@@ -103,14 +103,14 @@ Interface: HTML5, CSS3, JavaScript vanilla (pas de frameworks lourds)
 
 ### 🚀 Démarrage rapide Raspberry Pi 4
 
-1. **Préparer le Raspberry Pi 4**
+1. Préparer le Raspberry Pi 4
    bash
    # Utiliser Raspberry Pi Imager pour flasher Raspberry Pi OS Lite
    # Activer SSH dans les préférences
    # Configurer le Wi-Fi si nécessaire pour les mises à jour initiales
    
 
-2. **Connecter et mettre à jour**
+2. Connecter et mettre à jour
    bash
    ssh pi@votre-raspberry
    sudo apt update && sudo apt full-upgrade -y
@@ -119,12 +119,12 @@ Interface: HTML5, CSS3, JavaScript vanilla (pas de frameworks lourds)
    # → Performance Options → Overclock → Medium (optionnel)
    
 
-3. **Exécuter l'installation**
+3. Exécuter l'installation
    bash
    sudo ./install.sh
    
 
-4. **Se connecter au réseau**
+4. Se connecter au réseau
    - Chercher le Wi-Fi `⛑️ SOS Guide` (émis par votre Pi 4)
    - Se connecter (pas de mot de passe)
    - Ouvrir un navigateur à l'adresse `http://10.0.0.1`
