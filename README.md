@@ -100,12 +100,7 @@ Point d'accès: Hostapd (optimisé pour le chipset Wi-Fi Pi 4)
 DHCP: Dnsmasq (configuration minimale)
 Interface: HTML5, CSS3, JavaScript vanilla (pas de frameworks lourds)
    
-
-1. Exécuter l'installation
-   bash
-   sudo ./install.sh
-   
-2. Se connecter au réseau
+Se connecter au réseau
    - Chercher le Wi-Fi `⛑️ SOS Guide` (émis par votre Pi 4)
    - Se connecter (pas de mot de passe)
    - Ouvrir un navigateur à l'adresse `http://10.0.0.1`
