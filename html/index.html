@@ -438,7 +438,7 @@
 
         .card-actions {
             display: flex;
-            gap: 0.5rem;
+            gap: 0.75rem;
             margin-top: auto;
         }
 
@@ -660,7 +660,7 @@
             color: var(--primary);
         }
 
-        /* Modals améliorés */
+        /* Modals - Améliorés */
         .modal {
             position: fixed;
             top: 0;
@@ -672,7 +672,7 @@
             align-items: center;
             justify-content: center;
             z-index: 2000;
-            padding: 1rem;
+            padding: 2rem;
             backdrop-filter: blur(5px);
         }
 
@@ -680,13 +680,13 @@
             background: white;
             padding: 2.5rem;
             border-radius: var(--border-radius-lg);
-            max-width: 900px;
+            max-width: 800px;
             width: 100%;
             max-height: 90vh;
             overflow-y: auto;
             position: relative;
             box-shadow: var(--shadow-xl);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--primary-light);
         }
 
         .modal-large {
@@ -700,10 +700,10 @@
             color: var(--dark);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.75rem;
         }
 
-        .modal-title:before {
+        .modal-title::before {
             content: '';
             display: inline-block;
             width: 8px;
@@ -713,8 +713,8 @@
         }
 
         .modal-section {
-            margin-bottom: 2.5rem;
-            padding-bottom: 2.5rem;
+            margin-bottom: 2rem;
+            padding-bottom: 2rem;
             border-bottom: 1px solid var(--gray-light);
         }
 
@@ -742,17 +742,17 @@
 
         .modal-section ul, .modal-section ol {
             margin-left: 1.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
 
         .modal-section li {
-            margin-bottom: 0.75rem;
+            margin-bottom: 0.5rem;
             color: var(--gray-dark);
             position: relative;
             padding-left: 0.5rem;
         }
 
-        .modal-section li:before {
+        .modal-section li::before {
             content: '•';
             color: var(--primary);
             font-weight: bold;
@@ -797,11 +797,13 @@
             border-radius: var(--border-radius);
             border: 1px solid var(--gray-light);
             transition: var(--transition);
+            box-shadow: var(--shadow);
         }
 
         .tech-item:hover {
             border-color: var(--primary);
             transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
         }
 
         .specs-grid {
@@ -817,6 +819,12 @@
             border-radius: var(--border-radius);
             text-align: center;
             border: 1px solid var(--gray-light);
+            transition: var(--transition);
+        }
+
+        .spec-item:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
         }
 
         .spec-value {
@@ -844,11 +852,12 @@
             border-radius: var(--border-radius);
             border-left: 4px solid var(--primary);
             transition: var(--transition);
+            box-shadow: var(--shadow);
         }
 
         .equipment-item:hover {
             transform: translateY(-2px);
-            box-shadow: var(--shadow);
+            box-shadow: var(--shadow-lg);
         }
 
         .survival-step {
@@ -857,6 +866,7 @@
             border-radius: var(--border-radius);
             margin: 1rem 0;
             border-left: 4px solid var(--secondary);
+            box-shadow: var(--shadow);
         }
 
         .step-number {
@@ -881,12 +891,34 @@
             margin: 0 auto;
         }
 
-        /* Intro Card */
-        .intro-card {
+        /* Intro Card avec badge COMMENT ÇA MARCHE ? au-dessus */
+        .intro-card-wrapper {
             grid-column: 1 / -1;
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .intro-badge {
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            background: linear-gradient(135deg, #FF4081 0%, #F50057 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            box-shadow: var(--shadow-xl);
+            z-index: 10;
+        }
+
+        .intro-card {
             background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
             color: white;
             position: relative;
+            padding-top: 3rem;
         }
 
         .intro-card .card-title,
@@ -908,21 +940,6 @@
         .intro-card .card-action-btn:hover {
             background: white;
             color: var(--primary);
-        }
-
-        .intro-badge {
-            position: absolute;
-            top: -12px;
-            right: 30px;
-            background: linear-gradient(135deg, #FF4081 0%, #F50057 100%);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: var(--shadow-lg);
         }
 
         .intro-steps {
@@ -963,21 +980,21 @@
             color: rgba(255, 255, 255, 0.9);
         }
 
-        /* Footer optimisé */
+        /* Footer réduit */
         .footer {
             background: var(--dark);
             color: white;
-            padding: 2rem 0 0;
+            padding: 3rem 0 1.5rem;
         }
 
         .footer-content {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 0 2rem;
             display: grid;
             grid-template-columns: 1fr auto;
             gap: 3rem;
-            align-items: center;
+            align-items: start;
         }
 
         .footer-brand {
@@ -992,71 +1009,69 @@
             gap: 0.75rem;
             color: white;
             text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 700;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
         }
 
         .footer-description {
             color: rgba(255, 255, 255, 0.7);
             line-height: 1.5;
-            font-size: 0.875rem;
-            max-width: 400px;
+            font-size: 0.9rem;
+            max-width: 500px;
         }
 
-        .footer-offline {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            max-width: 300px;
-        }
-
-        .footer-offline h4 {
-            font-size: 1rem;
-            font-weight: 600;
-            margin-bottom: 0.75rem;
-            color: white;
-        }
-
-        .footer-offline p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 0.875rem;
-            line-height: 1.5;
-            margin-bottom: 1rem;
-        }
-
-        .footer-offline-buttons {
+        .footer-actions {
             display: flex;
-            gap: 0.75rem;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: flex-start;
         }
 
-        .footer-offline-btn {
-            background: rgba(255, 255, 255, 0.2);
+        .footer-btn {
+            background: rgba(255, 255, 255, 0.1);
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 0.75rem 1.5rem;
             border-radius: var(--border-radius);
-            font-size: 0.875rem;
             text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
+            font-size: 0.9rem;
+            display: flex;
             align-items: center;
             gap: 0.5rem;
+            transition: var(--transition);
         }
 
-        .footer-offline-btn:hover {
-            background: white;
-            color: var(--dark);
+        .footer-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
         }
 
         .footer-bottom {
-            padding: 1.5rem 0;
+            padding: 2rem 0 0;
             text-align: center;
             color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 2rem;
+            padding-right: 2rem;
+        }
+
+        .footer-note {
+            background: rgba(0, 102, 204, 0.1);
+            border: 1px solid rgba(0, 102, 204, 0.3);
+            border-radius: var(--border-radius);
+            padding: 1rem;
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+        }
+
+        .footer-note strong {
+            color: #FFD700;
         }
 
         /* Responsive */
@@ -1113,7 +1128,7 @@
             }
 
             .section {
-                padding: 8rem 1rem;
+                padding: 4rem 1rem;
             }
 
             .section-title {
@@ -1151,30 +1166,46 @@
                 flex-direction: row;
             }
 
+            .footer {
+                padding: 2rem 0 1rem;
+            }
+
             .footer-content {
-                padding: 1.5rem;
+                padding: 0 1rem;
             }
 
             .intro-badge {
                 position: relative;
                 top: 0;
-                right: 0;
-                margin-bottom: 1rem;
+                left: 0;
+                margin: -1rem auto 1rem;
                 display: inline-block;
             }
 
-            .modal-title {
-                font-size: 1.75rem;
+            .intro-card {
+                padding-top: 2rem;
             }
         }
 
         @media (max-width: 480px) {
+            .hero-title {
+                font-size: 1.75rem;
+            }
+
+            .section-title {
+                font-size: 1.75rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
             .card-actions {
                 flex-direction: column;
             }
-            
-            .footer-offline-buttons {
-                flex-direction: column;
+
+            .card-info-btn {
+                width: 100%;
             }
         }
     </style>
@@ -1182,6 +1213,7 @@
 <body>
     <!-- Navigation -->
     <header class="header">
+        <div class="tricolore-bar"></div>
         <nav class="nav-container">
             <a href="#" class="logo">
                 <span class="logo-icon">⛑️</span>
@@ -1239,11 +1271,11 @@
             <div class="search-container" id="searchContainer">
                 <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un service, une aide, un numéro...">
             </div>
-           
         </div>
-            <div id="serviceGrid" class="services-grid">
-                <!-- Le contenu est généré dynamiquement par JavaScript -->
-            </div>
+        
+        <div id="serviceGrid" class="services-grid">
+            <!-- Le contenu est généré dynamiquement par JavaScript -->
+        </div>
     </section>
 
     <!-- FAQ Section -->
@@ -1263,7 +1295,7 @@
         </div>
     </section>
 
-    <!-- Footer optimisé -->
+    <!-- Footer réduit -->
     <footer class="footer">
         <div class="footer-content">
             <div class="footer-brand">
@@ -1273,34 +1305,32 @@
                 </a>
                 <p class="footer-description">
                     Solution open-source d'information citoyenne résiliente. 
-                    Déployable sur Raspberry Pi, fonctionne sans internet.
+                    Déployable sur Raspberry Pi, fonctionne 100% sans internet.
                 </p>
-                <p class="footer-description" style="margin-top: 0.5rem; font-size: 0.8rem;">
-                    ⚠️ Cette page fonctionne hors-ligne. Pour visiter notre site web (mises à jour, communauté), 
-                    utilisez votre connexion internet mobile.
-                </p>
+                
+                <div class="footer-note">
+                    <strong>💡 Pour un accès permanent :</strong><br>
+                    • Ajoutez cette page à vos favoris<br>
+                    • Téléchargez la page complète
+                </div>
             </div>
 
-            <div class="footer-offline">
-                <h4>📲 Accès hors ligne</h4>
-                <p>Cette page est autonome et fonctionne sans connexion internet.</p>
-                <div class="footer-offline-buttons">
-                    <a href="https://sos-guide.fr" target="_blank" class="footer-offline-btn">
-                        🌐 Visiter le site
-                    </a>
-                    <button onclick="savePage()" class="footer-offline-btn">
-                        💾 Télécharger
-                    </button>
-                    <button onclick="addToFavorites()" class="footer-offline-btn">
-                        ⭐ Favoris
-                    </button>
-                </div>
+            <div class="footer-actions">
+                <button class="footer-btn" onclick="downloadPage()">
+                    <span>📥 Télécharger cette page</span>
+                </button>
+                <a href="mailto:contact@sos-guide.fr" class="footer-btn">
+                    <span>📧 Contact</span>
+                </a>
             </div>
         </div>
         
         <div class="footer-bottom">
             <p>© 2026 ⛑️ SOS GUIDE - Projet open-source sous licence MIT</p>
             <p style="margin-top: 0.25rem;">Conçu par Ludovic MARTIN et la communauté des contributeurs</p>
+            <p style="margin-top: 0.5rem; font-size: 0.7rem; color: rgba(255, 255, 255, 0.4);">
+                Cette page fonctionne 100% hors-ligne • Dernière mise à jour : janvier 2026
+            </p>
         </div>
     </footer>
 
@@ -1311,7 +1341,7 @@
             <h3 class="modal-title">À propos de SOS Guide</h3>
             
             <div class="modal-section">
-                <h4>📋 Notre Mission</h4>
+                <h4>⛑️ Notre Mission</h4>
                 <p><strong>SOS Guide</strong> centralise les aides citoyennes et les numéros d'urgence pour un accès rapide en toute situation. Notre objectif est de fournir un accès universel aux informations vitales : services d'urgence, aides sociales, associations locales et ressources citoyennes.</p>
                 <p>SOS Guide garantit que ces informations restent disponibles même sans connexion internet, lors de pannes de réseau, de catastrophes naturelles, ou dans les zones blanches.</p>
             </div>
@@ -1429,16 +1459,26 @@
             <h3 class="modal-title" id="descTitle">Titre du Service</h3>
             
             <div class="modal-section">
-                <h4>📋 Description</h4>
+                <h4>📋 Description du Service</h4>
                 <p id="descText">Description détaillée du service...</p>
                 <div class="highlight-box" id="descNum">
-                    <strong>📞 Numéro :</strong> 00 00 00 00 00
+                    <strong>📞 Numéro d'urgence :</strong> <span id="descNumValue">00 00 00 00 00</span>
                 </div>
             </div>
             
             <div class="modal-section">
-                <h4>ℹ️ Informations complémentaires</h4>
-                <p>Ce service est disponible 24h/24 et 7j/7 pour les urgences. Pour les appels non urgents, privilégiez les horaires de bureau.</p>
+                <h4>🕐 Disponibilité</h4>
+                <p>Ce service est disponible 24h/24 et 7j/7 pour les urgences. Pour les appels non urgents, privilégiez les horaires de bureau (9h-18h).</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📝 Conseils d'utilisation</h4>
+                <ul>
+                    <li>Gardez votre calme en appelant</li>
+                    <li>Préparez votre adresse exacte avant d'appeler</li>
+                    <li>Décrivez clairement la situation</li>
+                    <li>Ne raccrochez pas avant d'avoir reçu les instructions</li>
+                </ul>
             </div>
             
             <div class="card-actions" style="margin-top: 20px;">
@@ -1582,7 +1622,7 @@
             <div class="survival-step">
                 <h4><span class="step-number">4</span> SECOURIR les victimes</h4>
                 <p><strong>Vérifiez la conscience</strong> : parlez à la victime, secouez doucement</p>
-                <p><strong>Contrôlez la respiration</strong> : regardez si le ventle/poitrine se soulève</p>
+                <p><strong>Contrôlez la respiration</strong> : regardez si le ventre/poitrine se soulève</p>
                 <p><strong>Pratiquez les gestes de base</strong> :</p>
                 <ul>
                     <li>PLA : Position Latérale de sécurité (si inconscient mais respire)</li>
@@ -1826,116 +1866,123 @@
         </div>
     </div>
 
-    <!-- NOUVEAU MODAL : Droits et Devoirs -->
+    <!-- Modal Droits et Devoirs -->
     <div id="rightsModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">Droits et Devoirs du Citoyen</h3>
+            <h3 class="modal-title">Droits et Devoirs Citoyens</h3>
             
             <div class="modal-section">
-                <h4>📜 Droits Fondamentaux</h4>
-                <div class="equipment-list">
-                    <div class="equipment-item">
-                        <h5>🏛️ Droit à la sécurité</h5>
-                        <p>Protection par les forces de l'ordre et services d'urgence</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>🏥 Droit aux soins</h5>
-                        <p>Accès aux soins médicaux d'urgence, quel que soit votre statut</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>🏠 Droit au logement</h5>
-                        <p>Hébergement d'urgence via le 115 en cas de besoin</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>🎓 Droit à l'information</h5>
-                        <p>Accès aux informations vitales et alertes officielles</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>⚖️ Droit à la justice</h5>
-                        <p>Protection légale et accès à la justice en cas de violation</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>🗳️ Droit de vote</h5>
-                        <p>Expression démocratique même en situation de crise</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>⚖️ Devoirs Civiques Essentiels</h4>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">1</span> SOLIDARITÉ</h4>
-                    <p><strong>Portez assistance</strong> à personne en danger dans la mesure de vos moyens</p>
-                    <p><strong>Signalez</strong> toute situation nécessitant l'intervention des secours</p>
-                    <p><strong>Partagez</strong> les informations vitales avec votre entourage</p>
-                    <p><strong>Respectez</strong> les consignes des autorités en situation de crise</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">2</span> RESPONSABILITÉ</h4>
-                    <p><strong>Ne propagez pas</strong> de fausses informations ou rumeurs</p>
-                    <p><strong>Utilisez raisonnablement</strong> les services d'urgence (ne pas saturer le 15/18/17)</p>
-                    <p><strong>Préparez-vous</strong> pour réduire la charge sur les services publics</p>
-                    <p><strong>Participez</strong> aux exercices de sécurité organisés localement</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">3</span> CITOYENNETÉ</h4>
-                    <p><strong>Connaissez</strong> vos droits et les recours possibles</p>
-                    <p><strong>Respectez</strong> les consignes de sécurité et les interdictions</p>
-                    <p><strong>Contribuez</strong> à l'entraide communautaire en cas de besoin</p>
-                    <p><strong>Formez-vous</strong> aux gestes qui sauvent (PSC1, SST)</p>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>🛡️ Protection Légale</h4>
-                <ul>
-                    <li><strong>Loi n°2020-296 du 23 mars 2020</strong> : État d'urgence sanitaire et mesures exceptionnelles</li>
-                    <li><strong>Article 223-6 du Code pénal</strong> : Obligation de porter assistance à personne en péril</li>
-                    <li><strong>Loi n°2004-811 du 13 août 2004</strong> : Modernisation de la sécurité civile</li>
-                    <li><strong>Convention européenne des droits de l'homme</strong> : Protection des droits fondamentaux</li>
-                    <li><strong>Charte de l'environnement</strong> : Droit à l'information sur les risques majeurs</li>
-                </ul>
-                
+                <h4>⚖️ Droits Fondamentaux en Situation d'Urgence</h4>
+                <p><strong>Article 2 de la Déclaration des Droits de l'Homme et du Citoyen (1789) :</strong></p>
                 <div class="highlight-box">
-                    <p><strong>⚠️ Non-assistance à personne en danger</strong> : Le fait de ne pas porter secours à une personne en péril est puni de 5 ans d'emprisonnement et de 75 000€ d'amende (article 223-6 CP).</p>
+                    <p>"Le but de toute association politique est la conservation des droits naturels et imprescriptibles de l'Homme. Ces droits sont la liberté, la propriété, la sûreté, et la résistance à l'oppression."</p>
+                </div>
+                
+                <p><strong>Droits essentiels garantis :</strong></p>
+                <ul>
+                    <li><strong>Droit à la sécurité</strong> : Protection par les forces de l'ordre et services de secours</li>
+                    <li><strong>Droit aux soins</strong> : Accès aux services médicaux d'urgence</li>
+                    <li><strong>Droit à l'information</strong> : Informations claires sur la situation et les consignes</li>
+                    <li><strong>Droit à l'assistance</strong> : Aide sociale et hébergement d'urgence</li>
+                    <li><strong>Droit à la dignité</strong> : Traitement respectueux dans toutes les circonstances</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📜 Devoirs du Citoyen en Cas de Crise</h4>
+                
+                <div class="survival-step">
+                    <h4><span class="step-number">1</span> Devoir d'Assistance</h4>
+                    <p><strong>Article 223-6 du Code Pénal :</strong></p>
+                    <p>"Quiconque pouvant empêcher par son action immédiate, sans risque pour lui ou pour les tiers, soit un crime, soit un délit contre l'intégrité corporelle de la personne s'abstient volontairement de le faire est puni de cinq ans d'emprisonnement et de 75 000 euros d'amende."</p>
+                    <p><strong>Ce que cela signifie :</strong> Vous devez porter assistance à une personne en danger si vous pouvez le faire sans vous mettre en danger.</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4><span class="step-number">2</span> Devoir d'Alerte</h4>
+                    <p><strong>Obligation de signaler :</strong></p>
+                    <ul>
+                        <li>Toute situation de danger immédiat (incendie, accident, agression)</li>
+                        <li>Toute personne en détresse visible</li>
+                        <li>Toute menace pour la sécurité publique</li>
+                    </ul>
+                    <p><strong>Numéros d'urgence à connaître :</strong> 15, 17, 18, 112</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4><span class="step-number">3</span> Devoir d'Obéissance aux Consignes</h4>
+                    <p><strong>En cas de crise majeure :</strong></p>
+                    <ul>
+                        <li>Respecter les consignes des autorités</li>
+                        <li>Suivre les ordres d'évacuation</li>
+                        <li>Ne pas entraver l'action des secours</li>
+                        <li>Participer aux efforts collectifs si requis</li>
+                    </ul>
+                </div>
+                
+                <div class="survival-step">
+                    <h4><span class="step-number">4</span> Devoir de Solidarité</h4>
+                    <p><strong>Article 1 de la Constitution :</strong></p>
+                    <p>"La France est une République indivisible, laïque, démocratique et sociale. Elle assure l'égalité devant la loi de tous les citoyens sans distinction d'origine, de race ou de religion. Elle respecte toutes les croyances."</p>
+                    <p><strong>Dans la pratique :</strong> Aider ses concitoyens, partager les ressources, soutenir les plus vulnérables.</p>
                 </div>
             </div>
             
             <div class="modal-section">
-                <h4>📞 Recours et Signalements</h4>
-                <div class="equipment-list">
-                    <div class="equipment-item">
-                        <h5>🏛️ Défenseur des droits</h5>
-                        <p>09 69 39 00 00 - Signalement des atteintes aux droits</p>
+                <h4>🛡️ Protections Légales Spécifiques</h4>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>🏥 Secret Médical</h5>
+                        <p>Maintien du secret médical même en situation d'urgence. Les informations médicales ne peuvent être partagées qu'avec l'accord du patient ou en cas de nécessité thérapeutique.</p>
                     </div>
-                    <div class="equipment-item">
-                        <h5>👮‍♂️ Police / Gendarmerie</h5>
-                        <p>17 - Signalement d'infractions ou situations dangereuses</p>
+                    
+                    <div class="tech-item">
+                        <h5>🏠 Droit au Logement</h5>
+                        <p>En cas de catastrophe naturelle ou technologique, droit à un relogement temporaire et à une indemnisation.</p>
                     </div>
-                    <div class="equipment-item">
-                        <h5>👶 Protection de l'enfance</h5>
-                        <p>119 - Signalement d'enfant en danger ou risque</p>
+                    
+                    <div class="tech-item">
+                        <h5>💼 Continuité des Services</h5>
+                        <p>Obligation pour les services essentiels (eau, électricité, communications) de maintenir un service minimum.</p>
                     </div>
-                    <div class="equipment-item">
-                        <h5>👵 Maltraitance personnes âgées</h5>
-                        <p>39 77 - Signalement de situations de maltraitance</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>⚖️ Maison de la justice</h5>
-                        <p>Conseils juridiques gratuits près de chez vous</p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>📋 Service Public</h5>
-                        <p>3939 - Renseignements sur vos droits et démarches</p>
+                    
+                    <div class="tech-item">
+                        <h5>📢 Liberté d'Information</h5>
+                        <p>Droit à une information transparente et vérifiée sur la situation et les risques.</p>
                     </div>
                 </div>
             </div>
             
-            <div class="highlight-box success">
-                <p><strong>💡 Savoir + Agir = Protection :</strong> Connaître ses droits permet de mieux les faire respecter. Connaître ses devoirs permet de mieux protéger les autres. La sécurité collective commence par la responsabilité individuelle.</p>
+            <div class="modal-section">
+                <h4>⚠️ Limitations Exceptionnelles des Libertés</h4>
+                <p><strong>En cas de crise majeure, l'État peut :</strong></p>
+                <ul>
+                    <li>Instaurer un couvre-feu</li>
+                    <li>Restreindre la liberté de circulation</li>
+                    <li>Réquisitionner des biens ou services</li>
+                    <li>Limiter les rassemblements</li>
+                </ul>
+                <p><strong>Ces mesures doivent être :</strong></p>
+                <ol>
+                    <li>Nécessaires à la protection de la population</li>
+                    <li>Proportionnées au danger</li>
+                    <li>Limitées dans le temps</li>
+                    <li>Contrôlées par le pouvoir judiciaire</li>
+                </ol>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>📞 Contacts juridiques d'urgence :</strong></p>
+                <ul>
+                    <li><strong>Défenseur des droits :</strong> 09 69 39 00 00</li>
+                    <li><strong>Ordre des avocats :</strong> Contacter le barreau local</li>
+                    <li><strong>Associations d'aide juridique :</strong> ADIJ, CIDJ, Maisons de la justice et du droit</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Conseil pratique :</strong> En situation d'urgence, vos premiers droits sont le droit à la vie et à la sécurité. Les autres droits (propriété, liberté de circulation) peuvent être temporairement restreints pour assurer la protection de tous. Suivez toujours les consignes des autorités compétentes.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">Fermer</button>
@@ -1960,7 +2007,7 @@
             faqItems = JSON.parse(faqJSON);
         }
 
-        // ICONS
+        // ICONS - Ajout de l'icône balance pour Droits et Devoirs
         const ICONS = {
             emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
             social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
@@ -1969,14 +2016,13 @@
             fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
             heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
             phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
-            world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1.
-                        1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+            world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
             kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
             protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
             alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
             health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
             wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
-            rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>`
+            rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"/></svg>`
         };
 
         // SERVICES data - TOUS LES 42 SERVICES
@@ -2419,42 +2465,40 @@
             document.getElementById(modalId).style.display = 'flex';
         }
 
-        // Fonctions pour le footer
-        function savePage() {
+        // Fonction pour télécharger la page
+        function downloadPage() {
             const htmlContent = document.documentElement.outerHTML;
             const blob = new Blob([htmlContent], { type: 'text/html' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = 'SOS-Guide-Hors-Ligne.html';
+            a.download = 'sos-guide-hors-ligne.html';
             document.body.appendChild(a);
             a.click();
             document.body.removeChild(a);
             URL.revokeObjectURL(url);
             
-            // Notification simple
-            alert('Page téléchargée ! Enregistrez le fichier pour y accéder hors ligne.');
-        }
-
-        function addToFavorites() {
-            if (window.sidebar && window.sidebar.addPanel) {
-                // Firefox
-                window.sidebar.addPanel(document.title, window.location.href, "");
-            } else if (window.external && ('AddFavorite' in window.external)) {
-                // Internet Explorer
-                window.external.AddFavorite(window.location.href, document.title);
-            } else if (window.opera && window.print) {
-                // Opera
-                const a = document.createElement('a');
-                a.href = window.location.href;
-                a.title = document.title;
-                a.rel = 'sidebar';
-                a.click();
-            } else {
-                // Webkit, Chrome, Safari
-                alert('Pour ajouter cette page aux favoris, appuyez sur ' + 
-                      (navigator.userAgent.toLowerCase().indexOf('mac') !== -1 ? 'Cmd+D' : 'Ctrl+D'));
-            }
+            // Notification visuelle
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary);
+                color: white;
+                padding: 1rem 1.5rem;
+                border-radius: var(--border-radius);
+                z-index: 3000;
+                box-shadow: var(--shadow-xl);
+                animation: slideIn 0.3s ease;
+            `;
+            notification.innerHTML = '📥 Page téléchargée ! Enregistrez le fichier.';
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => document.body.removeChild(notification), 300);
+            }, 3000);
         }
 
         // Fonction pour gérer la visibilité de la barre de recherche
@@ -2549,7 +2593,7 @@
             if (service) {
                 document.getElementById('descTitle').textContent = service.name;
                 document.getElementById('descText').textContent = service.detail || service.desc;
-                document.getElementById('descNum').innerHTML = `<strong>📞 Numéro :</strong> ${service.num}`;
+                document.getElementById('descNumValue').textContent = service.num;
                 
                 const callBtn = document.getElementById('descCallBtn');
                 const callNum = document.getElementById('descCallNum');
@@ -2581,7 +2625,7 @@
             openModal('healthModal');
         }
         
-        // Fonction pour ouvrir le modal droits
+        // Fonction pour ouvrir le modal droits et devoirs
         function openRightsModal() {
             openModal('rightsModal');
         }
@@ -2596,43 +2640,45 @@
             // Si on est dans la catégorie Accueil
             if (filter === 'Accueil') {
                 let html = `
-                    <div class="card intro-card">
+                    <div class="intro-card-wrapper">
                         <div class="intro-badge">COMMENT ÇA MARCHE ?</div>
-                        <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
-                        <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
-                        
-                        <div class="intro-steps">
-                            <div class="intro-step">
-                                <div class="step-number">1</div>
-                                <div class="intro-step-title">Navigation par catégories</div>
-                                <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
+                        <div class="card intro-card">
+                            <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
+                            <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
+                            
+                            <div class="intro-steps">
+                                <div class="intro-step">
+                                    <div class="step-number">1</div>
+                                    <div class="intro-step-title">Navigation par catégories</div>
+                                    <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
+                                </div>
+                                <div class="intro-step">
+                                    <div class="step-number">2</div>
+                                    <div class="intro-step-title">Recherche rapide</div>
+                                    <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
+                                </div>
+                                <div class="intro-step">
+                                    <div class="step-number">3</div>
+                                    <div class="intro-step-title">Accès aux numéros</div>
+                                    <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
+                                </div>
+                                <div class="intro-step">
+                                    <div class="step-number">4</div>
+                                    <div class="intro-step-title">Guides et ressources</div>
+                                    <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
+                                </div>
                             </div>
-                            <div class="intro-step">
-                                <div class="step-number">2</div>
-                                <div class="intro-step-title">Recherche rapide</div>
-                                <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
+                            
+                            <div class="card-actions">
+                                <button class="card-action-btn" onclick="openModal('aboutModal')">
+                                    <span>En savoir plus sur le projet</span>
+                                    <span>→</span>
+                                </button>
                             </div>
-                            <div class="intro-step">
-                                <div class="step-number">3</div>
-                                <div class="intro-step-title">Accès aux numéros</div>
-                                <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
-                            </div>
-                            <div class="intro-step">
-                                <div class="step-number">4</div>
-                                <div class="intro-step-title">Guides et ressources</div>
-                                <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
-                            </div>
+                            <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                                <strong>⚠️ Important :</strong> Pour appeler les numéros d'urgence, votre téléphone doit avoir du réseau mobile. Cette page fournit les informations, mais les appels passent par votre opérateur téléphonique.
+                            </p>
                         </div>
-                        
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openModal('aboutModal')">
-                                <span>En savoir plus sur le projet</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                        <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
-                            <strong>⚠️ Important :</strong> Pour appeler les numéros d'urgence, votre téléphone doit avoir du réseau mobile. Cette page fournit les informations, mais les appels passent par votre opérateur téléphonique.
-                        </p>
                     </div>
                     
                     <div class="card">
@@ -2708,13 +2754,13 @@
                             <div class="card-icon">
                                 ${ICONS.rights}
                             </div>
-                            <span class="tag">CITOYEN</span>
+                            <span class="tag">LOI</span>
                         </div>
                         <h3 class="card-title">Droits & Devoirs</h3>
-                        <p class="card-text">Connaître ses droits fondamentaux et ses responsabilités civiques en situation d'urgence. Protections légales et recours.</p>
+                        <p class="card-text">Connaître ses droits fondamentaux et les devoirs en situation d'urgence. Textes de loi, protections et obligations.</p>
                         <div class="card-actions">
                             <button class="card-action-btn" onclick="openRightsModal()">
-                                <span>Voir droits et devoirs</span>
+                                <span>Voir les droits et devoirs</span>
                                 <span>→</span>
                             </button>
                         </div>
@@ -2851,6 +2897,32 @@
                 card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
                 observer.observe(card);
             });
+
+            // Ajouter les animations CSS pour les notifications
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                    to {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                }
+                @keyframes slideOut {
+                    from {
+                        transform: translateX(0);
+                        opacity: 1;
+                    }
+                    to {
+                        transform: translateX(100%);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
         };
     </script>
 
