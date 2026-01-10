@@ -1,5 +1,3 @@
-Voici le README mis à jour avec l'**emphase sur le Raspberry Pi 4** :
-
 # ⛑️ SOS GUIDE - Système d'Information Citoyen Résilient
 
 **Solution open-source basée sur Raspberry Pi 4 pour situations d'urgence et zones sans connexion internet**
