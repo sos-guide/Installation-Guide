@@ -101,7 +101,7 @@ DHCP: Dnsmasq (configuration minimale)
 Interface: HTML5, CSS3, JavaScript vanilla (pas de frameworks lourds)
 
 
-## 🚀 Démarrage rapide Raspberry Pi 4
+### 🚀 Démarrage rapide Raspberry Pi 4
 
 1. **Préparer le Raspberry Pi 4**
    bash
