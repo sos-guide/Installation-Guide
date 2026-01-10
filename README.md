@@ -237,7 +237,7 @@ Nous proposons des **kits Raspberry Pi 4 clés en main** incluant :
 - Support technique dédié
 - Formation à l'utilisation
 
-Contactez-nous à **collectivites@sos-guide.fr**
+Contactez-nous à **contact@sos-guide.fr**
 
 ## 👤 Fondateur & Équipe
 
@@ -247,7 +247,6 @@ Contactez-nous à **collectivites@sos-guide.fr**
 > *"Notre mission n'est pas de créer plus de technologie, mais de rendre la technologie existante utile à tous, surtout quand tout le reste s'arrête."*
 
 - 📧 contact@sos-guide.fr
-- 🔗 [Portfolio & autres projets](https://ludovicmartin.fr)
 
 ### La communauté
 SOS GUIDE est soutenu par une communauté de contributeurs bénévoles passionnés par la résilience numérique et la solidarité.
