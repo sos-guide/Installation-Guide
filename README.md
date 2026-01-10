@@ -79,26 +79,6 @@ sudo ./install.sh
 
 ### Méthode 2 : Image système complète
 *Disponible prochainement - Image pré-configurée pour flashage direct*
-
-### 🔧 Configuration réseau optimisée pour Pi 4
-yaml
-SSID: "⛑️ SOS Guide"
-IP du serveur: 10.0.0.1
-Plage DHCP: 10.0.0.2 à 10.0.0.49
-Port: HTTP 80
-Bande Wi-Fi: 2.4GHz (meilleure portée pour les bâtiments)
-Canal: 7 (moins de interférences)
-Mode sécurité: Ouvert (facilite l'accès en urgence)
-Utilisateurs max: 50 simultanés (capacité réelle du Pi 4)
-
-
-### ⚙️ Logiciels optimisés pour Raspberry Pi 4
-bash
-Système: Raspberry Pi OS Lite (32-bit) Bullseye
-Serveur web: Lighttpd (léger et rapide)
-Point d'accès: Hostapd (optimisé pour le chipset Wi-Fi Pi 4)
-DHCP: Dnsmasq (configuration minimale)
-Interface: HTML5, CSS3, JavaScript vanilla (pas de frameworks lourds)
    
 Se connecter au réseau
    - Chercher le Wi-Fi `⛑️ SOS Guide` (émis par votre Pi 4)
