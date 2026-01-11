@@ -66,9 +66,12 @@
 ---
 
 ### Méthode 1 : Script d'installation (Recommandé)
-bash
+
 # Télécharger le script
-wget https://raw.githubusercontent.com/sos-guide/Installation-Guide/main/install.sh
+git clone https://github.com/sos-guide/Installation-Guide.git
+
+# Entrer dans le dossier
+cd Installation-Guide
 
 # Rendre exécutable
 chmod +x install.sh
