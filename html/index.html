@@ -827,901 +827,877 @@
     </div>
 
     <script>
-        // Variables globales
-        let filter = 'Accueil';
-        let search = '';
-        let categories = [];
-        let faqItems = [];
+    // Variables globales
+    let filter = 'Accueil';
+    let search = '';
+    let categories = [];
+    let faqItems = [];
 
-        // Chargement des données JSON
-        function loadJSONData() {
-            // Charger les catégories
-            const categoriesJSON = document.getElementById('categoriesData').textContent;
-            categories = JSON.parse(categoriesJSON);
-            
-            // Charger la FAQ
-            const faqJSON = document.getElementById('faqData').textContent;
-            faqItems = JSON.parse(faqJSON);
+    // Chargement des données JSON
+    function loadJSONData() {
+        // Charger les catégories
+        const categoriesJSON = document.getElementById('categoriesData').textContent;
+        categories = JSON.parse(categoriesJSON);
+        
+        // Charger la FAQ
+        const faqJSON = document.getElementById('faqData').textContent;
+        faqItems = JSON.parse(faqJSON);
+    }
+
+    // ICONS
+    const ICONS = {
+        emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
+        social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+        police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
+        fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
+        heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
+        world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+        kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
+        protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+        alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
+        health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
+        wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
+        rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
+    };
+
+    // SERVICES data - TOUS LES 42 SERVICES
+    const SERVICES = [
+        // URGENCES
+        { 
+            id: 1,
+            cat: 'Urgence', 
+            name: 'SAMU', 
+            num: '15', 
+            col: '#EF4444', 
+            icon: ICONS.emergency, 
+            desc: 'Service d\'Aide Médicale Urgente. Pour toutes les urgences médicales graves nécessitant une intervention rapide.',
+            detail: 'Le SAMU intervient pour les urgences médicales (accidents, malaise, détresse vitale). Ne pas appeler pour des questions non urgentes.'
+        },
+        { 
+            id: 2,
+            cat: 'Urgence', 
+            name: 'Police Secours', 
+            num: '17', 
+            col: '#0066FF', 
+            icon: ICONS.police, 
+            desc: 'Police nationale pour signaler une infraction, un danger immédiat ou demander une intervention urgente.',
+            detail: 'Police Secours intervient pour les crimes, délits, accidents de la route, troubles à l\'ordre public.'
+        },
+        { 
+            id: 3,
+            cat: 'Urgence', 
+            name: 'Pompiers', 
+            num: '18', 
+            col: '#F59E0B', 
+            icon: ICONS.fire, 
+            desc: 'Sapeurs-pompiers pour les incendies, accidents, inondations et tous types de secours.',
+            detail: 'Les pompiers interviennent pour les incendies, accidents de la route, secours à personnes, inondations.'
+        },
+        { 
+            id: 4,
+            cat: 'Urgence', 
+            name: 'SOS Médecins', 
+            num: '3624', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'Médecin de garde disponible 24h/24 pour les urgences médicales non vitales.',
+            detail: 'SOS Médecins envoie un médecin à domicile pour les urgences non vitales (fièvre, douleurs, conseils médicaux).'
+        },
+        { 
+            id: 5,
+            cat: 'Urgence', 
+            name: 'Numéro d\'urgence unique UE', 
+            num: '112', 
+            col: '#3B82F6', 
+            icon: ICONS.emergency, 
+            desc: 'Numéro d\'urgence européen valable dans tous les pays de l\'Union européenne.',
+            detail: 'Le 112 fonctionne partout en Europe. Il vous met en relation avec les services d\'urgence du pays.'
+        },
+        { 
+            id: 6,
+            cat: 'Urgence', 
+            name: 'Centre Anti-Poison', 
+            num: '01 40 05 48 48', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Conseils en cas d\'intoxication, ingestion de produits dangereux ou morsures.',
+            detail: 'Centre anti-poison de Paris. Donnez le nom du produit, la quantité ingérée, l\'âge et le poids de la victime.'
+        },
+        { 
+            id: 7,
+            cat: 'Urgence', 
+            name: 'Urgences Électricité', 
+            num: '09 72 67 50 XX', 
+            col: '#F59E0B', 
+            icon: ICONS.emergency, 
+            desc: 'Enedis pour les pannes d\'électricité, fils électriques coupés ou dangers électriques.',
+            detail: 'Composez le numéro de votre région (remplacer XX par le numéro départemental). Signalez les pannes.'
+        },
+        { 
+            id: 8,
+            cat: 'Urgence', 
+            name: 'Urgences Gaz', 
+            num: '09 69 36 35 34', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'GRDF pour les fuites de gaz, odeurs suspectes ou problèmes d\'alimentation.',
+            detail: 'En cas de forte odeur de gaz : ne pas allumer de lumière, aérer, quitter les lieux, appeler depuis l\'extérieur.'
+        },
+        
+        // SOCIAL
+        { 
+            id: 9,
+            cat: 'Social', 
+            name: 'SAMU Social', 
+            num: '115', 
+            col: '#0F172A', 
+            icon: ICONS.social, 
+            desc: 'Hébergement d\'urgence, maraudes et aide aux personnes sans abri.',
+            detail: 'Le 115 oriente vers les places d\'hébergement d\'urgence, organise les maraudes.'
+        },
+        { 
+            id: 10,
+            cat: 'Social', 
+            name: 'Enfance en Danger', 
+            num: '119', 
+            col: '#EC4899', 
+            icon: ICONS.social, 
+            desc: 'Signalement des enfants en danger ou risquant de l\'être.',
+            detail: 'Numéro gratuit, confidentiel, 24h/24. Signalez toute situation de maltraitance ou négligence.'
+        },
+        { 
+            id: 11,
+            cat: 'Social', 
+            name: 'Violences Femmes', 
+            num: '3919', 
+            col: '#BE185D', 
+            icon: ICONS.social, 
+            desc: 'Écoute, information et orientation des femmes victimes de violences.',
+            detail: 'Numéro gratuit, anonyme, 24h/24. Violences conjugales, psychologiques, sexuelles.'
+        },
+        { 
+            id: 12,
+            cat: 'Social', 
+            name: 'Drogue Info Service', 
+            num: '0800 23 13 13', 
+            col: '#059669', 
+            icon: ICONS.social, 
+            desc: 'Écoute, information et aide pour les addictions (drogues, alcool, jeux).',
+            detail: 'Numéro gratuit, anonyme, 7j/7 de 8h à 2h. Conseils, orientation vers des centres de soins.'
+        },
+        { 
+            id: 13,
+            cat: 'Social', 
+            name: 'Suicide Écoute', 
+            num: '3114', 
+            col: '#3B82F6', 
+            icon: ICONS.heart, 
+            desc: 'Prévention du suicide, écoute et soutien psychologique.',
+            detail: 'Numéro national de prévention du suicide. Écoute bienveillante, non jugeante, 24h/24.'
+        },
+        { 
+            id: 14,
+            cat: 'Social', 
+            name: 'Allô Service Public', 
+            num: '3939', 
+            col: '#6366F1', 
+            icon: ICONS.phone, 
+            desc: 'Informations sur tous les services publics français.',
+            detail: 'Du lundi au vendredi, 9h-18h. Renseignements sur les démarches administratives, droits, aides sociales.'
+        },
+        { 
+            id: 15,
+            cat: 'Social', 
+            name: 'Handicap Écoute', 
+            num: '0 800 360 360', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Informations sur les droits, aides et accompagnement des personnes handicapées.',
+            detail: 'Numéro gratuit, du lundi au vendredi 9h-17h. Renseignements sur l\'AAH, la PCH, la MDPH.'
+        },
+        { 
+            id: 16,
+            cat: 'Social', 
+            name: 'SOS Amitié', 
+            num: '09 72 39 40 50', 
+            col: '#EC4899', 
+            icon: ICONS.heart, 
+            desc: 'Écoute bienveillante et anonyme pour les personnes en détresse psychologique.',
+            detail: 'Association d\'écoute bénévole, 24h/24. Pour parler de vos difficultés, isolement, souffrance morale.'
+        },
+        
+        // ASSOCIATIONS FRANÇAISES
+        { 
+            id: 17,
+            cat: 'Associations', 
+            name: 'Restos du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#F43F5E', 
+            icon: ICONS.heart, 
+            desc: 'Aide alimentaire, insertion sociale et accompagnement des plus démunis.',
+            detail: 'Distribution de repas, épiceries sociales, aide à l\'insertion. Ouvert de novembre à mars.'
+        },
+        { 
+            id: 18,
+            cat: 'Associations', 
+            name: 'Croix-Rouge française', 
+            num: '0800 858 858', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Action humanitaire, secourisme, aide sociale et formation aux premiers secours.',
+            detail: 'Urgences, maraudes, aide alimentaire, formation SST/PSC1. Actions locales partout en France.'
+        },
+        { 
+            id: 19,
+            cat: 'Associations', 
+            name: 'Secours Catholique', 
+            num: '01 45 49 73 00', 
+            col: '#B91C1C', 
+            icon: ICONS.heart, 
+            desc: 'Aide aux plus démunis, accueil, hébergement et lutte contre l\'exclusion.',
+            detail: 'Accueil de jour, distribution alimentaire, aide aux démarches, soutien scolaire.'
+        },
+        { 
+            id: 20,
+            cat: 'Associations', 
+            name: 'Emmaüs', 
+            num: '01 41 58 25 00', 
+            col: '#1E293B', 
+            icon: ICONS.assoc, 
+            desc: 'Lutte contre l\'exclusion par le travail, réinsertion et économie solidaire.',
+            detail: 'Communautés Emmaüs proposent hébergement, travail dans la récupération, vente d\'objets.'
+        },
+        { 
+            id: 21,
+            cat: 'Associations', 
+            name: 'SPA', 
+            num: '01 43 80 40 66', 
+            col: '#D97706', 
+            icon: ICONS.heart, 
+            desc: 'Protection animale, refuge, adoption et lutte contre la maltraitance.',
+            detail: 'Société Protectrice des Animaux. Signalement de maltraitance, adoption d\'animaux.'
+        },
+        { 
+            id: 22,
+            cat: 'Associations', 
+            name: 'Secours Populaire', 
+            num: '01 44 78 21 00', 
+            col: '#2563EB', 
+            icon: ICONS.heart, 
+            desc: 'Solidarité pour tous, aide alimentaire, vestimentaire et accès à la culture.',
+            detail: 'Aide d\'urgence, colis alimentaires, vacances solidaires, aide aux devoirs.'
+        },
+        { 
+            id: 23,
+            cat: 'Associations', 
+            name: 'Médecins du Monde', 
+            num: '01 44 92 15 15', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Soins aux plus démunis en France et à l\'international.',
+            detail: 'Centres de soins gratuits, maraudes médicales, accès aux droits santé.'
+        },
+        { 
+            id: 24,
+            cat: 'Associations', 
+            name: 'Banque Alimentaire', 
+            num: '01 48 28 00 00', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Collecte et distribution de denrées alimentaires aux associations.',
+            detail: '79 Banques Alimentaires en France. Approvisionnent 5 400 associations.'
+        },
+        
+        // ASSOCIATIONS INTERNATIONALES
+        { 
+            id: 25,
+            cat: 'International', 
+            name: 'UNICEF France', 
+            num: '0 800 840 840', 
+            col: '#3B82F6', 
+            icon: ICONS.world, 
+            desc: 'Fonds des Nations Unies pour l\'enfance. Protection des enfants dans le monde.',
+            detail: 'Action dans 190 pays. Vaccination, éducation, protection contre les violences.'
+        },
+        { 
+            id: 26,
+            cat: 'International', 
+            name: 'Médecins Sans Frontières', 
+            num: '0 800 840 840', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Aide médicale d\'urgence dans les zones de conflits et catastrophes.',
+            detail: 'ONG médicale internationale présente dans 70 pays. Soins aux populations vulnérables.'
+        },
+        { 
+            id: 27,
+            cat: 'International', 
+            name: 'CARE France', 
+            num: '01 53 19 89 89', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre la pauvreté et les injustices dans le monde.',
+            detail: 'Action dans 100 pays. Urgences humanitaires, développement durable.'
+        },
+        { 
+            id: 28,
+            cat: 'International', 
+            name: 'Action contre la Faim', 
+            num: '01 70 84 70 84', 
+            col: '#059669', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre la faim dans le monde, nutrition et sécurité alimentaire.',
+            detail: 'Présente dans 50 pays. Programmes nutritionnels, eau et assainissement.'
+        },
+        { 
+            id: 29,
+            cat: 'International', 
+            name: 'WWF France', 
+            num: '01 55 25 84 84', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Protection de l\'environnement et de la biodiversité mondiale.',
+            detail: 'Fonds mondial pour la nature. Protection des espèces menacées, forêts, océans, climat.'
+        },
+        { 
+            id: 30,
+            cat: 'International', 
+            name: 'Amnesty International', 
+            num: '01 53 38 65 65', 
+            col: '#8B5CF6', 
+            icon: ICONS.world, 
+            desc: 'Défense des droits humains dans le monde.',
+            detail: 'Mouvement mondial de 10 millions de personnes. Lutte pour les droits humains.'
+        },
+        { 
+            id: 31,
+            cat: 'International', 
+            name: 'Handicap International', 
+            num: '04 78 69 79 79', 
+            col: '#F59E0B', 
+            icon: ICONS.world, 
+            desc: 'Aide aux personnes handicapées dans les pays pauvres et zones de conflit.',
+            detail: 'Soins de réadaptation, insertion sociale, prévention des handicaps.'
+        },
+        { 
+            id: 32,
+            cat: 'International', 
+            name: 'Croix-Rouge Internationale', 
+            num: '+41 22 734 60 01', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Action humanitaire dans les zones de conflit à travers le monde.',
+            detail: 'Comité international de la Croix-Rouge. Protection des victimes de guerre.'
+        },
+        { 
+            id: 33,
+            cat: 'Associations', 
+            name: 'La Cimade', 
+            num: '01 44 18 60 50', 
+            col: '#1D4ED8', 
+            icon: ICONS.assoc, 
+            desc: 'Association de solidarité active avec les migrants, les réfugiés et les demandeurs d\'asile.',
+            detail: 'Aide juridique, accompagnement administratif, centres d\'hébergement, formation linguistique.'
+        },
+        { 
+            id: 34,
+            cat: 'Associations', 
+            name: 'France Nature Environnement', 
+            num: '01 44 08 02 50', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Fédération d\'associations pour la protection de l\'environnement et la défense du cadre de vie.',
+            detail: 'Actions juridiques, sensibilisation, défense de la biodiversité, lutte contre les pollutions.'
+        },
+        { 
+            id: 35,
+            cat: 'Associations', 
+            name: 'SOS Villages d\'Enfants', 
+            num: '01 55 07 25 25', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Accueil d\'enfants séparés de leurs familles dans un environnement stable et affectif.',
+            detail: 'Villages d\'accueil, programmes de renforcement familial, aide à l\'insertion des jeunes.'
+        },
+        { 
+            id: 36,
+            cat: 'Associations', 
+            name: 'Les Restaurants du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Distribution de repas et colis alimentaires aux personnes en situation de précarité.',
+            detail: 'Campagnes hivernales, épiceries solidaires, ateliers cuisine, insertion professionnelle.'
+        },
+        { 
+            id: 37,
+            cat: 'Associations', 
+            name: 'Fondation de France', 
+            num: '01 44 21 31 00', 
+            col: '#3B82F6', 
+            icon: ICONS.assoc, 
+            desc: 'Fondation qui soutient des projets dans les domaines de la solidarité, la santé, l\'éducation.',
+            detail: 'Financement de projets associatifs, fonds d\'urgence, appels à projets thématiques.'
+        },
+        { 
+            id: 38,
+            cat: 'International', 
+            name: 'Oxfam France', 
+            num: '01 77 35 76 00', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre les inégalités et la pauvreté dans le monde.',
+            detail: 'Aide d\'urgence, développement durable, plaidoyer politique, commerce équitable.'
+        },
+        { 
+            id: 39,
+            cat: 'International', 
+            name: 'Plan International France', 
+            num: '01 84 87 03 50', 
+            col: '#EC4899', 
+            icon: ICONS.world, 
+            desc: 'Défense des droits des enfants et égalité filles-garçons dans le monde.',
+            detail: 'Parrainages, protection contre les violences, éducation, santé maternelle et infantile.'
+        },
+        { 
+            id: 40,
+            cat: 'Social', 
+            name: 'SOS Homophobie', 
+            num: '01 48 06 42 41', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Lutte contre les LGBTphobies et aide aux victimes.',
+            detail: 'Écoute téléphonique, accompagnement juridique, interventions en milieu scolaire, observation.'
+        },
+        { 
+            id: 41,
+            cat: 'Associations', 
+            name: 'Petits Frères des Pauvres', 
+            num: '01 49 23 13 00', 
+            col: '#7C3AED', 
+            icon: ICONS.heart, 
+            desc: 'Lutte contre l\'isolement des personnes âgées.',
+            detail: 'Visites à domicile, sorties culturelles, vacances solidaires, aide administrative.'
+        },
+        { 
+            id: 42,
+            cat: 'International', 
+            name: 'Solidarités International', 
+            num: '01 76 21 86 00', 
+            col: '#F97316', 
+            icon: ICONS.world, 
+            desc: 'Aide humanitaire d\'urgence dans les zones de conflits et catastrophes naturelles.',
+            detail: 'Accès à l\'eau potable, assainissement, sécurité alimentaire, abris d\'urgence.'
         }
+    ];
 
-        // ICONS
-        const ICONS = {
-            emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
-            social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
-            assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
-            police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
-            fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
-            heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
-            phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
-            world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
-            kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
-            protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
-            alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
-            health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
-            wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
-            rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
-        };
+    // Fonctions de gestion des modals
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
 
-        // SERVICES data - TOUS LES 42 SERVICES
-        const SERVICES = [
-            // URGENCES
-            { 
-                id: 1,
-                cat: 'Urgence', 
-                name: 'SAMU', 
-                num: '15', 
-                col: '#EF4444', 
-                icon: ICONS.emergency, 
-                desc: 'Service d\'Aide Médicale Urgente. Pour toutes les urgences médicales graves nécessitant une intervention rapide.',
-                detail: 'Le SAMU intervient pour les urgences médicales (accidents, malaise, détresse vitale). Ne pas appeler pour des questions non urgentes.'
-            },
-            { 
-                id: 2,
-                cat: 'Urgence', 
-                name: 'Police Secours', 
-                num: '17', 
-                col: '#0066FF', 
-                icon: ICONS.police, 
-                desc: 'Police nationale pour signaler une infraction, un danger immédiat ou demander une intervention urgente.',
-                detail: 'Police Secours intervient pour les crimes, délits, accidents de la route, troubles à l\'ordre public.'
-            },
-            { 
-                id: 3,
-                cat: 'Urgence', 
-                name: 'Pompiers', 
-                num: '18', 
-                col: '#F59E0B', 
-                icon: ICONS.fire, 
-                desc: 'Sapeurs-pompiers pour les incendies, accidents, inondations et tous types de secours.',
-                detail: 'Les pompiers interviennent pour les incendies, accidents de la route, secours à personnes, inondations.'
-            },
-            { 
-                id: 4,
-                cat: 'Urgence', 
-                name: 'SOS Médecins', 
-                num: '3624', 
-                col: '#8B5CF6', 
-                icon: ICONS.emergency, 
-                desc: 'Médecin de garde disponible 24h/24 pour les urgences médicales non vitales.',
-                detail: 'SOS Médecins envoie un médecin à domicile pour les urgences non vitales (fièvre, douleurs, conseils médicaux).'
-            },
-            { 
-                id: 5,
-                cat: 'Urgence', 
-                name: 'Numéro d\'urgence unique UE', 
-                num: '112', 
-                col: '#3B82F6', 
-                icon: ICONS.emergency, 
-                desc: 'Numéro d\'urgence européen valable dans tous les pays de l\'Union européenne.',
-                detail: 'Le 112 fonctionne partout en Europe. Il vous met en relation avec les services d\'urgence du pays.'
-            },
-            { 
-                id: 6,
-                cat: 'Urgence', 
-                name: 'Centre Anti-Poison', 
-                num: '01 40 05 48 48', 
-                col: '#10B981', 
-                icon: ICONS.emergency, 
-                desc: 'Conseils en cas d\'intoxication, ingestion de produits dangereux ou morsures.',
-                detail: 'Centre anti-poison de Paris. Donnez le nom du produit, la quantité ingérée, l\'âge et le poids de la victime.'
-            },
-            { 
-                id: 7,
-                cat: 'Urgence', 
-                name: 'Urgences Électricité', 
-                num: '09 72 67 50 XX', 
-                col: '#F59E0B', 
-                icon: ICONS.emergency, 
-                desc: 'Enedis pour les pannes d\'électricité, fils électriques coupés ou dangers électriques.',
-                detail: 'Composez le numéro de votre région (remplacer XX par le numéro départemental). Signalez les pannes.'
-            },
-            { 
-                id: 8,
-                cat: 'Urgence', 
-                name: 'Urgences Gaz', 
-                num: '09 69 36 35 34', 
-                col: '#8B5CF6', 
-                icon: ICONS.emergency, 
-                desc: 'GRDF pour les fuites de gaz, odeurs suspectes ou problèmes d\'alimentation.',
-                detail: 'En cas de forte odeur de gaz : ne pas allumer de lumière, aérer, quitter les lieux, appeler depuis l\'extérieur.'
-            },
-            
-            // SOCIAL
-            { 
-                id: 9,
-                cat: 'Social', 
-                name: 'SAMU Social', 
-                num: '115', 
-                col: '#0F172A', 
-                icon: ICONS.social, 
-                desc: 'Hébergement d\'urgence, maraudes et aide aux personnes sans abri.',
-                detail: 'Le 115 oriente vers les places d\'hébergement d\'urgence, organise les maraudes.'
-            },
-            { 
-                id: 10,
-                cat: 'Social', 
-                name: 'Enfance en Danger', 
-                num: '119', 
-                col: '#EC4899', 
-                icon: ICONS.social, 
-                desc: 'Signalement des enfants en danger ou risquant de l\'être.',
-                detail: 'Numéro gratuit, confidentiel, 24h/24. Signalez toute situation de maltraitance ou négligence.'
-            },
-            { 
-                id: 11,
-                cat: 'Social', 
-                name: 'Violences Femmes', 
-                num: '3919', 
-                col: '#BE185D', 
-                icon: ICONS.social, 
-                desc: 'Écoute, information et orientation des femmes victimes de violences.',
-                detail: 'Numéro gratuit, anonyme, 24h/24. Violences conjugales, psychologiques, sexuelles.'
-            },
-            { 
-                id: 12,
-                cat: 'Social', 
-                name: 'Drogue Info Service', 
-                num: '0800 23 13 13', 
-                col: '#059669', 
-                icon: ICONS.social, 
-                desc: 'Écoute, information et aide pour les addictions (drogues, alcool, jeux).',
-                detail: 'Numéro gratuit, anonyme, 7j/7 de 8h à 2h. Conseils, orientation vers des centres de soins.'
-            },
-            { 
-                id: 13,
-                cat: 'Social', 
-                name: 'Suicide Écoute', 
-                num: '3114', 
-                col: '#3B82F6', 
-                icon: ICONS.heart, 
-                desc: 'Prévention du suicide, écoute et soutien psychologique.',
-                detail: 'Numéro national de prévention du suicide. Écoute bienveillante, non jugeante, 24h/24.'
-            },
-            { 
-                id: 14,
-                cat: 'Social', 
-                name: 'Allô Service Public', 
-                num: '3939', 
-                col: '#6366F1', 
-                icon: ICONS.phone, 
-                desc: 'Informations sur tous les services publics français.',
-                detail: 'Du lundi au vendredi, 9h-18h. Renseignements sur les démarches administratives, droits, aides sociales.'
-            },
-            { 
-                id: 15,
-                cat: 'Social', 
-                name: 'Handicap Écoute', 
-                num: '0 800 360 360', 
-                col: '#8B5CF6', 
-                icon: ICONS.social, 
-                desc: 'Informations sur les droits, aides et accompagnement des personnes handicapées.',
-                detail: 'Numéro gratuit, du lundi au vendredi 9h-17h. Renseignements sur l\'AAH, la PCH, la MDPH.'
-            },
-            { 
-                id: 16,
-                cat: 'Social', 
-                name: 'SOS Amitié', 
-                num: '09 72 39 40 50', 
-                col: '#EC4899', 
-                icon: ICONS.heart, 
-                desc: 'Écoute bienveillante et anonyme pour les personnes en détresse psychologique.',
-                detail: 'Association d\'écoute bénévole, 24h/24. Pour parler de vos difficultés, isolement, souffrance morale.'
-            },
-            
-            // ASSOCIATIONS FRANÇAISES
-            { 
-                id: 17,
-                cat: 'Associations', 
-                name: 'Restos du Cœur', 
-                num: '01 53 32 23 23', 
-                col: '#F43F5E', 
-                icon: ICONS.heart, 
-                desc: 'Aide alimentaire, insertion sociale et accompagnement des plus démunis.',
-                detail: 'Distribution de repas, épiceries sociales, aide à l\'insertion. Ouvert de novembre à mars.'
-            },
-            { 
-                id: 18,
-                cat: 'Associations', 
-                name: 'Croix-Rouge française', 
-                num: '0800 858 858', 
-                col: '#EF4444', 
-                icon: ICONS.heart, 
-                desc: 'Action humanitaire, secourisme, aide sociale et formation aux premiers secours.',
-                detail: 'Urgences, maraudes, aide alimentaire, formation SST/PSC1. Actions locales partout en France.'
-            },
-            { 
-                id: 19,
-                cat: 'Associations', 
-                name: 'Secours Catholique', 
-                num: '01 45 49 73 00', 
-                col: '#B91C1C', 
-                icon: ICONS.heart, 
-                desc: 'Aide aux plus démunis, accueil, hébergement et lutte contre l\'exclusion.',
-                detail: 'Accueil de jour, distribution alimentaire, aide aux démarches, soutien scolaire.'
-            },
-            { 
-                id: 20,
-                cat: 'Associations', 
-                name: 'Emmaüs', 
-                num: '01 41 58 25 00', 
-                col: '#1E293B', 
-                icon: ICONS.assoc, 
-                desc: 'Lutte contre l\'exclusion par le travail, réinsertion et économie solidaire.',
-                detail: 'Communautés Emmaüs proposent hébergement, travail dans la récupération, vente d\'objets.'
-            },
-            { 
-                id: 21,
-                cat: 'Associations', 
-                name: 'SPA', 
-                num: '01 43 80 40 66', 
-                col: '#D97706', 
-                icon: ICONS.heart, 
-                desc: 'Protection animale, refuge, adoption et lutte contre la maltraitance.',
-                detail: 'Société Protectrice des Animaux. Signalement de maltraitance, adoption d\'animaux.'
-            },
-            { 
-                id: 22,
-                cat: 'Associations', 
-                name: 'Secours Populaire', 
-                num: '01 44 78 21 00', 
-                col: '#2563EB', 
-                icon: ICONS.heart, 
-                desc: 'Solidarité pour tous, aide alimentaire, vestimentaire et accès à la culture.',
-                detail: 'Aide d\'urgence, colis alimentaires, vacances solidaires, aide aux devoirs.'
-            },
-            { 
-                id: 23,
-                cat: 'Associations', 
-                name: 'Médecins du Monde', 
-                num: '01 44 92 15 15', 
-                col: '#10B981', 
-                icon: ICONS.emergency, 
-                desc: 'Soins aux plus démunis en France et à l\'international.',
-                detail: 'Centres de soins gratuits, maraudes médicales, accès aux droits santé.'
-            },
-            { 
-                id: 24,
-                cat: 'Associations', 
-                name: 'Banque Alimentaire', 
-                num: '01 48 28 00 00', 
-                col: '#F59E0B', 
-                icon: ICONS.heart, 
-                desc: 'Collecte et distribution de denrées alimentaires aux associations.',
-                detail: '79 Banques Alimentaires en France. Approvisionnent 5 400 associations.'
-            },
-            
-            // ASSOCIATIONS INTERNATIONALES
-            { 
-                id: 25,
-                cat: 'International', 
-                name: 'UNICEF France', 
-                num: '0 800 840 840', 
-                col: '#3B82F6', 
-                icon: ICONS.world, 
-                desc: 'Fonds des Nations Unies pour l\'enfance. Protection des enfants dans le monde.',
-                detail: 'Action dans 190 pays. Vaccination, éducation, protection contre les violences.'
-            },
-            { 
-                id: 26,
-                cat: 'International', 
-                name: 'Médecins Sans Frontières', 
-                num: '0 800 840 840', 
-                col: '#EF4444', 
-                icon: ICONS.world, 
-                desc: 'Aide médicale d\'urgence dans les zones de conflits et catastrophes.',
-                detail: 'ONG médicale internationale présente dans 70 pays. Soins aux populations vulnérables.'
-            },
-            { 
-                id: 27,
-                cat: 'International', 
-                name: 'CARE France', 
-                num: '01 53 19 89 89', 
-                col: '#DC2626', 
-                icon: ICONS.world, 
-                desc: 'Lutte contre la pauvreté et les injustices dans le monde.',
-                detail: 'Action dans 100 pays. Urgences humanitaires, développement durable.'
-            },
-            { 
-                id: 28,
-                cat: 'International', 
-                name: 'Action contre la Faim', 
-                num: '01 70 84 70 84', 
-                col: '#059669', 
-                icon: ICONS.world, 
-                desc: 'Lutte contre la faim dans le monde, nutrition et sécurité alimentaire.',
-                detail: 'Présente dans 50 pays. Programmes nutritionnels, eau et assainissement.'
-            },
-            { 
-                id: 29,
-                cat: 'International', 
-                name: 'WWF France', 
-                num: '01 55 25 84 84', 
-                col: '#10B981', 
-                icon: ICONS.world, 
-                desc: 'Protection de l\'environnement et de la biodiversité mondiale.',
-                detail: 'Fonds mondial pour la nature. Protection des espèces menacées, forêts, océans, climat.'
-            },
-            { 
-                id: 30,
-                cat: 'International', 
-                name: 'Amnesty International', 
-                num: '01 53 38 65 65', 
-                col: '#8B5CF6', 
-                icon: ICONS.world, 
-                desc: 'Défense des droits humains dans le monde.',
-                detail: 'Mouvement mondial de 10 millions de personnes. Lutte pour les droits humains.'
-            },
-            { 
-                id: 31,
-                cat: 'International', 
-                name: 'Handicap International', 
-                num: '04 78 69 79 79', 
-                col: '#F59E0B', 
-                icon: ICONS.world, 
-                desc: 'Aide aux personnes handicapées dans les pays pauvres et zones de conflit.',
-                detail: 'Soins de réadaptation, insertion sociale, prévention des handicaps.'
-            },
-            { 
-                id: 32,
-                cat: 'International', 
-                name: 'Croix-Rouge Internationale', 
-                num: '+41 22 734 60 01', 
-                col: '#EF4444', 
-                icon: ICONS.world, 
-                desc: 'Action humanitaire dans les zones de conflit à travers le monde.',
-                detail: 'Comité international de la Croix-Rouge. Protection des victimes de guerre.'
-            },
-            { 
-                id: 33,
-                cat: 'Associations', 
-                name: 'La Cimade', 
-                num: '01 44 18 60 50', 
-                col: '#1D4ED8', 
-                icon: ICONS.assoc, 
-                desc: 'Association de solidarité active avec les migrants, les réfugiés et les demandeurs d\'asile.',
-                detail: 'Aide juridique, accompagnement administratif, centres d\'hébergement, formation linguistique.'
-            },
-            { 
-                id: 34,
-                cat: 'Associations', 
-                name: 'France Nature Environnement', 
-                num: '01 44 08 02 50', 
-                col: '#10B981', 
-                icon: ICONS.world, 
-                desc: 'Fédération d\'associations pour la protection de l\'environnement et la défense du cadre de vie.',
-                detail: 'Actions juridiques, sensibilisation, défense de la biodiversité, lutte contre les pollutions.'
-            },
-            { 
-                id: 35,
-                cat: 'Associations', 
-                name: 'SOS Villages d\'Enfants', 
-                num: '01 55 07 25 25', 
-                col: '#F59E0B', 
-                icon: ICONS.heart, 
-                desc: 'Accueil d\'enfants séparés de leurs familles dans un environnement stable et affectif.',
-                detail: 'Villages d\'accueil, programmes de renforcement familial, aide à l\'insertion des jeunes.'
-            },
-            { 
-                id: 36,
-                cat: 'Associations', 
-                name: 'Les Restaurants du Cœur', 
-                num: '01 53 32 23 23', 
-                col: '#EF4444', 
-                icon: ICONS.heart, 
-                desc: 'Distribution de repas et colis alimentaires aux personnes en situation de précarité.',
-                detail: 'Campagnes hivernales, épiceries solidaires, ateliers cuisine, insertion professionnelle.'
-            },
-            { 
-                id: 37,
-                cat: 'Associations', 
-                name: 'Fondation de France', 
-                num: '01 44 21 31 00', 
-                col: '#3B82F6', 
-                icon: ICONS.assoc, 
-                desc: 'Fondation qui soutient des projets dans les domaines de la solidarité, la santé, l\'éducation.',
-                detail: 'Financement de projets associatifs, fonds d\'urgence, appels à projets thématiques.'
-            },
-            { 
-                id: 38,
-                cat: 'International', 
-                name: 'Oxfam France', 
-                num: '01 77 35 76 00', 
-                col: '#DC2626', 
-                icon: ICONS.world, 
-                desc: 'Lutte contre les inégalités et la pauvreté dans le monde.',
-                detail: 'Aide d\'urgence, développement durable, plaidoyer politique, commerce équitable.'
-            },
-            { 
-                id: 39,
-                cat: 'International', 
-                name: 'Plan International France', 
-                num: '01 84 87 03 50', 
-                col: '#EC4899', 
-                icon: ICONS.world, 
-                desc: 'Défense des droits des enfants et égalité filles-garçons dans le monde.',
-                detail: 'Parrainages, protection contre les violences, éducation, santé maternelle et infantile.'
-            },
-            { 
-                id: 40,
-                cat: 'Social', 
-                name: 'SOS Homophobie', 
-                num: '01 48 06 42 41', 
-                col: '#8B5CF6', 
-                icon: ICONS.social, 
-                desc: 'Lutte contre les LGBTphobies et aide aux victimes.',
-                detail: 'Écoute téléphonique, accompagnement juridique, interventions en milieu scolaire, observation.'
-            },
-            { 
-                id: 41,
-                cat: 'Associations', 
-                name: 'Petits Frères des Pauvres', 
-                num: '01 49 23 13 00', 
-                col: '#7C3AED', 
-                icon: ICONS.heart, 
-                desc: 'Lutte contre l\'isolement des personnes âgées.',
-                detail: 'Visites à domicile, sorties culturelles, vacances solidaires, aide administrative.'
-            },
-            { 
-                id: 42,
-                cat: 'International', 
-                name: 'Solidarités International', 
-                num: '01 76 21 86 00', 
-                col: '#F97316', 
-                icon: ICONS.world, 
-                desc: 'Aide humanitaire d\'urgence dans les zones de conflits et catastrophes naturelles.',
-                detail: 'Accès à l\'eau potable, assainissement, sécurité alimentaire, abris d\'urgence.'
-            }
-        ];
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
 
-        // Fonctions de gestion des modals
-        function closeModal(modalId) {
-            document.getElementById(modalId).style.display = 'none';
-        }
+    // Fonction pour ouvrir le modal droits
+    function openRightsModal() {
+        openModal('rightsModal');
+    }
 
-        function openModal(modalId) {
-            document.getElementById(modalId).style.display = 'flex';
-        }
-
-        // Fonction pour ouvrir le modal droits
-        function openRightsModal() {
-            openModal('rightsModal');
-        }
-
-        // Fonction pour gérer le menu déroulant PDF
-        function togglePdfDropdown() {
-            const dropdown = document.getElementById('pdfDropdown');
-            dropdown.classList.toggle('show');
-        }
-
-        // Fonction pour gérer la visibilité de la barre de recherche
-        function toggleSearchBar() {
-            const searchContainer = document.getElementById('searchContainer');
-            const searchInput = document.getElementById('searchInput');
-            
-            // Liste des catégories où la barre de recherche doit être visible
-            const searchVisibleCategories = ['Tous', 'Urgence', 'Social', 'Associations', 'International'];
-            
-            if (searchVisibleCategories.includes(filter)) {
-                // Afficher la barre de recherche
-                searchContainer.style.display = 'block';
-                // Vider la recherche si on vient de la catégorie Accueil
-                if (search === '' && searchInput.value !== '') {
-                    searchInput.value = '';
-                }
-            } else if (filter === 'Accueil') {
-                // Cacher la barre de recherche
-                searchContainer.style.display = 'none';
-                // Vider la recherche
-                search = '';
-                searchInput.value = '';
-            } else {
-                // Pour les autres catégories (au cas où)
-                searchContainer.style.display = 'none';
-                search = '';
+    // Fonction pour gérer la visibilité de la barre de recherche
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        // Liste des catégories où la barre de recherche doit être visible
+        const searchVisibleCategories = ['Tous', 'Urgence', 'Social', 'Associations', 'International'];
+        
+        if (searchVisibleCategories.includes(filter)) {
+            // Afficher la barre de recherche
+            searchContainer.style.display = 'block';
+            // Vider la recherche si on vient de la catégorie Accueil
+            if (search === '' && searchInput.value !== '') {
                 searchInput.value = '';
             }
+        } else if (filter === 'Accueil') {
+            // Cacher la barre de recherche
+            searchContainer.style.display = 'none';
+            // Vider la recherche
+            search = '';
+            searchInput.value = '';
+        } else {
+            // Pour les autres catégories (au cas où)
+            searchContainer.style.display = 'none';
+            search = '';
+            searchInput.value = '';
         }
+    }
 
-        // Fonction pour générer la FAQ
-        function renderFAQ() {
-            const faqContainer = document.getElementById('faqContainer');
+    // Fonction pour générer la FAQ
+    function renderFAQ() {
+        const faqContainer = document.getElementById('faqContainer');
+        
+        if (faqItems.length === 0) return;
+        
+        let html = '';
+        
+        faqItems.forEach((item, index) => {
+            html += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(${index})">
+                        <span>${item.question}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" id="faqAnswer${index}">
+                        ${item.answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        faqContainer.innerHTML = html;
+    }
+
+    // Fonction pour ouvrir/fermer les questions FAQ
+    function toggleFAQ(index) {
+        const answer = document.getElementById(`faqAnswer${index}`);
+        const question = answer.previousElementSibling;
+        
+        // Fermer toutes les autres réponses
+        document.querySelectorAll('.faq-answer').forEach((ans, i) => {
+            if (i !== index) {
+                ans.classList.remove('show');
+                ans.previousElementSibling.classList.remove('active');
+            }
+        });
+        
+        // Basculer l'état actuel
+        answer.classList.toggle('show');
+        question.classList.toggle('active');
+    }
+
+    // Menu Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+
+    // Fonction pour ouvrir le modal de description
+    function openDescModal(serviceId) {
+        const service = SERVICES.find(s => s.id === serviceId);
+        if (service) {
+            document.getElementById('descTitle').textContent = service.name;
+            document.getElementById('descText').textContent = service.detail || service.desc;
+            document.getElementById('descNum').innerHTML = `<strong>📞 Numéro :</strong> ${service.num}`;
             
-            if (faqItems.length === 0) return;
+            const callBtn = document.getElementById('descCallBtn');
+            const callNum = document.getElementById('descCallNum');
             
-            let html = '';
+            callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
+            callNum.textContent = `Appeler le ${service.num}`;
             
-            faqItems.forEach((item, index) => {
-                html += `
-                    <div class="faq-item">
-                        <button class="faq-question" onclick="toggleFAQ(${index})">
-                            <span>${item.question}</span>
-                            <span class="faq-icon">+</span>
+            openModal('descModal');
+        }
+    }
+    
+    // Fonction pour ouvrir le modal survie
+    function openSurvivalModal() {
+        openModal('survivalModal');
+    }
+    
+    // Fonction pour ouvrir le modal protocole
+    function openProtocolModal() {
+        openModal('protocolModal');
+    }
+    
+    // Fonction pour ouvrir le modal alerte
+    function openAlertModal() {
+        openModal('alertModal');
+    }
+    
+    // Fonction pour ouvrir le modal santé
+    function openHealthModal() {
+        openModal('healthModal');
+    }
+
+    // Fonction de rendu principal
+    function render() {
+        const grid = document.getElementById('serviceGrid');
+
+        // Gérer la visibilité de la barre de recherche
+        toggleSearchBar();
+
+        // Si on est dans la catégorie Accueil
+        if (filter === 'Accueil') {
+            let html = `
+                <div class="card intro-card">
+                    <div class="intro-badge">COMMENT ÇA MARCHE ?</div>
+                    <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
+                    <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
+                    
+                    <div class="intro-steps">
+                        <div class="intro-step">
+                            <div class="step-number">1</div>
+                            <div class="intro-step-title">Navigation par catégories</div>
+                            <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">2</div>
+                            <div class="intro-step-title">Recherche rapide</div>
+                            <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">3</div>
+                            <div class="intro-step-title">Accès aux numéros</div>
+                            <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">4</div>
+                            <div class="intro-step-title">Guides et ressources</div>
+                            <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openModal('aboutModal')">
+                            <span>En savoir plus sur le projet</span>
+                            <span>→</span>
                         </button>
-                        <div class="faq-answer" id="faqAnswer${index}">
-                            ${item.answer}
-                        </div>
                     </div>
-                `;
-            });
-            
-            faqContainer.innerHTML = html;
-        }
-
-        // Fonction pour ouvrir/fermer les questions FAQ
-        function toggleFAQ(index) {
-            const answer = document.getElementById(`faqAnswer${index}`);
-            const question = answer.previousElementSibling;
-            
-            // Fermer toutes les autres réponses
-            document.querySelectorAll('.faq-answer').forEach((ans, i) => {
-                if (i !== index) {
-                    ans.classList.remove('show');
-                    ans.previousElementSibling.classList.remove('active');
-                }
-            });
-            
-            // Basculer l'état actuel
-            answer.classList.toggle('show');
-            question.classList.toggle('active');
-        }
-
-        // Menu Hamburger
-        const hamburger = document.getElementById('hamburger');
-        const mobileMenu = document.getElementById('mobileMenu');
-
-        function toggleMenu() {
-            hamburger.classList.toggle('active');
-            mobileMenu.classList.toggle('active');
-        }
-
-        function closeMenu() {
-            hamburger.classList.remove('active');
-            mobileMenu.classList.remove('active');
-        }
-
-        // Fonction pour ouvrir le modal de description
-        function openDescModal(serviceId) {
-            const service = SERVICES.find(s => s.id === serviceId);
-            if (service) {
-                document.getElementById('descTitle').textContent = service.name;
-                document.getElementById('descText').textContent = service.detail || service.desc;
-                document.getElementById('descNum').innerHTML = `<strong>📞 Numéro :</strong> ${service.num}`;
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                        <strong>⚠️ Important :</strong> Pour appeler les numéros d'urgence, votre téléphone doit avoir du réseau mobile. Cette page fournit les informations, mais les appels passent par votre opérateur téléphonique.
+                    </p>
+                </div>
                 
-                const callBtn = document.getElementById('descCallBtn');
-                const callNum = document.getElementById('descCallNum');
-                
-                callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
-                callNum.textContent = `Appeler le ${service.num}`;
-                
-                openModal('descModal');
-            }
-        }
-        
-        // Fonction pour ouvrir le modal survie
-        function openSurvivalModal() {
-            openModal('survivalModal');
-        }
-        
-        // Fonction pour ouvrir le modal protocole
-        function openProtocolModal() {
-            openModal('protocolModal');
-        }
-        
-        // Fonction pour ouvrir le modal alerte
-        function openAlertModal() {
-            openModal('alertModal');
-        }
-        
-        // Fonction pour ouvrir le modal santé
-        function openHealthModal() {
-            openModal('healthModal');
-        }
-
-        // Fonction de rendu principal
-        function render() {
-            const grid = document.getElementById('serviceGrid');
-
-            // Gérer la visibilité de la barre de recherche
-            toggleSearchBar();
-
-            // Si on est dans la catégorie Accueil
-            if (filter === 'Accueil') {
-                let html = `
-                    <div class="card intro-card">
-                        <div class="intro-badge">COMMENT ÇA MARCHE ?</div>
-                        <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
-                        <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
-                        
-                        <div class="intro-steps">
-                            <div class="intro-step">
-                                <div class="step-number">1</div>
-                                <div class="intro-step-title">Navigation par catégories</div>
-                                <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
-                            </div>
-                            <div class="intro-step">
-                                <div class="step-number">2</div>
-                                <div class="intro-step-title">Recherche rapide</div>
-                                <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
-                            </div>
-                            <div class="intro-step">
-                                <div class="step-number">3</div>
-                                <div class="intro-step-title">Accès aux numéros</div>
-                                <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
-                            </div>
-                            <div class="intro-step">
-                                <div class="step-number">4</div>
-                                <div class="intro-step-title">Guides et ressources</div>
-                                <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
-                            </div>
-                        </div>
-                        
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openModal('aboutModal')">
-                                <span>En savoir plus sur le projet</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                        <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
-                            <strong>⚠️ Important :</strong> Pour appeler les numéros d'urgence, votre téléphone doit avoir du réseau mobile. Cette page fournit les informations, mais les appels passent par votre opérateur téléphonique.
-                        </p>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.rights}
-                            </div>
-                            <span class="tag">DROITS</span>
-                        </div>
-                        <h3 class="card-title">Droits & Devoirs Fondamentaux</h3>
-                        <p class="card-text">Constitution, Déclaration des Droits de l'Homme, valeurs de la République. Connaître ses droits et devoirs en situation difficile.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openRightsModal()">
-                                <span>Voir les fondements</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.kit}
-                            </div>
-                            <span class="tag">SURVIE</span>
-                        </div>
-                        <h3 class="card-title">Équipements de Survie</h3>
-                        <p class="card-text">Liste complète des équipements essentiels à préparer pour faire face aux situations d'urgence. 12 catégories détaillées.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openSurvivalModal()">
-                                <span>Voir la liste complète</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.protocol}
-                            </div>
-                            <span class="tag">PROTOCOLE</span>
-                        </div>
-                        <h3 class="card-title">Protocole d'Urgence</h3>
-                        <p class="card-text">Les 5 étapes à suivre en cas de situation critique. Méthode structurée pour réagir efficacement. Guide PSC1 intégré.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openProtocolModal()">
-                                <span>Voir les étapes détaillées</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.alert}
-                            </div>
-                            <span class="tag">ALERTE</span>
-                        </div>
-                        <h3 class="card-title">Alerte & Communication</h3>
-                        <p class="card-text">Systèmes d'alerte officiels, moyens de communication et plan familial d'urgence. FR-Alert, SAIP, signaux nationaux.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openAlertModal()">
-                                <span>Voir les systèmes complets</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.heart}
-                            </div>
-                            <span class="tag">SANTÉ</span>
-                        </div>
-                        <h3 class="card-title">Santé & Premiers Secours</h3>
-                        <p class="card-text">Trousse de premiers soins, gestes qui sauvent et préparation médicale d'urgence. Guide complet avec procédures.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openHealthModal()">
-                                <span>Voir les gestes détaillés</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                grid.innerHTML = html;
-                return;
-            }
-
-            // Pour les autres catégories (Tous, Urgence, Social, etc.)
-            const filtered = SERVICES.filter(s => {
-                const matchesFilter = filter === 'Tous' || s.cat === filter;
-                const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
-                                    s.desc.toLowerCase().includes(search.toLowerCase());
-                return matchesFilter && matchesSearch;
-            });
-
-            const html = filtered.map(s => `
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-icon" style="background: ${s.col}20;">
-                            ${s.icon}
+                        <div class="card-icon">
+                            ${ICONS.rights}
                         </div>
-                        <span class="tag">${s.cat}</span>
+                        <span class="tag">DROITS</span>
                     </div>
-                    <h3 class="card-title">${s.name}</h3>
-                    <p class="card-text">${s.desc}</p>
+                    <h3 class="card-title">Droits & Devoirs Fondamentaux</h3>
+                    <p class="card-text">Constitution, Déclaration des Droits de l'Homme, valeurs de la République. Connaître ses droits et devoirs en situation difficile.</p>
                     <div class="card-actions">
-                        <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
-                            <span>${s.num}</span>
-                            <span>📞</span>
-                        </a>
-                        <button class="card-info-btn" onclick="openDescModal(${s.id})">
-                            <span>?</span>
+                        <button class="card-action-btn" onclick="openRightsModal()">
+                            <span>Voir les fondements</span>
+                            <span>→</span>
                         </button>
                     </div>
                 </div>
-            `).join('');
-
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.kit}
+                        </div>
+                        <span class="tag">SURVIE</span>
+                    </div>
+                    <h3 class="card-title">Équipements de Survie</h3>
+                    <p class="card-text">Liste complète des équipements essentiels à préparer pour faire face aux situations d'urgence. 12 catégories détaillées.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openSurvivalModal()">
+                            <span>Voir la liste complète</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.protocol}
+                        </div>
+                        <span class="tag">PROTOCOLE</span>
+                    </div>
+                    <h3 class="card-title">Protocole d'Urgence</h3>
+                    <p class="card-text">Les 5 étapes à suivre en cas de situation critique. Méthode structurée pour réagir efficacement. Guide PSC1 intégré.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openProtocolModal()">
+                            <span>Voir les étapes détaillées</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.alert}
+                        </div>
+                        <span class="tag">ALERTE</span>
+                    </div>
+                    <h3 class="card-title">Alerte & Communication</h3>
+                    <p class="card-text">Systèmes d'alerte officiels, moyens de communication et plan familial d'urgence. FR-Alert, SAIP, signaux nationaux.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openAlertModal()">
+                            <span>Voir les systèmes complets</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.heart}
+                        </div>
+                        <span class="tag">SANTÉ</span>
+                    </div>
+                    <h3 class="card-title">Santé & Premiers Secours</h3>
+                    <p class="card-text">Trousse de premiers soins, gestes qui sauvent et préparation médicale d'urgence. Guide complet avec procédures.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openHealthModal()">
+                            <span>Voir les gestes détaillés</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
             grid.innerHTML = html;
+            return;
         }
 
-        // Initialisation
-        window.onload = () => {
-            // Charger les données JSON
-            loadJSONData();
-            
-            // Générer la FAQ
-            renderFAQ();
-            
-            // Rendre le contenu initial
-            render();
+        // Pour les autres catégories (Tous, Urgence, Social, etc.)
+        const filtered = SERVICES.filter(s => {
+            const matchesFilter = filter === 'Tous' || s.cat === filter;
+            const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
+                                s.desc.toLowerCase().includes(search.toLowerCase());
+            return matchesFilter && matchesSearch;
+        });
 
-            // Événements pour les filtres
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
-                    filter = this.getAttribute('data-cat');
-                    render();
-                });
-            });
+        const html = filtered.map(s => `
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: ${s.col}20;">
+                        ${s.icon}
+                    </div>
+                    <span class="tag">${s.cat}</span>
+                </div>
+                <h3 class="card-title">${s.name}</h3>
+                <p class="card-text">${s.desc}</p>
+                <div class="card-actions">
+                    <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
+                        <span>${s.num}</span>
+                        <span>📞</span>
+                    </a>
+                    <button class="card-info-btn" onclick="openDescModal(${s.id})">
+                        <span>?</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
 
-            // Événement pour la recherche
-            document.getElementById('searchInput').addEventListener('input', (e) => {
-                search = e.target.value;
+        grid.innerHTML = html;
+    }
+
+    // Initialisation
+    window.onload = () => {
+        // Charger les données JSON
+        loadJSONData();
+        
+        // Générer la FAQ
+        renderFAQ();
+        
+        // Rendre le contenu initial
+        render();
+
+        // Événements pour les filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filter = this.getAttribute('data-cat');
                 render();
             });
+        });
 
-            // Événements pour les boutons
-            document.getElementById('aboutBtn').addEventListener('click', () => {
-                openModal('aboutModal');
+        // Événement pour la recherche
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            search = e.target.value;
+            render();
+        });
+
+        // Événements pour les boutons
+        document.getElementById('aboutBtn').addEventListener('click', () => {
+            openModal('aboutModal');
+        });
+
+        document.getElementById('aboutBtnMobile').addEventListener('click', () => {
+            openModal('aboutModal');
+            closeMenu();
+        });
+
+        // Hamburger menu
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Fermer les modals en cliquant en dehors
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
             });
+        });
 
-            document.getElementById('aboutBtnMobile').addEventListener('click', () => {
-                openModal('aboutModal');
-                closeMenu();
-            });
+        // Fermer les modals avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
 
-            // Événement pour le menu PDF
-            document.getElementById('pdfBtn').addEventListener('click', (e) => {
-                e.stopPropagation();
-                togglePdfDropdown();
-            });
-
-            // Fermer le menu déroulant PDF si on clique ailleurs
-            document.addEventListener('click', function(event) {
-                const pdfBtn = document.getElementById('pdfBtn');
-                const pdfDropdown = document.getElementById('pdfDropdown');
+        // Smooth scrolling pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
                 
-                if (!pdfBtn.contains(event.target) && !pdfDropdown.contains(event.target)) {
-                    pdfDropdown.classList.remove('show');
-                }
-            });
-
-            // Hamburger menu
-            hamburger.addEventListener('click', toggleMenu);
-
-            // Fermer les modals en cliquant en dehors
-            document.querySelectorAll('.modal').forEach(modal => {
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        modal.style.display = 'none';
-                    }
-                });
-            });
-
-            // Fermer les modals avec la touche Échap
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') {
-                    document.querySelectorAll('.modal').forEach(modal => {
-                        modal.style.display = 'none';
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
                     });
-                    // Fermer aussi le menu déroulant PDF
-                    document.getElementById('pdfDropdown').classList.remove('show');
+                    closeMenu();
                 }
             });
+        });
 
-            // Smooth scrolling pour les liens d'ancrage
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    if (this.getAttribute('href') === '#') return;
-                    
-                    e.preventDefault();
-                    const target = document.querySelector(this.getAttribute('href'));
-                    
-                    if (target) {
-                        window.scrollTo({
-                            top: target.offsetTop - 100,
-                            behavior: 'smooth'
-                        });
-                        closeMenu();
-                    }
-                });
+        // Observer pour les animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
             });
+        }, { threshold: 0.1 });
 
-            // Observer pour les animations
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.style.opacity = '1';
-                        entry.target.style.transform = 'translateY(0)';
-                    }
-                });
-            }, { threshold: 0.1 });
-
-            // Observer les cartes
-            document.querySelectorAll('.card').forEach(card => {
-                card.style.opacity = '0';
-                card.style.transform = 'translateY(20px)';
-                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                observer.observe(card);
-            });
-        };
-    </script>
+        // Observer les cartes
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    };
+</script>
 
     <!-- JSON pour les catégories -->
     <script id="categoriesData" type="application/json">
