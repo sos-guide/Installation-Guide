@@ -7,1129 +7,7 @@
     <meta name="description" content="Guide des services d'urgence et de solidarité pour tous les citoyens. Accès hors ligne garanti.">
     <meta name="theme-color" content="#0066CC">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛑️</text></svg>">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #0066CC;
-            --primary-dark: #0052A3;
-            --primary-light: #E6F2FF;
-            --secondary: #2E7D32;
-            --secondary-light: #E8F5E9;
-            --accent: #FF6B35;
-            --accent-light: #FFE8E0;
-            --dark: #1A1A1A;
-            --dark-light: #2D2D2D;
-            --light: #F8F9FA;
-            --gray-light: #E9ECEF;
-            --gray: #6C757D;
-            --gray-dark: #495057;
-            --border-radius: 12px;
-            --border-radius-lg: 20px;
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
-            background: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-
-        /* Barre tricolore */
-        .tricolore-bar {
-            height: 8px;
-            background: linear-gradient(90deg, #0055A4 0%, #0055A4 33%, #FFFFFF 33%, #FFFFFF 66%, #EF4135 66%, #EF4135 100%);
-            width: 100%;
-        }
-
-        /* Navigation */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            z-index: 1000;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            text-decoration: none;
-            color: var(--dark);
-            font-weight: 800;
-            font-size: 1.5rem;
-            letter-spacing: -0.02em;
-        }
-
-        .logo-icon {
-            font-size: 1.8rem;
-            display: inline-block;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .nav-link {
-            text-decoration: none;
-            color: var(--gray-dark);
-            font-weight: 500;
-            transition: var(--transition);
-            padding: 0.5rem 0;
-            position: relative;
-        }
-
-        .nav-link:hover {
-            color: var(--primary);
-        }
-
-        .nav-link::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-
-        .nav-link:hover::after {
-            width: 100%;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary {
-            background: white;
-            color: var(--dark);
-            border: 2px solid var(--gray-light);
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .btn-secondary:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        /* Hamburger Menu */
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            justify-content: space-between;
-            width: 30px;
-            height: 21px;
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            padding: 0;
-            z-index: 1001;
-        }
-
-        .hamburger span {
-            width: 100%;
-            height: 3px;
-            background: var(--dark);
-            border-radius: 2px;
-            transition: var(--transition);
-            transform-origin: left;
-        }
-
-        .hamburger.active span:first-child {
-            transform: rotate(45deg);
-        }
-
-        .hamburger.active span:nth-child(2) {
-            opacity: 0;
-        }
-
-        .hamburger.active span:last-child {
-            transform: rotate(-45deg);
-        }
-
-        /* Mobile Menu */
-        .mobile-menu {
-            position: fixed;
-            top: 0;
-            right: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(10px);
-            z-index: 999;
-            padding: 6rem 2rem 2rem;
-            transition: var(--transition);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .mobile-menu.active {
-            right: 0;
-        }
-
-        .mobile-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .mobile-nav a {
-            font-size: 1.25rem;
-            font-weight: 600;
-            color: var(--dark);
-            text-decoration: none;
-            padding: 0.75rem 0;
-            border-bottom: 2px solid var(--gray-light);
-            transition: var(--transition);
-        }
-
-        .mobile-nav a:hover {
-            color: var(--primary);
-            border-color: var(--primary);
-        }
-
-        .mobile-cta {
-            margin-top: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        /* Hero Section */
-        .hero {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 8rem 2rem 4rem;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(0, 102, 204, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(46, 125, 50, 0.1) 0%, transparent 50%);
-        }
-
-        .hero-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-icon-container {
-            margin-bottom: 1.5rem;
-        }
-
-        .hero-icon-large {
-            font-size: 8rem;
-            display: inline-block;
-            animation: float 3s ease-in-out infinite, pulse 2s infinite;
-            filter: drop-shadow(0 10px 20px rgba(0, 102, 204, 0.2));
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(5deg); }
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-        }
-
-        .hero-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, var(--dark) 0%, var(--primary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            color: var(--gray-dark);
-            max-width: 600px;
-            margin: 0 auto 3rem;
-            line-height: 1.6;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        /* Sections */
-        .section {
-            padding: 6rem 2rem;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 600px;
-            margin: 0 auto 4rem;
-        }
-
-        .section-badge {
-            display: inline-block;
-            background: var(--primary-light);
-            color: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title {
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .section-subtitle {
-            font-size: 1.125rem;
-            color: var(--gray-dark);
-            line-height: 1.6;
-        }
-
-        /* Cards */
-        .card-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: white;
-            border-radius: var(--border-radius-lg);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--gray-light);
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            box-shadow: var(--shadow-xl);
-            border-color: var(--primary-light);
-        }
-
-        .card-icon {
-            width: 60px;
-            height: 60px;
-            background: var(--primary-light);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .card-icon svg {
-            width: 32px;
-            height: 32px;
-            stroke: var(--primary);
-        }
-
-        .card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .card-text {
-            color: var(--gray-dark);
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .tag {
-            display: inline-block;
-            padding: 0.25rem 0.75rem;
-            background: var(--primary-light);
-            color: var(--primary);
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .card-actions {
-            display: flex;
-            gap: 0.75rem;
-            margin-top: auto;
-        }
-
-        .card-action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: var(--primary-light);
-            padding: 0.75rem 1rem;
-            border-radius: var(--border-radius);
-            text-decoration: none;
-            color: var(--primary);
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 0.9rem;
-            flex: 1;
-        }
-
-        .card-action-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        .card-info-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: var(--light);
-            padding: 0.75rem;
-            border-radius: var(--border-radius);
-            color: var(--gray);
-            font-weight: 700;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 48px;
-            flex-shrink: 0;
-        }
-
-        .card-info-btn:hover {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Filters */
-        .filters-container {
-            max-width: 1200px;
-            margin: 0 auto 3rem;
-            text-align: center;
-        }
-
-        .filters {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1rem;
-        }
-
-        .filter-btn {
-            padding: 0.5rem 1.25rem;
-            border-radius: 50px;
-            background: white;
-            border: 2px solid var(--gray-light);
-            font-size: 0.875rem;
-            font-weight: 600;
-            color: var(--gray-dark);
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .filter-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        /* Search */
-        .search-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            transition: var(--transition);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 1rem 1.5rem;
-            border-radius: var(--border-radius);
-            border: 2px solid var(--gray-light);
-            background: white;
-            font-size: 1rem;
-            transition: var(--transition);
-        }
-
-        .search-input:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        /* FAQ */
-        .faq-section {
-            max-width: 1200px;
-            margin: 4rem auto 0;
-        }
-
-        .faq-container {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .faq-item {
-            background: white;
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            border: 1px solid var(--gray-light);
-            transition: var(--transition);
-        }
-
-        .faq-item:hover {
-            border-color: var(--primary);
-        }
-
-        .faq-question {
-            padding: 1.5rem;
-            font-size: 1.125rem;
-            font-weight: 600;
-            color: var(--dark);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: var(--transition);
-            background: white;
-            border: none;
-            width: 100%;
-            text-align: left;
-        }
-
-        .faq-question:hover {
-            background: var(--light);
-        }
-
-        .faq-question.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        .faq-icon {
-            font-size: 1.25rem;
-            transition: var(--transition);
-        }
-
-        .faq-answer {
-            padding: 0 1.5rem;
-            max-height: 0;
-            overflow: hidden;
-            transition: var(--transition);
-            color: var(--gray-dark);
-            line-height: 1.6;
-        }
-
-        .faq-answer.show {
-            padding: 0 1.5rem 1.5rem;
-            max-height: 1000px;
-        }
-
-        /* PDF Menu */
-        .pdf-menu {
-            position: relative;
-        }
-
-        .pdf-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: white;
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow-lg);
-            min-width: 250px;
-            margin-top: 0.5rem;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            z-index: 1001;
-            border: 1px solid var(--gray-light);
-        }
-
-        .pdf-dropdown.show {
-            display: flex;
-        }
-
-        .pdf-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            padding: 1rem;
-            text-decoration: none;
-            color: var(--dark);
-            transition: var(--transition);
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .pdf-item:last-child {
-            border-bottom: none;
-        }
-
-        .pdf-item:hover {
-            background: var(--light);
-            color: var(--primary);
-        }
-
-        /* Modals */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            z-index: 2000;
-            padding: 2rem;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2.5rem;
-            border-radius: var(--border-radius-lg);
-            max-width: 800px;
-            width: 100%;
-            max-height: 90vh;
-            overflow-y: auto;
-            position: relative;
-        }
-
-        .modal-large {
-            max-width: 1000px;
-        }
-
-        .modal-title {
-            font-size: 2rem;
-            font-weight: 800;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .modal-section {
-            margin-bottom: 2rem;
-            padding-bottom: 2rem;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .modal-section:last-child {
-            border-bottom: none;
-            margin-bottom: 0;
-            padding-bottom: 0;
-        }
-
-        .modal-section h4 {
-            font-size: 1.25rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: var(--dark);
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .modal-section p {
-            color: var(--gray-dark);
-            line-height: 1.6;
-            margin-bottom: 1rem;
-        }
-
-        .modal-section ul, .modal-section ol {
-            margin-left: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .modal-section li {
-            margin-bottom: 0.5rem;
-            color: var(--gray-dark);
-        }
-
-        .highlight-box {
-            background: var(--primary-light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary);
-            margin: 1.5rem 0;
-        }
-
-        .highlight-box.warning {
-            background: #FFF3CD;
-            border-left-color: #FFC107;
-        }
-
-        .highlight-box.success {
-            background: #D1E7DD;
-            border-left-color: #198754;
-        }
-
-        .highlight-box.danger {
-            background: #F8D7DA;
-            border-left-color: #DC3545;
-        }
-
-        .tech-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 1.5rem 0;
-        }
-
-        .tech-item {
-            background: white;
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            border: 1px solid var(--gray-light);
-            transition: var(--transition);
-        }
-
-        .tech-item:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .spec-item {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            text-align: center;
-            border: 1px solid var(--gray-light);
-        }
-
-        .spec-value {
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin-bottom: 0.25rem;
-        }
-
-        .spec-label {
-            font-size: 0.875rem;
-            color: var(--gray-dark);
-        }
-
-        .equipment-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 1rem;
-            margin: 1.5rem 0;
-        }
-
-        .equipment-item {
-            background: var(--light);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            border-left: 4px solid var(--primary);
-            transition: var(--transition);
-        }
-
-        .equipment-item:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
-        }
-
-        .survival-step {
-            background: var(--light);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            margin: 1rem 0;
-            border-left: 4px solid var(--secondary);
-        }
-
-        .step-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 32px;
-            height: 32px;
-            background: var(--primary);
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            margin-right: 0.75rem;
-        }
-
-        /* Service Grid */
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        /* Intro Card */
-        .intro-card {
-            grid-column: 1 / -1;
-            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
-            color: white;
-            position: relative;
-        }
-
-        .intro-card .card-title,
-        .intro-card .card-text {
-            color: white;
-        }
-
-        .intro-card .tag {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-        }
-
-        .intro-card .card-action-btn {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .intro-card .card-action-btn:hover {
-            background: white;
-            color: var(--primary);
-        }
-
-        .intro-badge {
-            position: absolute;
-            top: -12px;
-            right: 30px;
-            background: linear-gradient(135deg, #FF4081 0%, #F50057 100%);
-            color: white;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-size: 0.875rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .intro-steps {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-
-        .intro-step {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 1.5rem;
-            border-radius: var(--border-radius);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            transition: var(--transition);
-        }
-
-        .intro-step:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .intro-step .step-number {
-            background: white;
-            color: var(--primary);
-            margin-bottom: 1rem;
-        }
-
-        .intro-step-title {
-            font-size: 1.125rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: white;
-        }
-
-        .intro-step-desc {
-            font-size: 0.875rem;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Footer */
-        .footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 2rem 1.5rem;
-        }
-
-        .footer-content {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            color: white;
-            text-decoration: none;
-            font-size: 1.25rem;
-            font-weight: 700;
-        }
-
-        .footer-description {
-            color: rgba(255, 255, 255, 0.7);
-            line-height: 1.5;
-            font-size: 0.875rem;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-links h3 {
-            font-size: 0.875rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: white;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition);
-            font-size: 0.875rem;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(3px);
-        }
-
-        .footer-bottom {
-            padding: 1.5rem 0 0;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 0.75rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .footer-offline {
-            background: rgba(0, 0, 0, 0.2);
-            padding: 1rem;
-            border-radius: var(--border-radius);
-            margin-top: 1rem;
-            border-left: 4px solid var(--accent);
-        }
-
-        .footer-offline h4 {
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: var(--accent-light);
-        }
-
-        .footer-offline p {
-            font-size: 0.75rem;
-            line-height: 1.4;
-        }
-
-        /* Responsive */
-        @media (max-width: 1024px) {
-            .nav-links {
-                display: none;
-            }
-
-            .hamburger {
-                display: flex;
-            }
-
-            .hero-title {
-                font-size: 2.5rem;
-            }
-
-            .hero-icon-large {
-                font-size: 6rem;
-            }
-
-            .services-grid {
-                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            }
-
-            .intro-steps {
-                grid-template-columns: 1fr;
-            }
-
-            .tech-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .equipment-list {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero {
-                padding: 6rem 1rem 3rem;
-            }
-
-            .hero-title {
-                font-size: 2rem;
-            }
-
-            .hero-icon-large {
-                font-size: 4rem;
-            }
-
-            .section {
-                padding: 8rem 1rem;
-            }
-
-            .section-title {
-                font-size: 2rem;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 1.5rem;
-            }
-
-            .filters {
-                gap: 0.5rem;
-            }
-
-            .filter-btn {
-                padding: 0.4rem 1rem;
-                font-size: 0.8rem;
-            }
-
-            .modal-content {
-                padding: 1.5rem;
-                margin: 1rem;
-            }
-
-            .tech-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .equipment-list {
-                grid-template-columns: 1fr;
-            }
-
-            .card-actions {
-                flex-direction: row;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-                padding: 0;
-            }
-
-            .intro-badge {
-                position: relative;
-                top: 0;
-                right: 0;
-                margin-bottom: 1rem;
-                display: inline-block;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="assets/css/style.css" />
 </head>
 <body>
     <!-- Navigation -->
@@ -1175,7 +53,8 @@
     
        <div class="section-header">
             <span class="section-badge">BIENVENUE</span>
-            <h2 class="section-title">Hey, salut toi ! 👋</h2>
+            <h2 class="section-title">Hey, salut ! 👋</h2>
+            
         </div>
         
         <div class="filters-container">
@@ -1227,39 +106,38 @@
                     Solution open-source d'information citoyenne résiliente. 
                     Déployable sur Raspberry Pi, fonctionne sans internet.
                 </p>
-                
             </div>
 
             <div>
                 <div class="footer-links">
                     <h3>Navigation</h3>
                     <a href="#services">Services</a>
-                    <a href="#faq">FAQ Santé Mentale</a>
-                    <a href="#services?cat=Urgence">Numéros d'Urgence</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#ressources">Documents</a>
+                    <a href="#about">À propos</a>
                 </div>
             </div>
 
             <div>
                 <div class="footer-links">
-                    <h3>Guides Pratiques</h3>
-                    <a href="#" onclick="openSurvivalModal()">Équipements de Survie</a>
-                    <a href="#" onclick="openProtocolModal()">Protocole d'Urgence</a>
-                    <a href="#" onclick="openRightsModal()">Droits & Devoirs</a>
-                </div>
-            </div>
-
-            <div>
-                <div class="footer-links">
-                    <h3>Solidarité</h3>
-                    <a href="#services?cat=Social">Services Sociaux</a>
+                    <h3>Catégories</h3>
+                    <a href="#services?cat=Urgence">Urgences</a>
+                    <a href="#services?cat=Social">Services sociaux</a>
                     <a href="#services?cat=Associations">Associations</a>
                     <a href="#services?cat=International">International</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <a href="mailto:contact@sos-guide.fr" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; display: block; font-size: 0.8rem;">contact@sos-guide.fr</a>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2026 ⛑️ SOS GUIDE - Projet open-source sous licence MIT - Page fonctionnant 100% hors ligne</p>
+            <p>© 2026 ⛑️ SOS GUIDE - Projet open-source sous licence MIT</p>
             <p style="margin-top: 0.25rem;">Conçu par Ludovic MARTIN et la communauté des contributeurs</p>
         </div>
     </footer>
@@ -1268,49 +146,47 @@
     <!-- Modal À propos -->
     <div id="aboutModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">⛑️ À propos de SOS Guide</h3>
+            <h3 class="modal-title">À propos de SOS Guide</h3>
             
             <div class="modal-section">
-                <h4>🎯 Notre Mission</h4>
+                <h4>📋 Notre Mission</h4>
                 <p><strong>SOS Guide</strong> centralise les aides citoyennes et les numéros d'urgence pour un accès rapide en toute situation. Notre objectif est de fournir un accès universel aux informations vitales : services d'urgence, aides sociales, associations locales et ressources citoyennes.</p>
-                <div class="highlight-box success">
-                    <p><strong>📡 Accès Garanti :</strong> SOS Guide fonctionne 100% hors ligne, garantissant l'accès aux informations vitales même lors de pannes réseau, catastrophes naturelles, ou dans les zones blanches.</p>
-                </div>
+                <p>SOS Guide garantit que ces informations restent disponibles même sans connexion internet, lors de pannes de réseau, de catastrophes naturelles, ou dans les zones blanches.</p>
             </div>
             
             <div class="modal-section">
-                <h4>🔧 Architecture Technique</h4>
+                <h4>⚙️ Fonctionnement Technique Avancé</h4>
                 
                 <div class="tech-grid">
                     <div class="tech-item">
                         <h5>📶 Réseau Wi-Fi Local</h5>
-                        <p>Le Raspberry Pi émet son propre réseau Wi-Fi "SOS-GUIDE" sans mot de passe pour une connexion instantanée.</p>
+                        <p>Le Raspberry Pi émet son propre réseau Wi-Fi "SOS-GUIDE". Pas de mot de passe requis pour une connexion rapide.</p>
                     </div>
                     
                     <div class="tech-item">
-                        <h5>💾 Stockage Autonome</h5>
-                        <p>Toutes les données sont stockées localement sur carte microSD. Aucune connexion internet requise après déploiement.</p>
+                        <h5>💾 Stockage Local</h5>
+                        <p>Toutes les données sont stockées sur une carte microSD. Aucune connexion internet n'est nécessaire une fois le système démarré.</p>
                     </div>
                     
                     <div class="tech-item">
-                        <h5>🔋 Énergie Résiliente</h5>
-                        <p>Consommation 3-5 watts. Fonctionne 24h+ sur batterie externe. Compatible panneaux solaires.</p>
+                        <h5>🔋 Faible Consommation</h5>
+                        <p>Le Raspberry Pi consomme seulement 3-5 watts. Il peut fonctionner sur batterie externe pendant 24h+.</p>
                     </div>
                     
                     <div class="tech-item">
                         <h5>👥 Multi-utilisateurs</h5>
-                        <p>Supporte jusqu'à 50 connexions simultanées. Idéal pour lieux publics et situations de crise.</p>
+                        <p>Supporte jusqu'à 50 utilisateurs simultanés sur le réseau local. Idéal pour les lieux publics et collectivités.</p>
                     </div>
                 </div>
             </div>
             
             <div class="modal-section">
-                <h4>📊 Spécifications Techniques</h4>
+                <h4>🖥️ Caractéristiques du Raspberry Pi</h4>
                 
                 <div class="specs-grid">
                     <div class="spec-item">
                         <div class="spec-value">RPi 4</div>
-                        <div class="spec-label">Modèle Standard</div>
+                        <div class="spec-label">Modèle standard</div>
                     </div>
                     
                     <div class="spec-item">
@@ -1338,56 +214,47 @@
                         <div class="spec-label">Utilisateurs simultanés</div>
                     </div>
                 </div>
+                
+                <p>Le Raspberry Pi est un nano-ordinateur de la taille d'une carte de crédit. Sa faible consommation et sa polyvalence en font la solution idéale pour des déploiements locaux et autonomes.</p>
             </div>
             
             <div class="modal-section">
                 <h4>🤝 Communauté & Solidarité</h4>
-                <div class="highlight-box">
-                    <p><strong>📢 Projet Open-Source :</strong> Contribuez sur GitHub, suggérez des améliorations, ou déployez SOS Guide dans votre communauté.</p>
+                <p>Ce projet est <strong>open-source</strong> et contributif. Les informations sont mises à jour régulièrement par la communauté pour garantir leur exactitude et pertinence.</p>
+                <p>Nous croyons en la solidarité numérique : chaque commune, association ou groupe de citoyens peut déployer son propre SOS Guide pour servir sa communauté.</p>
+                
+                <div class="highlight-box success">
+                    <p><strong>📢 Contribuez !</strong> Vous pouvez améliorer ce projet sur GitHub, suggérer des ajouts, ou déployer SOS Guide dans votre commune.</p>
                 </div>
-                <p>Chaque commune, association ou groupe citoyen peut déployer son propre SOS Guide pour servir sa communauté.</p>
             </div>
             
             <div class="modal-section">
-                <h4>🌐 Coordonnées Officielles</h4>
-                <div class="equipment-list">
-                    <div class="equipment-item">
-                        <h5>🌍 Site Web</h5>
-                        <p><a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>📧 Email</h5>
-                        <p><a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
-                    </div>
-                    <div class="equipment-item">
-                        <h5>💻 GitHub</h5>
-                        <p><a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
-                    </div>
-                </div>
+                <h4>🌐 Coordonnées & Site Web</h4>
+                <p><strong>Site web :</strong> <a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
+                <p><strong>Email :</strong> <a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
+                <p><strong>GitHub :</strong> <a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
                 
                 <div class="highlight-box warning">
-                    <p><strong>⚠️ Note importante :</strong> Pour visiter notre site web, vous devez vous déconnecter du réseau Wi-Fi "SOS-GUIDE" et utiliser votre connexion mobile (3G/4G/5G). Ce service en ligne fonctionne indépendamment de cette page hors-ligne.</p>
+                    <p><strong>⚠️ Note importante :</strong> Pour visiter notre site web, vous devez vous déconnecter du réseau Wi-Fi "SOS-GUIDE" et utiliser votre connexion mobile (3G/4G/5G) ou une autre connexion internet. Ce service en ligne fonctionne indépendamment de cette page hors-ligne.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 Pour les communes :</strong> Nous proposons des kits de déploiement clés en main, incluant le Raspberry Pi préconfiguré, l'alimentation et le boîtier. Contactez-nous pour plus d'informations.</p>
                 </div>
             </div>
             
             <div class="modal-section">
                 <h4>🚀 Déploiement & Scalabilité</h4>
-                <div class="survival-step">
-                    <h4><span class="step-number">1</span> Communes & Villes</h4>
-                    <p>Services d'urgence locaux, mairies, centres communaux</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">2</span> Centres d'Accueil</h4>
-                    <p>Réfugiés, sans-abri, situations d'urgence humanitaire</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">3</span> Événements Publics</h4>
-                    <p>Festivals, manifestations, rassemblements de grande ampleur</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">4</span> Zones Rurales</h4>
-                    <p>Complément aux faibles couvertures réseau, zones isolées</p>
-                </div>
+                <p>SOS Guide peut être déployé dans différents contextes :</p>
+                <ul>
+                    <li><strong>Communes</strong> : Services d'urgence locaux, associations, mairie</li>
+                    <li><strong>Événements</strong> : Festivals, manifestations, rassemblements</li>
+                    <li><strong>Centres d'accueil</strong> : Réfugiés, sans-abri, situations d'urgence</li>
+                    <li><strong>Zones rurales</strong> : Complément aux faibles couvertures réseau</li>
+                    <li><strong>Établissements</strong> : Écoles, hôpitaux, maisons de retraite</li>
+                </ul>
+                
+                <p>Le système est conçu pour être <strong>autonome, durable et réplicable</strong> à faible coût.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('aboutModal')">Fermer</button>
@@ -1408,16 +275,16 @@
             </div>
             
             <div class="modal-section">
-                <h4>⏱️ Disponibilité</h4>
-                <p>Ce service est disponible 24h/24 et 7j/7 pour les urgences. Pour les appels non urgents, privilégiez les horaires de bureau (9h-18h).</p>
+                <h4>ℹ️ Informations complémentaires</h4>
+                <p>Ce service est disponible 24h/24 et 7j/7 pour les urgences. Pour les appels non urgents, privilégiez les horaires de bureau.</p>
             </div>
             
             <div class="card-actions" style="margin-top: 20px;">
-                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none; flex: 1;">
+                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none;">
                     <span id="descCallNum">Appeler maintenant</span>
                     <span>📞</span>
                 </a>
-                <button class="card-info-btn" onclick="closeModal('descModal')" style="width: 48px; flex-shrink: 0;">✕</button>
+                <button class="card-info-btn" onclick="closeModal('descModal')">✕</button>
             </div>
         </div>
     </div>
@@ -1425,82 +292,87 @@
     <!-- Modal Équipements de Survie -->
     <div id="survivalModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">📦 Équipements de Survie Essentiels</h3>
+            <h3 class="modal-title">Équipements de Survie Essentiels</h3>
             
             <div class="modal-section">
-                <h4>🎒 Kit de Base Obligatoire</h4>
-                <div class="highlight-box">
-                    <p><strong>💡 Préparation :</strong> Préparez ces équipements à l'avance et vérifiez-les tous les 6 mois.</p>
-                </div>
+                <h4>📦 Kit de Base Obligatoire</h4>
+                <p>Préparez ces équipements à l'avance pour faire face aux situations d'urgence :</p>
                 
                 <div class="equipment-list">
                     <div class="equipment-item">
                         <h5>💧 Eau potable</h5>
-                        <p>3L/personne/jour (minimum 3 jours)</p>
+                        <p>3 litres par personne par jour (minimum 3 jours)</p>
                     </div>
                     <div class="equipment-item">
                         <h5>🍞 Nourriture non périssable</h5>
-                        <p>Conserves, barres énergétiques (3 jours)</p>
+                        <p>Conserves, barres énergétiques, aliments secs (3 jours)</p>
                     </div>
                     <div class="equipment-item">
                         <h5>🔦 Lampe torche + piles</h5>
-                        <p>Éclairage d'urgence avec piles de rechange</p>
+                        <p>Éclairage d'urgence, prévoir des piles de rechange</p>
                     </div>
                     <div class="equipment-item">
                         <h5>📻 Radio à manivelle</h5>
-                        <p>Informations sans électricité</p>
+                        <p>Pour recevoir les informations sans électricité</p>
                     </div>
                     <div class="equipment-item">
                         <h5>⚡ Chargeur solaire</h5>
-                        <p>Recharge téléphones et appareils</p>
+                        <p>Pour recharger téléphones et petits appareils</p>
                     </div>
                     <div class="equipment-item">
-                        <h5>🧰 Trousse premiers secours</h5>
-                        <p>Pansements, antiseptique, médicaments</p>
+                        <h5>🧰 Trousse de premiers secours</h5>
+                        <p>Pansements, antiseptique, médicaments essentiels</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔪 Multifonction</h5>
+                        <p>Couteau suisse ou Leatherman</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧤 Gants de protection</h5>
+                        <p>Pour manipulation d'objets dangereux</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧥 Couverture de survie</h5>
+                        <p>Isolation thermique (chaud/froid)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧻 Produits d'hygiène</h5>
+                        <p>Gel hydroalcoolique, papier toilette, lingettes</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🗺️ Carte locale</h5>
+                        <p>Cartes papier de votre région</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Liste de contacts</h5>
+                        <p>Contacts d'urgence sur papier</p>
                     </div>
                 </div>
             </div>
             
             <div class="modal-section">
                 <h4>📄 Documents Importants</h4>
-                <div class="survival-step">
-                    <h4><span class="step-number">1</span> Identité</h4>
-                    <p>Photocopies cartes d'identité, passeports, permis</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">2</span> Santé</h4>
-                    <p>Carte vitale, ordonnances, carnets de vaccination</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">3</span> Assurances</h4>
-                    <p>Copies assurances habitation, santé, voiture</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">4</span> Contacts</h4>
-                    <p>Liste contacts d'urgence sur papier</p>
-                </div>
+                <ul>
+                    <li>Photocopies des papiers d'identité (carte d'identité, passeport, permis)</li>
+                    <li>Carte vitale et ordonnances médicales</li>
+                    <li>Copie des assurances (habitation, santé, voiture)</li>
+                    <li>Contacts d'urgence familiaux et professionnels</li>
+                    <li>Argent liquide en petites coupures (minimum 100€)</li>
+                    <li>Clés de voiture et de maison de rechange</li>
+                    <li>Carnet de santé et vaccinations</li>
+                </ul>
             </div>
             
             <div class="modal-section">
                 <h4>🏠 Conception du Kit</h4>
-                <div class="tech-grid">
-                    <div class="tech-item">
-                        <h5>📍 Stockage</h5>
-                        <p>Endroit facile d'accès, à l'abri humidité/lumière</p>
-                    </div>
-                    <div class="tech-item">
-                        <h5>📅 Vérification</h5>
-                        <p>Vérifiez dates péremption tous les 6 mois</p>
-                    </div>
-                    <div class="tech-item">
-                        <h5>🎒 Évacuation</h5>
-                        <p>Sac à dos par personne (30-40L)</p>
-                    </div>
-                    <div class="tech-item">
-                        <h5>👨‍👩‍👧‍👦 Personnalisation</h5>
-                        <p>Adaptez aux besoins spécifiques famille</p>
-                    </div>
-                </div>
+                <p><strong>Stockage :</strong> Stockez votre kit dans un endroit facile d'accès, à l'abri de l'humidité et de la lumière directe.</p>
+                <p><strong>Vérification :</strong> Vérifiez régulièrement les dates de péremption (tous les 6 mois).</p>
+                <p><strong>Évacuation :</strong> Prévoyez un sac à dos par personne (30-40L) pour une évacuation rapide.</p>
+                <p><strong>Personnalisation :</strong> Adaptez votre kit aux besoins spécifiques (bébés, personnes âgées, animaux, médicaments particuliers).</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Conseil expert :</strong> Préparez deux kits : un "kit maison" plus complet et un "kit d'évacuation" léger dans un sac à dos. Testez régulièrement votre matériel et formez tous les membres de la famille à son utilisation.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('survivalModal')">Fermer</button>
@@ -1510,47 +382,68 @@
     <!-- Modal Protocole d'Urgence -->
     <div id="protocolModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">🚨 Protocole d'Urgence en 5 Étapes</h3>
-            
-            <div class="modal-section">
-                <h4>📋 Procédure Standardisée</h4>
-                <div class="highlight-box success">
-                    <p><strong>🎓 Formation PSC1 :</strong> Suivez une formation de 7 heures accessible dès 10 ans. Contactez la Croix-Rouge, les Pompiers, ou la Protection Civile.</p>
-                </div>
-            </div>
+            <h3 class="modal-title">Protocole d'Urgence en 5 Étapes</h3>
             
             <div class="survival-step">
                 <h4><span class="step-number">1</span> ÉVALUER la situation</h4>
                 <p><strong>Gardez votre calme</strong> - Respirez profondément avant d'agir</p>
                 <p><strong>Analysez les dangers</strong> : feu, fumée, effondrement, gaz, électricité</p>
                 <p><strong>Protégez-vous d'abord</strong> avant de secourir les autres</p>
+                <p><strong>Identifiez les issues de secours</strong></p>
+                <p><strong>Évaluez le nombre de victimes</strong> et leur état apparent</p>
             </div>
             
             <div class="survival-step">
                 <h4><span class="step-number">2</span> ALERTER les secours</h4>
                 <p><strong>Composez le numéro adapté</strong> : 15 (SAMU), 18 (Pompiers), 17 (Police), 112 (UE)</p>
-                <p><strong>Donnez informations clairement</strong> : adresse exacte, nature problème, nombre victimes</p>
+                <p><strong>Donnez ces informations clairement</strong> :</p>
+                <ul>
+                    <li>Votre nom et numéro de téléphone</li>
+                    <li>L'adresse exacte (ville, rue, numéro, étage, code d'entrée)</li>
+                    <li>La nature du problème (accident, incendie, malaise...)</li>
+                    <li>Le nombre de victimes et leur état apparent</li>
+                    <li>Les dangers particuliers (gaz, produits chimiques, électricité...)</li>
+                    <li>Les actions déjà entreprises</li>
+                </ul>
+                <p><strong>Ne raccrochez pas le premier</strong> - Attendez les instructions du secouriste</p>
             </div>
             
             <div class="survival-step">
                 <h4><span class="step-number">3</span> PROTÉGER les personnes</h4>
                 <p><strong>Mettez les victimes en sécurité</strong> à l'abri du danger</p>
                 <p><strong>Balisez la zone dangereuse</strong> pour éviter d'autres accidents</p>
-                <p><strong>Coupez gaz et électricité</strong> si nécessaire</p>
+                <p><strong>Coupez gaz et électricité</strong> si nécessaire et sans danger</p>
+                <p><strong>Éloignez les curieux</strong> pour faciliter l'intervention des secours</p>
+                <p><strong>Établissez un périmètre de sécurité</strong> d'au moins 50 mètres</p>
             </div>
             
             <div class="survival-step">
                 <h4><span class="step-number">4</span> SECOURIR les victimes</h4>
-                <p><strong>Vérifiez conscience et respiration</strong></p>
-                <p><strong>Pratiquez les gestes de base</strong> : PLS, compression saignements, RCP si formé</p>
-                <p><strong>Utilisez défibrillateur si disponible</strong> (DSA/DAE)</p>
+                <p><strong>Vérifiez la conscience</strong> : parlez à la victime, secouez doucement</p>
+                <p><strong>Contrôlez la respiration</strong> : regardez si le ventre/poitrine se soulève</p>
+                <p><strong>Pratiquez les gestes de base</strong> :</p>
+                <ul>
+                    <li>PLA : Position Latérale de sécurité (si inconscient mais respire)</li>
+                    <li>Compression des saignements abondants (avec tissu propre)</li>
+                    <li>Réanimation cardio-pulmonaire si formé (30 compressions/2 insufflations)</li>
+                    <li>Utilisation du défibrillateur si disponible (DSA/DAE)</li>
+                </ul>
+                <p><strong>Réchauffez les victimes</strong> avec couvertures ou vêtements</p>
+                <p><strong>Ne donnez jamais à boire</strong> à une personne inconsciente</p>
             </div>
             
             <div class="survival-step">
                 <h4><span class="step-number">5</span> ATTENDRE les secours</h4>
-                <p><strong>Préparez l'accès</strong> : dégagez couloirs, ouvrez portes</p>
-                <p><strong>Signalez votre présence</strong> : lumières, signes</p>
-                <p><strong>Transmettez informations</strong> aux secours à arrivée</p>
+                <p><strong>Préparez l'accès</strong> : dégagez les couloirs, ouvrez les portes</p>
+                <p><strong>Signalez votre présence</strong> : allumez les lumières, faites des signes</p>
+                <p><strong>Transmettez les informations</strong> aux secours à leur arrivée</p>
+                <p><strong>Suivez leurs instructions</strong> sans les gêner dans leur travail</p>
+                <p><strong>Restez disponible</strong> pour fournir d'autres informations</p>
+                <p><strong>Notez l'heure d'arrivée</strong> des secours pour le suivi</p>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Formation recommandée :</strong> Suivez une formation PSC1 (Prévention et Secours Civiques de niveau 1) pour maîtriser ces gestes. Ces formations sont accessibles à tous dès 10 ans et durent environ 7 heures.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('protocolModal')">Fermer</button>
@@ -1560,24 +453,32 @@
     <!-- Modal Alerte Urgence -->
     <div id="alertModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">📢 Alerte et Communication d'Urgence</h3>
+            <h3 class="modal-title">Alerte et Communication d'Urgence</h3>
             
             <div class="modal-section">
                 <h4>📱 Systèmes d'Alerte Officiels</h4>
-                <div class="tech-grid">
-                    <div class="tech-item">
-                        <h5>📲 SAIP</h5>
-                        <p>Application mobile gratuite "SAIP" - Notifications push alertes locales</p>
-                    </div>
-                    <div class="tech-item">
-                        <h5>📡 FR-Alert</h5>
-                        <p>Diffusion cellulaire - Alertes automatiques sur tous mobiles sans internet</p>
-                    </div>
-                    <div class="tech-item">
-                        <h5>🌤️ Météo France</h5>
-                        <p>Vigilance 4 couleurs - Bulletins alerte phénomènes dangereux</p>
-                    </div>
-                </div>
+                <p><strong>SAIP</strong> (Système d'Alerte et d'Information des Populations) :</p>
+                <ul>
+                    <li>Application mobile "SAIP" à télécharger gratuitement</li>
+                    <li>Notifications push pour alertes locales (inondations, incidents, attentats)</li>
+                    <li>Informations en temps réel avec conseils de comportement</li>
+                    <li>Géolocalisation pour alertes ciblées</li>
+                </ul>
+                
+                <p><strong>FR-Alert</strong> : système de diffusion cellulaire</p>
+                <ul>
+                    <li>Alertes reçues automatiquement sur tous les mobiles</li>
+                    <li>Fonctionne même sans application ni internet</li>
+                    <li>Messages en cas de danger immédiat (via cell broadcast)</li>
+                    <li>Couverture nationale activée depuis 2022</li>
+                </ul>
+                
+                <p><strong>Alertes Météo France</strong> : Vigilance météorologique</p>
+                <ul>
+                    <li>Carte de vigilance 4 couleurs (vert, jaune, orange, rouge)</li>
+                    <li>Bulletins d'alerte pour phénomènes dangereux</li>
+                    <li>Prévisions à 24h et 48h</li>
+                </ul>
             </div>
             
             <div class="modal-section">
@@ -1585,37 +486,60 @@
                 <div class="equipment-list">
                     <div class="equipment-item">
                         <h5>📻 Radio FM</h5>
-                        <p>France Inter 87.8 - France Info 105.5</p>
+                        <p>France Inter (87.8), France Info (105.5), stations locales</p>
                     </div>
                     <div class="equipment-item">
                         <h5>📺 Télévision</h5>
-                        <p>France 2 - France 3 Régions</p>
+                        <p>France 2, France 3 Régions, chaînes d'info en continu</p>
                     </div>
                     <div class="equipment-item">
                         <h5>🌐 Sites officiels</h5>
-                        <p>Vigicrues.fr - MétéoFrance.fr</p>
+                        <p>Vigicrues, Météo France, Préfecture, Mairie</p>
                     </div>
                     <div class="equipment-item">
                         <h5>📱 Réseaux sociaux</h5>
-                        <p>Comptes officiels Préfecture, Mairie, Pompiers</p>
+                        <p>Comptes officiels Préfecture, Mairie, Pompiers, Gendarmerie</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📞 Lignes info</h5>
+                        <p>Numéros verts préfectoraux, mairies</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📢 Haut-parleurs</h5>
+                        <p>Véhicules municipaux, sirènes locales</p>
                     </div>
                 </div>
             </div>
             
             <div class="modal-section">
+                <h4>👨‍👩‍👧‍👦 Plan de Communication Familial</h4>
+                <p><strong>Établissez un plan avant la crise :</strong></p>
+                <ol>
+                    <li><strong>Désignez un contact hors région</strong> : Toute la famille appelle cette personne pour centraliser les informations</li>
+                    <li><strong>Prévoyez des points de rendez-vous</strong> : Un près de chez vous, un hors du quartier, un hors de la ville</li>
+                    <li><strong>Utilisez les SMS plutôt que les appels</strong> : Les SMS passent mieux en cas de réseau saturé</li>
+                    <li><strong>Économisez la batterie</strong> : Mode économie d'énergie, chargeurs portables</li>
+                    <li><strong>Messages courts et clairs</strong> : "Je suis sain et sauf à [lieu]", "Besoin d'aide à [adresse]"</li>
+                    <li><strong>Code familial</strong> : Mot de passe ou phrase pour authentifier les messages</li>
+                </ol>
+            </div>
+            
+            <div class="modal-section">
                 <h4>⚠️ Signaux d'Alerte Nationaux</h4>
-                <div class="survival-step">
-                    <h4><span class="step-number">🚨</span> Alerte</h4>
-                    <p>Son modulé montant/descendant (3×1 minute séparées 5 secondes)</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">✅</span> Fin d'alerte</h4>
-                    <p>Son continu 30 secondes</p>
-                </div>
-                <div class="survival-step">
-                    <h4><span class="step-number">📅</span> Essai mensuel</h4>
-                    <p>Premier mercredi mois à midi (1 minute 41 secondes)</p>
-                </div>
+                <p><strong>Sirènes du réseau national d'alerte :</strong></p>
+                <ul>
+                    <li><strong>Alerte</strong> : Son modulé montant et descendant (3 fois 1 minute séparées de 5 secondes)</li>
+                    <li><strong>Fin d'alerte</strong> : Son continu de 30 secondes</li>
+                    <li><strong>Essai mensuel</strong> : Premier mercredi du mois à midi (son unique de 1 minute 41 secondes)</li>
+                </ul>
+                
+                <p><strong>Messages vocaux</strong> : dans les transports, lieux publics, centres commerciaux</p>
+                <p><strong>Panneaux à messages variables</strong> : sur routes et autoroutes</p>
+                <p><strong>Alarme des téléphones</strong> : Son strident spécifique pour FR-Alert</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 En cas de blackout communication :</strong> Utilisez des messages écrits (papier), des signaux visuels (draps aux fenêtres), des coups de sifflet, ou le système de messagerie de SOS Guide si disponible localement.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('alertModal')">Fermer</button>
@@ -1625,14 +549,14 @@
     <!-- Modal Santé Premiers Secours -->
     <div id="healthModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">🩺 Santé et Premiers Secours Complet</h3>
+            <h3 class="modal-title">Santé et Premiers Secours Complet</h3>
             
             <div class="modal-section">
-                <h4>🧰 Trousse Premiers Secours Complète</h4>
+                <h4>🧰 Composition Trousse Premiers Secours Complète</h4>
                 <div class="equipment-list">
                     <div class="equipment-item">
                         <h5>🩹 Pansements</h5>
-                        <p>Compresses stériles, sparadrap, pansements hydrocolloïdes</p>
+                        <p>Compresses stériles, sparadrap, bandes, pansements hydrocolloïdes</p>
                     </div>
                     <div class="equipment-item">
                         <h5>🧴 Antiseptique</h5>
@@ -1640,158 +564,262 @@
                     </div>
                     <div class="equipment-item">
                         <h5>💊 Médicaments essentiels</h5>
-                        <p>Paracétamol, ibuprofène, anti-diarrhéique</p>
+                        <p>Paracétamol, ibuprofène, anti-diarrhéique, anti-histaminique</p>
                     </div>
                     <div class="equipment-item">
                         <h5>✂️ Matériel</h5>
-                        <p>Ciseaux bout rond, pince à épiler, gants jetables</p>
+                        <p>Ciseaux à bout rond, pince à épiler, gants jetables (taille M et L)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌡️ Thermomètre</h5>
+                        <p>Électronique avec piles de rechange</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>😷 Couvre-visage</h5>
+                        <p>Masques chirurgicaux, FFP2 (x10)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🩺 Tensio-mètre</h5>
+                        <p>Pour personnes à risque (hypertension)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧽 Compresses</h5>
+                        <p>Compresses stériles 10x10 (x20), compresses hémostatiques</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🦠 Désinfectant</h5>
+                        <p>Solution hydroalcoolique (100ml), savon antiseptique</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Carnet de soins</h5>
+                        <p>Pour noter les interventions et observations</p>
                     </div>
                 </div>
             </div>
             
             <div class="modal-section">
-                <h4>🆘 Gestes qui Sauvent</h4>
+                <h4>🆘 Gestes qui Sauvent - Guide Complet</h4>
                 
                 <div class="survival-step">
-                    <h4><span class="step-number">🩸</span> Hémorragie Sévère</h4>
-                    <p>Appuyez directement sur plaie avec tissu propre</p>
-                    <p>Allongez victime - Surélevez membre - Appelez 15</p>
+                    <h4>🩸 Hémorragie Sévère</h4>
+                    <p><strong>1. Appuyez directement</strong> sur la plaie avec un tissu propre</p>
+                    <p><strong>2. Allongez la victime</strong> pour éviter le malaise vagal</p>
+                    <p><strong>3. Surélevez le membre</strong> si l'hémorragie est sur un membre</p>
+                    <p><strong>4. Comprimez l'artère</strong> en amont si l'hémorragie persiste (points de compression)</p>
+                    <p><strong>5. Appelez le 15</strong> immédiatement pour hémorragie abondante</p>
+                    <p><strong>6. Posez un garrot</strong> uniquement en dernier recours (notez l'heure de pose)</p>
                 </div>
                 
                 <div class="survival-step">
-                    <h4><span class="step-number">🔥</span> Brûlure</h4>
-                    <p>Refroidissez 15-20 minutes eau tiède</p>
-                    <p>Retirez vêtements/bijoux avant œdème</p>
-                    <p>Ne percez pas cloques - Couvrez tissu propre</p>
+                    <h4>🔥 Brûlure</h4>
+                    <p><strong>1. Refroidissez 15-20 minutes</strong> sous eau tiède (15-25°C)</p>
+                    <p><strong>2. Retirez vêtements et bijoux</strong> avant l'apparition de l'œdème</p>
+                    <p><strong>3. Ne percez pas les cloques</strong> (risque d'infection)</p>
+                    <p><strong>4. Ne mettez pas de corps gras</strong> (beurre, huile, crème)</p>
+                    <p><strong>5. Couvrez avec un tissu propre</strong> et sec</p>
+                    <p><strong>6. Appelez le 15 si</strong> : brûlure étendue (> paume de la main), sur le visage, les mains, les articulations, ou brûlure chimique/électrique</p>
                 </div>
                 
                 <div class="survival-step">
-                    <h4><span class="step-number">😵</span> Malaise</h4>
-                    <p>Vérifiez conscience et respiration</p>
-                    <p>Si inconscient mais respire : Position Latérale Sécurité</p>
-                    <p>Si inconscient ne respire pas : RCP 30/2</p>
+                    <h4>😵 Malaise / Perte de connaissance</h4>
+                    <p><strong>1. Vérifiez la conscience</strong> : "Ça va ? Vous m'entendez ?" + stimulation douce</p>
+                    <p><strong>2. Vérifiez la respiration</strong> : regardez si la poitrine se soulève, écoutez, sentez le souffle</p>
+                    <p><strong>3. Si inconscient mais respire</strong> : Mettez en Position Latérale de Sécurité (PLS)</p>
+                    <p><strong>4. Si inconscient et ne respire pas</strong> : Commencez la RCP (30 compressions/2 insufflations)</p>
+                    <p><strong>5. Desserrez col, cravate, ceinture</strong></p>
+                    <p><strong>6. Protégez de la chaleur/froid</strong> avec une couverture</p>
+                    <p><strong>7. Appelez le 15</strong> en décrivant précisément les symptômes</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🤕 Traumatisme / Fracture</h4>
+                    <p><strong>1. Immobilisez le membre</strong> dans la position où vous l'avez trouvé</p>
+                    <p><strong>2. Appliquez du froid</strong> pour réduire l'œdème et la douleur</p>
+                    <p><strong>3. Surélevez le membre</strong> si possible</p>
+                    <p><strong>4. Ne donnez rien à manger ou boire</strong> (risque d'intervention chirurgicale)</p>
+                    <p><strong>5. Surveillez les signes de choc</strong> : pâleur, sueurs, frissons, agitation</p>
+                    <p><strong>6. Transportez uniquement si nécessaire</strong>, avec immobilisation préalable</p>
                 </div>
             </div>
             
             <div class="modal-section">
                 <h4>📋 Préparation Médicale Familiale</h4>
-                <div class="highlight-box">
-                    <p><strong>📝 Liste essentielle :</strong> Médicaments habituels, ordonnances, contacts médecins, groupe sanguin, allergies, carnets vaccination, assurances santé, contacts ICE.</p>
-                </div>
+                <ul>
+                    <li><strong>Liste des médicaments habituels</strong> avec posologie précise et durée de traitement</li>
+                    <li><strong>Copie des ordonnances</strong> en cours (à renouveler avant expiration)</li>
+                    <li><strong>Contacts professionnels</strong> : médecin traitant, spécialistes, pharmacie de garde</li>
+                    <li><strong>Informations médicales</strong> : groupe sanguin, allergies connues (médicaments, aliments, autres)</li>
+                    <li><strong>Document sur les pathologies chroniques</strong> : diabète, hypertension, asthme, épilepsie, etc.</li>
+                    <li><strong>Carnet de vaccination</strong> à jour pour tous les membres de la famille</li>
+                    <li><strong>Assurances santé</strong> : numéros de contrat, téléphones, garanties</li>
+                    <li><strong>Contacts ICE</strong> (In Case of Emergency) programmés dans le téléphone</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Formation PSC1 :</strong> La formation Prévention et Secours Civiques de niveau 1 est accessible à tous dès 10 ans. Elle dure 7 heures et coûte entre 50 et 70€. Contactez la Croix-Rouge, les Pompiers, ou la Protection Civile de votre département.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('healthModal')">Fermer</button>
         </div>
     </div>
 
-    <!-- Modal Droits et Devoirs -->
+    <!-- Modal Droits & Devoirs -->
     <div id="rightsModal" class="modal">
         <div class="modal-content modal-large">
-            <h3 class="modal-title">⚖️ Droits & Devoirs du Citoyen</h3>
+            <h3 class="modal-title">Droits & Devoirs Fondamentaux</h3>
             
             <div class="modal-section">
-                <h4>📜 Cadre Légal de la Protection Civile</h4>
-                <div class="highlight-box">
-                    <p><strong>Article L.721-1 du Code de la Sécurité Intérieure :</strong> "La sécurité civile a pour objet la prévention des risques de toute nature, l'information et l'alerte des populations ainsi que la protection des personnes, des biens et de l'environnement."</p>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>✅ Droits Fondamentaux en Situation d'Urgence</h4>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">1</span> Droit à l'Information</h4>
-                    <p>Accès aux informations sur les risques et les consignes de sécurité</p>
-                    <p>Alertes précoces en cas de danger imminent</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">2</span> Droit aux Secours</h4>
-                    <p>Accès aux services d'urgence sans discrimination</p>
-                    <p>Prise en charge médicale et psychologique</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">3</span> Droit à la Protection</h4>
-                    <p>Protection des personnes vulnérables (enfants, personnes âgées, handicapées)</p>
-                    <p>Hébergement d'urgence et aide alimentaire</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">4</span> Droit à la Confidentialité</h4>
-                    <p>Respect de la vie privée et des données personnelles</p>
-                    <p>Confidentialité médicale préservée</p>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>📋 Devoirs Civiques en Situation de Crise</h4>
-                
+                <h4>⚖️ Les Fondements de la République</h4>
                 <div class="tech-grid">
                     <div class="tech-item">
-                        <h5>🔊 Respecter les Consignes</h5>
-                        <p>Se conformer aux instructions des autorités et secours</p>
+                        <h5>🇫🇷 Constitution de 1958</h5>
+                        <p>Loi fondamentale qui organise les pouvoirs publics, définit les libertés et les droits des citoyens. Instaure la Ve République.</p>
                     </div>
                     
                     <div class="tech-item">
-                        <h5>🤝 Solidarité Citoyenne</h5>
-                        <p>Porter assistance aux personnes en danger dans la mesure de ses moyens</p>
+                        <h5>📜 Déclaration des Droits de l'Homme (1789)</h5>
+                        <p>« Les hommes naissent et demeurent libres et égaux en droits. » 17 articles fondateurs des droits naturels et inaliénables.</p>
                     </div>
                     
                     <div class="tech-item">
-                        <h5>🚫 Non-Entrave</h5>
-                        <p>Ne pas gêner l'action des secours et services d'urgence</p>
+                        <h5>🤝 Préambule de 1946</h5>
+                        <p>Établit les droits sociaux et économiques : droit au travail, à la santé, à l'éducation, égalité hommes-femmes.</p>
                     </div>
                     
                     <div class="tech-item">
-                        <h5>📢 Information Véridique</h5>
-                        <p>Transmettre des informations exactes aux secours</p>
+                        <h5>🌈 Charte de l'Environnement (2005)</h5>
+                        <p>Intègre la protection de l'environnement dans la Constitution : droit de vivre dans un environnement équilibré et respectueux de la santé.</p>
                     </div>
                 </div>
             </div>
             
             <div class="modal-section">
-                <h4>⚠️ Responsabilités Légales</h4>
-                <div class="survival-step">
-                    <h4><span class="step-number">⚖️</span> Non-Assistance à Personne en Danger</h4>
-                    <p><strong>Article 223-6 du Code Pénal :</strong> "Quiconque pouvant empêcher par son action immédiate, sans risque pour lui ou pour les tiers, soit un crime, soit un délit contre l'intégrité corporelle de la personne s'abstient volontairement de le faire est puni de cinq ans d'emprisonnement et de 75 000 euros d'amende."</p>
-                </div>
-                
-                <div class="survival-step">
-                    <h4><span class="step-number">📞</span> Utilisation des Numéros d'Urgence</h4>
-                    <p>Les appels abusifs aux services d'urgence sont passibles d'amende (jusqu'à 750€)</p>
-                    <p>Respecter la priorité aux situations réelles d'urgence</p>
-                </div>
-            </div>
-            
-            <div class="modal-section">
-                <h4>🛡️ Protection des Secouristes</h4>
-                <div class="highlight-box success">
-                    <p><strong>Article 122-7 du Code Pénal :</strong> "N'est pas pénalement responsable la personne qui, face à un danger actuel ou imminent qui menace elle-même, autrui ou un bien, accomplit un acte nécessaire à la sauvegarde de la personne ou du bien, sauf s'il y a disproportion entre les moyens employés et la gravité de la menace."</p>
-                </div>
-                <p>Ce texte protège les citoyens et secouristes agissant en état de nécessité.</p>
-            </div>
-            
-            <div class="modal-section">
-                <h4>📚 Ressources Juridiques</h4>
+                <h4>🛡️ Vos Droits Fondamentaux</h4>
                 <div class="equipment-list">
                     <div class="equipment-item">
-                        <h5>📘 Code de la Sécurité Intérieure</h5>
-                        <p>Définit l'organisation de la sécurité civile</p>
+                        <h5>🧑‍⚖️ Droits civils et politiques</h5>
+                        <p>Liberté d'expression, de conscience, de religion. Droit de vote, d'association, de manifestation pacifique.</p>
                     </div>
                     <div class="equipment-item">
-                        <h5>📗 Code Pénal</h5>
-                        <p>Définit les infractions et sanctions</p>
+                        <h5>🏥 Droits sociaux et économiques</h5>
+                        <p>Droit au travail, à la santé, à l'éducation, au logement, à la protection sociale, à un niveau de vie suffisant.</p>
                     </div>
                     <div class="equipment-item">
-                        <h5>📕 Code de la Santé Publique</h5>
-                        <p>Régit l'organisation des secours médicaux</p>
+                        <h5>👶 Droits spécifiques</h5>
+                        <p>Droits de l'enfant, des personnes handicapées, des personnes âgées, égalité entre hommes et femmes.</p>
                     </div>
                     <div class="equipment-item">
-                        <h5>📙 Défenseure des Droits</h5>
-                        <p>0 809 69 70 00 - protection des droits</p>
+                        <h5>⚖️ Droits juridiques</h5>
+                        <p>Présomption d'innocence, droit à un procès équitable, droit à un avocat, protection contre l'arbitraire.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌍 Droits environnementaux</h5>
+                        <p>Droit à un environnement sain, information sur les risques, participation aux décisions environnementales.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Droits numériques</h5>
+                        <p>Protection des données personnelles (RGPD), liberté d'accès à internet, droit à l'oubli numérique.</p>
                     </div>
                 </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Vos Devoirs de Citoyen</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🏛️ Devoirs civiques</h5>
+                        <p>Respecter la loi, payer ses impôts, participer aux élections, siéger en tant que juré si convoqué.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👨‍👩‍👧‍👦 Devoirs sociaux</h5>
+                        <p>Respecter les droits d'autrui, protéger les personnes vulnérables, contribuer à la solidarité nationale.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🎖️ Devoirs civils</h5>
+                        <p>Participer à la Journée Défense et Citoyenneté (JDC), respecter les symboles de la République.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌳 Devoirs environnementaux</h5>
+                        <p>Contribuer à la préservation de l'environnement, respecter les réglementations écologiques.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🆘 Devoirs en situation d'urgence</h5>
+                        <p>Porter secours à personne en danger (obligation d'assistance), respecter les consignes des autorités.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📚 Devoirs éducatifs</h5>
+                        <p>Assurer l'éducation de ses enfants, respecter l'obligation scolaire (3 à 16 ans).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📞 Numéros d'Urgence pour la Défense des Droits</h4>
+                <div class="highlight-box">
+                    <p><strong>Défenseur des droits :</strong> 09 69 39 00 00</p>
+                    <p><strong>Violences conjugales :</strong> 3919</p>
+                    <p><strong>Enfance en danger :</strong> 119</p>
+                    <p><strong>Discrimination :</strong> 08 10 00 14 04</p>
+                    <p><strong>Handicap :</strong> 0 800 360 360</p>
+                    <p><strong>Consommation :</strong> 08 90 90 19 80</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📚 Textes Fondamentaux à Connaître</h4>
+                <ul>
+                    <li><strong>Constitution du 4 octobre 1958</strong> - Organisation des pouvoirs publics</li>
+                    <li><strong>Déclaration des Droits de l'Homme et du Citoyen (1789)</strong> - Libertés fondamentales</li>
+                    <li><strong>Préambule de la Constitution de 1946</strong> - Droits sociaux et économiques</li>
+                    <li><strong>Charte de l'environnement (2005)</strong> - Droits environnementaux</li>
+                    <li><strong>Convention européenne des droits de l'homme (1950)</strong> - Protection des droits en Europe</li>
+                    <li><strong>Convention internationale des droits de l'enfant (1989)</strong> - Droits spécifiques des enfants</li>
+                    <li><strong>Déclaration universelle des droits de l'homme (1948)</strong> - Normes internationales</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏛️ Institutions de Protection des Droits</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">Défenseur des droits</div>
+                        <div class="spec-label">Institution indépendante</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Cour européenne des droits de l'homme</div>
+                        <div class="spec-label">Juridiction internationale</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Conseil constitutionnel</div>
+                        <div class="spec-label">Contrôle de constitutionnalité</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CNIL</div>
+                        <div class="spec-label">Protection des données</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CGLPL</div>
+                        <div class="spec-label">Contrôleur des lieux de privation de liberté</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Médiateur de la République</div>
+                        <div class="spec-label">Règlement des litiges avec l'administration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>💡 Saviez-vous ?</strong> En France, la Constitution est au sommet de la hiérarchie des normes. Toutes les lois doivent être conformes à la Constitution et aux principes fondamentaux qu'elle contient. Le Conseil constitutionnel veille à cette conformité.</p>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>⚠️ En situation d'urgence :</strong> Certains droits peuvent être temporairement restreints pour protéger la population (état d'urgence, catastrophe naturelle). Ces restrictions doivent être proportionnées, temporaires et contrôlées par l'autorité judiciaire.</p>
             </div>
             
             <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">Fermer</button>
@@ -2274,6 +1302,11 @@
             document.getElementById(modalId).style.display = 'flex';
         }
 
+        // Fonction pour ouvrir le modal droits
+        function openRightsModal() {
+            openModal('rightsModal');
+        }
+
         // Fonction pour gérer le menu déroulant PDF
         function togglePdfDropdown() {
             const dropdown = document.getElementById('pdfDropdown');
@@ -2403,11 +1436,6 @@
         function openHealthModal() {
             openModal('healthModal');
         }
-        
-        // Fonction pour ouvrir le modal droits et devoirs
-        function openRightsModal() {
-            openModal('rightsModal');
-        }
 
         // Fonction de rendu principal
         function render() {
@@ -2421,29 +1449,29 @@
                 let html = `
                     <div class="card intro-card">
                         <div class="intro-badge">COMMENT ÇA MARCHE ?</div>
-                        <h3 class="card-title">Guide d'utilisation SOS Guide</h3>
-                        <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations vitales. Voici comment naviguer :</p>
+                        <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
+                        <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
                         
                         <div class="intro-steps">
                             <div class="intro-step">
                                 <div class="step-number">1</div>
                                 <div class="intro-step-title">Navigation par catégories</div>
-                                <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie.</div>
+                                <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
                             </div>
                             <div class="intro-step">
                                 <div class="step-number">2</div>
                                 <div class="intro-step-title">Recherche rapide</div>
-                                <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique.</div>
+                                <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
                             </div>
                             <div class="intro-step">
                                 <div class="step-number">3</div>
                                 <div class="intro-step-title">Accès aux numéros</div>
-                                <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro d'urgence.</div>
+                                <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
                             </div>
                             <div class="intro-step">
                                 <div class="step-number">4</div>
-                                <div class="intro-step-title">Guides pratiques</div>
-                                <div class="intro-step-desc">Explorez les guides : Équipements, Protocoles, Alertes, Santé et Droits.</div>
+                                <div class="intro-step-title">Guides et ressources</div>
+                                <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
                             </div>
                         </div>
                         
@@ -2461,12 +1489,29 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon">
+                                ${ICONS.rights}
+                            </div>
+                            <span class="tag">DROITS</span>
+                        </div>
+                        <h3 class="card-title">Droits & Devoirs Fondamentaux</h3>
+                        <p class="card-text">Constitution, Déclaration des Droits de l'Homme, valeurs de la République. Connaître ses droits et devoirs en situation difficile.</p>
+                        <div class="card-actions">
+                            <button class="card-action-btn" onclick="openRightsModal()">
+                                <span>Voir les fondements</span>
+                                <span>→</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-icon">
                                 ${ICONS.kit}
                             </div>
                             <span class="tag">SURVIE</span>
                         </div>
                         <h3 class="card-title">Équipements de Survie</h3>
-                        <p class="card-text">Liste complète des équipements essentiels à préparer pour faire face aux situations d'urgence.</p>
+                        <p class="card-text">Liste complète des équipements essentiels à préparer pour faire face aux situations d'urgence. 12 catégories détaillées.</p>
                         <div class="card-actions">
                             <button class="card-action-btn" onclick="openSurvivalModal()">
                                 <span>Voir la liste complète</span>
@@ -2483,7 +1528,7 @@
                             <span class="tag">PROTOCOLE</span>
                         </div>
                         <h3 class="card-title">Protocole d'Urgence</h3>
-                        <p class="card-text">Les 5 étapes à suivre en cas de situation critique. Méthode structurée pour réagir efficacement.</p>
+                        <p class="card-text">Les 5 étapes à suivre en cas de situation critique. Méthode structurée pour réagir efficacement. Guide PSC1 intégré.</p>
                         <div class="card-actions">
                             <button class="card-action-btn" onclick="openProtocolModal()">
                                 <span>Voir les étapes détaillées</span>
@@ -2500,7 +1545,7 @@
                             <span class="tag">ALERTE</span>
                         </div>
                         <h3 class="card-title">Alerte & Communication</h3>
-                        <p class="card-text">Systèmes d'alerte officiels, moyens de communication et plan familial d'urgence.</p>
+                        <p class="card-text">Systèmes d'alerte officiels, moyens de communication et plan familial d'urgence. FR-Alert, SAIP, signaux nationaux.</p>
                         <div class="card-actions">
                             <button class="card-action-btn" onclick="openAlertModal()">
                                 <span>Voir les systèmes complets</span>
@@ -2512,32 +1557,15 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="card-icon">
-                                ${ICONS.health}
+                                ${ICONS.heart}
                             </div>
                             <span class="tag">SANTÉ</span>
                         </div>
                         <h3 class="card-title">Santé & Premiers Secours</h3>
-                        <p class="card-text">Trousse de premiers soins, gestes qui sauvent et préparation médicale d'urgence.</p>
+                        <p class="card-text">Trousse de premiers soins, gestes qui sauvent et préparation médicale d'urgence. Guide complet avec procédures.</p>
                         <div class="card-actions">
                             <button class="card-action-btn" onclick="openHealthModal()">
                                 <span>Voir les gestes détaillés</span>
-                                <span>→</span>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="card">
-                        <div class="card-header">
-                            <div class="card-icon">
-                                ${ICONS.rights}
-                            </div>
-                            <span class="tag">DROITS</span>
-                        </div>
-                        <h3 class="card-title">Droits & Devoirs</h3>
-                        <p class="card-text">Cadre légal, droits fondamentaux et responsabilités civiques en situation d'urgence.</p>
-                        <div class="card-actions">
-                            <button class="card-action-btn" onclick="openRightsModal()">
-                                <span>Consulter les droits</span>
                                 <span>→</span>
                             </button>
                         </div>
@@ -2567,11 +1595,11 @@
                     <h3 class="card-title">${s.name}</h3>
                     <p class="card-text">${s.desc}</p>
                     <div class="card-actions">
-                        <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn" style="flex: 1;">
+                        <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
                             <span>${s.num}</span>
                             <span>📞</span>
                         </a>
-                        <button class="card-info-btn" onclick="openDescModal(${s.id})" style="width: 48px; flex-shrink: 0;">
+                        <button class="card-info-btn" onclick="openDescModal(${s.id})">
                             <span>?</span>
                         </button>
                     </div>
@@ -2618,6 +1646,25 @@
                 closeMenu();
             });
 
+            // Événement pour le menu PDF
+            document.getElementById('pdfBtn').addEventListener('click', (e) => {
+                e.stopPropagation();
+                togglePdfDropdown();
+            });
+
+            // Fermer le menu déroulant PDF si on clique ailleurs
+            document.addEventListener('click', function(event) {
+                const pdfBtn = document.getElementById('pdfBtn');
+                const pdfDropdown = document.getElementById('pdfDropdown');
+                
+                if (!pdfBtn.contains(event.target) && !pdfDropdown.contains(event.target)) {
+                    pdfDropdown.classList.remove('show');
+                }
+            });
+
+            // Hamburger menu
+            hamburger.addEventListener('click', toggleMenu);
+
             // Fermer les modals en cliquant en dehors
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', (e) => {
@@ -2633,11 +1680,10 @@
                     document.querySelectorAll('.modal').forEach(modal => {
                         modal.style.display = 'none';
                     });
+                    // Fermer aussi le menu déroulant PDF
+                    document.getElementById('pdfDropdown').classList.remove('show');
                 }
             });
-
-            // Hamburger menu
-            hamburger.addEventListener('click', toggleMenu);
 
             // Smooth scrolling pour les liens d'ancrage
             document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -2668,14 +1714,12 @@
             }, { threshold: 0.1 });
 
             // Observer les cartes
-            setTimeout(() => {
-                document.querySelectorAll('.card').forEach(card => {
-                    card.style.opacity = '0';
-                    card.style.transform = 'translateY(20px)';
-                    card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-                    observer.observe(card);
-                });
-            }, 100);
+            document.querySelectorAll('.card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(card);
+            });
         };
     </script>
 
