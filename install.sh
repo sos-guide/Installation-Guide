@@ -175,7 +175,7 @@ EOF
     cat > /etc/hostapd/hostapd.conf << 'EOF'
 interface=wlan0
 driver=nl80211
-ssid=⛑️ SOS-Guide
+ssid=⛑️ SOS-GUIDE
 hw_mode=g
 channel=7
 wmm_enabled=0
@@ -339,13 +339,13 @@ show_complete() {
     echo "╠════════════════════════════════════════════════════════════╣"
     echo "║                                                            ║"
     echo "║  📡 POINT D'ACCÈS WI-FI OUVERT :                           ║"
-    echo "║     • SSID: ⛑️ SOS-Guide                                   ║"
+    echo "║     • SSID: SOS Guide                                      ║"
     echo "║     • Mot de passe: Aucun (réseau ouvert)                  ║"
     echo "║     • IP: 10.0.0.1                                         ║"
     echo "║     • eth0: DÉSACTIVÉ (réseau isolé)                       ║"
     echo "║                                                            ║"
     echo "║  🌐 ACCÈS IMMÉDIAT :                                       ║"
-    echo "║     1. Connectez-vous au Wi-Fi '⛑️ SOS-Guide'              ║"
+    echo "║     1. Connectez-vous au Wi-Fi '⛑️ SOS-GUIDE'              ║"
     echo "║     2. Ouvrez un navigateur web                            ║"
     echo "║     3. Vous verrez la page d'accueil SOS Guide             ║"
     echo "║                                                            ║"
@@ -367,7 +367,7 @@ show_complete() {
     echo "╚════════════════════════════════════════════════════════════╝"
     echo ""
     echo "📋 RÉCAPITULATIF :"
-    echo "   1. Le Raspberry Pi diffuse le Wi-Fi '⛑️ SOS-Guide' (ouvert)"
+    echo "   1. Le Raspberry Pi diffuse le Wi-Fi 'SOS Guide' (ouvert)"
     echo "   2. eth0 est DÉSACTIVÉ pour isoler complètement le réseau"
     echo "   3. Les clients se connectent automatiquement au Wi-Fi"
     echo "   4. Ils voient la page d'accueil"
