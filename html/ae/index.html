@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل SOS | خدمات المواطنين</title>
+    <meta name="description" content="دليل خدمات الطوارئ والتضامن لجميع المواطنين. الوصول بدون اتصال بالإنترنت مضمون.">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛑️</text></svg>">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <!-- التنقل -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⛑️</span>
+                <span>دليل SOS</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#services" class="nav-link">الخدمات</a>
+                <a href="#faq" class="nav-link">الأسئلة الشائعة</a>
+                <button id="aboutBtn" class="btn-primary">
+                    حول المشروع
+                </button>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- قائمة الجوال -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#services" onclick="closeMenu()">الخدمات</a>
+            <a href="#faq" onclick="closeMenu()">الأسئلة الشائعة</a>
+        </nav>
+
+        <div class="mobile-cta">
+            <button id="aboutBtnMobile" class="btn-primary" onclick="closeMenu(); openModal('aboutModal');">
+                حول المشروع
+            </button>
+        </div>
+    </div>
+
+    <!-- قسم الخدمات -->
+    <section class="section" id="services">
+    
+       <div class="section-header">
+            <span class="section-badge">أهلاً بك</span>
+            <h2 class="section-title">مرحباً بك! 👋</h2>
+            
+        </div>
+        
+        <div class="filters-container">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-cat="الرئيسية">الرئيسية</button>
+                <button class="filter-btn" data-cat="الكل">الكل</button>
+                <button class="filter-btn" data-cat="الطوارئ">الطوارئ</button>
+                <button class="filter-btn" data-cat="الاجتماعي">الاجتماعي</button>
+                <button class="filter-btn" data-cat="الجمعيات">الجمعيات</button>
+                <button class="filter-btn" data-cat="الدولية">الدولية</button>
+            </div>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث عن خدمة، مساعدة، رقم...">
+            </div>
+        </div>
+        
+        <div id="serviceGrid" class="services-grid">
+            <!-- المحتوى يتم إنشاؤه ديناميكياً بواسطة JavaScript -->
+        </div>
+    </section>
+
+    <!-- قسم الأسئلة الشائعة -->
+    <section class="section" id="faq">
+        <div class="section-header">
+            <span class="section-badge">الدعم</span>
+            <h2 class="section-title">الأسئلة الشائعة - الصحة النفسية والمعنوية</h2>
+            <p class="section-subtitle">
+                إجابات على الأسئلة المتداولة حول الرفاهية في الأوقات الصعبة
+            </p>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-container" id="faqContainer">
+                <!-- المحتوى سيتم إنشاؤه ديناميكياً بواسطة JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- التذييل -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <span>⛑️</span>
+                    <span>دليل SOS</span>
+                </a>
+                <p class="footer-description">
+                    حل مفتوح المصدر للمعلومات المواطنية المرنة. 
+                    قابل للنشر على Raspberry Pi، يعمل بدون إنترنت.
+                </p>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>التنقل</h3>
+                    <a href="#services">الخدمات</a>
+                    <a href="#faq">الأسئلة الشائعة</a>
+                    <a href="#ressources">المستندات</a>
+                    <a href="#about">حول المشروع</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>الفئات</h3>
+                    <a href="#services?cat=الطوارئ">الطوارئ</a>
+                    <a href="#services?cat=الاجتماعي">الخدمات الاجتماعية</a>
+                    <a href="#services?cat=الجمعيات">الجمعيات</a>
+                    <a href="#services?cat=الدولية">الدولية</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>الاتصال</h3>
+                    <a href="mailto:contact@sos-guide.fr" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; display: block; font-size: 0.8rem;">contact@sos-guide.fr</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 ⛑️ دليل SOS - مشروع مفتوح المصدر تحت رخصة MIT</p>
+            <p style="margin-top: 0.25rem;">صمم بواسطة Ludovic MARTIN ومجتمع المساهمين</p>
+        </div>
+    </footer>
+
+    <!-- النوافذ المنبثقة -->
+    <!-- نافذة حول المشروع -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">حول دليل SOS</h3>
+            
+            <div class="modal-section">
+                <h4>📋 مهمتنا</h4>
+                <p><strong>دليل SOS</strong> يركز المساعدات المواطنية وأرقام الطوارئ للوصول السريع في أي حالة. هدفنا هو توفير وصول عالمي للمعلومات الحيوية: خدمات الطوارئ، المساعدات الاجتماعية، الجمعيات المحلية والموارد المواطنية.</p>
+                <p>دليل SOS يضمن بقاء هذه المعلومات متاحة حتى بدون اتصال بالإنترنت، أثناء انقطاع الشبكة، الكوارث الطبيعية، أو في المناطق النائية.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚙️ العمل التقني المتقدم</h4>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>📶 شبكة Wi-Fi محلية</h5>
+                        <p>جهاز Raspberry Pi يبث شبكة Wi-Fi خاصة "SOS-GUIDE". لا حاجة لكلمة مرور للاتصال السريع.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>💾 تخزين محلي</h5>
+                        <p>جميع البيانات مخزنة على بطاقة microSD. لا حاجة لاتصال بالإنترنت بعد تشغيل النظام.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🔋 استهلاك منخفض للطاقة</h5>
+                        <p>جهاز Raspberry Pi يستهلك فقط 3-5 واط. يمكن أن يعمل على بطارية خارجية لأكثر من 24 ساعة.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>👥 مستخدمون متعددون</h5>
+                        <p>يدعم حتى 50 مستخدم متزامن على الشبكة المحلية. مثالي للأماكن العامة والمجتمعات.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🖥️ مواصفات Raspberry Pi</h4>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">RPi 4</div>
+                        <div class="spec-label">الموديل القياسي</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">2GB</div>
+                        <div class="spec-label">ذاكرة RAM</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">16GB</div>
+                        <div class="spec-label">تخزين microSD</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Wi-Fi 5</div>
+                        <div class="spec-label">ثنائي النطاق</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">5V/3A</div>
+                        <div class="spec-label">الطاقة</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">30+</div>
+                        <div class="spec-label">مستخدمون متزامنون</div>
+                    </div>
+                </div>
+                
+                <p>جهاز Raspberry Pi هو حاسوب صغير بحجم بطاقة ائتمان. استهلاكه المنخفض للطاقة وتعدد استخداماته يجعله الحل المثالي للنشر المحلي والمستقل.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 المجتمع والتضامن</h4>
+                <p>هذا المشروع <strong>مفتوح المصدر</strong> وتعاوني. يتم تحديث المعلومات بانتظام من قبل المجتمع لضمان دقتها وملاءمتها.</p>
+                <p>نؤمن بالتضامن الرقمي: كل بلدية، جمعية أو مجموعة مواطنين يمكنها نشر دليل SOS الخاص بها لخدمة مجتمعها.</p>
+                
+                <div class="highlight-box success">
+                    <p><strong>📢 ساهم!</strong> يمكنك تحسين هذا المشروع على GitHub، اقتراح إضافات، أو نشر دليل SOS في بلديتك.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🌐 معلومات الاتصال والموقع الإلكتروني</h4>
+                <p><strong>الموقع الإلكتروني:</strong> <a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
+                <p><strong>البريد الإلكتروني:</strong> <a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
+                
+                <div class="highlight-box warning">
+                    <p><strong>⚠️ ملاحظة هامة:</strong> لزيارة موقعنا الإلكتروني، يجب عليك قطع الاتصال بشبكة Wi-Fi "SOS-GUIDE" واستخدام اتصال الهاتف المحمول (3G/4G/5G) أو اتصال إنترنت آخر. هذه الخدمة عبر الإنترنت تعمل بشكل مستقل عن هذه الصفحة التي تعمل بدون اتصال.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 للبلديات:</strong> نقدم مجموعات نشر جاهزة، تشمل جهاز Raspberry Pi مكون مسبقاً، مصدر الطاقة والعلبة. اتصل بنا للمزيد من المعلومات.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🚀 النشر والقابلية للتوسع</h4>
+                <p>يمكن نشر دليل SOS في سياقات مختلفة:</p>
+                <ul>
+                    <li><strong>البلديات</strong>: خدمات الطوارئ المحلية، الجمعيات، البلدية</li>
+                    <li><strong>الفعاليات</strong>: المهرجانات، المظاهرات، التجمعات</li>
+                    <li><strong>مراكز الاستقبال</strong>: اللاجئون، المشردون، حالات الطوارئ</li>
+                    <li><strong>المناطق الريفية</strong>: مكمل للتغطية الشبكية الضعيفة</li>
+                    <li><strong>المؤسسات</strong>: المدارس، المستشفيات، دور المسنين</li>
+                </ul>
+                
+                <p>النظام مصمم ليكون <strong>مستقلاً، مستداماً وقابلاً للتكرار</strong> بتكلفة منخفضة.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('aboutModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة وصف الخدمة -->
+    <div id="descModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="descTitle">اسم الخدمة</h3>
+            
+            <div class="modal-section">
+                <h4>📋 الوصف</h4>
+                <p id="descText">وصف مفصل للخدمة...</p>
+                <div class="highlight-box" id="descNum">
+                    <strong>📞 الرقم:</strong> 00 00 00 00 00
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>ℹ️ معلومات إضافية</h4>
+                <p>هذه الخدمة متاحة 24/7 للطوارئ. للمكالمات غير الطارئة، يفضل استخدام أوقات الدوام الرسمي.</p>
+            </div>
+            
+            <div class="card-actions" style="margin-top: 20px;">
+                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none;">
+                    <span id="descCallNum">اتصل الآن</span>
+                    <span>📞</span>
+                </a>
+                <button class="card-info-btn" onclick="closeModal('descModal')">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة معدات النجاة -->
+    <div id="survivalModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">معدات النجاة الأساسية</h3>
+            
+            <div class="modal-section">
+                <h4>📦 مجموعة الأساس الإلزامية</h4>
+                <p>جهز هذه المعدات مسبقاً للتعامل مع حالات الطوارئ:</p>
+                
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>💧 ماء صالح للشرب</h5>
+                        <p>3 لترات للشخص الواحد يومياً (3 أيام كحد أدنى)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🍞 طعام غير قابل للتلف</h5>
+                        <p>معلبات، ألواح الطاقة، أطعمة جافة (3 أيام)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔦 مصباح يدوي + بطاريات</h5>
+                        <p>إضاءة طوارئ، احتياطي بطاريات</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📻 راديو يدوي</h5>
+                        <p>لاستقبال المعلومات بدون كهرباء</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚡ شاحن شمسي</h5>
+                        <p>لشحن الهواتف والأجهزة الصغيرة</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧰 حقيبة الإسعافات الأولية</h5>
+                        <p>لصقات، مطهر، أدوية أساسية</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔪 أداة متعددة الاستخدامات</h5>
+                        <p>سكين سويسري أو Leatherman</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧤 قفازات واقية</h5>
+                        <p>لتعامل مع الأشياء الخطرة</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧥 بطانية النجاة</h5>
+                        <p>عزل حراري (حار/بارد)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧻 منتجات النظافة</h5>
+                        <p>جل كحولي، ورق تواليت، مناديل مبللة</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🗺️ خريطة محلية</h5>
+                        <p>خرائط ورقية لمنطقتك</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 قائمة جهات الاتصال</h5>
+                        <p>جهات اتصال الطوارئ على الورق</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📄 وثائق هامة</h4>
+                <ul>
+                    <li>صور عن بطاقات الهوية (هوية، جواز سفر، رخصة قيادة)</li>
+                    <li>بطاقة الضمان الصحي والوصفات الطبية</li>
+                    <li>نسخ عن وثائق التأمين (سكن، صحة، سيارة)</li>
+                    <li>جهات اتصال الطوارئ العائلية والمهنية</li>
+                    <li>نقود سائلة بفئات صغيرة (100 يورو كحد أدنى)</li>
+                    <li>مفاتيح سيارة ومنزل احتياطية</li>
+                    <li>سجل صحي وتطعيمات</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏠 تصميم المجموعة</h4>
+                <p><strong>التخزين:</strong> خزن مجموعتك في مكان سهل الوصول، بعيداً عن الرطوبة والضوء المباشر.</p>
+                <p><strong>الفحص:</strong> تحقق بانتظام من تواريخ الصلاحية (كل 6 أشهر).</p>
+                <p><strong>الإخلاء:</strong> خطط لحقيبة ظهر لكل شخص (30-40 لتر) للإخلاء السريع.</p>
+                <p><strong>التخصيص:</strong> خصص مجموعتك للاحتياجات الخاصة (رضع، مسنون، حيوانات، أدوية خاصة).</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 نصيحة خبير:</strong> جهز مجموعتين: "مجموعة المنزل" الأكثر اكتمالاً و"مجموعة الإخلاء" الخفيفة في حقيبة ظهر. اختبر معداتك بانتظام ودرّب جميع أفراد الأسرة على استخدامها.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('survivalModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة بروتوكول الطوارئ -->
+    <div id="protocolModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">بروتوكول الطوارئ في 5 خطوات</h3>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">1</span> تقييم الموقف</h4>
+                <p><strong>احتفظ بهدوئك</strong> - تنفس بعمق قبل التصرف</p>
+                <p><strong>حلل المخاطر</strong>: حريق، دخان، انهيار، غاز، كهرباء</p>
+                <p><strong>احمِ نفسك أولاً</strong> قبل إنقاذ الآخرين</p>
+                <p><strong>حدد مخارج الطوارئ</strong></p>
+                <p><strong>قدر عدد الضحايا</strong> وحالتهم الظاهرية</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">2</span> تنبيه خدمات الإنقاذ</h4>
+                <p><strong>اتصل بالرقم المناسب</strong>: 15 (الإسعاف)، 18 (الإطفاء)، 17 (الشرطة)، 112 (الاتحاد الأوروبي)</p>
+                <p><strong>أعطِ هذه المعلومات بوضوح:</strong></p>
+                <ul>
+                    <li>اسمك ورقم هاتفك</li>
+                    <li>العنوان الدقيق (المدينة، الشارع، الرقم، الطابق، رمز الدخول)</li>
+                    <li>طبيعة المشكلة (حادث، حريق، إعياء...)</li>
+                    <li>عدد الضحايا وحالتهم الظاهرية</li>
+                    <li>المخاطر الخاصة (غاز، مواد كيميائية، كهرباء...)</li>
+                    <li>الإجراءات المتخذة بالفعل</li>
+                </ul>
+                <p><strong>لا تضع السماعة أولاً</strong> - انتظر تعليمات المسعف</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">3</span> حماية الأشخاص</h4>
+                <p><strong>ضع الضحايا في مكان آمن</strong> بعيداً عن الخطر</p>
+                <p><strong>علّم المنطقة الخطرة</strong> لتجنب حوادث أخرى</p>
+                <p><strong>أوقف الغاز والكهرباء</strong> إذا لزم الأمر ودون خطر</p>
+                    <li>إنعاش قلبي رئوي إذا كنت مدرباً (30 ضغطة/نفسين)</li>
+                    <li>استخدام مزيل الرجفان إذا متوفر (DSA/DAE)</li>
+                </ul>
+                <p><strong>دفّئ الضحايا</strong> ببطاطين أو ملابس</p>
+                <p><strong>لا تعطي الشراب أبداً</strong> لشخص فاقد الوعي</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">5</span> انتظار خدمات الإنقاذ</h4>
+                <p><strong>جهز الوصول</strong>: أفسح الممرات، افتح الأبواب</p>
+                <p><strong>اشعر بوجودك</strong>: أضئ الأضواء، أشر</p>
+                <p><strong>انقل المعلومات</strong> لفرق الإنقاذ عند وصولهم</p>
+                <p><strong>اتبع تعليماتهم</strong> دون عرقلة عملهم</p>
+                <p><strong>كن متاحاً</strong> لتقديم معلومات أخرى</p>
+                <p><strong>سجل وقت وصول</strong> فرق الإنقاذ للمتابعة</p>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 تدريب موصى به:</strong> خذ تدريب PSC1 (الوقاية والإسعافات المدنية مستوى 1) لإتقان هذه الحركات. هذه التدريبات متاحة للجميع من عمر 10 سنوات وتستمر حوالي 7 ساعات.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('protocolModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة إنذار الطوارئ -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">إنذار واتصال الطوارئ</h3>
+            
+            <div class="modal-section">
+                <h4>📱 أنظمة الإنذار الرسمية</h4>
+                <p><strong>SAIP</strong> (نظام إنذار وإعلام السكان):</p>
+                <ul>
+                    <li>تطبيق جوال "SAIP" مجاني للتحميل</li>
+                    <li>إشعارات فورية للتنبيهات المحلية (فيضانات، حوادث، هجمات)</li>
+                    <li>معلومات آنية مع نصائح سلوكية</li>
+                    <li>تحديد الموقع الجغرافي للتنبيهات المستهدفة</li>
+                </ul>
+                
+                <p><strong>FR-Alert</strong>: نظام البث الخلوي</p>
+                <ul>
+                    <li>تنبيهات تصل تلقائياً لجميع الهواتف المحمولة</li>
+                    <li>يعمل حتى بدون تطبيق أو إنترنت</li>
+                    <li>رسائل في حال الخطر المباشر (عبر البث الخلوي)</li>
+                    <li>تغطية وطنية مفعلة منذ 2022</li>
+                </ul>
+                
+                <p><strong>تنبيهات Météo France</strong>: اليقظة الجوية</p>
+                <ul>
+                    <li>خريطة يقظة بألوان 4 (أخضر، أصفر، برتقالي، أحمر)</li>
+                    <li>نشرات إنذار للظواهر الخطرة</li>
+                    <li>تنبؤات لـ 24 و 48 ساعة</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📻 وسائل اتصال أساسية</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>📻 راديو FM</h5>
+                        <p>France Inter (87.8), France Info (105.5), محطات محلية</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📺 تلفزيون</h5>
+                        <p>France 2, France 3 Régions, قنوات إخبارية مستمرة</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌐 مواقع رسمية</h5>
+                        <p>Vigicrues, Météo France, المحافظة، البلدية</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 شبكات التواصل</h5>
+                        <p>حسابات رسمية المحافظة، البلدية، الإطفاء، الدرك</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📞 خطوط معلومات</h5>
+                        <p>أرقام خضراء للمحافظة، البلديات</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📢 مكبرات الصوت</h5>
+                        <p>مركبات بلدية، صفارات إنذار محلية</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>👨‍👩‍👧‍👦 خطة اتصال عائلية</h4>
+                <p><strong>ضع خطة قبل الأزمة:</strong></p>
+                <ol>
+                    <li><strong>عين جهة اتصال خارج المنطقة</strong>: جميع العائلة تتصل بهذا الشخص لتركيز المعلومات</li>
+                    <li><strong>حدد نقاط لقاء</strong>: واحد قريب من منزلك، واحد خارج الحي، واحد خارج المدينة</li>
+                    <li><strong>استخدم الرسائل النصية بدلاً من المكالمات</strong>: الرسائل النصية تمر أفضل في حال تشبع الشبكة</li>
+                    <li><strong>وفر بطارية الهاتف</strong>: وضع توفير الطاقة، شواحن محمولة</li>
+                    <li><strong>رسائل قصيرة وواضحة</strong>: "أنا بخير في [المكان]"، "أحتاج مساعدة في [العنوان]"</li>
+                    <li><strong>رمز عائلي</strong>: كلمة سر أو جملة للتحقق من الرسائل</li>
+                </ol>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚠️ إشارات الإنذار الوطنية</h4>
+                <p><strong>صفارات شبكة الإنذار الوطني:</strong></p>
+                <ul>
+                    <li><strong>إنذار</strong>: صوت معدل صعوداً وهبوطاً (3 مرات دقيقة واحدة مفصولة ب5 ثوان)</li>
+                    <li><strong>نهاية الإنذار</strong>: صوت مستمر لمدة 30 ثانية</li>
+                    <li><strong>اختبار شهري</strong>: أول أربعاء من الشهر عند الظهر (صوت وحيد لمدة دقيقة و41 ثانية)</li>
+                </ul>
+                
+                <p><strong>رسائل صوتية</strong>: في المواصلات، الأماكن العامة، المراكز التجارية</p>
+                <p><strong>لوحات رسائل متغيرة</strong>: على الطرق والطرق السريعة</p>
+                <p><strong>إنذار الهواتف</strong>: صوت صارم خاص لـ FR-Alert</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 في حال انقطاع الاتصالات:</strong> استخدم رسائل مكتوبة (ورق)، إشارات بصرية (ملاءات على النوافذ)، صفارات، أو نظام المراسلة في دليل SOS إذا كان متوفراً محلياً.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('alertModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة الصحة والإسعافات الأولية -->
+    <div id="healthModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">الصحة والإسعافات الأولية الكاملة</h3>
+            
+            <div class="modal-section">
+                <h4>🧰 محتويات حقيبة الإسعافات الأولية الكاملة</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🩹 لصقات</h5>
+                        <p>ضمادات معقمة، شريط لاصق، أربطة، لصقات هيدروكولويد</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧴 مطهر</h5>
+                        <p>Biseptine, Dakin, ماء أكسجيني، كلورهيكسيدين</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>💊 أدوية أساسية</h5>
+                        <p>باراسيتامول، إيبوبروفين، مضاد إسهال، مضاد هستامين</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>✂️ أدوات</h5>
+                        <p>مقص برأس دائري، ملقط، قفازات تستخدم مرة واحدة (مقاس M و L)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌡️ مقياس حرارة</h5>
+                        <p>إلكتروني مع بطاريات احتياطية</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>😷 غطاء وجه</h5>
+                        <p>أقنعة جراحية، FFP2 (x10)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🩺 مقياس ضغط</h5>
+                        <p>لأشخاص في خطر (ارتفاع ضغط)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧽 ضمادات</h5>
+                        <p>ضمادات معقمة 10x10 (x20), ضمادات مرقئة</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🦠 مطهر</h5>
+                        <p>محلول هيدروكحولي (100مل)، صابون مطهر</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 دفتر رعاية</h5>
+                        <p>لتسجيل التدخلات والملاحظات</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🆘 حركات تنقذ حياة - دليل كامل</h4>
+                
+                <div class="survival-step">
+                    <h4>🩸 نزيف حاد</h4>
+                    <p><strong>1. اضغط مباشرة</strong> على الجرح بقماش نظيف</p>
+                    <p><strong>2. أضجع المصاب</strong> لتجنب الإغماء الوعائي</p>
+                    <p><strong>3. ارفع الطرف</strong> إذا كان النزيف على طرف</p>
+                    <p><strong>4. اضغط الشريان</strong> في المكان الأعلى إذا استمر النزيف (نقاط الضغط)</p>
+                    <p><strong>5. اتصل بالـ 15</strong> فوراً للنزيف الغزير</p>
+                    <p><strong>6. ضع رباطاً</strong> فقط كحل أخير (سجل وقت وضعه)</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🔥 حرق</h4>
+                    <p><strong>1. برد لمدة 15-20 دقيقة</strong> تحت ماء فاتر (15-25°م)</p>
+                    <p><strong>2. أزل الملابس والمجوهرات</strong> قبل ظهور الوذمة</p>
+                    <p><strong>3. لا تفتح البثور</strong> (خطر العدوى)</p>
+                    <p><strong>4. لا تضع مواد دهنية</strong> (زبدة، زيت، كريم)</p>
+                    <p><strong>5. غطِ بقماش نظيف</strong> وجاف</p>
+                    <p><strong>6. اتصل بالـ 15 إذا</strong>: حرق واسع (> حجم راحة اليد)، على الوجه، اليدين، المفاصل، أو حرق كيميائي/كهربائي</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>😵 إعياء / فقدان وعي</h4>
+                    <p><strong>1. تحقق من الوعي</strong>: "هل أنت بخير؟ هل تسمعني؟" + تحفيز لطيف</p>
+                    <p><strong>2. تحقق من التنفس</strong>: انظر إذا كان الصدر يعلو، استمع، احس بالنفس</p>
+                    <p><strong>3. إذا كان فاقد الوعي لكن يتنفس</strong>: ضعه في وضعية الأمان الجانبية</p>
+                    <p><strong>4. إذا كان فاقد الوعي ولا يتنفس</strong>: ابدأ الإنعاش القلبي الرئوي (30 ضغطة/نفسين)</p>
+                    <p><strong>5. أرخِ الياقة، الربطة، الحزام</strong></p>
+                    <p><strong>6. احمِ من الحرارة/البرد</strong> ببطانية</p>
+                    <p><strong>7. اتصل بالـ 15</strong> بوصف الأعراض بدقة</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🤕 رضّة / كسر</h4>
+                    <p><strong>1. ثبّت الطرف</strong> في الوضعية التي وجدته فيها</p>
+                    <p><strong>2. ضع برودة</strong> لتقليل الوذمة والألم</p>
+                    <p><strong>3. ارفع الطرف</strong> إذا أمكن</p>
+                    <p><strong>4. لا تعطِ أي أكل أو شراب</strong> (خطر تدخل جراحي)</p>
+                    <p><strong>5. راقب علامات الصدمة</strong>: شحوب، تعرق، قشعريرة، هياج</p>
+                    <p><strong>6. انقل فقط إذا لزم الأمر</strong>, مع تثبيت مسبق</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📋 تحضير طبي عائلي</h4>
+                <ul>
+                    <li><strong>قائمة الأدوية المعتادة</strong> بجرعة دقيقة ومدة العلاج</li>
+                    <li><strong>نسخ الوصفات الطبية</strong> الجارية (لتجديدها قبل انتهائها)</li>
+                    <li><strong>جهات اتصال مهنية</strong>: الطبيب المعالج، أخصائيون، صيدلية الطوارئ</li>
+                    <li><strong>معلومات طبية</strong>: فصيلة الدم، حساسيات معروفة (أدوية، أطعمة، أخرى)</li>
+                    <li><strong>وثيقة عن الأمراض المزمنة</strong>: سكري، ارتفاع ضغط، ربو، صرع، إلخ.</li>
+                    <li><strong>سجل تطعيمات</strong> محدث لجميع أفراد الأسرة</li>
+                    <li><strong>تأمينات صحية</strong>: أرقام عقود، هواتف، ضمانات</li>
+                    <li><strong>جهات اتصال ICE</strong> (في حال الطوارئ) مبرمجة في الهاتف</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 تدريب PSC1:</strong> تدريب الوقاية والإسعافات المدنية مستوى 1 متاح للجميع من عمر 10 سنوات. يستمر 7 ساعات ويكلف بين 50 و70 يورو. اتصل بالصليب الأحمر، الإطفاء، أو الحماية المدنية في منطقتك.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('healthModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <!-- نافذة الحقوق والواجبات -->
+    <div id="rightsModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">الحقوق والواجبات الأساسية</h3>
+            
+            <div class="modal-section">
+                <h4>⚖️ أسس الجمهورية</h4>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>🇫🇷 دستور 1958</h5>
+                        <p>القانون الأساسي الذي ينظم السلطات العامة، يحدد الحريات وحقوق المواطنين. يؤسس الجمهورية الخامسة.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>📜 إعلان حقوق الإنسان (1789)</h5>
+                        <p>"يولد الناس ويبقون أحراراً ومتساوين في الحقوق." 17 مادة أساسية للحقوق الطبيعية وغير القابلة للتصرف.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🤝 مقدمة 1946</h5>
+                        <p>تؤسس الحقوق الاجتماعية والاقتصادية: الحق في العمل، الصحة، التعليم، مساواة الرجل والمرأة.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🌈 ميثاق البيئة (2005)</h5>
+                        <p>يدمج حماية البيئة في الدستور: الحق في العيش في بيئة متوازنة وتحترم الصحة.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🛡️ حقوقك الأساسية</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🧑‍⚖️ حقوق مدنية وسياسية</h5>
+                        <p>حرية التعبير، الوجدان، الدين. حق التصويت، التجمع، التظاهر السلمي.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🏥 حقوق اجتماعية واقتصادية</h5>
+                        <p>الحق في العمل، الصحة، التعليم، السكن، الحماية الاجتماعية، مستوى معيشي كافٍ.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👶 حقوق خاصة</h5>
+                        <p>حقوق الطفل، الأشخاص ذوي الإعاقة، المسنين، مساواة بين الرجل والمرأة.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚖️ حقوق قانونية</h5>
+                        <p>قرينة البراءة، حق في محاكمة عادلة، حق في محام، حماية من التعسف.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌍 حقوق بيئية</h5>
+                        <p>الحق في بيئة صحية، معلومات عن المخاطر، مشاركة في القرارات البيئية.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 حقوق رقمية</h5>
+                        <p>حماية البيانات الشخصية (GDPR)، حرية الوصول للإنترنت، الحق في النسيان الرقمي.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 واجباتك كمواطن</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🏛️ واجبات مدنية</h5>
+                        <p>احترام القانون، دفع الضرائب، المشاركة في الانتخابات، الجلوس كعضو هيئة محلفين إذا استدعيت.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👨‍👩‍👧‍👦 واجبات اجتماعية</h5>
+                        <p>احترام حقوق الآخرين، حماية الأشخاص الضعفاء، المساهمة في التضامن الوطني.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🎖️ واجبات مدنية</h5>
+                        <p>المشاركة في اليوم الدفاع والمواطنة (JDC)، احترام رموز الجمهورية.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌳 واجبات بيئية</h5>
+                        <p>المساهمة في حماية البيئة، احترام التنظيمات البيئية.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🆘 واجبات في حال الطوارئ</h5>
+                        <p>إنقاذ شخص في خطر (واجب المساعدة)، احترام تعليمات السلطات.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📚 واجبات تعليمية</h5>
+                        <p>ضمان تعليم أطفالك، احترام إلزامية التعليم (3 إلى 16 سنة).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📞 أرقام الطوارئ للدفاع عن الحقوق</h4>
+                <div class="highlight-box">
+                    <p><strong>المدافع عن الحقوق:</strong> 09 69 39 00 00</p>
+                    <p><strong>العنف المنزلي:</strong> 3919</p>
+                    <p><strong>الطفولة في خطر:</strong> 119</p>
+                    <p><strong>تمييز:</strong> 08 10 00 14 04</p>
+                    <p><strong>إعاقة:</strong> 0 800 360 360</p>
+                    <p><strong>استهلاك:</strong> 08 90 90 19 80</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📚 نصوص أساسية يجب معرفتها</h4>
+                <ul>
+                    <li><strong>دستور 4 أكتوبر 1958</strong> - تنظيم السلطات العامة</li>
+                    <li><strong>إعلان حقوق الإنسان والمواطن (1789)</strong> - الحريات الأساسية</li>
+                    <li><strong>مقدمة دستور 1946</strong> - الحقوق الاجتماعية والاقتصادية</li>
+                    <li><strong>ميثاق البيئة (2005)</strong> - الحقوق البيئية</li>
+                    <li><strong>الاتفاقية الأوروبية لحقوق الإنسان (1950)</strong> - حماية الحقوق في أوروبا</li>
+                    <li><strong>الاتفاقية الدولية لحقوق الطفل (1989)</strong> - حقوق خاصة للأطفال</li>
+                    <li><strong>الإعلان العالمي لحقوق الإنسان (1948)</strong> - معايير دولية</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏛️ مؤسسات حماية الحقوق</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">المدافع عن الحقوق</div>
+                        <div class="spec-label">مؤسسة مستقلة</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">المحكمة الأوروبية لحقوق الإنسان</div>
+                        <div class="spec-label">هيئة قضائية دولية</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">المجلس الدستوري</div>
+                        <div class="spec-label">رقابة دستورية</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CNIL</div>
+                        <div class="spec-label">حماية البيانات</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CGLPL</div>
+                        <div class="spec-label">مراقب أماكن الحرمان من الحرية</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">وسيط الجمهورية</div>
+                        <div class="spec-label">تسوية النزاعات مع الإدارة</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>💡 هل تعلم؟</strong> في فرنسا، الدستور في قمة هرم المعايير. جميع القوانين يجب أن تتفق مع الدستور والمبادئ الأساسية التي يحتويها. المجلس الدستوري يراقب هذه المطابقة.</p>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>⚠️ في حال الطوارئ:</strong> بعض الحقوق قد تقيد مؤقتاً لحماية السكان (حالة الطوارئ، كارثة طبيعية). هذه القيود يجب أن تكون متناسبة، مؤقتة ومراقبة من السلطة القضائية.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">إغلاق</button>
+        </div>
+    </div>
+
+    <script>
+    // متغيرات عامة
+    let filter = 'الرئيسية';
+    let search = '';
+    let categories = [];
+    let faqItems = [];
+
+    // تحميل بيانات JSON
+    function loadJSONData() {
+        // تحميل الفئات
+        const categoriesJSON = document.getElementById('categoriesData').textContent;
+        categories = JSON.parse(categoriesJSON);
+        
+        // تحميل الأسئلة الشائعة
+        const faqJSON = document.getElementById('faqData').textContent;
+        faqItems = JSON.parse(faqJSON);
+    }
+
+    // الأيقونات
+    const ICONS = {
+        emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
+        social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+        police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
+        fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
+        heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
+        world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+        kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
+        protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+        alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
+        health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
+        wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
+        rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
+    };
+
+    // بيانات الخدمات - جميع الخدمات الـ 42
+    const SERVICES = [
+        // الطوارئ
+        { 
+            id: 1,
+            cat: 'الطوارئ', 
+            name: 'الإسعاف', 
+            num: '15', 
+            col: '#EF4444', 
+            icon: ICONS.emergency, 
+            desc: 'خدمة المساعدة الطبية الطارئة. لجميع الحالات الطبية الطارئة الخطيرة التي تتطلب تدخلاً سريعاً.',
+            detail: 'الإسعاف يتدخل للحالات الطبية الطارئة (حوادث، إعياء، ضائقة حيوية). لا تتصل لاستفسارات غير طارئة.'
+        },
+        { 
+            id: 2,
+            cat: 'الطوارئ', 
+            name: 'الشرطة', 
+            num: '17', 
+            col: '#0066FF', 
+            icon: ICONS.police, 
+            desc: 'الشرطة الوطنية للإبلاغ عن جريمة، خطر مباشر أو طلب تدخل عاجل.',
+            detail: 'الشرطة تتدخل للجرائم، الجنح، حوادث الطرق، اضطرابات النظام العام.'
+        },
+        { 
+            id: 3,
+            cat: 'الطوارئ', 
+            name: 'الإطفاء', 
+            num: '18', 
+            col: '#F59E0B', 
+            icon: ICONS.fire, 
+            desc: 'رجال الإطفاء للحرائق، الحوادث، الفيضانات وجميع أنواع الإنقاذ.',
+            detail: 'رجال الإطفاء يتدخلون للحرائق، حوادث الطرق، إنقاذ الأشخاص، الفيضانات.'
+        },
+        { 
+            id: 4,
+            cat: 'الطوارئ', 
+            name: 'أطباء الطوارئ', 
+            num: '3624', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'طبيب متاح 24/7 للحالات الطبية الطارئة غير الحيوية.',
+            detail: 'أطباء الطوارئ يرسلون طبيباً إلى المنزل للحالات غير الحيوية (حمى، آلام، استشارات طبية).'
+        },
+        { 
+            id: 5,
+            cat: 'الطوارئ', 
+            name: 'رقم الطوارئ الموحد في الاتحاد الأوروبي', 
+            num: '112', 
+            col: '#3B82F6', 
+            icon: ICONS.emergency, 
+            desc: 'رقم الطوارئ الأوروبي صالح في جميع دول الاتحاد الأوروبي.',
+            detail: 'الرقم 112 يعمل في جميع أنحاء أوروبا. يوصلك بخدمات الطوارئ في البلد.'
+        },
+        { 
+            id: 6,
+            cat: 'الطوارئ', 
+            name: 'مركز مكافحة السموم', 
+            num: '01 40 05 48 48', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'نصائح في حال التسمم، ابتلاع مواد خطرة أو عضات.',
+            detail: 'مركز مكافحة السموم في باريس. أعط اسم المنتج، الكمية المبتلعة، عمر ووزن المصاب.'
+        },
+        { 
+            id: 7,
+            cat: 'الطوارئ', 
+            name: 'طوارئ الكهرباء', 
+            num: '09 72 67 50 XX', 
+            col: '#F59E0B', 
+            icon: ICONS.emergency, 
+            desc: 'Enedis لأعطال الكهرباء، أسلاك كهربائية مقطوعة أو مخاطر كهربائية.',
+            detail: 'اتصل برقم منطقتك (استبدل XX برمز المنطقة). أبلغ عن الأعطال.'
+        },
+        { 
+            id: 8,
+            cat: 'الطوارئ', 
+            name: 'طوارئ الغاز', 
+            num: '09 69 36 35 34', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'GRDF لتسرب الغاز، روائح مشبوهة أو مشاكل في التغذية.',
+            detail: 'في حال رائحة غاز قوية: لا تشعل أضواء، هوّن المكان، اخرج، اتصل من الخارج.'
+        },
+        
+        // الاجتماعي
+        { 
+            id: 9,
+            cat: 'الاجتماعي', 
+            name: 'الإسعاف الاجتماعي', 
+            num: '115', 
+            col: '#0F172A', 
+            icon: ICONS.social, 
+            desc: 'إيواء طارئ، جولات ومساعدة للمشردين.',
+            detail: 'الرقم 115 يوجه إلى أماكن الإيواء الطارئ، ينظم الجولات.'
+        },
+        { 
+            id: 10,
+            cat: 'الاجتماعي', 
+            name: 'الطفولة في خطر', 
+            num: '119', 
+            col: '#EC4899', 
+            icon: ICONS.social, 
+            desc: 'الإبلاغ عن أطفال في خطر أو معرضين للخطر.',
+            detail: 'رقم مجاني، سري، 24/7. أبلغ عن أي حالة إساءة أو إهمال.'
+        },
+        { 
+            id: 11,
+            cat: 'الاجتماعي', 
+            name: 'عنف ضد النساء', 
+            num: '3919', 
+            col: '#BE185D', 
+            icon: ICONS.social, 
+            desc: 'استماع، معلومات وتوجيه للنساء ضحايا العنف.',
+            detail: 'رقم مجاني، مجهول، 24/7. عنف منزلي، نفسي، جنسي.'
+        },
+        { 
+            id: 12,
+            cat: 'الاجتماعي', 
+            name: 'خدمة معلومات المخدرات', 
+            num: '0800 23 13 13', 
+            col: '#059669', 
+            icon: ICONS.social, 
+            desc: 'استماع، معلومات ومساعدة للإدمان (مخدرات، كحول، قمار).',
+            detail: 'رقم مجاني، مجهول، 7/7 من 8 صباحاً إلى 2 ليلاً. نصائح، توجيه لمراكز علاج.'
+        },
+        { 
+            id: 13,
+            cat: 'الاجتماعي', 
+            name: 'الاستماع لمنع الانتحار', 
+            num: '3114', 
+            col: '#3B82F6', 
+            icon: ICONS.heart, 
+            desc: 'منع الانتحار، استماع ودعم نفسي.',
+            detail: 'الرقم الوطني لمنع الانتحار. استماع متعاطف، غير حاكم، 24/7.'
+        },
+        { 
+            id: 14,
+            cat: 'الاجتماعي', 
+            name: 'خدمة المعلومات العامة', 
+            num: '3939', 
+            col: '#6366F1', 
+            icon: ICONS.phone, 
+            desc: 'معلومات عن جميع الخدمات العامة الفرنسية.',
+            detail: 'من الاثنين إلى الجمعة، 9 صباحاً-6 مساءً. استفسارات عن الإجراءات الإدارية، الحقوق، المساعدات الاجتماعية.'
+        },
+        { 
+            id: 15,
+            cat: 'الاجتماعي', 
+            name: 'الاستماع للإعاقة', 
+            num: '0 800 360 360', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'معلومات عن الحقوق، المساعدات ومرافقة ذوي الإعاقة.',
+            detail: 'رقم مجاني، من الاثنين إلى الجمعة 9 صباحاً-5 مساءً. استفسارات عن AAH، PCH، MDPH.'
+        },
+        { 
+            id: 16,
+            cat: 'الاجتماعي', 
+            name: 'صداقة SOS', 
+            num: '09 72 39 40 50', 
+            col: '#EC4899', 
+            icon: ICONS.heart, 
+            desc: 'استماع متعاطف ومجهول للأشخاص في ضائقة نفسية.',
+            detail: 'جمعية استماع تطوعية، 24/7. للتحدث عن صعوباتك، عزلتك، معاناتك المعنوية.'
+        },
+        
+        // الجمعيات الفرنسية
+        { 
+            id: 17,
+            cat: 'الجمعيات', 
+            name: 'مطاعم القلب', 
+            num: '01 53 32 23 23', 
+            col: '#F43F5E', 
+            icon: ICONS.heart, 
+            desc: 'مساعدة غذائية، إدماج اجتماعي ومرافقة للمحتاجين.',
+            detail: 'توزيع وجبات، متاجر اجتماعية، مساعدة للإدماج. مفتوح من نوفمبر إلى مارس.'
+        },
+        { 
+            id: 18,
+            cat: 'الجمعيات', 
+            name: 'الصليب الأحمر الفرنسي', 
+            num: '0800 858 858', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'عمل إنساني، إسعاف أولي، مساعدة اجتماعية وتدريب على الإسعافات الأولية.',
+            detail: 'طوارئ، جولات، مساعدة غذائية، تدريب SST/PSC1. إجراءات محلية في جميع أنحاء فرنسا.'
+        },
+        { 
+            id: 19,
+            cat: 'الجمعيات', 
+            name: 'الإغاثة الكاثوليكية', 
+            num: '01 45 49 73 00', 
+            col: '#B91C1C', 
+            icon: ICONS.heart, 
+            desc: 'مساعدة للمحتاجين، استقبال، إيواء ومكافحة الاستبعاد.',
+            detail: 'استقبال نهاراً، توزيع غذائي، مساعدة في الإجراءات، دعم مدرسي.'
+        },
+        { 
+            id: 20,
+            cat: 'الجمعيات', 
+            name: 'إيماوس', 
+            num: '01 41 58 25 00', 
+            col: '#1E293B', 
+            icon: ICONS.assoc, 
+            desc: 'مكافحة الاستبعاد عبر العمل، إعادة إدماج واقتصاد تضامني.',
+            detail: 'مجتمعات إيماوس تقدم إيواء، عمل في إعادة التدوير، بيع أشياء.'
+        },
+        { 
+            id: 21,
+            cat: 'الجمعيات', 
+            name: 'جمعية حماية الحيوانات', 
+            num: '01 43 80 40 66', 
+            col: '#D97706', 
+            icon: ICONS.heart, 
+            desc: 'حماية الحيوان، ملجأ، تبني ومكافحة الإساءة.',
+            detail: 'جمعية حماية الحيوانات. إبلاغ عن إساءة، تبني حيوانات.'
+        },
+        { 
+            id: 22,
+            cat: 'الجمعيات', 
+            name: 'الإغاثة الشعبية', 
+            num: '01 44 78 21 00', 
+            col: '#2563EB', 
+            icon: ICONS.heart, 
+            desc: 'تضامن للجميع، مساعدة غذائية، ملابس ووصول للثقافة.',
+            detail: 'مساعدة طارئة، طرود غذائية، عطلات تضامنية، مساعدة في الواجبات.'
+        },
+        { 
+            id: 23,
+            cat: 'الجمعيات', 
+            name: 'أطباء العالم', 
+            num: '01 44 92 15 15', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'رعاية للمحتاجين في فرنسا وعالمياً.',
+            detail: 'مراكز رعاية مجانية، جولات طبية، وصول لحقوق الصحة.'
+        },
+        { 
+            id: 24,
+            cat: 'الجمعيات', 
+            name: 'البنك الغذائي', 
+            num: '01 48 28 00 00', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'جمع وتوزيع مواد غذائية للجمعيات.',
+            detail: '79 بنكاً غذائياً في فرنسا. تزود 5,400 جمعية.'
+        },
+        
+        // الجمعيات الدولية
+        { 
+            id: 25,
+            cat: 'الدولية', 
+            name: 'اليونيسف فرنسا', 
+            num: '0 800 840 840', 
+            col: '#3B82F6', 
+            icon: ICONS.world, 
+            desc: 'صندوق الأمم المتحدة للطفولة. حماية الأطفال في العالم.',
+            detail: 'عمل في 190 بلداً. تطعيم، تعليم، حماية من العنف.'
+        },
+        { 
+            id: 26,
+            cat: 'الدولية', 
+            name: 'أطباء بلا حدود', 
+            num: '0 800 840 840', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'مساعدة طبية طارئة في مناطق النزاعات والكوارث.',
+            detail: 'منظمة طبية دولية موجودة في 70 بلداً. رعاية للسكان الضعفاء.'
+        },
+        { 
+            id: 27,
+            cat: 'الدولية', 
+            name: 'كير فرنسا', 
+            num: '01 53 19 89 89', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'مكافحة الفقر والظلم في العالم.',
+            detail: 'عمل في 100 بلد. طوارئ إنسانية، تنمية مستدامة.'
+        },
+        { 
+            id: 28,
+            cat: 'الدولية', 
+            name: 'العمل ضد الجوع', 
+            num: '01 70 84 70 84', 
+            col: '#059669', 
+            icon: ICONS.world, 
+            desc: 'مكافحة الجوع في العالم، تغذية وأمن غذائي.',
+            detail: 'موجودة في 50 بلداً. برامج تغذية، ماء وصرف صحي.'
+        },
+        { 
+            id: 29,
+            cat: 'الدولية', 
+            name: 'الصندوق العالمي للطبيعة فرنسا', 
+            num: '01 55 25 84 84', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'حماية البيئة والتنوع البيولوجي العالمي.',
+            detail: 'صندوق عالمي للطبيعة. حماية الأنواع المهددة، غابات، محيطات، مناخ.'
+        },
+        { 
+            id: 30,
+            cat: 'الدولية', 
+            name: 'العفو الدولية', 
+            num: '01 53 38 65 65', 
+            col: '#8B5CF6', 
+            icon: ICONS.world, 
+            desc: 'دفاع عن حقوق الإنسان في العالم.',
+            detail: 'حركة عالمية من 10 ملايين شخص. كفاح من أجل حقوق الإنسان.'
+        },
+        { 
+            id: 31,
+            cat: 'الدولية', 
+            name: 'الإعاقة الدولية', 
+            num: '04 78 69 79 79', 
+            col: '#F59E0B', 
+            icon: ICONS.world, 
+            desc: 'مساعدة لذوي الإعاقة في البلدان الفقيرة ومناطق النزاع.',
+            detail: 'رعاية إعادة تأهيل، إدماج اجتماعي، منع الإعاقات.'
+        },
+        { 
+            id: 32,
+            cat: 'الدولية', 
+            name: 'الصليب الأحمر الدولي', 
+            num: '+41 22 734 60 01', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'عمل إنساني في مناطق النزاع حول العالم.',
+            detail: 'اللجنة الدولية للصليب الأحمر. حماية ضحايا الحرب.'
+        },
+        { 
+            id: 33,
+            cat: 'الجمعيات', 
+            name: 'السيماد', 
+            num: '01 44 18 60 50', 
+            col: '#1D4ED8', 
+            icon: ICONS.assoc, 
+            desc: 'جمعية تضامن نشط مع المهاجرين، اللاجئين وطالبي اللجوء.',
+            detail: 'مساعدة قانونية، مرافقة إدارية، مراكز إيواء، تدريب لغوي.'
+        },
+        { 
+            id: 34,
+            cat: 'الجمعيات', 
+            name: 'فرنسا بيئة طبيعية', 
+            num: '01 44 08 02 50', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'اتحاد جمعيات لحماية البيئة والدفاع عن نمط العيش.',
+            detail: 'إجراءات قانونية، توعية، دفاع عن التنوع البيولوجي، مكافحة التلوث.'
+        },
+        { 
+            id: 35,
+            cat: 'الجمعيات', 
+            name: 'قرى الأطفال SOS', 
+            num: '01 55 07 25 25', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'استقبال أطفال منفصلين عن عائلاتهم في بيئة مستقرة وعاطفية.',
+            detail: 'قرى استقبال، برامج تقوية عائلية، مساعدة لإدماج الشباب.'
+        },
+        { 
+            id: 36,
+            cat: 'الجمعيات', 
+            name: 'مطاعم القلب', 
+            num: '01 53 32 23 23', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'توزيع وجبات وطرود غذائية للأشخاص في وضع هش.',
+            detail: 'حملات شتوية، متاجر تضامنية، ورشات طبخ، إدماج مهني.'
+        },
+        { 
+            id: 37,
+            cat: 'الجمعيات', 
+            name: 'مؤسسة فرنسا', 
+            num: '01 44 21 31 00', 
+            col: '#3B82F6', 
+            icon: ICONS.assoc, 
+            desc: 'مؤسسة تدعم مشاريع في مجالات التضامن، الصحة، التعليم.',
+            detail: 'تمويل مشاريع جمعوية، صناديق طوارئ، دعوات لمشاريع موضوعية.'
+        },
+        { 
+            id: 38,
+            cat: 'الدولية', 
+            name: 'أوكسفام فرنسا', 
+            num: '01 77 35 76 00', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'مكافحة اللامساواة والفقر في العالم.',
+            detail: 'مساعدة طارئة، تنمية مستدامة، مناصرة سياسية، تجارة عادلة.'
+        },
+        { 
+            id: 39,
+            cat: 'الدولية', 
+            name: 'خطة الدولية فرنسا', 
+            num: '01 84 87 03 50', 
+            col: '#EC4899', 
+            icon: ICONS.world, 
+            desc: 'دفاع عن حقوق الأطفال ومساواة الفتيات والصبيان في العالم.',
+            detail: 'كفالات، حماية من العنف، تعليم، صحة أمومية وطفولية.'
+        },
+        { 
+            id: 40,
+            cat: 'الاجتماعي', 
+            name: 'مكافحة رهاب المثلية SOS', 
+            num: '01 48 06 42 41', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'مكافحة رهاب المثلية ومساعدة الضحايا.',
+            detail: 'استماع هاتفي، مرافقة قانونية، تدخلات في الوسط المدرسي، مراقبة.'
+        },
+        { 
+            id: 41,
+            cat: 'الجمعيات', 
+            name: 'إخوة المساكين الصغار', 
+            num: '01 49 23 13 00', 
+            col: '#7C3AED', 
+            icon: ICONS.heart, 
+            desc: 'مكافحة عزل المسنين.',
+            detail: 'زيارات منزلية، خروجات ثقافية، عطل تضامنية، مساعدة إدارية.'
+        },
+        { 
+            id: 42,
+            cat: 'الدولية', 
+            name: 'تضامنات دولية', 
+            num: '01 76 21 86 00', 
+            col: '#F97316', 
+            icon: ICONS.world, 
+            desc: 'مساعدة إنسانية طارئة في مناطق النزاعات والكوارث الطبيعية.',
+            detail: 'وصول لماء صالح للشرب، صرف صحي، أمن غذائي، ملاجئ طارئة.'
+        }
+    ];
+
+    // وظائف إدارة النوافذ المنبثقة
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    // وظيفة لفتح نافذة الحقوق
+    function openRightsModal() {
+        openModal('rightsModal');
+    }
+
+    // وظيفة لإدارة ظهور شريط البحث
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        // قائمة الفئات التي يجب أن يكون شريط البحث مرئياً فيها
+        const searchVisibleCategories = ['الكل', 'الطوارئ', 'الاجتماعي', 'الجمعيات', 'الدولية'];
+        
+        if (searchVisibleCategories.includes(filter)) {
+            // إظهار شريط البحث
+            searchContainer.style.display = 'block';
+            // تفريغ البحث إذا أتينا من فئة الرئيسية
+            if (search === '' && searchInput.value !== '') {
+                searchInput.value = '';
+            }
+        } else if (filter === 'الرئيسية') {
+            // إخفاء شريط البحث
+            searchContainer.style.display = 'none';
+            // تفريغ البحث
+            search = '';
+            searchInput.value = '';
+        } else {
+            // للفئات الأخرى (تحسباً)
+            searchContainer.style.display = 'none';
+            search = '';
+            searchInput.value = '';
+        }
+    }
+
+    // وظيفة لإنشاء الأسئلة الشائعة
+    function renderFAQ() {
+        const faqContainer = document.getElementById('faqContainer');
+        
+        if (faqItems.length === 0) return;
+        
+        let html = '';
+        
+        faqItems.forEach((item, index) => {
+            html += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(${index})">
+                        <span>${item.question}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" id="faqAnswer${index}">
+                        ${item.answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        faqContainer.innerHTML = html;
+    }
+
+    // وظيفة لفتح/إغلاق أسئلة الأسئلة الشائعة
+    function toggleFAQ(index) {
+        const answer = document.getElementById(`faqAnswer${index}`);
+        const question = answer.previousElementSibling;
+        
+        // إغلاق جميع الإجابات الأخرى
+        document.querySelectorAll('.faq-answer').forEach((ans, i) => {
+            if (i !== index) {
+                ans.classList.remove('show');
+                ans.previousElementSibling.classList.remove('active');
+            }
+        });
+        
+        // تبديل الحالة الحالية
+        answer.classList.toggle('show');
+        question.classList.toggle('active');
+    }
+
+    // قائمة الهامبرغر
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+
+    // وظيفة لفتح نافذة الوصف
+    function openDescModal(serviceId) {
+        const service = SERVICES.find(s => s.id === serviceId);
+        if (service) {
+            document.getElementById('descTitle').textContent = service.name;
+            document.getElementById('descText').textContent = service.detail || service.desc;
+            document.getElementById('descNum').innerHTML = `<strong>📞 الرقم:</strong> ${service.num}`;
+            
+            const callBtn = document.getElementById('descCallBtn');
+            const callNum = document.getElementById('descCallNum');
+            
+            callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
+            callNum.textContent = `اتصل بالرقم ${service.num}`;
+            
+            openModal('descModal');
+        }
+    }
+    
+    // وظيفة لفتح نافذة النجاة
+    function openSurvivalModal() {
+        openModal('survivalModal');
+    }
+    
+    // وظيفة لفتح نافذة البروتوكول
+    function openProtocolModal() {
+        openModal('protocolModal');
+    }
+    
+    // وظيفة لفتح نافذة الإنذار
+    function openAlertModal() {
+        openModal('alertModal');
+    }
+    
+    // وظيفة لفتح نافذة الصحة
+    function openHealthModal() {
+        openModal('healthModal');
+    }
+
+    // وظيفة العرض الرئيسية
+    function render() {
+        const grid = document.getElementById('serviceGrid');
+
+        // إدارة ظهور شريط البحث
+        toggleSearchBar();
+
+        // إذا كنا في فئة الرئيسية
+        if (filter === 'الرئيسية') {
+            let html = `
+                <div class="card intro-card">
+                    <div class="intro-badge">كيف يعمل؟</div>
+                    <h3 class="card-title">كيف تستخدم دليل SOS؟</h3>
+                    <p class="card-text">هذه الصفحة تعمل <strong>100% بدون اتصال بالإنترنت</strong> وتعطيك وصولاً للمعلومات الأساسية. إليك كيفية التنقل واستخدام جميع الميزات:</p>
+                    
+                    <div class="intro-steps">
+                        <div class="intro-step">
+                            <div class="step-number">1</div>
+                            <div class="intro-step-title">التنقل حسب الفئات</div>
+                            <div class="intro-step-desc">انقر على أزرار التصفية لرؤية الخدمات حسب الفئة: الطوارئ، الاجتماعي، الجمعيات، الدولية أو جميع الخدمات.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">2</div>
+                            <div class="intro-step-title">بحث سريع</div>
+                            <div class="intro-step-desc">في الفئات، استخدم شريط البحث لإيجاد خدمة محددة بالاسم أو الوصف.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">3</div>
+                            <div class="intro-step-title">الوصول للأرقام</div>
+                            <div class="intro-step-desc">انقر على "اتصال" لطلب رقم مباشرة، أو على "؟" لرؤية تفاصيل الخدمة.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">4</div>
+                            <div class="intro-step-title">أدلة وموارد</div>
+                            <div class="intro-step-desc">استكشف الأدلة العملية: معدات النجاة، بروتوكول الطوارئ، إنذار واتصال، والصحة والإسعافات الأولية.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openModal('aboutModal')">
+                            <span>معرفة المزيد عن المشروع</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                        <strong>⚠️ هام:</strong> لطلب أرقام الطوارئ، هاتفك يجب أن يكون لديه شبكة محمولة. هذه الصفحة تقدم المعلومات، لكن المكالمات تتم عبر مشغل الهاتف الخاص بك.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.rights}
+                        </div>
+                        <span class="tag">حقوق</span>
+                    </div>
+                    <h3 class="card-title">الحقوق والواجبات الأساسية</h3>
+                    <p class="card-text">الدستور، إعلان حقوق الإنسان، قيم الجمهورية. معرفة حقوقك وواجباتك في الأوقات الصعبة.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openRightsModal()">
+                            <span>رؤية الأسس</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.kit}
+                        </div>
+                        <span class="tag">نجاة</span>
+                    </div>
+                    <h3 class="card-title">معدات النجاة</h3>
+                    <p class="card-text">قائمة كاملة بالمعدات الأساسية للتجهيز للتعامل مع حالات الطوارئ. 12 فئة مفصلة.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openSurvivalModal()">
+                            <span>رؤية القائمة الكاملة</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.protocol}
+                        </div>
+                        <span class="tag">بروتوكول</span>
+                    </div>
+                    <h3 class="card-title">بروتوكول الطوارئ</h3>
+                    <p class="card-text">الخطوات الخمس المتبعة في حالات الأزمات. طريقة منظمة للتفاعل بفعالية. دليل PSC1 مدمج.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openProtocolModal()">
+                            <span>رؤية الخطوات المفصلة</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.alert}
+                        </div>
+                        <span class="tag">إنذار</span>
+                    </div>
+                    <h3 class="card-title">إنذار واتصال</h3>
+                    <p class="card-text">أنظمة إنذار رسمية، وسائل اتصال وخطة عائلية للطوارئ. FR-Alert، SAIP، إشارات وطنية.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openAlertModal()">
+                            <span>رؤية الأنظمة الكاملة</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.heart}
+                        </div>
+                        <span class="tag">صحة</span>
+                    </div>
+                    <h3 class="card-title">الصحة والإسعافات الأولية</h3>
+                    <p class="card-text">حقيبة الإسعافات الأولية، حركات تنقذ حياة وتجهيز طبي للطوارئ. دليل كامل مع إجراءات.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openHealthModal()">
+                            <span>رؤية الحركات المفصلة</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            grid.innerHTML = html;
+            return;
+        }
+
+        // للفئات الأخرى (الكل، الطوارئ، الاجتماعي، إلخ.)
+        const filtered = SERVICES.filter(s => {
+            const matchesFilter = filter === 'الكل' || s.cat === filter;
+            const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
+                                s.desc.toLowerCase().includes(search.toLowerCase());
+            return matchesFilter && matchesSearch;
+        });
+
+        const html = filtered.map(s => `
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: ${s.col}20;">
+                        ${s.icon}
+                    </div>
+                    <span class="tag">${s.cat}</span>
+                </div>
+                <h3 class="card-title">${s.name}</h3>
+                <p class="card-text">${s.desc}</p>
+                <div class="card-actions">
+                    <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
+                        <span>${s.num}</span>
+                        <span>📞</span>
+                    </a>
+                    <button class="card-info-btn" onclick="openDescModal(${s.id})">
+                        <span>؟</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = html;
+    }
+
+    // التهيئة
+    window.onload = () => {
+        // تحميل بيانات JSON
+        loadJSONData();
+        
+        // إنشاء الأسئلة الشائعة
+        renderFAQ();
+        
+        // عرض المحتوى الأولي
+        render();
+
+        // أحداث للفلاتر
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filter = this.getAttribute('data-cat');
+                render();
+            });
+        });
+
+        // حدث للبحث
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            search = e.target.value;
+            render();
+        });
+
+        // أحداث للأزرار
+        document.getElementById('aboutBtn').addEventListener('click', () => {
+            openModal('aboutModal');
+        });
+
+        document.getElementById('aboutBtnMobile').addEventListener('click', () => {
+            openModal('aboutModal');
+            closeMenu();
+        });
+
+        // قائمة الهامبرغر
+        hamburger.addEventListener('click', toggleMenu);
+
+        // إغلاق النوافذ المنبثقة بالنقر خارجها
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // إغلاق النوافذ المنبثقة بمفتاح Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // التمرير السلس لروابط الربط
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    closeMenu();
+                }
+            });
+        });
+
+        // مراقب للحركات
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // مراقب البطاقات
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    };
+</script>
+
+    <!-- JSON للفئات -->
+    <script id="categoriesData" type="application/json">
+        [
+            {"id": "الكل", "name": "الكل"},
+            {"id": "الطوارئ", "name": "الطوارئ"},
+            {"id": "الاجتماعي", "name": "الاجتماعي"},
+            {"id": "الجمعيات", "name": "الجمعيات"},
+            {"id": "الدولية", "name": "الدولية"}
+        ]
+    </script>
+
+    <!-- JSON للأسئلة الشائعة - 8 أسئلة كاملة -->
+    <script id="faqData" type="application/json">
+        [
+            {
+                "question": "كيف أحافظ على المعنويات في الأوقات الصعبة؟",
+                "answer": "اعتنِ بنفسك بروتينات بسيطة: تنفس بعمق عدة مرات يومياً، احتفظ بدليل امتنان (اكتب 3 أشياء إيجابية كل يوم)، ابقَ على اتصال بأحبائك حتى عن بعد. تذكر أن كل موقف، حتى الصعب، مؤقت. مارس التأمل الذهني 10 دقائق يومياً لتقليل التوتر وتحسين الوضوح العقلي."
+            },
+            {
+                "question": "ماذا أفعل عندما يصبح القلق قوياً جداً؟",
+                "answer": "جرب تقنية 5-4-3-2-1: سمّ 5 أشياء تراها، 4 تلمسها، 3 تسمعها، 2 تشمها، 1 تتذوقها. هذه التقنية تعيدك للحاضر. تنفس ببطء (4 ثوان شهيق، 4 وقفة، 6 زفير). تحدث لشخص تثق به. مارس تناسق القلب 3 مرات يومياً. إذا استمر القلق، استشر مختص صحة."
+            },
+            {
+                "question": "كيف أدعم شخصاً عزيزاً في ضائقة نفسية؟",
+                "answer": "استمع بدون حكم، صحح مشاعره ('أفهم أنك تشعر هكذا')، قدم وجودك بدون إجبار. شجعه على استشارة مختص إذا لزم (طبيب نفسي، طبيب). ذكّره أنه ليس وحيداً وأن طلب المساعدة علامة قوة. اقترح أنشطة بسيطة معاً (مشي، طبخ، استماع لموسيقى). تجنب النصائح غير المطلوبة وجمل مثل 'ستمر'."
+            },
+            {
+                "question": "تمارين بسيطة لتقليل التوتر؟",
+                "answer": "1) تناسق القلب: شهيق 5 ثوان، زفير 5 ثوان لمدة 5 دقائق. 2) مشي واعي: ركز على كل خطوة، إحساس الأرض. 3) تدليك ذاتي لليدين أو الوجه. 4) تصور إيجابي: تخيل مكاناً هادئاً وآمناً بجميع حواسك. 5) كتابة علاجية: اكتب أفكارك 10 دقائق بدون حكم. 6) تنفس مربع: شهيق 4ث، احتباس 4ث، زفير 4ث، احتباس 4ث."
+            },
+            {
+                "question": "كيف أحافظ على رابط اجتماعي في فترة عزل؟",
+                "answer": "نظم مكالمات منتظمة مع العائلة والأصدقاء، شارك في أنشطة عبر الإنترنت (نوادي قراءة، ألعاب)، تبادل رسائل إيجابية. اقترح 'مقاهي افتراضية' أو وجبات مشتركة عبر الفيديو. انضم لمجموعات دعم عبر الإنترنت إذا احتجت. اكتب رسائل أو بطاقات بريدية لاتصال شخصي أكثر. شارك في أنشطة مجتمعية محلية عندما يكون ذلك ممكناً."
+            },
+            {
+                "question": "متى يجب طلب مساعدة مهنية؟",
+                "answer": "استشر مختصاً إذا شعرت: حزن شديد مستمر (+أسبوعين)، فقدان اهتمام بنشاطاتك المعتادة، اضطرابات نوم/شهية، أفكار سلبية متكررة، صعوبة في العمل يومياً، أفكار انتحارية. خطوط الاستماع مثل 3114 متاحة 24/7. الاستشارات النفسية تردها الضمان الاجتماعي (8 جلسات سنوياً)."
+            },
+            {
+                "question": "كيف أعيد إنشاء روتين مهدئ؟",
+                "answer": "حدد أوقاتاً منتظمة للنوم (7-9 ساعات)، الوجبات، النشاط البدني (30 دقيقة/يوم). أدمج لحظات توقف واعية. أنشئ طقوساً مريحة (شاي الصباح، موسيقى هادئة المساء). قلل التعرض لمعلومات مقلقة، خاصة قبل النوم. ضع أنشطة ممتعة كل يوم (قراءة، موسيقى، زراعة، صناعات). نظم يومك بأهداف بسيطة وقابلة للتحقيق."
+            },
+            {
+                "question": "موارد مجانية للصحة النفسية؟",
+                "answer": "• 3114: منع انتحار 24/7 (مجاني)<br>• 09 72 39 40 50: صداقة SOS (استماع متعاطف)<br>• 0 800 23 13 13: خدمة معلومات المخدرات<br>• تطبيقات مجانية: Petit Bambou (تأمل)، Moodpath (متابعة مزاج)، Mes antidotes (CNAM)<br>• قنوات يوتيوب: Christophe André, Mélanie Cellier, Psynergy<br>• كتب مكتبات رقمية (مجاني مع تسجيل)<br>• مجموعات كلام عبر الإنترنت (جمعيات)<br>• بيوت المراهقين (استقبال مجاني)"
+            }
+        ]
+    </script>
+</body>
+</html>

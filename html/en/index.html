@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS GUIDE | Citizen Services</title>
+    <meta name="description" content="Emergency and solidarity services guide for all citizens. Offline access guaranteed.">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛑️</text></svg>">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⛑️</span>
+                <span>SOS GUIDE</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <button id="aboutBtn" class="btn-primary">
+                    About
+                </button>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#faq" onclick="closeMenu()">FAQ</a>
+        </nav>
+
+        <div class="mobile-cta">
+            <button id="aboutBtnMobile" class="btn-primary" onclick="closeMenu(); openModal('aboutModal');">
+                About
+            </button>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+    
+       <div class="section-header">
+            <span class="section-badge">WELCOME</span>
+            <h2 class="section-title">Hey, hello there! 👋</h2>
+            
+        </div>
+        
+        <div class="filters-container">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-cat="Home">Home</button>
+                <button class="filter-btn" data-cat="All">All</button>
+                <button class="filter-btn" data-cat="Emergency">Emergency</button>
+                <button class="filter-btn" data-cat="Social">Social</button>
+                <button class="filter-btn" data-cat="Associations">Associations</button>
+                <button class="filter-btn" data-cat="International">International</button>
+            </div>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" id="searchInput" class="search-input" placeholder="Search for a service, help, number...">
+            </div>
+        </div>
+        
+        <div id="serviceGrid" class="services-grid">
+            <!-- Content generated dynamically by JavaScript -->
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq">
+        <div class="section-header">
+            <span class="section-badge">SUPPORT</span>
+            <h2 class="section-title">FAQ - Mental Health & Morale</h2>
+            <p class="section-subtitle">
+                Answers to frequently asked questions about well-being in difficult situations
+            </p>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-container" id="faqContainer">
+                <!-- Content generated dynamically by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <span>⛑️</span>
+                    <span>SOS GUIDE</span>
+                </a>
+                <p class="footer-description">
+                    Open-source resilient citizen information solution.
+                    Deployable on Raspberry Pi, works without internet.
+                </p>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Navigation</h3>
+                    <a href="#services">Services</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#resources">Documents</a>
+                    <a href="#about">About</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Categories</h3>
+                    <a href="#services?cat=Emergency">Emergencies</a>
+                    <a href="#services?cat=Social">Social services</a>
+                    <a href="#services?cat=Associations">Associations</a>
+                    <a href="#services?cat=International">International</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <a href="mailto:contact@sos-guide.fr" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; display: block; font-size: 0.8rem;">contact@sos-guide.fr</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 ⛑️ SOS GUIDE - Open-source project under MIT license</p>
+            <p style="margin-top: 0.25rem;">Designed by Ludovic MARTIN and the community of contributors</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- About Modal -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">About SOS Guide</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Our Mission</h4>
+                <p><strong>SOS Guide</strong> centralizes citizen assistance and emergency numbers for quick access in any situation. Our goal is to provide universal access to vital information: emergency services, social assistance, local associations, and citizen resources.</p>
+                <p>SOS Guide ensures this information remains available even without an internet connection, during network outages, natural disasters, or in areas with no coverage.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚙️ Advanced Technical Operation</h4>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>📶 Local Wi-Fi Network</h5>
+                        <p>The Raspberry Pi broadcasts its own "SOS-GUIDE" Wi-Fi network. No password required for quick connection.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>💾 Local Storage</h5>
+                        <p>All data is stored on a microSD card. No internet connection is needed once the system is started.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🔋 Low Consumption</h5>
+                        <p>The Raspberry Pi consumes only 3-5 watts. It can run on an external battery for 24+ hours.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>👥 Multi-user</h5>
+                        <p>Supports up to 50 simultaneous users on the local network. Ideal for public places and communities.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🖥️ Raspberry Pi Specifications</h4>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">RPi 4</div>
+                        <div class="spec-label">Standard model</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">2GB</div>
+                        <div class="spec-label">RAM</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">16GB</div>
+                        <div class="spec-label">microSD storage</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Wi-Fi 5</div>
+                        <div class="spec-label">Dual-band</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">5V/3A</div>
+                        <div class="spec-label">Power supply</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">30+</div>
+                        <div class="spec-label">Simultaneous users</div>
+                    </div>
+                </div>
+                
+                <p>The Raspberry Pi is a credit-card sized nano-computer. Its low consumption and versatility make it the ideal solution for local, autonomous deployments.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Community & Solidarity</h4>
+                <p>This project is <strong>open-source</strong> and community-driven. Information is regularly updated by the community to ensure accuracy and relevance.</p>
+                <p>We believe in digital solidarity: every municipality, association, or citizen group can deploy their own SOS Guide to serve their community.</p>
+                
+                <div class="highlight-box success">
+                    <p><strong>📢 Contribute!</strong> You can improve this project on GitHub, suggest additions, or deploy SOS Guide in your municipality.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🌐 Contact & Website</h4>
+                <p><strong>Website:</strong> <a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
+                <p><strong>Email:</strong> <a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
+                
+                <div class="highlight-box warning">
+                    <p><strong>⚠️ Important note:</strong> To visit our website, you must disconnect from the "SOS-GUIDE" Wi-Fi network and use your mobile connection (3G/4G/5G) or another internet connection. This online service operates independently of this offline page.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 For municipalities:</strong> We offer ready-to-deploy kits including pre-configured Raspberry Pi, power supply, and case. Contact us for more information.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🚀 Deployment & Scalability</h4>
+                <p>SOS Guide can be deployed in various contexts:</p>
+                <ul>
+                    <li><strong>Municipalities</strong>: Local emergency services, associations, town hall</li>
+                    <li><strong>Events</strong>: Festivals, demonstrations, gatherings</li>
+                    <li><strong>Reception centers</strong>: Refugees, homeless, emergency situations</li>
+                    <li><strong>Rural areas</strong>: Complement to poor network coverage</li>
+                    <li><strong>Institutions</strong>: Schools, hospitals, retirement homes</li>
+                </ul>
+                
+                <p>The system is designed to be <strong>autonomous, durable, and replicable</strong> at low cost.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('aboutModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Service Description Modal -->
+    <div id="descModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="descTitle">Service Title</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Description</h4>
+                <p id="descText">Detailed service description...</p>
+                <div class="highlight-box" id="descNum">
+                    <strong>📞 Number:</strong> 00 00 00 00 00
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>ℹ️ Additional Information</h4>
+                <p>This service is available 24/7 for emergencies. For non-urgent calls, prefer office hours.</p>
+            </div>
+            
+            <div class="card-actions" style="margin-top: 20px;">
+                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none;">
+                    <span id="descCallNum">Call now</span>
+                    <span>📞</span>
+                </a>
+                <button class="card-info-btn" onclick="closeModal('descModal')">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Survival Equipment Modal -->
+    <div id="survivalModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Essential Survival Equipment</h3>
+            
+            <div class="modal-section">
+                <h4>📦 Mandatory Basic Kit</h4>
+                <p>Prepare this equipment in advance to face emergency situations:</p>
+                
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>💧 Drinking water</h5>
+                        <p>3 liters per person per day (minimum 3 days)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🍞 Non-perishable food</h5>
+                        <p>Canned food, energy bars, dry foods (3 days)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔦 Flashlight + batteries</h5>
+                        <p>Emergency lighting, bring spare batteries</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📻 Hand-crank radio</h5>
+                        <p>To receive information without electricity</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚡ Solar charger</h5>
+                        <p>To recharge phones and small devices</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧰 First aid kit</h5>
+                        <p>Bandages, antiseptic, essential medications</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔪 Multi-tool</h5>
+                        <p>Swiss Army knife or Leatherman</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧤 Protective gloves</h5>
+                        <p>For handling dangerous objects</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧥 Survival blanket</h5>
+                        <p>Thermal insulation (hot/cold)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧻 Hygiene products</h5>
+                        <p>Hand sanitizer, toilet paper, wipes</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🗺️ Local map</h5>
+                        <p>Paper maps of your region</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Contact list</h5>
+                        <p>Emergency contacts on paper</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📄 Important Documents</h4>
+                <ul>
+                    <li>Copies of ID documents (ID card, passport, driver's license)</li>
+                    <li>Health card and medical prescriptions</li>
+                    <li>Copy of insurance policies (home, health, car)</li>
+                    <li>Family and professional emergency contacts</li>
+                    <li>Cash in small denominations (minimum €100)</li>
+                    <li>Spare car and house keys</li>
+                    <li>Health record and vaccinations</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏠 Kit Design</h4>
+                <p><strong>Storage:</strong> Store your kit in an easily accessible place, protected from moisture and direct light.</p>
+                <p><strong>Check:</strong> Regularly check expiration dates (every 6 months).</p>
+                <p><strong>Evacuation:</strong> Plan a backpack per person (30-40L) for quick evacuation.</p>
+                <p><strong>Personalization:</strong> Adapt your kit to specific needs (babies, elderly, pets, special medications).</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Expert advice:</strong> Prepare two kits: a more complete "home kit" and a lightweight "evacuation kit" in a backpack. Regularly test your equipment and train all family members in its use.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('survivalModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Emergency Protocol Modal -->
+    <div id="protocolModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">5-Step Emergency Protocol</h3>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">1</span> ASSESS the situation</h4>
+                <p><strong>Stay calm</strong> - Breathe deeply before acting</p>
+                <p><strong>Analyze dangers</strong>: fire, smoke, collapse, gas, electricity</p>
+                <p><strong>Protect yourself first</strong> before rescuing others</p>
+                <p><strong>Identify emergency exits</strong></p>
+                <p><strong>Assess number of victims</strong> and their apparent condition</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">2</span> ALERT emergency services</h4>
+                <p><strong>Dial the appropriate number</strong>: 15 (SAMU), 18 (Firefighters), 17 (Police), 112 (EU)</p>
+                <p><strong>Give this information clearly</strong>:</p>
+                <ul>
+                    <li>Your name and phone number</li>
+                    <li>Exact address (city, street, number, floor, entry code)</li>
+                    <li>Nature of the problem (accident, fire, illness...)</li>
+                    <li>Number of victims and their apparent condition</li>
+                    <li>Specific dangers (gas, chemicals, electricity...)</li>
+                    <li>Actions already taken</li>
+                </ul>
+                <p><strong>Don't hang up first</strong> - Wait for the rescuer's instructions</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">3</span> PROTECT people</h4>
+                <p><strong>Move victims to safety</strong> away from danger</p>
+                <p><strong>Mark the dangerous area</strong> to prevent other accidents</p>
+                <p><strong>Turn off gas and electricity</strong> if necessary and safe</p>
+                <p><strong>Keep bystanders away</strong> to facilitate emergency services</p>
+                <p><strong>Establish a safety perimeter</strong> of at least 50 meters</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">4</span> RESCUE victims</h4>
+                <p><strong>Check consciousness</strong>: talk to the victim, shake gently</p>
+                <p><strong>Check breathing</strong>: see if chest/stomach rises</p>
+                <p><strong>Practice basic first aid</strong>:</p>
+                <ul>
+                    <li>Recovery position (if unconscious but breathing)</li>
+                    <li>Compress heavy bleeding (with clean cloth)</li>
+                    <li>Cardiopulmonary resuscitation if trained (30 compressions/2 breaths)</li>
+                    <li>Use defibrillator if available (AED)</li>
+                </ul>
+                <p><strong>Warm victims</strong> with blankets or clothing</p>
+                <p><strong>Never give drink</strong> to an unconscious person</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">5</span> WAIT for emergency services</h4>
+                <p><strong>Prepare access</strong>: clear corridors, open doors</p>
+                <p><strong>Signal your presence</strong>: turn on lights, make signs</p>
+                <p><strong>Transmit information</strong> to emergency services upon arrival</p>
+                <p><strong>Follow their instructions</strong> without interfering</p>
+                <p><strong>Stay available</strong> to provide additional information</p>
+                <p><strong>Note arrival time</strong> of emergency services for follow-up</p>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Recommended training:</strong> Take a PSC1 (First Aid and Civil Protection Level 1) course to master these skills. These courses are accessible to everyone from age 10 and last about 7 hours.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('protocolModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Emergency Alert Modal -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Emergency Alert and Communication</h3>
+            
+            <div class="modal-section">
+                <h4>📱 Official Alert Systems</h4>
+                <p><strong>SAIP</strong> (Population Alert and Information System):</p>
+                <ul>
+                    <li>Free "SAIP" mobile app to download</li>
+                    <li>Push notifications for local alerts (floods, incidents, attacks)</li>
+                    <li>Real-time information with behavior advice</li>
+                    <li>Geolocation for targeted alerts</li>
+                </ul>
+                
+                <p><strong>FR-Alert</strong>: cell broadcast system</p>
+                <ul>
+                    <li>Alerts automatically received on all mobile phones</li>
+                    <li>Works without app or internet</li>
+                    <li>Messages in case of immediate danger (via cell broadcast)</li>
+                    <li>National coverage activated since 2022</li>
+                </ul>
+                
+                <p><strong>Weather France Alerts</strong>: Meteorological vigilance</p>
+                <ul>
+                    <li>4-color vigilance map (green, yellow, orange, red)</li>
+                    <li>Alert bulletins for dangerous phenomena</li>
+                    <li>24h and 48h forecasts</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📻 Essential Communication Means</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>📻 FM Radio</h5>
+                        <p>France Inter (87.8), France Info (105.5), local stations</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📺 Television</h5>
+                        <p>France 2, France 3 Regions, news channels</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌐 Official websites</h5>
+                        <p>Vigicrues, Météo France, Prefecture, Town Hall</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Social networks</h5>
+                        <p>Official accounts Prefecture, Town Hall, Firefighters, Police</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📞 Info lines</h5>
+                        <p>Prefecture toll-free numbers, town halls</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📢 Loudspeakers</h5>
+                        <p>Municipal vehicles, local sirens</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>👨‍👩‍👧‍👦 Family Communication Plan</h4>
+                <p><strong>Establish a plan before the crisis:</strong></p>
+                <ol>
+                    <li><strong>Designate an out-of-region contact</strong>: The whole family calls this person to centralize information</li>
+                    <li><strong>Plan meeting points</strong>: One near your home, one outside the neighborhood, one outside the city</li>
+                    <li><strong>Use SMS rather than calls</strong>: SMS works better when the network is saturated</li>
+                    <li><strong>Save battery</strong>: Power saving mode, portable chargers</li>
+                    <li><strong>Short and clear messages</strong>: "I am safe at [location]", "Need help at [address]"</li>
+                    <li><strong>Family code</strong>: Password or phrase to authenticate messages</li>
+                </ol>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚠️ National Alert Signals</h4>
+                <p><strong>National alert network sirens:</strong></p>
+                <ul>
+                    <li><strong>Alert</strong>: Modulated sound rising and falling (3 times 1 minute separated by 5 seconds)</li>
+                    <li><strong>End of alert</strong>: Continuous sound for 30 seconds</li>
+                    <li><strong>Monthly test</strong>: First Wednesday of the month at noon (single sound of 1 minute 41 seconds)</li>
+                </ul>
+                
+                <p><strong>Voice messages</strong>: in transport, public places, shopping centers</p>
+                <p><strong>Variable message signs</strong>: on roads and highways</p>
+                <p><strong>Phone alarm</strong>: Specific strident sound for FR-Alert</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 In case of communication blackout:</strong> Use written messages (paper), visual signals (sheets in windows), whistle blows, or SOS Guide messaging system if available locally.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('alertModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Health First Aid Modal -->
+    <div id="healthModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Health and Complete First Aid</h3>
+            
+            <div class="modal-section">
+                <h4>🧰 Complete First Aid Kit Composition</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🩹 Bandages</h5>
+                        <p>Sterile compresses, adhesive tape, bandages, hydrocolloid dressings</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧴 Antiseptic</h5>
+                        <p>Biseptine, Dakin, hydrogen peroxide, chlorhexidine</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>💊 Essential medications</h5>
+                        <p>Paracetamol, ibuprofen, anti-diarrheal, antihistamine</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>✂️ Equipment</h5>
+                        <p>Round-tip scissors, tweezers, disposable gloves (size M and L)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌡️ Thermometer</h5>
+                        <p>Electronic with spare batteries</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>😷 Face cover</h5>
+                        <p>Surgical masks, FFP2 (x10)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🩺 Blood pressure monitor</h5>
+                        <p>For at-risk persons (hypertension)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧽 Compresses</h5>
+                        <p>Sterile compresses 10x10 (x20), hemostatic compresses</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🦠 Disinfectant</h5>
+                        <p>Hand sanitizer (100ml), antiseptic soap</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Care notebook</h5>
+                        <p>To record interventions and observations</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🆘 Life-Saving Actions - Complete Guide</h4>
+                
+                <div class="survival-step">
+                    <h4>🩸 Severe Bleeding</h4>
+                    <p><strong>1. Press directly</strong> on the wound with clean cloth</p>
+                    <p><strong>2. Lay the victim down</strong> to prevent fainting</p>
+                    <p><strong>3. Elevate the limb</strong> if bleeding is on a limb</p>
+                    <p><strong>4. Compress the artery</strong> upstream if bleeding persists (pressure points)</p>
+                    <p><strong>5. Call 15</strong> immediately for heavy bleeding</p>
+                    <p><strong>6. Apply a tourniquet</strong> only as last resort (note application time)</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🔥 Burn</h4>
+                    <p><strong>1. Cool for 15-20 minutes</strong> under lukewarm water (15-25°C)</p>
+                    <p><strong>2. Remove clothing and jewelry</strong> before swelling appears</p>
+                    <p><strong>3. Do not pop blisters</strong> (risk of infection)</p>
+                    <p><strong>4. Do not apply greasy substances</strong> (butter, oil, cream)</p>
+                    <p><strong>5. Cover with clean cloth</strong> and dry</p>
+                    <p><strong>6. Call 15 if</strong>: extensive burn (> palm size), on face, hands, joints, or chemical/electrical burn</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>😵 Illness / Loss of consciousness</h4>
+                    <p><strong>1. Check consciousness</strong>: "Are you okay? Can you hear me?" + gentle stimulation</p>
+                    <p><strong>2. Check breathing</strong>: see if chest rises, listen, feel breath</p>
+                    <p><strong>3. If unconscious but breathing</strong>: Put in Recovery Position</p>
+                    <p><strong>4. If unconscious and not breathing</strong>: Start CPR (30 compressions/2 breaths)</p>
+                    <p><strong>5. Loosen collar, tie, belt</strong></p>
+                    <p><strong>6. Protect from heat/cold</strong> with a blanket</p>
+                    <p><strong>7. Call 15</strong> describing symptoms precisely</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🤕 Trauma / Fracture</h4>
+                    <p><strong>1. Immobilize the limb</strong> in the position found</p>
+                    <p><strong>2. Apply cold</strong> to reduce swelling and pain</p>
+                    <p><strong>3. Elevate the limb</strong> if possible</p>
+                    <p><strong>4. Do not give anything to eat or drink</strong> (risk of surgery)</p>
+                    <p><strong>5. Watch for signs of shock</strong>: pallor, sweating, chills, agitation</p>
+                    <p><strong>6. Transport only if necessary</strong>, with prior immobilization</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📋 Family Medical Preparation</h4>
+                <ul>
+                    <li><strong>List of usual medications</strong> with precise dosage and treatment duration</li>
+                    <li><strong>Copy of current prescriptions</strong> (to renew before expiration)</li>
+                    <li><strong>Professional contacts</strong>: GP, specialists, on-duty pharmacy</li>
+                    <li><strong>Medical information</strong>: blood type, known allergies (medications, food, others)</li>
+                    <li><strong>Document on chronic conditions</strong>: diabetes, hypertension, asthma, epilepsy, etc.</li>
+                    <li><strong>Up-to-date vaccination record</strong> for all family members</li>
+                    <li><strong>Health insurance</strong>: policy numbers, phones, coverage</li>
+                    <li><strong>ICE contacts</strong> (In Case of Emergency) programmed in the phone</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 PSC1 Training:</strong> The First Aid and Civil Protection Level 1 training is accessible to everyone from age 10. It lasts 7 hours and costs between €50 and €70. Contact the Red Cross, Firefighters, or Civil Protection in your department.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('healthModal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Rights & Duties Modal -->
+    <div id="rightsModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Fundamental Rights & Duties</h3>
+            
+            <div class="modal-section">
+                <h4>⚖️ Foundations of the Republic</h4>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>🇫🇷 Constitution of 1958</h5>
+                        <p>Fundamental law organizing public powers, defining freedoms and citizens' rights. Establishes the Fifth Republic.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>📜 Declaration of the Rights of Man (1789)</h5>
+                        <p>"Men are born and remain free and equal in rights." 17 founding articles of natural and inalienable rights.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🤝 Preamble of 1946</h5>
+                        <p>Establishes social and economic rights: right to work, health, education, gender equality.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🌈 Environmental Charter (2005)</h5>
+                        <p>Integrates environmental protection in the Constitution: right to live in a balanced and healthy environment.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🛡️ Your Fundamental Rights</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🧑‍⚖️ Civil and political rights</h5>
+                        <p>Freedom of expression, conscience, religion. Right to vote, association, peaceful demonstration.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🏥 Social and economic rights</h5>
+                        <p>Right to work, health, education, housing, social protection, adequate standard of living.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👶 Specific rights</h5>
+                        <p>Children's rights, rights of persons with disabilities, elderly rights, gender equality.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚖️ Legal rights</h5>
+                        <p>Presumption of innocence, right to fair trial, right to lawyer, protection against arbitrariness.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌍 Environmental rights</h5>
+                        <p>Right to healthy environment, information on risks, participation in environmental decisions.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Digital rights</h5>
+                        <p>Personal data protection (GDPR), freedom of internet access, right to be forgotten.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Your Citizen Duties</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🏛️ Civic duties</h5>
+                        <p>Respect the law, pay taxes, participate in elections, serve as juror if summoned.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👨‍👩‍👧‍👦 Social duties</h5>
+                        <p>Respect others' rights, protect vulnerable persons, contribute to national solidarity.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🎖️ Civil duties</h5>
+                        <p>Participate in Defense and Citizenship Day (JDC), respect symbols of the Republic.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌳 Environmental duties</h5>
+                        <p>Contribute to environmental preservation, respect ecological regulations.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🆘 Duties in emergency situations</h5>
+                        <p>Assist persons in danger (duty to rescue), follow authorities' instructions.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📚 Educational duties</h5>
+                        <p>Ensure children's education, respect compulsory schooling (ages 3 to 16).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📞 Emergency Numbers for Rights Defense</h4>
+                <div class="highlight-box">
+                    <p><strong>Defender of Rights:</strong> 09 69 39 00 00</p>
+                    <p><strong>Domestic violence:</strong> 3919</p>
+                    <p><strong>Child in danger:</strong> 119</p>
+                    <p><strong>Discrimination:</strong> 08 10 00 14 04</p>
+                    <p><strong>Disability:</strong> 0 800 360 360</p>
+                    <p><strong>Consumer rights:</strong> 08 90 90 19 80</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📚 Fundamental Texts to Know</h4>
+                <ul>
+                    <li><strong>Constitution of October 4, 1958</strong> - Organization of public powers</li>
+                    <li><strong>Declaration of the Rights of Man and Citizen (1789)</strong> - Fundamental freedoms</li>
+                    <li><strong>Preamble to the 1946 Constitution</strong> - Social and economic rights</li>
+                    <li><strong>Environmental Charter (2005)</strong> - Environmental rights</li>
+                    <li><strong>European Convention on Human Rights (1950)</strong> - Rights protection in Europe</li>
+                    <li><strong>International Convention on Children's Rights (1989)</strong> - Specific children's rights</li>
+                    <li><strong>Universal Declaration of Human Rights (1948)</strong> - International standards</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏛️ Rights Protection Institutions</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">Defender of Rights</div>
+                        <div class="spec-label">Independent institution</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">European Court of Human Rights</div>
+                        <div class="spec-label">International jurisdiction</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Constitutional Council</div>
+                        <div class="spec-label">Constitutionality control</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CNIL</div>
+                        <div class="spec-label">Data protection</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CGLPL</div>
+                        <div class="spec-label">Controller of places of deprivation of liberty</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Ombudsman of the Republic</div>
+                        <div class="spec-label">Dispute resolution with administration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>💡 Did you know?</strong> In France, the Constitution is at the top of the hierarchy of norms. All laws must comply with the Constitution and the fundamental principles it contains. The Constitutional Council ensures this compliance.</p>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>⚠️ In emergency situations:</strong> Some rights may be temporarily restricted to protect the population (state of emergency, natural disaster). These restrictions must be proportional, temporary, and controlled by judicial authority.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">Close</button>
+        </div>
+    </div>
+
+    <script>
+    // Global variables
+    let filter = 'Home';
+    let search = '';
+    let categories = [];
+    let faqItems = [];
+
+    // Load JSON data
+    function loadJSONData() {
+        // Load categories
+        const categoriesJSON = document.getElementById('categoriesData').textContent;
+        categories = JSON.parse(categoriesJSON);
+        
+        // Load FAQ
+        const faqJSON = document.getElementById('faqData').textContent;
+        faqItems = JSON.parse(faqJSON);
+    }
+
+    // ICONS
+    const ICONS = {
+        emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
+        social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+        police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
+        fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
+        heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
+        world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+        kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
+        protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+        alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
+        health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
+        wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
+        rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
+    };
+
+    // SERVICES data - ALL 42 SERVICES
+    const SERVICES = [
+        // EMERGENCIES
+        { 
+            id: 1,
+            cat: 'Emergency', 
+            name: 'SAMU', 
+            num: '15', 
+            col: '#EF4444', 
+            icon: ICONS.emergency, 
+            desc: 'Emergency Medical Assistance Service. For all serious medical emergencies requiring rapid intervention.',
+            detail: 'SAMU intervenes for medical emergencies (accidents, illness, vital distress). Do not call for non-urgent questions.'
+        },
+        { 
+            id: 2,
+            cat: 'Emergency', 
+            name: 'Police Emergency', 
+            num: '17', 
+            col: '#0066FF', 
+            icon: ICONS.police, 
+            desc: 'National police to report an offense, immediate danger, or request urgent intervention.',
+            detail: 'Police Emergency intervenes for crimes, offenses, road accidents, public order disturbances.'
+        },
+        { 
+            id: 3,
+            cat: 'Emergency', 
+            name: 'Firefighters', 
+            num: '18', 
+            col: '#F59E0B', 
+            icon: ICONS.fire, 
+            desc: 'Firefighters for fires, accidents, floods, and all types of rescue.',
+            detail: 'Firefighters intervene for fires, road accidents, person rescues, floods.'
+        },
+        { 
+            id: 4,
+            cat: 'Emergency', 
+            name: 'SOS Doctors', 
+            num: '3624', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'On-duty doctor available 24/7 for non-vital medical emergencies.',
+            detail: 'SOS Doctors sends a doctor to your home for non-vital emergencies (fever, pain, medical advice).'
+        },
+        { 
+            id: 5,
+            cat: 'Emergency', 
+            name: 'EU Single Emergency Number', 
+            num: '112', 
+            col: '#3B82F6', 
+            icon: ICONS.emergency, 
+            desc: 'European emergency number valid in all European Union countries.',
+            detail: '112 works everywhere in Europe. It connects you to the country\'s emergency services.'
+        },
+        { 
+            id: 6,
+            cat: 'Emergency', 
+            name: 'Anti-Poison Center', 
+            num: '01 40 05 48 48', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Advice in case of poisoning, ingestion of dangerous products, or bites.',
+            detail: 'Paris anti-poison center. Provide product name, quantity ingested, victim\'s age and weight.'
+        },
+        { 
+            id: 7,
+            cat: 'Emergency', 
+            name: 'Electricity Emergency', 
+            num: '09 72 67 50 XX', 
+            col: '#F59E0B', 
+            icon: ICONS.emergency, 
+            desc: 'Enedis for power outages, cut electrical wires, or electrical dangers.',
+            detail: 'Dial your region\'s number (replace XX with department number). Report outages.'
+        },
+        { 
+            id: 8,
+            cat: 'Emergency', 
+            name: 'Gas Emergency', 
+            num: '09 69 36 35 34', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'GRDF for gas leaks, suspicious odors, or supply problems.',
+            detail: 'In case of strong gas smell: do not turn on lights, ventilate, leave premises, call from outside.'
+        },
+        
+        // SOCIAL
+        { 
+            id: 9,
+            cat: 'Social', 
+            name: 'Social Emergency Service', 
+            num: '115', 
+            col: '#0F172A', 
+            icon: ICONS.social, 
+            desc: 'Emergency housing, outreach teams, and assistance for homeless persons.',
+            detail: '115 directs to emergency housing places, organizes outreach teams.'
+        },
+        { 
+            id: 10,
+            cat: 'Social', 
+            name: 'Child in Danger', 
+            num: '119', 
+            col: '#EC4899', 
+            icon: ICONS.social, 
+            desc: 'Reporting children in danger or at risk.',
+            detail: 'Free, confidential number, 24/7. Report any situation of abuse or neglect.'
+        },
+        { 
+            id: 11,
+            cat: 'Social', 
+            name: 'Violence Against Women', 
+            num: '3919', 
+            col: '#BE185D', 
+            icon: ICONS.social, 
+            desc: 'Listening, information, and guidance for women victims of violence.',
+            detail: 'Free, anonymous number, 24/7. Domestic violence, psychological, sexual violence.'
+        },
+        { 
+            id: 12,
+            cat: 'Social', 
+            name: 'Drug Info Service', 
+            num: '0800 23 13 13', 
+            col: '#059669', 
+            icon: ICONS.social, 
+            desc: 'Listening, information, and help for addictions (drugs, alcohol, gambling).',
+            detail: 'Free, anonymous number, 7 days a week 8am-2am. Advice, referral to treatment centers.'
+        },
+        { 
+            id: 13,
+            cat: 'Social', 
+            name: 'Suicide Prevention', 
+            num: '3114', 
+            col: '#3B82F6', 
+            icon: ICONS.heart, 
+            desc: 'Suicide prevention, listening, and psychological support.',
+            detail: 'National suicide prevention number. Compassionate, non-judgmental listening, 24/7.'
+        },
+        { 
+            id: 14,
+            cat: 'Social', 
+            name: 'Public Service Information', 
+            num: '3939', 
+            col: '#6366F1', 
+            icon: ICONS.phone, 
+            desc: 'Information on all French public services.',
+            detail: 'Monday to Friday, 9am-6pm. Information on administrative procedures, rights, social assistance.'
+        },
+        { 
+            id: 15,
+            cat: 'Social', 
+            name: 'Disability Information', 
+            num: '0 800 360 360', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Information on rights, assistance, and support for persons with disabilities.',
+            detail: 'Free number, Monday to Friday 9am-5pm. Information on AAH, PCH, MDPH.'
+        },
+        { 
+            id: 16,
+            cat: 'Social', 
+            name: 'SOS Friendship', 
+            num: '09 72 39 40 50', 
+            col: '#EC4899', 
+            icon: ICONS.heart, 
+            desc: 'Compassionate and anonymous listening for persons in psychological distress.',
+            detail: 'Volunteer listening association, 24/7. To talk about your difficulties, isolation, moral suffering.'
+        },
+        
+        // FRENCH ASSOCIATIONS
+        { 
+            id: 17,
+            cat: 'Associations', 
+            name: 'Restos du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#F43F5E', 
+            icon: ICONS.heart, 
+            desc: 'Food aid, social integration, and support for the most deprived.',
+            detail: 'Meal distribution, social grocery stores, integration assistance. Open from November to March.'
+        },
+        { 
+            id: 18,
+            cat: 'Associations', 
+            name: 'French Red Cross', 
+            num: '0800 858 858', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Humanitarian action, first aid, social assistance, and first aid training.',
+            detail: 'Emergencies, outreach teams, food aid, SST/PSC1 training. Local actions throughout France.'
+        },
+        { 
+            id: 19,
+            cat: 'Associations', 
+            name: 'Catholic Relief', 
+            num: '01 45 49 73 00', 
+            col: '#B91C1C', 
+            icon: ICONS.heart, 
+            desc: 'Assistance to the most deprived, reception, housing, and fight against exclusion.',
+            detail: 'Day centers, food distribution, assistance with procedures, school support.'
+        },
+        { 
+            id: 20,
+            cat: 'Associations', 
+            name: 'Emmaüs', 
+            num: '01 41 58 25 00', 
+            col: '#1E293B', 
+            icon: ICONS.assoc, 
+            desc: 'Fight against exclusion through work, reintegration, and solidarity economy.',
+            detail: 'Emmaüs communities offer housing, work in recycling, sale of objects.'
+        },
+        { 
+            id: 21,
+            cat: 'Associations', 
+            name: 'SPA', 
+            num: '01 43 80 40 66', 
+            col: '#D97706', 
+            icon: ICONS.heart, 
+            desc: 'Animal protection, shelter, adoption, and fight against mistreatment.',
+            detail: 'Society for the Protection of Animals. Report mistreatment, adopt animals.'
+        },
+        { 
+            id: 22,
+            cat: 'Associations', 
+            name: 'Popular Relief', 
+            num: '01 44 78 21 00', 
+            col: '#2563EB', 
+            icon: ICONS.heart, 
+            desc: 'Solidarity for all, food, clothing assistance, and access to culture.',
+            detail: 'Emergency aid, food parcels, solidarity vacations, homework help.'
+        },
+        { 
+            id: 23,
+            cat: 'Associations', 
+            name: 'Doctors of the World', 
+            num: '01 44 92 15 15', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Healthcare for the most deprived in France and internationally.',
+            detail: 'Free healthcare centers, medical outreach teams, access to health rights.'
+        },
+        { 
+            id: 24,
+            cat: 'Associations', 
+            name: 'Food Bank', 
+            num: '01 48 28 00 00', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Collection and distribution of food supplies to associations.',
+            detail: '79 Food Banks in France. Supply 5,400 associations.'
+        },
+        
+        // INTERNATIONAL ASSOCIATIONS
+        { 
+            id: 25,
+            cat: 'International', 
+            name: 'UNICEF France', 
+            num: '0 800 840 840', 
+            col: '#3B82F6', 
+            icon: ICONS.world, 
+            desc: 'United Nations Children\'s Fund. Child protection worldwide.',
+            detail: 'Action in 190 countries. Vaccination, education, protection against violence.'
+        },
+        { 
+            id: 26,
+            cat: 'International', 
+            name: 'Doctors Without Borders', 
+            num: '0 800 840 840', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Emergency medical aid in conflict zones and disasters.',
+            detail: 'International medical NGO present in 70 countries. Care for vulnerable populations.'
+        },
+        { 
+            id: 27,
+            cat: 'International', 
+            name: 'CARE France', 
+            num: '01 53 19 89 89', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Fight against poverty and injustice worldwide.',
+            detail: 'Action in 100 countries. Humanitarian emergencies, sustainable development.'
+        },
+        { 
+            id: 28,
+            cat: 'International', 
+            name: 'Action Against Hunger', 
+            num: '01 70 84 70 84', 
+            col: '#059669', 
+            icon: ICONS.world, 
+            desc: 'Fight against hunger worldwide, nutrition, and food security.',
+            detail: 'Present in 50 countries. Nutritional programs, water and sanitation.'
+        },
+        { 
+            id: 29,
+            cat: 'International', 
+            name: 'WWF France', 
+            num: '01 55 25 84 84', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Environmental and biodiversity protection worldwide.',
+            detail: 'World Wildlife Fund. Protection of endangered species, forests, oceans, climate.'
+        },
+        { 
+            id: 30,
+            cat: 'International', 
+            name: 'Amnesty International', 
+            num: '01 53 38 65 65', 
+            col: '#8B5CF6', 
+            icon: ICONS.world, 
+            desc: 'Human rights defense worldwide.',
+            detail: 'Global movement of 10 million people. Fight for human rights.'
+        },
+        { 
+            id: 31,
+            cat: 'International', 
+            name: 'Handicap International', 
+            num: '04 78 69 79 79', 
+            col: '#F59E0B', 
+            icon: ICONS.world, 
+            desc: 'Assistance to persons with disabilities in poor countries and conflict zones.',
+            detail: 'Rehabilitation care, social integration, disability prevention.'
+        },
+        { 
+            id: 32,
+            cat: 'International', 
+            name: 'International Red Cross', 
+            num: '+41 22 734 60 01', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Humanitarian action in conflict zones worldwide.',
+            detail: 'International Committee of the Red Cross. Protection of war victims.'
+        },
+        { 
+            id: 33,
+            cat: 'Associations', 
+            name: 'La Cimade', 
+            num: '01 44 18 60 50', 
+            col: '#1D4ED8', 
+            icon: ICONS.assoc, 
+            desc: 'Solidarity association with migrants, refugees, and asylum seekers.',
+            detail: 'Legal assistance, administrative support, housing centers, language training.'
+        },
+        { 
+            id: 34,
+            cat: 'Associations', 
+            name: 'France Nature Environment', 
+            num: '01 44 08 02 50', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Federation of associations for environmental protection and living environment defense.',
+            detail: 'Legal actions, awareness, biodiversity defense, fight against pollution.'
+        },
+        { 
+            id: 35,
+            cat: 'Associations', 
+            name: 'SOS Children\'s Villages', 
+            num: '01 55 07 25 25', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Reception of children separated from their families in stable and affective environment.',
+            detail: 'Reception villages, family strengthening programs, youth integration assistance.'
+        },
+        { 
+            id: 36,
+            cat: 'Associations', 
+            name: 'Restaurants du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Meal and food parcel distribution to persons in precarious situations.',
+            detail: 'Winter campaigns, solidarity grocery stores, cooking workshops, professional integration.'
+        },
+        { 
+            id: 37,
+            cat: 'Associations', 
+            name: 'Foundation of France', 
+            num: '01 44 21 31 00', 
+            col: '#3B82F6', 
+            icon: ICONS.assoc, 
+            desc: 'Foundation supporting projects in solidarity, health, education.',
+            detail: 'Funding of association projects, emergency funds, thematic calls for projects.'
+        },
+        { 
+            id: 38,
+            cat: 'International', 
+            name: 'Oxfam France', 
+            num: '01 77 35 76 00', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Fight against inequality and poverty worldwide.',
+            detail: 'Emergency aid, sustainable development, political advocacy, fair trade.'
+        },
+        { 
+            id: 39,
+            cat: 'International', 
+            name: 'Plan International France', 
+            num: '01 84 87 03 50', 
+            col: '#EC4899', 
+            icon: ICONS.world, 
+            desc: 'Defense of children\'s rights and gender equality worldwide.',
+            detail: 'Sponsorships, protection against violence, education, maternal and child health.'
+        },
+        { 
+            id: 40,
+            cat: 'Social', 
+            name: 'SOS Homophobia', 
+            num: '01 48 06 42 41', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Fight against LGBTphobia and assistance to victims.',
+            detail: 'Phone listening, legal support, school interventions, monitoring.'
+        },
+        { 
+            id: 41,
+            cat: 'Associations', 
+            name: 'Little Brothers of the Poor', 
+            num: '01 49 23 13 00', 
+            col: '#7C3AED', 
+            icon: ICONS.heart, 
+            desc: 'Fight against isolation of elderly persons.',
+            detail: 'Home visits, cultural outings, solidarity vacations, administrative assistance.'
+        },
+        { 
+            id: 42,
+            cat: 'International', 
+            name: 'Solidarités International', 
+            num: '01 76 21 86 00', 
+            col: '#F97316', 
+            icon: ICONS.world, 
+            desc: 'Emergency humanitarian aid in conflict zones and natural disasters.',
+            detail: 'Access to drinking water, sanitation, food security, emergency shelters.'
+        }
+    ];
+
+    // Modal management functions
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    // Function to open rights modal
+    function openRightsModal() {
+        openModal('rightsModal');
+    }
+
+    // Function to manage search bar visibility
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        // List of categories where search bar should be visible
+        const searchVisibleCategories = ['All', 'Emergency', 'Social', 'Associations', 'International'];
+        
+        if (searchVisibleCategories.includes(filter)) {
+            // Show search bar
+            searchContainer.style.display = 'block';
+            // Clear search if coming from Home category
+            if (search === '' && searchInput.value !== '') {
+                searchInput.value = '';
+            }
+        } else if (filter === 'Home') {
+            // Hide search bar
+            searchContainer.style.display = 'none';
+            // Clear search
+            search = '';
+            searchInput.value = '';
+        } else {
+            // For other categories (just in case)
+            searchContainer.style.display = 'none';
+            search = '';
+            searchInput.value = '';
+        }
+    }
+
+    // Function to generate FAQ
+    function renderFAQ() {
+        const faqContainer = document.getElementById('faqContainer');
+        
+        if (faqItems.length === 0) return;
+        
+        let html = '';
+        
+        faqItems.forEach((item, index) => {
+            html += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(${index})">
+                        <span>${item.question}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" id="faqAnswer${index}">
+                        ${item.answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        faqContainer.innerHTML = html;
+    }
+
+    // Function to open/close FAQ questions
+    function toggleFAQ(index) {
+        const answer = document.getElementById(`faqAnswer${index}`);
+        const question = answer.previousElementSibling;
+        
+        // Close all other answers
+        document.querySelectorAll('.faq-answer').forEach((ans, i) => {
+            if (i !== index) {
+                ans.classList.remove('show');
+                ans.previousElementSibling.classList.remove('active');
+            }
+        });
+        
+        // Toggle current state
+        answer.classList.toggle('show');
+        question.classList.toggle('active');
+    }
+
+    // Hamburger Menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+
+    // Function to open description modal
+    function openDescModal(serviceId) {
+        const service = SERVICES.find(s => s.id === serviceId);
+        if (service) {
+            document.getElementById('descTitle').textContent = service.name;
+            document.getElementById('descText').textContent = service.detail || service.desc;
+            document.getElementById('descNum').innerHTML = `<strong>📞 Number:</strong> ${service.num}`;
+            
+            const callBtn = document.getElementById('descCallBtn');
+            const callNum = document.getElementById('descCallNum');
+            
+            callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
+            callNum.textContent = `Call ${service.num}`;
+            
+            openModal('descModal');
+        }
+    }
+    
+    // Function to open survival modal
+    function openSurvivalModal() {
+        openModal('survivalModal');
+    }
+    
+    // Function to open protocol modal
+    function openProtocolModal() {
+        openModal('protocolModal');
+    }
+    
+    // Function to open alert modal
+    function openAlertModal() {
+        openModal('alertModal');
+    }
+    
+    // Function to open health modal
+    function openHealthModal() {
+        openModal('healthModal');
+    }
+
+    // Main render function
+    function render() {
+        const grid = document.getElementById('serviceGrid');
+
+        // Manage search bar visibility
+        toggleSearchBar();
+
+        // If in Home category
+        if (filter === 'Home') {
+            let html = `
+                <div class="card intro-card">
+                    <div class="intro-badge">HOW DOES IT WORK?</div>
+                    <h3 class="card-title">How to use SOS Guide?</h3>
+                    <p class="card-text">This page works <strong>100% offline</strong> and gives you access to essential information. Here's how to navigate and use all features:</p>
+                    
+                    <div class="intro-steps">
+                        <div class="intro-step">
+                            <div class="step-number">1</div>
+                            <div class="intro-step-title">Navigation by categories</div>
+                            <div class="intro-step-desc">Click on filter buttons to see services by category: Emergencies, Social, Associations, International, or All services.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">2</div>
+                            <div class="intro-step-title">Quick search</div>
+                            <div class="intro-step-desc">In categories, use the search bar to find a specific service by name or description.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">3</div>
+                            <div class="intro-step-title">Access to numbers</div>
+                            <div class="intro-step-desc">Click "Call" to directly dial a number, or "?" to see service details.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">4</div>
+                            <div class="intro-step-title">Guides and resources</div>
+                            <div class="intro-step-desc">Explore practical guides: Survival Equipment, Emergency Protocol, Alert & Communication, and Health & first aid.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openModal('aboutModal')">
+                            <span>Learn more about the project</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                        <strong>⚠️ Important:</strong> To call emergency numbers, your phone must have mobile network. This page provides information, but calls go through your phone operator.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.rights}
+                        </div>
+                        <span class="tag">RIGHTS</span>
+                    </div>
+                    <h3 class="card-title">Fundamental Rights & Duties</h3>
+                    <p class="card-text">Constitution, Declaration of Human Rights, Republic values. Know your rights and duties in difficult situations.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openRightsModal()">
+                            <span>See foundations</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.kit}
+                        </div>
+                        <span class="tag">SURVIVAL</span>
+                    </div>
+                    <h3 class="card-title">Survival Equipment</h3>
+                    <p class="card-text">Complete list of essential equipment to prepare for emergency situations. 12 detailed categories.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openSurvivalModal()">
+                            <span>See complete list</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.protocol}
+                        </div>
+                        <span class="tag">PROTOCOL</span>
+                    </div>
+                    <h3 class="card-title">Emergency Protocol</h3>
+                    <p class="card-text">The 5 steps to follow in critical situations. Structured method to react effectively. Integrated PSC1 guide.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openProtocolModal()">
+                            <span>See detailed steps</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.alert}
+                        </div>
+                        <span class="tag">ALERT</span>
+                    </div>
+                    <h3 class="card-title">Alert & Communication</h3>
+                    <p class="card-text">Official alert systems, communication means, and family emergency plan. FR-Alert, SAIP, national signals.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openAlertModal()">
+                            <span>See complete systems</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.heart}
+                        </div>
+                        <span class="tag">HEALTH</span>
+                    </div>
+                    <h3 class="card-title">Health & First Aid</h3>
+                    <p class="card-text">First aid kit, life-saving actions, and emergency medical preparation. Complete guide with procedures.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openHealthModal()">
+                            <span>See detailed actions</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            grid.innerHTML = html;
+            return;
+        }
+
+        // For other categories (All, Emergency, Social, etc.)
+        const filtered = SERVICES.filter(s => {
+            const matchesFilter = filter === 'All' || s.cat === filter;
+            const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
+                                s.desc.toLowerCase().includes(search.toLowerCase());
+            return matchesFilter && matchesSearch;
+        });
+
+        const html = filtered.map(s => `
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: ${s.col}20;">
+                        ${s.icon}
+                    </div>
+                    <span class="tag">${s.cat}</span>
+                </div>
+                <h3 class="card-title">${s.name}</h3>
+                <p class="card-text">${s.desc}</p>
+                <div class="card-actions">
+                    <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
+                        <span>${s.num}</span>
+                        <span>📞</span>
+                    </a>
+                    <button class="card-info-btn" onclick="openDescModal(${s.id})">
+                        <span>?</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = html;
+    }
+
+    // Initialization
+    window.onload = () => {
+        // Load JSON data
+        loadJSONData();
+        
+        // Generate FAQ
+        renderFAQ();
+        
+        // Render initial content
+        render();
+
+        // Events for filters
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filter = this.getAttribute('data-cat');
+                render();
+            });
+        });
+
+        // Event for search
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            search = e.target.value;
+            render();
+        });
+
+        // Events for buttons
+        document.getElementById('aboutBtn').addEventListener('click', () => {
+            openModal('aboutModal');
+        });
+
+        document.getElementById('aboutBtnMobile').addEventListener('click', () => {
+            openModal('aboutModal');
+            closeMenu();
+        });
+
+        // Hamburger menu
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Close modals when clicking outside
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Close modals with Escape key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    closeMenu();
+                }
+            });
+        });
+
+        // Observer for animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observe cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    };
+</script>
+
+    <!-- JSON for categories -->
+    <script id="categoriesData" type="application/json">
+        [
+            {"id": "All", "name": "All"},
+            {"id": "Emergency", "name": "Emergency"},
+            {"id": "Social", "name": "Social"},
+            {"id": "Associations", "name": "Associations"},
+            {"id": "International", "name": "International"}
+        ]
+    </script>
+
+    <!-- JSON for FAQ - 8 COMPLETE QUESTIONS -->
+    <script id="faqData" type="application/json">
+        [
+            {
+                "question": "How to keep morale in difficult situations?",
+                "answer": "Take care of yourself with simple routines: breathe deeply several times a day, keep a gratitude journal (note 3 positive things each day), stay connected with loved ones even at a distance. Remember that every situation, even difficult, is temporary. Practice mindfulness meditation 10 minutes a day to reduce stress and improve mental clarity."
+            },
+            {
+                "question": "What to do when anxiety becomes too strong?",
+                "answer": "Try the 5-4-3-2-1 technique: name 5 things you see, 4 you touch, 3 you hear, 2 you smell, 1 you taste. This technique brings you back to the present. Breathe slowly (4 seconds inhale, 4 pause, 6 exhale). Talk to someone you trust. Practice heart coherence 3 times a day. If anxiety persists, consult a healthcare professional."
+            },
+            {
+                "question": "How to support a loved one in psychological distress?",
+                "answer": "Listen without judging, validate their emotions ('I understand you feel that way'), offer your presence without forcing. Encourage them to consult a professional if necessary (psychologist, doctor). Remind them they are not alone and that asking for help is a sign of strength. Suggest simple activities together (walk, cooking, listening to music). Avoid unsolicited advice and phrases like 'it will pass'."
+            },
+            {
+                "question": "Simple exercises to reduce stress?",
+                "answer": "1) Heart coherence: inhale 5 seconds, exhale 5 seconds for 5 minutes. 2) Mindful walking: focus on each step, sensation of the ground. 3) Self-massage of hands or face. 4) Positive visualization: imagine a calm and safe place with all your senses. 5) Therapeutic writing: write your thoughts for 10 minutes without judgment. 6) Square breathing: inhale 4s, hold 4s, exhale 4s, hold 4s."
+            },
+            {
+                "question": "How to maintain social connection during isolation periods?",
+                "answer": "Organize regular calls with family and friends, participate in online activities (book clubs, games), exchange positive messages. Suggest 'virtual coffees' or shared meals via video. Join online support groups if needed. Write letters or postcards for more personal contact. Participate in local community activities when possible."
+            },
+            {
+                "question": "When to ask for professional help?",
+                "answer": "Consult a professional if you feel: intense persistent sadness (+2 weeks), loss of interest in usual activities, sleep/appetite disorders, recurring negative thoughts, difficulty functioning daily, suicidal thoughts. Helplines like 3114 are available 24/7. Psychological consultations are reimbursed by Social Security (8 sessions per year)."
+            },
+            {
+                "question": "How to recreate a calming routine?",
+                "answer": "Establish regular schedules for sleep (7-9h), meals, physical activity (30 min/day). Integrate mindful break moments. Create comforting rituals (morning tea, soft music in the evening). Limit exposure to anxiety-inducing information, especially before sleeping. Schedule enjoyable activities each day (reading, music, gardening, DIY). Structure your day with simple and achievable goals."
+            },
+            {
+                "question": "Free resources for mental health?",
+                "answer": "• 3114: Suicide prevention 24/7 (free)<br>• 09 72 39 40 50: SOS Friendship (compassionate listening)<br>• 0 800 23 13 13: Drug Info Service<br>• Free apps: Petit Bambou (meditation), Moodpath (mood tracking), Mes antidotes (CNAM)<br>• YouTube channels: Christophe André, Mélanie Cellier, Psynergy<br>• Digital library books (free with registration)<br>• Online support groups (associations)<br>• Youth centers (free reception)"
+            }
+        ]
+    </script>
+</body>
+</html>

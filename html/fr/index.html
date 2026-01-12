@@ -1,0 +1,1751 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS GUIDE | Services Citoyens</title>
+    <meta name="description" content="Guide des services d'urgence et de solidarité pour tous les citoyens. Accès hors ligne garanti.">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛑️</text></svg>">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⛑️</span>
+                <span>SOS GUIDE</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#services" class="nav-link">Services</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+                <button id="aboutBtn" class="btn-primary">
+                    À propos
+                </button>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#faq" onclick="closeMenu()">FAQ</a>
+        </nav>
+
+        <div class="mobile-cta">
+            <button id="aboutBtnMobile" class="btn-primary" onclick="closeMenu(); openModal('aboutModal');">
+                À propos
+            </button>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+    
+       <div class="section-header">
+            <span class="section-badge">BIENVENUE</span>
+            <h2 class="section-title">Hey, salut toi ! 👋</h2>
+            
+        </div>
+        
+        <div class="filters-container">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-cat="Accueil">Accueil</button>
+                <button class="filter-btn" data-cat="Tous">Tous</button>
+                <button class="filter-btn" data-cat="Urgence">Urgence</button>
+                <button class="filter-btn" data-cat="Social">Social</button>
+                <button class="filter-btn" data-cat="Associations">Associations</button>
+                <button class="filter-btn" data-cat="International">International</button>
+            </div>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" id="searchInput" class="search-input" placeholder="Rechercher un service, une aide, un numéro...">
+            </div>
+        </div>
+        
+        <div id="serviceGrid" class="services-grid">
+            <!-- Le contenu est généré dynamiquement par JavaScript -->
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq">
+        <div class="section-header">
+            <span class="section-badge">SUPPORT</span>
+            <h2 class="section-title">FAQ - Santé Mentale & Moral</h2>
+            <p class="section-subtitle">
+                Réponses aux questions fréquentes sur le bien-être en situation difficile
+            </p>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-container" id="faqContainer">
+                <!-- Le contenu sera généré dynamiquement par JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <span>⛑️</span>
+                    <span>SOS GUIDE</span>
+                </a>
+                <p class="footer-description">
+                    Solution open-source d'information citoyenne résiliente. 
+                    Déployable sur Raspberry Pi, fonctionne sans internet.
+                </p>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Navigation</h3>
+                    <a href="#services">Services</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#ressources">Documents</a>
+                    <a href="#about">À propos</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Catégories</h3>
+                    <a href="#services?cat=Urgence">Urgences</a>
+                    <a href="#services?cat=Social">Services sociaux</a>
+                    <a href="#services?cat=Associations">Associations</a>
+                    <a href="#services?cat=International">International</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Contact</h3>
+                    <a href="mailto:contact@sos-guide.fr" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; display: block; font-size: 0.8rem;">contact@sos-guide.fr</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 ⛑️ SOS GUIDE - Projet open-source sous licence MIT</p>
+            <p style="margin-top: 0.25rem;">Conçu par Ludovic MARTIN et la communauté des contributeurs</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Modal À propos -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">À propos de SOS Guide</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Notre Mission</h4>
+                <p><strong>SOS Guide</strong> centralise les aides citoyennes et les numéros d'urgence pour un accès rapide en toute situation. Notre objectif est de fournir un accès universel aux informations vitales : services d'urgence, aides sociales, associations locales et ressources citoyennes.</p>
+                <p>SOS Guide garantit que ces informations restent disponibles même sans connexion internet, lors de pannes de réseau, de catastrophes naturelles, ou dans les zones blanches.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚙️ Fonctionnement Technique Avancé</h4>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>📶 Réseau Wi-Fi Local</h5>
+                        <p>Le Raspberry Pi émet son propre réseau Wi-Fi "SOS-GUIDE". Pas de mot de passe requis pour une connexion rapide.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>💾 Stockage Local</h5>
+                        <p>Toutes les données sont stockées sur une carte microSD. Aucune connexion internet n'est nécessaire une fois le système démarré.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🔋 Faible Consommation</h5>
+                        <p>Le Raspberry Pi consomme seulement 3-5 watts. Il peut fonctionner sur batterie externe pendant 24h+.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>👥 Multi-utilisateurs</h5>
+                        <p>Supporte jusqu'à 50 utilisateurs simultanés sur le réseau local. Idéal pour les lieux publics et collectivités.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🖥️ Caractéristiques du Raspberry Pi</h4>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">RPi 4</div>
+                        <div class="spec-label">Modèle standard</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">2GB</div>
+                        <div class="spec-label">Mémoire RAM</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">16GB</div>
+                        <div class="spec-label">Stockage microSD</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Wi-Fi 5</div>
+                        <div class="spec-label">Dual-band</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">5V/3A</div>
+                        <div class="spec-label">Alimentation</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">30+</div>
+                        <div class="spec-label">Utilisateurs simultanés</div>
+                    </div>
+                </div>
+                
+                <p>Le Raspberry Pi est un nano-ordinateur de la taille d'une carte de crédit. Sa faible consommation et sa polyvalence en font la solution idéale pour des déploiements locaux et autonomes.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Communauté & Solidarité</h4>
+                <p>Ce projet est <strong>open-source</strong> et contributif. Les informations sont mises à jour régulièrement par la communauté pour garantir leur exactitude et pertinence.</p>
+                <p>Nous croyons en la solidarité numérique : chaque commune, association ou groupe de citoyens peut déployer son propre SOS Guide pour servir sa communauté.</p>
+                
+                <div class="highlight-box success">
+                    <p><strong>📢 Contribuez !</strong> Vous pouvez améliorer ce projet sur GitHub, suggérer des ajouts, ou déployer SOS Guide dans votre commune.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🌐 Coordonnées & Site Web</h4>
+                <p><strong>Site web :</strong> <a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
+                <p><strong>Email :</strong> <a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
+                <p><strong>GitHub :</strong> <a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
+                
+                <div class="highlight-box warning">
+                    <p><strong>⚠️ Note importante :</strong> Pour visiter notre site web, vous devez vous déconnecter du réseau Wi-Fi "SOS-GUIDE" et utiliser votre connexion mobile (3G/4G/5G) ou une autre connexion internet. Ce service en ligne fonctionne indépendamment de cette page hors-ligne.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 Pour les communes :</strong> Nous proposons des kits de déploiement clés en main, incluant le Raspberry Pi préconfiguré, l'alimentation et le boîtier. Contactez-nous pour plus d'informations.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🚀 Déploiement & Scalabilité</h4>
+                <p>SOS Guide peut être déployé dans différents contextes :</p>
+                <ul>
+                    <li><strong>Communes</strong> : Services d'urgence locaux, associations, mairie</li>
+                    <li><strong>Événements</strong> : Festivals, manifestations, rassemblements</li>
+                    <li><strong>Centres d'accueil</strong> : Réfugiés, sans-abri, situations d'urgence</li>
+                    <li><strong>Zones rurales</strong> : Complément aux faibles couvertures réseau</li>
+                    <li><strong>Établissements</strong> : Écoles, hôpitaux, maisons de retraite</li>
+                </ul>
+                
+                <p>Le système est conçu pour être <strong>autonome, durable et réplicable</strong> à faible coût.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('aboutModal')">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Modal Description Service -->
+    <div id="descModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="descTitle">Titre du Service</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Description</h4>
+                <p id="descText">Description détaillée du service...</p>
+                <div class="highlight-box" id="descNum">
+                    <strong>📞 Numéro :</strong> 00 00 00 00 00
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>ℹ️ Informations complémentaires</h4>
+                <p>Ce service est disponible 24h/24 et 7j/7 pour les urgences. Pour les appels non urgents, privilégiez les horaires de bureau.</p>
+            </div>
+            
+            <div class="card-actions" style="margin-top: 20px;">
+                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none;">
+                    <span id="descCallNum">Appeler maintenant</span>
+                    <span>📞</span>
+                </a>
+                <button class="card-info-btn" onclick="closeModal('descModal')">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Équipements de Survie -->
+    <div id="survivalModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Équipements de Survie Essentiels</h3>
+            
+            <div class="modal-section">
+                <h4>📦 Kit de Base Obligatoire</h4>
+                <p>Préparez ces équipements à l'avance pour faire face aux situations d'urgence :</p>
+                
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>💧 Eau potable</h5>
+                        <p>3 litres par personne par jour (minimum 3 jours)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🍞 Nourriture non périssable</h5>
+                        <p>Conserves, barres énergétiques, aliments secs (3 jours)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔦 Lampe torche + piles</h5>
+                        <p>Éclairage d'urgence, prévoir des piles de rechange</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📻 Radio à manivelle</h5>
+                        <p>Pour recevoir les informations sans électricité</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚡ Chargeur solaire</h5>
+                        <p>Pour recharger téléphones et petits appareils</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧰 Trousse de premiers secours</h5>
+                        <p>Pansements, antiseptique, médicaments essentiels</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔪 Multifonction</h5>
+                        <p>Couteau suisse ou Leatherman</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧤 Gants de protection</h5>
+                        <p>Pour manipulation d'objets dangereux</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧥 Couverture de survie</h5>
+                        <p>Isolation thermique (chaud/froid)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧻 Produits d'hygiène</h5>
+                        <p>Gel hydroalcoolique, papier toilette, lingettes</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🗺️ Carte locale</h5>
+                        <p>Cartes papier de votre région</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Liste de contacts</h5>
+                        <p>Contacts d'urgence sur papier</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📄 Documents Importants</h4>
+                <ul>
+                    <li>Photocopies des papiers d'identité (carte d'identité, passeport, permis)</li>
+                    <li>Carte vitale et ordonnances médicales</li>
+                    <li>Copie des assurances (habitation, santé, voiture)</li>
+                    <li>Contacts d'urgence familiaux et professionnels</li>
+                    <li>Argent liquide en petites coupures (minimum 100€)</li>
+                    <li>Clés de voiture et de maison de rechange</li>
+                    <li>Carnet de santé et vaccinations</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏠 Conception du Kit</h4>
+                <p><strong>Stockage :</strong> Stockez votre kit dans un endroit facile d'accès, à l'abri de l'humidité et de la lumière directe.</p>
+                <p><strong>Vérification :</strong> Vérifiez régulièrement les dates de péremption (tous les 6 mois).</p>
+                <p><strong>Évacuation :</strong> Prévoyez un sac à dos par personne (30-40L) pour une évacuation rapide.</p>
+                <p><strong>Personnalisation :</strong> Adaptez votre kit aux besoins spécifiques (bébés, personnes âgées, animaux, médicaments particuliers).</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Conseil expert :</strong> Préparez deux kits : un "kit maison" plus complet et un "kit d'évacuation" léger dans un sac à dos. Testez régulièrement votre matériel et formez tous les membres de la famille à son utilisation.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('survivalModal')">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Modal Protocole d'Urgence -->
+    <div id="protocolModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Protocole d'Urgence en 5 Étapes</h3>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">1</span> ÉVALUER la situation</h4>
+                <p><strong>Gardez votre calme</strong> - Respirez profondément avant d'agir</p>
+                <p><strong>Analysez les dangers</strong> : feu, fumée, effondrement, gaz, électricité</p>
+                <p><strong>Protégez-vous d'abord</strong> avant de secourir les autres</p>
+                <p><strong>Identifiez les issues de secours</strong></p>
+                <p><strong>Évaluez le nombre de victimes</strong> et leur état apparent</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">2</span> ALERTER les secours</h4>
+                <p><strong>Composez le numéro adapté</strong> : 15 (SAMU), 18 (Pompiers), 17 (Police), 112 (UE)</p>
+                <p><strong>Donnez ces informations clairement</strong> :</p>
+                <ul>
+                    <li>Votre nom et numéro de téléphone</li>
+                    <li>L'adresse exacte (ville, rue, numéro, étage, code d'entrée)</li>
+                    <li>La nature du problème (accident, incendie, malaise...)</li>
+                    <li>Le nombre de victimes et leur état apparent</li>
+                    <li>Les dangers particuliers (gaz, produits chimiques, électricité...)</li>
+                    <li>Les actions déjà entreprises</li>
+                </ul>
+                <p><strong>Ne raccrochez pas le premier</strong> - Attendez les instructions du secouriste</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">3</span> PROTÉGER les personnes</h4>
+                <p><strong>Mettez les victimes en sécurité</strong> à l'abri du danger</p>
+                <p><strong>Balisez la zone dangereuse</strong> pour éviter d'autres accidents</p>
+                <p><strong>Coupez gaz et électricité</strong> si nécessaire et sans danger</p>
+                <p><strong>Éloignez les curieux</strong> pour faciliter l'intervention des secours</p>
+                <p><strong>Établissez un périmètre de sécurité</strong> d'au moins 50 mètres</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">4</span> SECOURIR les victimes</h4>
+                <p><strong>Vérifiez la conscience</strong> : parlez à la victime, secouez doucement</p>
+                <p><strong>Contrôlez la respiration</strong> : regardez si le ventre/poitrine se soulève</p>
+                <p><strong>Pratiquez les gestes de base</strong> :</p>
+                <ul>
+                    <li>PLA : Position Latérale de sécurité (si inconscient mais respire)</li>
+                    <li>Compression des saignements abondants (avec tissu propre)</li>
+                    <li>Réanimation cardio-pulmonaire si formé (30 compressions/2 insufflations)</li>
+                    <li>Utilisation du défibrillateur si disponible (DSA/DAE)</li>
+                </ul>
+                <p><strong>Réchauffez les victimes</strong> avec couvertures ou vêtements</p>
+                <p><strong>Ne donnez jamais à boire</strong> à une personne inconsciente</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">5</span> ATTENDRE les secours</h4>
+                <p><strong>Préparez l'accès</strong> : dégagez les couloirs, ouvrez les portes</p>
+                <p><strong>Signalez votre présence</strong> : allumez les lumières, faites des signes</p>
+                <p><strong>Transmettez les informations</strong> aux secours à leur arrivée</p>
+                <p><strong>Suivez leurs instructions</strong> sans les gêner dans leur travail</p>
+                <p><strong>Restez disponible</strong> pour fournir d'autres informations</p>
+                <p><strong>Notez l'heure d'arrivée</strong> des secours pour le suivi</p>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Formation recommandée :</strong> Suivez une formation PSC1 (Prévention et Secours Civiques de niveau 1) pour maîtriser ces gestes. Ces formations sont accessibles à tous dès 10 ans et durent environ 7 heures.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('protocolModal')">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Modal Alerte Urgence -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Alerte et Communication d'Urgence</h3>
+            
+            <div class="modal-section">
+                <h4>📱 Systèmes d'Alerte Officiels</h4>
+                <p><strong>SAIP</strong> (Système d'Alerte et d'Information des Populations) :</p>
+                <ul>
+                    <li>Application mobile "SAIP" à télécharger gratuitement</li>
+                    <li>Notifications push pour alertes locales (inondations, incidents, attentats)</li>
+                    <li>Informations en temps réel avec conseils de comportement</li>
+                    <li>Géolocalisation pour alertes ciblées</li>
+                </ul>
+                
+                <p><strong>FR-Alert</strong> : système de diffusion cellulaire</p>
+                <ul>
+                    <li>Alertes reçues automatiquement sur tous les mobiles</li>
+                    <li>Fonctionne même sans application ni internet</li>
+                    <li>Messages en cas de danger immédiat (via cell broadcast)</li>
+                    <li>Couverture nationale activée depuis 2022</li>
+                </ul>
+                
+                <p><strong>Alertes Météo France</strong> : Vigilance météorologique</p>
+                <ul>
+                    <li>Carte de vigilance 4 couleurs (vert, jaune, orange, rouge)</li>
+                    <li>Bulletins d'alerte pour phénomènes dangereux</li>
+                    <li>Prévisions à 24h et 48h</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📻 Moyens de Communication Essentiels</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>📻 Radio FM</h5>
+                        <p>France Inter (87.8), France Info (105.5), stations locales</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📺 Télévision</h5>
+                        <p>France 2, France 3 Régions, chaînes d'info en continu</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌐 Sites officiels</h5>
+                        <p>Vigicrues, Météo France, Préfecture, Mairie</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Réseaux sociaux</h5>
+                        <p>Comptes officiels Préfecture, Mairie, Pompiers, Gendarmerie</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📞 Lignes info</h5>
+                        <p>Numéros verts préfectoraux, mairies</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📢 Haut-parleurs</h5>
+                        <p>Véhicules municipaux, sirènes locales</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>👨‍👩‍👧‍👦 Plan de Communication Familial</h4>
+                <p><strong>Établissez un plan avant la crise :</strong></p>
+                <ol>
+                    <li><strong>Désignez un contact hors région</strong> : Toute la famille appelle cette personne pour centraliser les informations</li>
+                    <li><strong>Prévoyez des points de rendez-vous</strong> : Un près de chez vous, un hors du quartier, un hors de la ville</li>
+                    <li><strong>Utilisez les SMS plutôt que les appels</strong> : Les SMS passent mieux en cas de réseau saturé</li>
+                    <li><strong>Économisez la batterie</strong> : Mode économie d'énergie, chargeurs portables</li>
+                    <li><strong>Messages courts et clairs</strong> : "Je suis sain et sauf à [lieu]", "Besoin d'aide à [adresse]"</li>
+                    <li><strong>Code familial</strong> : Mot de passe ou phrase pour authentifier les messages</li>
+                </ol>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚠️ Signaux d'Alerte Nationaux</h4>
+                <p><strong>Sirènes du réseau national d'alerte :</strong></p>
+                <ul>
+                    <li><strong>Alerte</strong> : Son modulé montant et descendant (3 fois 1 minute séparées de 5 secondes)</li>
+                    <li><strong>Fin d'alerte</strong> : Son continu de 30 secondes</li>
+                    <li><strong>Essai mensuel</strong> : Premier mercredi du mois à midi (son unique de 1 minute 41 secondes)</li>
+                </ul>
+                
+                <p><strong>Messages vocaux</strong> : dans les transports, lieux publics, centres commerciaux</p>
+                <p><strong>Panneaux à messages variables</strong> : sur routes et autoroutes</p>
+                <p><strong>Alarme des téléphones</strong> : Son strident spécifique pour FR-Alert</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 En cas de blackout communication :</strong> Utilisez des messages écrits (papier), des signaux visuels (draps aux fenêtres), des coups de sifflet, ou le système de messagerie de SOS Guide si disponible localement.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('alertModal')">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Modal Santé Premiers Secours -->
+    <div id="healthModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Santé et Premiers Secours Complet</h3>
+            
+            <div class="modal-section">
+                <h4>🧰 Composition Trousse Premiers Secours Complète</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🩹 Pansements</h5>
+                        <p>Compresses stériles, sparadrap, bandes, pansements hydrocolloïdes</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧴 Antiseptique</h5>
+                        <p>Biseptine, Dakin, eau oxygénée, chlorhexidine</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>💊 Médicaments essentiels</h5>
+                        <p>Paracétamol, ibuprofène, anti-diarrhéique, anti-histaminique</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>✂️ Matériel</h5>
+                        <p>Ciseaux à bout rond, pince à épiler, gants jetables (taille M et L)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌡️ Thermomètre</h5>
+                        <p>Électronique avec piles de rechange</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>😷 Couvre-visage</h5>
+                        <p>Masques chirurgicaux, FFP2 (x10)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🩺 Tensio-mètre</h5>
+                        <p>Pour personnes à risque (hypertension)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧽 Compresses</h5>
+                        <p>Compresses stériles 10x10 (x20), compresses hémostatiques</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🦠 Désinfectant</h5>
+                        <p>Solution hydroalcoolique (100ml), savon antiseptique</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Carnet de soins</h5>
+                        <p>Pour noter les interventions et observations</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🆘 Gestes qui Sauvent - Guide Complet</h4>
+                
+                <div class="survival-step">
+                    <h4>🩸 Hémorragie Sévère</h4>
+                    <p><strong>1. Appuyez directement</strong> sur la plaie avec un tissu propre</p>
+                    <p><strong>2. Allongez la victime</strong> pour éviter le malaise vagal</p>
+                    <p><strong>3. Surélevez le membre</strong> si l'hémorragie est sur un membre</p>
+                    <p><strong>4. Comprimez l'artère</strong> en amont si l'hémorragie persiste (points de compression)</p>
+                    <p><strong>5. Appelez le 15</strong> immédiatement pour hémorragie abondante</p>
+                    <p><strong>6. Posez un garrot</strong> uniquement en dernier recours (notez l'heure de pose)</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🔥 Brûlure</h4>
+                    <p><strong>1. Refroidissez 15-20 minutes</strong> sous eau tiède (15-25°C)</p>
+                    <p><strong>2. Retirez vêtements et bijoux</strong> avant l'apparition de l'œdème</p>
+                    <p><strong>3. Ne percez pas les cloques</strong> (risque d'infection)</p>
+                    <p><strong>4. Ne mettez pas de corps gras</strong> (beurre, huile, crème)</p>
+                    <p><strong>5. Couvrez avec un tissu propre</strong> et sec</p>
+                    <p><strong>6. Appelez le 15 si</strong> : brûlure étendue (> paume de la main), sur le visage, les mains, les articulations, ou brûlure chimique/électrique</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>😵 Malaise / Perte de connaissance</h4>
+                    <p><strong>1. Vérifiez la conscience</strong> : "Ça va ? Vous m'entendez ?" + stimulation douce</p>
+                    <p><strong>2. Vérifiez la respiration</strong> : regardez si la poitrine se soulève, écoutez, sentez le souffle</p>
+                    <p><strong>3. Si inconscient mais respire</strong> : Mettez en Position Latérale de Sécurité (PLS)</p>
+                    <p><strong>4. Si inconscient et ne respire pas</strong> : Commencez la RCP (30 compressions/2 insufflations)</p>
+                    <p><strong>5. Desserrez col, cravate, ceinture</strong></p>
+                    <p><strong>6. Protégez de la chaleur/froid</strong> avec une couverture</p>
+                    <p><strong>7. Appelez le 15</strong> en décrivant précisément les symptômes</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🤕 Traumatisme / Fracture</h4>
+                    <p><strong>1. Immobilisez le membre</strong> dans la position où vous l'avez trouvé</p>
+                    <p><strong>2. Appliquez du froid</strong> pour réduire l'œdème et la douleur</p>
+                    <p><strong>3. Surélevez le membre</strong> si possible</p>
+                    <p><strong>4. Ne donnez rien à manger ou boire</strong> (risque d'intervention chirurgicale)</p>
+                    <p><strong>5. Surveillez les signes de choc</strong> : pâleur, sueurs, frissons, agitation</p>
+                    <p><strong>6. Transportez uniquement si nécessaire</strong>, avec immobilisation préalable</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📋 Préparation Médicale Familiale</h4>
+                <ul>
+                    <li><strong>Liste des médicaments habituels</strong> avec posologie précise et durée de traitement</li>
+                    <li><strong>Copie des ordonnances</strong> en cours (à renouveler avant expiration)</li>
+                    <li><strong>Contacts professionnels</strong> : médecin traitant, spécialistes, pharmacie de garde</li>
+                    <li><strong>Informations médicales</strong> : groupe sanguin, allergies connues (médicaments, aliments, autres)</li>
+                    <li><strong>Document sur les pathologies chroniques</strong> : diabète, hypertension, asthme, épilepsie, etc.</li>
+                    <li><strong>Carnet de vaccination</strong> à jour pour tous les membres de la famille</li>
+                    <li><strong>Assurances santé</strong> : numéros de contrat, téléphones, garanties</li>
+                    <li><strong>Contacts ICE</strong> (In Case of Emergency) programmés dans le téléphone</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Formation PSC1 :</strong> La formation Prévention et Secours Civiques de niveau 1 est accessible à tous dès 10 ans. Elle dure 7 heures et coûte entre 50 et 70€. Contactez la Croix-Rouge, les Pompiers, ou la Protection Civile de votre département.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('healthModal')">Fermer</button>
+        </div>
+    </div>
+
+    <!-- Modal Droits & Devoirs -->
+    <div id="rightsModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Droits & Devoirs Fondamentaux</h3>
+            
+            <div class="modal-section">
+                <h4>⚖️ Les Fondements de la République</h4>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>🇫🇷 Constitution de 1958</h5>
+                        <p>Loi fondamentale qui organise les pouvoirs publics, définit les libertés et les droits des citoyens. Instaure la Ve République.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>📜 Déclaration des Droits de l'Homme (1789)</h5>
+                        <p>« Les hommes naissent et demeurent libres et égaux en droits. » 17 articles fondateurs des droits naturels et inaliénables.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🤝 Préambule de 1946</h5>
+                        <p>Établit les droits sociaux et économiques : droit au travail, à la santé, à l'éducation, égalité hommes-femmes.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🌈 Charte de l'Environnement (2005)</h5>
+                        <p>Intègre la protection de l'environnement dans la Constitution : droit de vivre dans un environnement équilibré et respectueux de la santé.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🛡️ Vos Droits Fondamentaux</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🧑‍⚖️ Droits civils et politiques</h5>
+                        <p>Liberté d'expression, de conscience, de religion. Droit de vote, d'association, de manifestation pacifique.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🏥 Droits sociaux et économiques</h5>
+                        <p>Droit au travail, à la santé, à l'éducation, au logement, à la protection sociale, à un niveau de vie suffisant.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👶 Droits spécifiques</h5>
+                        <p>Droits de l'enfant, des personnes handicapées, des personnes âgées, égalité entre hommes et femmes.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚖️ Droits juridiques</h5>
+                        <p>Présomption d'innocence, droit à un procès équitable, droit à un avocat, protection contre l'arbitraire.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌍 Droits environnementaux</h5>
+                        <p>Droit à un environnement sain, information sur les risques, participation aux décisions environnementales.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Droits numériques</h5>
+                        <p>Protection des données personnelles (RGPD), liberté d'accès à internet, droit à l'oubli numérique.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Vos Devoirs de Citoyen</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🏛️ Devoirs civiques</h5>
+                        <p>Respecter la loi, payer ses impôts, participer aux élections, siéger en tant que juré si convoqué.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👨‍👩‍👧‍👦 Devoirs sociaux</h5>
+                        <p>Respecter les droits d'autrui, protéger les personnes vulnérables, contribuer à la solidarité nationale.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🎖️ Devoirs civils</h5>
+                        <p>Participer à la Journée Défense et Citoyenneté (JDC), respecter les symboles de la République.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌳 Devoirs environnementaux</h5>
+                        <p>Contribuer à la préservation de l'environnement, respecter les réglementations écologiques.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🆘 Devoirs en situation d'urgence</h5>
+                        <p>Porter secours à personne en danger (obligation d'assistance), respecter les consignes des autorités.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📚 Devoirs éducatifs</h5>
+                        <p>Assurer l'éducation de ses enfants, respecter l'obligation scolaire (3 à 16 ans).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📞 Numéros d'Urgence pour la Défense des Droits</h4>
+                <div class="highlight-box">
+                    <p><strong>Défenseur des droits :</strong> 09 69 39 00 00</p>
+                    <p><strong>Violences conjugales :</strong> 3919</p>
+                    <p><strong>Enfance en danger :</strong> 119</p>
+                    <p><strong>Discrimination :</strong> 08 10 00 14 04</p>
+                    <p><strong>Handicap :</strong> 0 800 360 360</p>
+                    <p><strong>Consommation :</strong> 08 90 90 19 80</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📚 Textes Fondamentaux à Connaître</h4>
+                <ul>
+                    <li><strong>Constitution du 4 octobre 1958</strong> - Organisation des pouvoirs publics</li>
+                    <li><strong>Déclaration des Droits de l'Homme et du Citoyen (1789)</strong> - Libertés fondamentales</li>
+                    <li><strong>Préambule de la Constitution de 1946</strong> - Droits sociaux et économiques</li>
+                    <li><strong>Charte de l'environnement (2005)</strong> - Droits environnementaux</li>
+                    <li><strong>Convention européenne des droits de l'homme (1950)</strong> - Protection des droits en Europe</li>
+                    <li><strong>Convention internationale des droits de l'enfant (1989)</strong> - Droits spécifiques des enfants</li>
+                    <li><strong>Déclaration universelle des droits de l'homme (1948)</strong> - Normes internationales</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏛️ Institutions de Protection des Droits</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">Défenseur des droits</div>
+                        <div class="spec-label">Institution indépendante</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Cour européenne des droits de l'homme</div>
+                        <div class="spec-label">Juridiction internationale</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Conseil constitutionnel</div>
+                        <div class="spec-label">Contrôle de constitutionnalité</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CNIL</div>
+                        <div class="spec-label">Protection des données</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CGLPL</div>
+                        <div class="spec-label">Contrôleur des lieux de privation de liberté</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Médiateur de la République</div>
+                        <div class="spec-label">Règlement des litiges avec l'administration</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>💡 Saviez-vous ?</strong> En France, la Constitution est au sommet de la hiérarchie des normes. Toutes les lois doivent être conformes à la Constitution et aux principes fondamentaux qu'elle contient. Le Conseil constitutionnel veille à cette conformité.</p>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>⚠️ En situation d'urgence :</strong> Certains droits peuvent être temporairement restreints pour protéger la population (état d'urgence, catastrophe naturelle). Ces restrictions doivent être proportionnées, temporaires et contrôlées par l'autorité judiciaire.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">Fermer</button>
+        </div>
+    </div>
+
+    <script>
+    // Variables globales
+    let filter = 'Accueil';
+    let search = '';
+    let categories = [];
+    let faqItems = [];
+
+    // Chargement des données JSON
+    function loadJSONData() {
+        // Charger les catégories
+        const categoriesJSON = document.getElementById('categoriesData').textContent;
+        categories = JSON.parse(categoriesJSON);
+        
+        // Charger la FAQ
+        const faqJSON = document.getElementById('faqData').textContent;
+        faqItems = JSON.parse(faqJSON);
+    }
+
+    // ICONS
+    const ICONS = {
+        emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
+        social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+        police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
+        fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
+        heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
+        world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+        kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
+        protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+        alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
+        health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
+        wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
+        rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
+    };
+
+    // SERVICES data - TOUS LES 42 SERVICES
+    const SERVICES = [
+        // URGENCES
+        { 
+            id: 1,
+            cat: 'Urgence', 
+            name: 'SAMU', 
+            num: '15', 
+            col: '#EF4444', 
+            icon: ICONS.emergency, 
+            desc: 'Service d\'Aide Médicale Urgente. Pour toutes les urgences médicales graves nécessitant une intervention rapide.',
+            detail: 'Le SAMU intervient pour les urgences médicales (accidents, malaise, détresse vitale). Ne pas appeler pour des questions non urgentes.'
+        },
+        { 
+            id: 2,
+            cat: 'Urgence', 
+            name: 'Police Secours', 
+            num: '17', 
+            col: '#0066FF', 
+            icon: ICONS.police, 
+            desc: 'Police nationale pour signaler une infraction, un danger immédiat ou demander une intervention urgente.',
+            detail: 'Police Secours intervient pour les crimes, délits, accidents de la route, troubles à l\'ordre public.'
+        },
+        { 
+            id: 3,
+            cat: 'Urgence', 
+            name: 'Pompiers', 
+            num: '18', 
+            col: '#F59E0B', 
+            icon: ICONS.fire, 
+            desc: 'Sapeurs-pompiers pour les incendies, accidents, inondations et tous types de secours.',
+            detail: 'Les pompiers interviennent pour les incendies, accidents de la route, secours à personnes, inondations.'
+        },
+        { 
+            id: 4,
+            cat: 'Urgence', 
+            name: 'SOS Médecins', 
+            num: '3624', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'Médecin de garde disponible 24h/24 pour les urgences médicales non vitales.',
+            detail: 'SOS Médecins envoie un médecin à domicile pour les urgences non vitales (fièvre, douleurs, conseils médicaux).'
+        },
+        { 
+            id: 5,
+            cat: 'Urgence', 
+            name: 'Numéro d\'urgence unique UE', 
+            num: '112', 
+            col: '#3B82F6', 
+            icon: ICONS.emergency, 
+            desc: 'Numéro d\'urgence européen valable dans tous les pays de l\'Union européenne.',
+            detail: 'Le 112 fonctionne partout en Europe. Il vous met en relation avec les services d\'urgence du pays.'
+        },
+        { 
+            id: 6,
+            cat: 'Urgence', 
+            name: 'Centre Anti-Poison', 
+            num: '01 40 05 48 48', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Conseils en cas d\'intoxication, ingestion de produits dangereux ou morsures.',
+            detail: 'Centre anti-poison de Paris. Donnez le nom du produit, la quantité ingérée, l\'âge et le poids de la victime.'
+        },
+        { 
+            id: 7,
+            cat: 'Urgence', 
+            name: 'Urgences Électricité', 
+            num: '09 72 67 50 XX', 
+            col: '#F59E0B', 
+            icon: ICONS.emergency, 
+            desc: 'Enedis pour les pannes d\'électricité, fils électriques coupés ou dangers électriques.',
+            detail: 'Composez le numéro de votre région (remplacer XX par le numéro départemental). Signalez les pannes.'
+        },
+        { 
+            id: 8,
+            cat: 'Urgence', 
+            name: 'Urgences Gaz', 
+            num: '09 69 36 35 34', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'GRDF pour les fuites de gaz, odeurs suspectes ou problèmes d\'alimentation.',
+            detail: 'En cas de forte odeur de gaz : ne pas allumer de lumière, aérer, quitter les lieux, appeler depuis l\'extérieur.'
+        },
+        
+        // SOCIAL
+        { 
+            id: 9,
+            cat: 'Social', 
+            name: 'SAMU Social', 
+            num: '115', 
+            col: '#0F172A', 
+            icon: ICONS.social, 
+            desc: 'Hébergement d\'urgence, maraudes et aide aux personnes sans abri.',
+            detail: 'Le 115 oriente vers les places d\'hébergement d\'urgence, organise les maraudes.'
+        },
+        { 
+            id: 10,
+            cat: 'Social', 
+            name: 'Enfance en Danger', 
+            num: '119', 
+            col: '#EC4899', 
+            icon: ICONS.social, 
+            desc: 'Signalement des enfants en danger ou risquant de l\'être.',
+            detail: 'Numéro gratuit, confidentiel, 24h/24. Signalez toute situation de maltraitance ou négligence.'
+        },
+        { 
+            id: 11,
+            cat: 'Social', 
+            name: 'Violences Femmes', 
+            num: '3919', 
+            col: '#BE185D', 
+            icon: ICONS.social, 
+            desc: 'Écoute, information et orientation des femmes victimes de violences.',
+            detail: 'Numéro gratuit, anonyme, 24h/24. Violences conjugales, psychologiques, sexuelles.'
+        },
+        { 
+            id: 12,
+            cat: 'Social', 
+            name: 'Drogue Info Service', 
+            num: '0800 23 13 13', 
+            col: '#059669', 
+            icon: ICONS.social, 
+            desc: 'Écoute, information et aide pour les addictions (drogues, alcool, jeux).',
+            detail: 'Numéro gratuit, anonyme, 7j/7 de 8h à 2h. Conseils, orientation vers des centres de soins.'
+        },
+        { 
+            id: 13,
+            cat: 'Social', 
+            name: 'Suicide Écoute', 
+            num: '3114', 
+            col: '#3B82F6', 
+            icon: ICONS.heart, 
+            desc: 'Prévention du suicide, écoute et soutien psychologique.',
+            detail: 'Numéro national de prévention du suicide. Écoute bienveillante, non jugeante, 24h/24.'
+        },
+        { 
+            id: 14,
+            cat: 'Social', 
+            name: 'Allô Service Public', 
+            num: '3939', 
+            col: '#6366F1', 
+            icon: ICONS.phone, 
+            desc: 'Informations sur tous les services publics français.',
+            detail: 'Du lundi au vendredi, 9h-18h. Renseignements sur les démarches administratives, droits, aides sociales.'
+        },
+        { 
+            id: 15,
+            cat: 'Social', 
+            name: 'Handicap Écoute', 
+            num: '0 800 360 360', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Informations sur les droits, aides et accompagnement des personnes handicapées.',
+            detail: 'Numéro gratuit, du lundi au vendredi 9h-17h. Renseignements sur l\'AAH, la PCH, la MDPH.'
+        },
+        { 
+            id: 16,
+            cat: 'Social', 
+            name: 'SOS Amitié', 
+            num: '09 72 39 40 50', 
+            col: '#EC4899', 
+            icon: ICONS.heart, 
+            desc: 'Écoute bienveillante et anonyme pour les personnes en détresse psychologique.',
+            detail: 'Association d\'écoute bénévole, 24h/24. Pour parler de vos difficultés, isolement, souffrance morale.'
+        },
+        
+        // ASSOCIATIONS FRANÇAISES
+        { 
+            id: 17,
+            cat: 'Associations', 
+            name: 'Restos du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#F43F5E', 
+            icon: ICONS.heart, 
+            desc: 'Aide alimentaire, insertion sociale et accompagnement des plus démunis.',
+            detail: 'Distribution de repas, épiceries sociales, aide à l\'insertion. Ouvert de novembre à mars.'
+        },
+        { 
+            id: 18,
+            cat: 'Associations', 
+            name: 'Croix-Rouge française', 
+            num: '0800 858 858', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Action humanitaire, secourisme, aide sociale et formation aux premiers secours.',
+            detail: 'Urgences, maraudes, aide alimentaire, formation SST/PSC1. Actions locales partout en France.'
+        },
+        { 
+            id: 19,
+            cat: 'Associations', 
+            name: 'Secours Catholique', 
+            num: '01 45 49 73 00', 
+            col: '#B91C1C', 
+            icon: ICONS.heart, 
+            desc: 'Aide aux plus démunis, accueil, hébergement et lutte contre l\'exclusion.',
+            detail: 'Accueil de jour, distribution alimentaire, aide aux démarches, soutien scolaire.'
+        },
+        { 
+            id: 20,
+            cat: 'Associations', 
+            name: 'Emmaüs', 
+            num: '01 41 58 25 00', 
+            col: '#1E293B', 
+            icon: ICONS.assoc, 
+            desc: 'Lutte contre l\'exclusion par le travail, réinsertion et économie solidaire.',
+            detail: 'Communautés Emmaüs proposent hébergement, travail dans la récupération, vente d\'objets.'
+        },
+        { 
+            id: 21,
+            cat: 'Associations', 
+            name: 'SPA', 
+            num: '01 43 80 40 66', 
+            col: '#D97706', 
+            icon: ICONS.heart, 
+            desc: 'Protection animale, refuge, adoption et lutte contre la maltraitance.',
+            detail: 'Société Protectrice des Animaux. Signalement de maltraitance, adoption d\'animaux.'
+        },
+        { 
+            id: 22,
+            cat: 'Associations', 
+            name: 'Secours Populaire', 
+            num: '01 44 78 21 00', 
+            col: '#2563EB', 
+            icon: ICONS.heart, 
+            desc: 'Solidarité pour tous, aide alimentaire, vestimentaire et accès à la culture.',
+            detail: 'Aide d\'urgence, colis alimentaires, vacances solidaires, aide aux devoirs.'
+        },
+        { 
+            id: 23,
+            cat: 'Associations', 
+            name: 'Médecins du Monde', 
+            num: '01 44 92 15 15', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Soins aux plus démunis en France et à l\'international.',
+            detail: 'Centres de soins gratuits, maraudes médicales, accès aux droits santé.'
+        },
+        { 
+            id: 24,
+            cat: 'Associations', 
+            name: 'Banque Alimentaire', 
+            num: '01 48 28 00 00', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Collecte et distribution de denrées alimentaires aux associations.',
+            detail: '79 Banques Alimentaires en France. Approvisionnent 5 400 associations.'
+        },
+        
+        // ASSOCIATIONS INTERNATIONALES
+        { 
+            id: 25,
+            cat: 'International', 
+            name: 'UNICEF France', 
+            num: '0 800 840 840', 
+            col: '#3B82F6', 
+            icon: ICONS.world, 
+            desc: 'Fonds des Nations Unies pour l\'enfance. Protection des enfants dans le monde.',
+            detail: 'Action dans 190 pays. Vaccination, éducation, protection contre les violences.'
+        },
+        { 
+            id: 26,
+            cat: 'International', 
+            name: 'Médecins Sans Frontières', 
+            num: '0 800 840 840', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Aide médicale d\'urgence dans les zones de conflits et catastrophes.',
+            detail: 'ONG médicale internationale présente dans 70 pays. Soins aux populations vulnérables.'
+        },
+        { 
+            id: 27,
+            cat: 'International', 
+            name: 'CARE France', 
+            num: '01 53 19 89 89', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre la pauvreté et les injustices dans le monde.',
+            detail: 'Action dans 100 pays. Urgences humanitaires, développement durable.'
+        },
+        { 
+            id: 28,
+            cat: 'International', 
+            name: 'Action contre la Faim', 
+            num: '01 70 84 70 84', 
+            col: '#059669', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre la faim dans le monde, nutrition et sécurité alimentaire.',
+            detail: 'Présente dans 50 pays. Programmes nutritionnels, eau et assainissement.'
+        },
+        { 
+            id: 29,
+            cat: 'International', 
+            name: 'WWF France', 
+            num: '01 55 25 84 84', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Protection de l\'environnement et de la biodiversité mondiale.',
+            detail: 'Fonds mondial pour la nature. Protection des espèces menacées, forêts, océans, climat.'
+        },
+        { 
+            id: 30,
+            cat: 'International', 
+            name: 'Amnesty International', 
+            num: '01 53 38 65 65', 
+            col: '#8B5CF6', 
+            icon: ICONS.world, 
+            desc: 'Défense des droits humains dans le monde.',
+            detail: 'Mouvement mondial de 10 millions de personnes. Lutte pour les droits humains.'
+        },
+        { 
+            id: 31,
+            cat: 'International', 
+            name: 'Handicap International', 
+            num: '04 78 69 79 79', 
+            col: '#F59E0B', 
+            icon: ICONS.world, 
+            desc: 'Aide aux personnes handicapées dans les pays pauvres et zones de conflit.',
+            detail: 'Soins de réadaptation, insertion sociale, prévention des handicaps.'
+        },
+        { 
+            id: 32,
+            cat: 'International', 
+            name: 'Croix-Rouge Internationale', 
+            num: '+41 22 734 60 01', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Action humanitaire dans les zones de conflit à travers le monde.',
+            detail: 'Comité international de la Croix-Rouge. Protection des victimes de guerre.'
+        },
+        { 
+            id: 33,
+            cat: 'Associations', 
+            name: 'La Cimade', 
+            num: '01 44 18 60 50', 
+            col: '#1D4ED8', 
+            icon: ICONS.assoc, 
+            desc: 'Association de solidarité active avec les migrants, les réfugiés et les demandeurs d\'asile.',
+            detail: 'Aide juridique, accompagnement administratif, centres d\'hébergement, formation linguistique.'
+        },
+        { 
+            id: 34,
+            cat: 'Associations', 
+            name: 'France Nature Environnement', 
+            num: '01 44 08 02 50', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Fédération d\'associations pour la protection de l\'environnement et la défense du cadre de vie.',
+            detail: 'Actions juridiques, sensibilisation, défense de la biodiversité, lutte contre les pollutions.'
+        },
+        { 
+            id: 35,
+            cat: 'Associations', 
+            name: 'SOS Villages d\'Enfants', 
+            num: '01 55 07 25 25', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Accueil d\'enfants séparés de leurs familles dans un environnement stable et affectif.',
+            detail: 'Villages d\'accueil, programmes de renforcement familial, aide à l\'insertion des jeunes.'
+        },
+        { 
+            id: 36,
+            cat: 'Associations', 
+            name: 'Les Restaurants du Cœur', 
+            num: '01 53 32 23 23', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Distribution de repas et colis alimentaires aux personnes en situation de précarité.',
+            detail: 'Campagnes hivernales, épiceries solidaires, ateliers cuisine, insertion professionnelle.'
+        },
+        { 
+            id: 37,
+            cat: 'Associations', 
+            name: 'Fondation de France', 
+            num: '01 44 21 31 00', 
+            col: '#3B82F6', 
+            icon: ICONS.assoc, 
+            desc: 'Fondation qui soutient des projets dans les domaines de la solidarité, la santé, l\'éducation.',
+            detail: 'Financement de projets associatifs, fonds d\'urgence, appels à projets thématiques.'
+        },
+        { 
+            id: 38,
+            cat: 'International', 
+            name: 'Oxfam France', 
+            num: '01 77 35 76 00', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Lutte contre les inégalités et la pauvreté dans le monde.',
+            detail: 'Aide d\'urgence, développement durable, plaidoyer politique, commerce équitable.'
+        },
+        { 
+            id: 39,
+            cat: 'International', 
+            name: 'Plan International France', 
+            num: '01 84 87 03 50', 
+            col: '#EC4899', 
+            icon: ICONS.world, 
+            desc: 'Défense des droits des enfants et égalité filles-garçons dans le monde.',
+            detail: 'Parrainages, protection contre les violences, éducation, santé maternelle et infantile.'
+        },
+        { 
+            id: 40,
+            cat: 'Social', 
+            name: 'SOS Homophobie', 
+            num: '01 48 06 42 41', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Lutte contre les LGBTphobies et aide aux victimes.',
+            detail: 'Écoute téléphonique, accompagnement juridique, interventions en milieu scolaire, observation.'
+        },
+        { 
+            id: 41,
+            cat: 'Associations', 
+            name: 'Petits Frères des Pauvres', 
+            num: '01 49 23 13 00', 
+            col: '#7C3AED', 
+            icon: ICONS.heart, 
+            desc: 'Lutte contre l\'isolement des personnes âgées.',
+            detail: 'Visites à domicile, sorties culturelles, vacances solidaires, aide administrative.'
+        },
+        { 
+            id: 42,
+            cat: 'International', 
+            name: 'Solidarités International', 
+            num: '01 76 21 86 00', 
+            col: '#F97316', 
+            icon: ICONS.world, 
+            desc: 'Aide humanitaire d\'urgence dans les zones de conflits et catastrophes naturelles.',
+            detail: 'Accès à l\'eau potable, assainissement, sécurité alimentaire, abris d\'urgence.'
+        }
+    ];
+
+    // Fonctions de gestion des modals
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    // Fonction pour ouvrir le modal droits
+    function openRightsModal() {
+        openModal('rightsModal');
+    }
+
+    // Fonction pour gérer la visibilité de la barre de recherche
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        // Liste des catégories où la barre de recherche doit être visible
+        const searchVisibleCategories = ['Tous', 'Urgence', 'Social', 'Associations', 'International'];
+        
+        if (searchVisibleCategories.includes(filter)) {
+            // Afficher la barre de recherche
+            searchContainer.style.display = 'block';
+            // Vider la recherche si on vient de la catégorie Accueil
+            if (search === '' && searchInput.value !== '') {
+                searchInput.value = '';
+            }
+        } else if (filter === 'Accueil') {
+            // Cacher la barre de recherche
+            searchContainer.style.display = 'none';
+            // Vider la recherche
+            search = '';
+            searchInput.value = '';
+        } else {
+            // Pour les autres catégories (au cas où)
+            searchContainer.style.display = 'none';
+            search = '';
+            searchInput.value = '';
+        }
+    }
+
+    // Fonction pour générer la FAQ
+    function renderFAQ() {
+        const faqContainer = document.getElementById('faqContainer');
+        
+        if (faqItems.length === 0) return;
+        
+        let html = '';
+        
+        faqItems.forEach((item, index) => {
+            html += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(${index})">
+                        <span>${item.question}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" id="faqAnswer${index}">
+                        ${item.answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        faqContainer.innerHTML = html;
+    }
+
+    // Fonction pour ouvrir/fermer les questions FAQ
+    function toggleFAQ(index) {
+        const answer = document.getElementById(`faqAnswer${index}`);
+        const question = answer.previousElementSibling;
+        
+        // Fermer toutes les autres réponses
+        document.querySelectorAll('.faq-answer').forEach((ans, i) => {
+            if (i !== index) {
+                ans.classList.remove('show');
+                ans.previousElementSibling.classList.remove('active');
+            }
+        });
+        
+        // Basculer l'état actuel
+        answer.classList.toggle('show');
+        question.classList.toggle('active');
+    }
+
+    // Menu Hamburger
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+
+    // Fonction pour ouvrir le modal de description
+    function openDescModal(serviceId) {
+        const service = SERVICES.find(s => s.id === serviceId);
+        if (service) {
+            document.getElementById('descTitle').textContent = service.name;
+            document.getElementById('descText').textContent = service.detail || service.desc;
+            document.getElementById('descNum').innerHTML = `<strong>📞 Numéro :</strong> ${service.num}`;
+            
+            const callBtn = document.getElementById('descCallBtn');
+            const callNum = document.getElementById('descCallNum');
+            
+            callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
+            callNum.textContent = `Appeler le ${service.num}`;
+            
+            openModal('descModal');
+        }
+    }
+    
+    // Fonction pour ouvrir le modal survie
+    function openSurvivalModal() {
+        openModal('survivalModal');
+    }
+    
+    // Fonction pour ouvrir le modal protocole
+    function openProtocolModal() {
+        openModal('protocolModal');
+    }
+    
+    // Fonction pour ouvrir le modal alerte
+    function openAlertModal() {
+        openModal('alertModal');
+    }
+    
+    // Fonction pour ouvrir le modal santé
+    function openHealthModal() {
+        openModal('healthModal');
+    }
+
+    // Fonction de rendu principal
+    function render() {
+        const grid = document.getElementById('serviceGrid');
+
+        // Gérer la visibilité de la barre de recherche
+        toggleSearchBar();
+
+        // Si on est dans la catégorie Accueil
+        if (filter === 'Accueil') {
+            let html = `
+                <div class="card intro-card">
+                    <div class="intro-badge">COMMENT ÇA MARCHE ?</div>
+                    <h3 class="card-title">Comment utiliser SOS Guide ?</h3>
+                    <p class="card-text">Cette page fonctionne <strong>100% hors-ligne</strong> et vous donne accès aux informations essentielles. Voici comment naviguer et utiliser toutes les fonctionnalités :</p>
+                    
+                    <div class="intro-steps">
+                        <div class="intro-step">
+                            <div class="step-number">1</div>
+                            <div class="intro-step-title">Navigation par catégories</div>
+                            <div class="intro-step-desc">Cliquez sur les boutons de filtre pour voir les services par catégorie : Urgences, Social, Associations, International ou Tous les services.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">2</div>
+                            <div class="intro-step-title">Recherche rapide</div>
+                            <div class="intro-step-desc">Dans les catégories, utilisez la barre de recherche pour trouver un service spécifique par nom ou description.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">3</div>
+                            <div class="intro-step-title">Accès aux numéros</div>
+                            <div class="intro-step-desc">Cliquez sur "Appeler" pour composer directement un numéro, ou sur "?" pour voir les détails du service.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">4</div>
+                            <div class="intro-step-title">Guides et ressources</div>
+                            <div class="intro-step-desc">Explorez les guides pratiques : Équipements de survie, Protocole d'urgence, Alerte & Communication, et Santé & premiers secours.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openModal('aboutModal')">
+                            <span>En savoir plus sur le projet</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                        <strong>⚠️ Important :</strong> Pour appeler les numéros d'urgence, votre téléphone doit avoir du réseau mobile. Cette page fournit les informations, mais les appels passent par votre opérateur téléphonique.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.rights}
+                        </div>
+                        <span class="tag">DROITS</span>
+                    </div>
+                    <h3 class="card-title">Droits & Devoirs Fondamentaux</h3>
+                    <p class="card-text">Constitution, Déclaration des Droits de l'Homme, valeurs de la République. Connaître ses droits et devoirs en situation difficile.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openRightsModal()">
+                            <span>Voir les fondements</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.kit}
+                        </div>
+                        <span class="tag">SURVIE</span>
+                    </div>
+                    <h3 class="card-title">Équipements de Survie</h3>
+                    <p class="card-text">Liste complète des équipements essentiels à préparer pour faire face aux situations d'urgence. 12 catégories détaillées.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openSurvivalModal()">
+                            <span>Voir la liste complète</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.protocol}
+                        </div>
+                        <span class="tag">PROTOCOLE</span>
+                    </div>
+                    <h3 class="card-title">Protocole d'Urgence</h3>
+                    <p class="card-text">Les 5 étapes à suivre en cas de situation critique. Méthode structurée pour réagir efficacement. Guide PSC1 intégré.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openProtocolModal()">
+                            <span>Voir les étapes détaillées</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.alert}
+                        </div>
+                        <span class="tag">ALERTE</span>
+                    </div>
+                    <h3 class="card-title">Alerte & Communication</h3>
+                    <p class="card-text">Systèmes d'alerte officiels, moyens de communication et plan familial d'urgence. FR-Alert, SAIP, signaux nationaux.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openAlertModal()">
+                            <span>Voir les systèmes complets</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.heart}
+                        </div>
+                        <span class="tag">SANTÉ</span>
+                    </div>
+                    <h3 class="card-title">Santé & Premiers Secours</h3>
+                    <p class="card-text">Trousse de premiers soins, gestes qui sauvent et préparation médicale d'urgence. Guide complet avec procédures.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openHealthModal()">
+                            <span>Voir les gestes détaillés</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            grid.innerHTML = html;
+            return;
+        }
+
+        // Pour les autres catégories (Tous, Urgence, Social, etc.)
+        const filtered = SERVICES.filter(s => {
+            const matchesFilter = filter === 'Tous' || s.cat === filter;
+            const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
+                                s.desc.toLowerCase().includes(search.toLowerCase());
+            return matchesFilter && matchesSearch;
+        });
+
+        const html = filtered.map(s => `
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: ${s.col}20;">
+                        ${s.icon}
+                    </div>
+                    <span class="tag">${s.cat}</span>
+                </div>
+                <h3 class="card-title">${s.name}</h3>
+                <p class="card-text">${s.desc}</p>
+                <div class="card-actions">
+                    <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
+                        <span>${s.num}</span>
+                        <span>📞</span>
+                    </a>
+                    <button class="card-info-btn" onclick="openDescModal(${s.id})">
+                        <span>?</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = html;
+    }
+
+    // Initialisation
+    window.onload = () => {
+        // Charger les données JSON
+        loadJSONData();
+        
+        // Générer la FAQ
+        renderFAQ();
+        
+        // Rendre le contenu initial
+        render();
+
+        // Événements pour les filtres
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filter = this.getAttribute('data-cat');
+                render();
+            });
+        });
+
+        // Événement pour la recherche
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            search = e.target.value;
+            render();
+        });
+
+        // Événements pour les boutons
+        document.getElementById('aboutBtn').addEventListener('click', () => {
+            openModal('aboutModal');
+        });
+
+        document.getElementById('aboutBtnMobile').addEventListener('click', () => {
+            openModal('aboutModal');
+            closeMenu();
+        });
+
+        // Hamburger menu
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Fermer les modals en cliquant en dehors
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Fermer les modals avec la touche Échap
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Smooth scrolling pour les liens d'ancrage
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                if (this.getAttribute('href') === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    closeMenu();
+                }
+            });
+        });
+
+        // Observer pour les animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Observer les cartes
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    };
+</script>
+
+    <!-- JSON pour les catégories -->
+    <script id="categoriesData" type="application/json">
+        [
+            {"id": "Tous", "name": "Tous"},
+            {"id": "Urgence", "name": "Urgence"},
+            {"id": "Social", "name": "Social"},
+            {"id": "Associations", "name": "Associations"},
+            {"id": "International", "name": "International"}
+        ]
+    </script>
+
+    <!-- JSON pour la FAQ - 8 QUESTIONS COMPLÈTES -->
+    <script id="faqData" type="application/json">
+        [
+            {
+                "question": "Comment garder le moral en situation difficile ?",
+                "answer": "Prenez soin de vous avec des routines simples : respirez profondément plusieurs fois par jour, gardez un journal de gratitude (notez 3 choses positives chaque jour), restez connecté avec vos proches même à distance. Rappelez-vous que chaque situation, même difficile, est temporaire. Pratiquez la méditation de pleine conscience 10 minutes par jour pour réduire le stress et améliorer la clarté mentale."
+            },
+            {
+                "question": "Que faire quand l'anxiété devient trop forte ?",
+                "answer": "Essayez la technique 5-4-3-2-1 : nommez 5 choses que vous voyez, 4 que vous touchez, 3 que vous entendez, 2 que vous sentez, 1 que vous goûtez. Cette technique vous ramène au présent. Respirez lentement (4 secondes d'inspiration, 4 de pause, 6 d'expiration). Parlez à quelqu'un de confiance. Pratiquez la cohérence cardiaque 3 fois par jour. Si l'anxiété persiste, consultez un professionnel de santé."
+            },
+            {
+                "question": "Comment soutenir un proche en détresse psychologique ?",
+                "answer": "Écoutez sans juger, validez ses émotions ('Je comprends que tu te sentes comme ça'), proposez votre présence sans forcer. Encouragez-le à consulter un professionnel si nécessaire (psychologue, médecin). Rappelez-lui qu'il n'est pas seul et que demander de l'aide est un signe de force. Proposez des activités simples ensemble (marche, cuisine, écouter de la musique). Évitez les conseils non sollicités et les phrases comme 'ça va passer'."
+            },
+            {
+                "question": "Des exercices simples pour réduire le stress ?",
+                "answer": "1) Cohérence cardiaque : inspirez 5 secondes, expirez 5 secondes pendant 5 minutes. 2) Marche consciente : concentrez-vous sur chaque pas, la sensation du sol. 3) Auto-massage des mains ou du visage. 4) Visualisation positive : imaginez un lieu calme et sécurisant avec tous vos sens. 5) Écriture thérapeutique : écrivez vos pensées pendant 10 minutes sans jugement. 6) Respiration carrée : inspirez 4s, retenez 4s, expirez 4s, retenez 4s."
+            },
+            {
+                "question": "Comment maintenir un lien social en période d'isolement ?",
+                "answer": "Organisez des appels réguliers avec famille et amis, participez à des activités en ligne (clubs de lecture, jeux), échangez des messages positifs. Proposez des 'cafés virtuels' ou des repas partagés par visio. Rejoignez des groupes de soutien en ligne si besoin. Écrivez des lettres ou cartes postales pour un contact plus personnel. Participez à des activités communautaires locales lorsque possible."
+            },
+            {
+                "question": "Quand faut-il demander de l'aide professionnelle ?",
+                "answer": "Consultez un professionnel si vous ressentez : tristesse intense persistante (+2 semaines), perte d'intérêt pour vos activités habituelles, troubles du sommeil/appétit, pensées négatives récurrentes, difficulté à fonctionner au quotidien, pensées suicidaires. Les lignes d'écoute comme le 3114 sont disponibles 24h/24. Les consultations psychologiques sont remboursées par la Sécurité Sociale (8 séances par an)."
+            },
+            {
+                "question": "Comment recréer une routine apaisante ?",
+                "answer": "Établissez des horaires réguliers pour le sommeil (7-9h), les repas, l'activité physique (30 min/jour). Intégrez des moments de pause consciente. Créez des rituels réconfortants (thé du matin, musique douce le soir). Limitez l'exposition aux informations anxiogènes, surtout avant de dormir. Programmez des activités plaisantes chaque jour (lecture, musique, jardinage, bricolage). Structurez votre journée avec des objectifs simples et réalisables."
+            },
+            {
+                "question": "Des ressources gratuites pour la santé mentale ?",
+                "answer": "• 3114 : Prévention suicide 24h/24 (gratuit)<br>• 09 72 39 40 50 : SOS Amitié (écoute bienveillante)<br>• 0 800 23 13 13 : Drogues Info Service<br>• Applications gratuites : Petit Bambou (méditation), Moodpath (suivi humeur), Mes antidotes (CNAM)<br>• Chaînes YouTube : Christophe André, Mélanie Cellier, Psynergy<br>• Livres de bibliothèques numériques (gratuit avec inscription)<br>• Groupes de parole en ligne (associations)<br>• Maisons des adolescents (accueil gratuit)"
+            }
+        ]
+    </script>
+</body>
+</html>

@@ -1,0 +1,1790 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOS GUIDE | Kansalaispalvelut</title>
+    <meta name="description" content="Opas hätä- ja solidaarisuuspalveluihin kaikille kansalaisille. Offline-käyttö taattu.">
+    <meta name="theme-color" content="#0066CC">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⛑️</text></svg>">
+    <link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="header">
+        <nav class="nav-container">
+            <a href="#" class="logo">
+                <span class="logo-icon">⛑️</span>
+                <span>SOS GUIDE</span>
+            </a>
+
+            <div class="nav-links">
+                <a href="#services" class="nav-link">Palvelut</a>
+                <a href="#faq" class="nav-link">UKK</a>
+                <button id="aboutBtn" class="btn-primary">
+                    Tietoa meistä
+                </button>
+            </div>
+
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <nav class="mobile-nav">
+            <a href="#services" onclick="closeMenu()">Palvelut</a>
+            <a href="#faq" onclick="closeMenu()">UKK</a>
+        </nav>
+
+        <div class="mobile-cta">
+            <button id="aboutBtnMobile" class="btn-primary" onclick="closeMenu(); openModal('aboutModal');">
+                Tietoa meistä
+            </button>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+    
+       <div class="section-header">
+            <span class="section-badge">TERVETULOA</span>
+            <h2 class="section-title">Hei, moi! 👋</h2>
+            
+        </div>
+        
+        <div class="filters-container">
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-cat="Koti">Koti</button>
+                <button class="filter-btn" data-cat="Kaikki">Kaikki</button>
+                <button class="filter-btn" data-cat="Hätä">Hätä</button>
+                <button class="filter-btn" data-cat="Sosiaaliset">Sosiaaliset</button>
+                <button class="filter-btn" data-cat="Yhdistykset">Yhdistykset</button>
+                <button class="filter-btn" data-cat="Kansainväliset">Kansainväliset</button>
+            </div>
+            
+            <div class="search-container" id="searchContainer">
+                <input type="text" id="searchInput" class="search-input" placeholder="Etsi palvelua, apua, numeroa...">
+            </div>
+        </div>
+        
+        <div id="serviceGrid" class="services-grid">
+            <!-- Sisältö generoidaan JavaScriptillä -->
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" id="faq">
+        <div class="section-header">
+            <span class="section-badge">TUKEA</span>
+            <h2 class="section-title">UKK - Mielenterveys & Mieli</h2>
+            <p class="section-subtitle">
+                Vastauksia usein kysyttyihin kysymyksiin hyvinvoinnista vaikeissa tilanteissa
+            </p>
+        </div>
+
+        <div class="faq-section">
+            <div class="faq-container" id="faqContainer">
+                <!-- Sisältö generoidaan JavaScriptillä -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="#" class="footer-logo">
+                    <span>⛑️</span>
+                    <span>SOS GUIDE</span>
+                </a>
+                <p class="footer-description">
+                    Resilienssiä rakentava avoimen lähdekoodin kansalaistietosisältö. 
+                    Käyttöön Raspberry Pi:llä, toimii ilman internettiä.
+                </p>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Navigointi</h3>
+                    <a href="#services">Palvelut</a>
+                    <a href="#faq">UKK</a>
+                    <a href="#ressources">Dokumentit</a>
+                    <a href="#about">Tietoa meistä</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Luokat</h3>
+                    <a href="#services?cat=Hätä">Hätätapaukset</a>
+                    <a href="#services?cat=Sosiaaliset">Sosiaaliset palvelut</a>
+                    <a href="#services?cat=Yhdistykset">Yhdistykset</a>
+                    <a href="#services?cat=Kansainväliset">Kansainväliset</a>
+                </div>
+            </div>
+
+            <div>
+                <div class="footer-links">
+                    <h3>Yhteystiedot</h3>
+                    <a href="mailto:contact@sos-guide.fr" style="color: rgba(255, 255, 255, 0.7); text-decoration: none; display: block; font-size: 0.8rem;">contact@sos-guide.fr</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 ⛑️ SOS GUIDE - Avoimen lähdekoodin projekti MIT-lisenssillä</p>
+            <p style="margin-top: 0.25rem;">Suunnitellut Ludovic MARTIN ja yhteisön avustajat</p>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Modal Tietoa meistä -->
+    <div id="aboutModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Tietoa SOS Guidesta</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Missiomme</h4>
+                <p><strong>SOS Guide</strong> keskittyy kansalaisapuihin ja hätänumeroihin nopeaa pääsyä varten kaikissa tilanteissa. Tavoitteemme on tarjota universaali pääsy elintärkeisiin tietoihin: hätäpalvelut, sosiaaliapu, paikalliset yhdistykset ja kansalaisresurssit.</p>
+                <p>SOS Guide takaa, että nämä tiedot pysyvät saatavilla ilman internetyhteyttä, verkkokatkojen, luonnonkatastrofien aikana tai verkkojen ulottumattomissa olevilla alueilla.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚙️ Tekninen toiminta</h4>
+                
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>📶 Paikallinen Wi-Fi-verkko</h5>
+                        <p>Raspberry Pi lähettää oman Wi-Fi-verkkonsa "SOS-GUIDE". Salasanaa ei tarvita nopeaan yhteyteen.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>💾 Paikallinen tallennus</h5>
+                        <p>Kaikki data tallennetaan microSD-kortille. Internet-yhteyttä ei tarvita järjestelmän käynnistämisen jälkeen.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🔋 Matala virrankulutus</h5>
+                        <p>Raspberry Pi kuluttaa vain 3-5 wattia. Se voi toimia ulkoisella akulla yli 24 tuntia.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>👥 Monen käyttäjän tuki</h5>
+                        <p>Tukee jopa 50 samanaikaista käyttäjää paikallisessa verkossa. Ihanteellinen julkisille paikoille ja yhteisöille.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🖥️ Raspberry Pi:n ominaisuudet</h4>
+                
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">RPi 4</div>
+                        <div class="spec-label">Vakio malli</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">2GB</div>
+                        <div class="spec-label">RAM-muisti</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">16GB</div>
+                        <div class="spec-label">MicroSD-tallennustila</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Wi-Fi 5</div>
+                        <div class="spec-label">Dual-band</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">5V/3A</div>
+                        <div class="spec-label">Virtalähde</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">30+</div>
+                        <div class="spec-label">Samanaikaiset käyttäjät</div>
+                    </div>
+                </div>
+                
+                <p>Raspberry Pi on luottokortin kokoinen nanotietokone. Sen matala virrankulutus ja monipuolisuus tekevät siitä ihanteellisen ratkaisun paikallisiin ja itsenäisiin käyttöönottoihin.</p>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Yhteisö & Solidaarisuus</h4>
+                <p>Tämä projekti on <strong>avoimen lähdekoodin</strong> ja yhteisöllinen. Tiedot päivitetään säännöllisesti yhteisön toimesta tarkkuuden ja ajantasaisuuden takaamiseksi.</p>
+                <p>Uskomme digitaaliseen solidaarisuuteen: jokainen kunta, yhdistys tai kansalaisryhmä voi ottaa käyttöön oman SOS Guiden palvellakseen yhteisöään.</p>
+                
+                <div class="highlight-box success">
+                    <p><strong>📢 Osallistu!</strong> Voit parantaa tätä projektia GitHubissa, ehdottaa lisäyksiä tai ottaa SOS Guiden käyttöön kunnassasi.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🌐 Yhteystiedot & Verkkosivusto</h4>
+                <p><strong>Verkkosivusto:</strong> <a href="http://sos-guide.fr" target="_blank">sos-guide.fr</a></p>
+                <p><strong>Sähköposti:</strong> <a href="mailto:contact@sos-guide.fr">contact@sos-guide.fr</a></p>
+                <p><strong>GitHub:</strong> <a href="https://github.com/sos-guide" target="_blank">github.com/sos-guide</a></p>
+                
+                <div class="highlight-box warning">
+                    <p><strong>⚠️ Tärkeä huomio:</strong> Vieraaksesi verkkosivustollamme, sinun on irrotettava "SOS-GUIDE" Wi-Fi-verkosta ja käytettävä matkapuhelinyhteyttä (3G/4G/5G) tai toista internet-yhteyttä. Tämä verkkopalvelu toimii riippumattomasti tästä offline-sivusta.</p>
+                </div>
+                
+                <div class="highlight-box">
+                    <p><strong>💡 Kunnille:</strong> Tarjoamme avaimet käteen -käyttöönottokokonaisuuksia, sisältäen esiasennetun Raspberry Pi:n, virtalähteen ja kotelon. Ota meihin yhteyttä lisätietoja varten.</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🚀 Käyttöönotto & Skaalautuvuus</h4>
+                <p>SOS Guidea voidaan ottaa käyttöön eri konteksteissa:</p>
+                <ul>
+                    <li><strong>Kunnat</strong>: Paikalliset hätäpalvelut, yhdistykset, kunnantalo</li>
+                    <li><strong>Tapahtumat</strong>: Festivaalit, mielenosoitukset, kokoontumiset</li>
+                    <li><strong>Vastaanottokeskukset</strong>: Pakolaiset, kodittomat, hätätilanteet</li>
+                    <li><strong>Maaseutualueet</strong>: Täydennys heikkoon verkkopeitteeseen</li>
+                    <li><strong>Laitokset</strong>: Koulut, sairaalat, vanhainkodit</li>
+                </ul>
+                
+                <p>Järjestelmä on suunniteltu olemaan <strong>itsenäinen, kestävä ja toistettava</strong> alhaisin kustannuksin.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('aboutModal')">Sulje</button>
+        </div>
+    </div>
+
+    <!-- Modal Palvelun kuvaus -->
+    <div id="descModal" class="modal">
+        <div class="modal-content">
+            <h3 class="modal-title" id="descTitle">Palvelun nimi</h3>
+            
+            <div class="modal-section">
+                <h4>📋 Kuvaus</h4>
+                <p id="descText">Yksityiskohtainen palvelun kuvaus...</p>
+                <div class="highlight-box" id="descNum">
+                    <strong>📞 Numero:</strong> 00 00 00 00 00
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>ℹ️ Lisätiedot</h4>
+                <p>Tämä palvelu on saatavilla 24/7 hätätapauksia varten. Ei-kiireellisissä tapauksissa suosittelemme toimiston aukioloaikoja.</p>
+            </div>
+            
+            <div class="card-actions" style="margin-top: 20px;">
+                <a href="#" class="card-action-btn" id="descCallBtn" style="text-decoration: none;">
+                    <span id="descCallNum">Soita nyt</span>
+                    <span>📞</span>
+                </a>
+                <button class="card-info-btn" onclick="closeModal('descModal')">✕</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Selviytymisvarusteet -->
+    <div id="survivalModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Välttämättömät selviytymisvarusteet</h3>
+            
+            <div class="modal-section">
+                <h4>📦 Pakollinen perussetti</h4>
+                <p>Valmista nämä varusteet etukäteen selviytyäksesi hätätilanteista:</p>
+                
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>💧 Juomavettä</h5>
+                        <p>3 litraa per henkilö per päivä (vähintään 3 päivää)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🍞 Pilaantumaton ruoka</h5>
+                        <p>Säilykkeet, energiapatukat, kuivaruoat (3 päivää)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔦 Taskulamppu + paristot</h5>
+                        <p>Hätävalaistus, varaa vara-paristoja</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📻 Kampiradio</h5>
+                        <p>Tietojen saamiseksi ilman sähköä</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚡ Aurinkolaturi</h5>
+                        <p>Puhelinten ja pienten laitteiden lataamiseen</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧰 Ensiapulaukku</h5>
+                        <p>Laastarit, antiseptiikka, välttämättömät lääkkeet</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🔪 Monitoimityökalu</h5>
+                        <p>Sveitsin veitsi tai Leatherman</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧤 Suojakäsineet</h5>
+                        <p>Vaarallisten esineiden käsittelyyn</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧥 Selviytymispeitto</h5>
+                        <p>Lämpöeristys (kylmä/kuuma)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧻 Hygieniatuotteet</h5>
+                        <p>Käsidesi, wc-paperi, kosteuspyyhkeet</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🗺️ Paikalliskartta</h5>
+                        <p>Paperikartat alueestasi</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Yhteystietolista</h5>
+                        <p>Hätäyhteystiedot paperilla</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📄 Tärkeät asiakirjat</h4>
+                <ul>
+                    <li>Henkilötodistusten kopiot (henkilökortti, passi, ajokortti)</li>
+                    <li>Terveyskortti ja lääkemääräykset</li>
+                    <li>Vakuutuskopiot (asunto, terveys, auto)</li>
+                    <li>Perheen ja työn hätäyhteystiedot</li>
+                    <li>Käteinen raha pieninä seteleinä (vähintään 100€)</li>
+                    <li>Auton ja talon vara-avaimet</li>
+                    <li>Terveyskirja ja rokotukset</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏠 Satin suunnittelu</h4>
+                <p><strong>Varastointi:</strong> Säilytä settisi helposti saatavilla olevassa paikassa, kosteudelta ja suoralta auringonvalolta suojattuna.</p>
+                <p><strong>Tarkistus:</strong> Tarkista säilyvyysajat säännöllisesti (6 kuukauden välein).</p>
+                <p><strong>Evakuointi:</strong> Varaa yksi reppu per henkilö (30-40L) nopeaa evakuointia varten.</p>
+                <p><strong>Mukauttaminen:</strong> Mukauta settisi erityistarpeisiin (vauvat, vanhukset, lemmikit, erityislääkkeet).</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Asiantuntijan vinkki:</strong> Valmistele kaksi settiä: täydellisempi "kotisetti" ja kevyempi "evakuointisetti" repussa. Testaa varusteitasi säännöllisesti ja opeta kaikki perheenjäsenet niiden käyttöön.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('survivalModal')">Sulje</button>
+        </div>
+    </div>
+
+    <!-- Modal Hätäprotokolla -->
+    <div id="protocolModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Hätäprotokolla 5 vaiheessa</h3>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">1</span> ARVIOI tilanne</h4>
+                <p><strong>Pysy rauhallisena</strong> - Hengitä syvään ennen toimintaa</p>
+                <p><strong>Analysoi vaarat</strong>: tuli, savu, sortuma, kaasu, sähkö</p>
+                <p><strong>Suojaa ensin itsesi</strong> ennen muiden auttamista</p>
+                <p><strong>Tunnista poistumistiet</strong></p>
+                <p><strong>Arvioi uhrien määrä</strong> ja heidän tilansa</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">2</span> HÄLYTÄ pelastuspalvelut</h4>
+                <p><strong>Valitse oikea numero</strong>: 112 (EU), 10022 (Hätäkeskus)</p>
+                <p><strong>Anna nämä tiedot selkeästi</strong>:</p>
+                <ul>
+                    <li>Nimesi ja puhelinnumerosi</li>
+                    <li>Tarkka osoite (kaupunki, katu, numero, kerros, ovenkoodi)</li>
+                    <li>Ongelman luonne (onnettomuus, tulipalo, pahoinvointi...)</li>
+                    <li>Uhrien määrä ja heidän tilansa</li>
+                    <li>Erikoisvaarat (kaasu, kemikaalit, sähkö...)</li>
+                    <li>Jo tehdyt toimet</li>
+                </ul>
+                <p><strong>Älä lopu ensimmäisenä</strong> - Odota pelastajan ohjeita</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">3</span> SUOJA ihmiset</h4>
+                <p><strong>Siirrä uhrit turvalliseen paikkaan</strong> vaarasta suojassa</p>
+                <p><strong>Merkitse vaarallinen alue</strong> estääksesi muita onnettomuuksia</p>
+                <p><strong>Sammuta kaasu ja sähkö</strong> tarvittaessa ja ilman vaaraa</p>
+                    <p><strong>Siirrä uteliaat kauemmas</strong> helpottaaksesi pelastustoimintaa</p>
+                <p><strong>Perusta turva-alue</strong> vähintään 50 metrin säteelle</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">4</span> AUTA uhreja</h4>
+                <p><strong>Tarkista taju</strong>: puhu uhrille, ravista kevyesti</p>
+                <p><strong>Tarkista hengitys</strong>: katso nouseeko vatsa/rinta</p>
+                <p><strong>Käytä perusaputoimia</strong>:</p>
+                <ul>
+                    <li>TPS: Toissijainen pelastusasento (jos tajuton mutta hengittää)</li>
+                    <li>Runsaan vuodon painaminen (puhtaalla kankaalla)</li>
+                    <li>Elvytys jos koulutettu (30 painelua/2 puhallusta)</li>
+                    <li>Defibrillaattorin käyttö jos saatavilla</li>
+                </ul>
+                <p><strong>Lämmitä uhreja</strong> peittojen tai vaatteiden avulla</p>
+                <p><strong>Älä koskaan anna juotavaa</strong> tajuttomalle henkilölle</p>
+            </div>
+            
+            <div class="survival-step">
+                <h4><span class="step-number">5</span> ODOTA pelastuspalveluita</h4>
+                <p><strong>Valmistele pääsy</strong>: tyhjennä käytävät, avaa ovet</p>
+                <p><strong>Ilmoita läsnäolosi</strong>: sytytä valot, tee merkkejä</p>
+                <p><strong>Välitä tiedot</strong> pelastuspalveluille saapuessaan</p>
+                <p><strong>Seuraa heidän ohjeitaan</strong> häiritsemättä työtä</p>
+                <p><strong>Pysy saatavilla</strong> antamaan lisätietoja</p>
+                <p><strong>Merkitse pelastuspalveluiden saapumisaika</strong> seurantaa varten</p>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 Suositeltu koulutus:</strong> Suorita PSC1-koulutus (Ennaltaehkäisevät ja siviilipelastustoimet, taso 1) hallitaksesi nämä toimet. Nämä koulutukset ovat kaikille saatavilla 10-vuotiaasta alkaen ja kestävät noin 7 tuntia.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('protocolModal')">Sulje</button>
+        </div>
+    </div>
+
+    <!-- Modal Hätäilmoitus -->
+    <div id="alertModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Hätäilmoitus ja viestintä</h3>
+            
+            <div class="modal-section">
+                <h4>📱 Viralliset hälytysjärjestelmät</h4>
+                <p><strong>SAIP</strong> (Systeemi d'Alerte et d'Information des Populations):</p>
+                <ul>
+                    <li>Lataa ilmainen "SAIP"-mobiilisovellus</li>
+                    <li>Push-ilmoitukset paikallisista hälytyksistä (tulvat, onnettomuudet)</li>
+                    <li>Reaaliaikaiset tiedot käyttäytymisohjeilla</li>
+                    <li>Paikannus kohdennettuja hälytyksiä varten</li>
+                </ul>
+                
+                <p><strong>FR-Alert</strong>: soluvaltausjärjestelmä</p>
+                <ul>
+                    <li>Hälytykset automaattisesti kaikkiin matkapuhelimiin</li>
+                    <li>Toimii ilman sovellusta tai internettiä</li>
+                    <li>Viestit välittömässä vaarassa (soluvaltauksen kautta)</li>
+                    <li>Kansallinen peitto käytössä vuodesta 2022</li>
+                </ul>
+                
+                <p><strong>Ilmatieteen laitoksen hälytykset</strong>: Säävalvonta</p>
+                <ul>
+                    <li>4-värinen valvontakartta (vihreä, keltainen, oranssi, punainen)</li>
+                    <li>Hälytysraportit vaarallisista ilmiöistä</li>
+                    <li>24h ja 48h ennusteet</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📻 Välttämättömät viestintävälineet</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>📻 FM-radio</h5>
+                        <p>Yle Radio 1, Yle Radio Suomi, paikallisasemat</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📺 Televisio</h5>
+                        <p>Yle TV1, Yle TV2, uutiskanavat</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌐 Viralliset sivustot</h5>
+                        <p>Ilmatieteen laitos, Pelastusviranomaiset, Kunnan sivut</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Sosiaaliset mediat</h5>
+                        <p>Viralliset tilit: Poliisi, Pelastuslaitos, Kunnan tililt</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📞 Tietolinjat</h5>
+                        <p>Maanantaihälytysnumerot, kunnan numerot</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📢 Kaiuttimet</h5>
+                        <p>Kunnan ajoneuvot, paikalliset sireenit</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>👨‍👩‍👧‍👦 Perheen viestintäsuunnitelma</h4>
+                <p><strong>Laadi suunnitelma ennen kriisiä:</strong></p>
+                <ol>
+                    <li><strong>Nimeä alueen ulkopuolinen yhteyshenkilö</strong>: Koko perhe soittaa tälle henkilölle keskitettyjen tietojen saamiseksi</li>
+                    <li><strong>Suunnittele tapaamispaikat</strong>: Yksi lähellä kotiä, yksi naapuruston ulkopuolella, yksi kaupungin ulkopuolella</li>
+                    <li><strong>Käytä tekstiviestejä puhelujen sijaan</strong>: Tekstiviestit kulkevat paremmin ruuhkaisessa verkossa</li>
+                    <li><strong>Säästä akkua</strong>: Akunsäästötila, kannettavat laturit</li>
+                    <li><strong>Lyhyet ja selkeät viestit</strong>: "Olen kunnossa [paikka]", "Tarvitsen apua [osoite]"</li>
+                    <li><strong>Perheen koodi</strong>: Salasana tai lause viestien todentamiseen</li>
+                </ol>
+            </div>
+            
+            <div class="modal-section">
+                <h4>⚠️ Kansalliset hälytysmerkit</h4>
+                <p><strong>Kansallisen hälytysverkon sireenit:</strong></p>
+                <ul>
+                    <li><strong>Hälytys</strong>: Moduloitu ääni nouseva ja laskeva (3 kertaa 1 minuutti erotettuna 5 sekunnilla)</li>
+                    <li><strong>Hälytyksen loppu</strong>: Jatkuva ääni 30 sekuntia</li>
+                    <li><strong>Kuukausikoe</strong>: Kuun ensimmäinen keskiviikko klo 12 (yksittäinen ääni 1 minuutti 41 sekuntia)</li>
+                </ul>
+                
+                <p><strong>Ääniviestit</strong>: liikenteessä, julkisissa paikoissa, ostoskeskuksissa</p>
+                <p><strong>Muuttuvat viestitaulut</strong>: teillä ja moottoriteillä</p>
+                <p><strong>Puhelinten hälytys</strong>: Erityinen kimeä ääni FR-Alertille</p>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>💡 Viestintäkatkoksen sattuessa:</strong> Käytä kirjallisia viestejä (paperi), visuaalisia signaaleja (liinat ikkunoissa), viheltimen ääniä tai SOS Guidin viestijärjestelmää jos saatavilla paikallisesti.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('alertModal')">Sulje</button>
+        </div>
+    </div>
+
+    <!-- Modal Terveys Ensiapu -->
+    <div id="healthModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Terveys ja täydellinen ensiapu</h3>
+            
+            <div class="modal-section">
+                <h4>🧰 Täydellisen ensiapulaukun sisältö</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🩹 Laastarit</h5>
+                        <p>Steriilit kompressit, teippi, siteet, hydrokolloidiset laastarit</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧴 Antiseptiikka</h5>
+                        <p>Biseptiini, Dakin, vetyperoksidi, klorheksidiini</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>💊 Välttämättömät lääkkeet</h5>
+                        <p>Parasetamoli, ibuprofeeni, ripulilääke, antihistamiini</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>✂️ Materiaali</h5>
+                        <p>Pyöreäkärkiset sakset, pinsetit, kertakäyttökäsineet (koot M ja L)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌡️ Lämpömittari</h5>
+                        <p>Elektroninen vara-paristoilla</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>😷 Kasvosuojat</h5>
+                        <p>Kirurgiset maskit, FFP2 (x10)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🩺 Verenpaineen mittari</h5>
+                        <p>Riskihenkilöille (verenpainetauti)</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🧽 Kompressit</h5>
+                        <p>Steriilit kompressit 10x10 (x20), hemostaattiset kompressit</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🦠 Desinfiointiaine</h5>
+                        <p>Käsidesi (100ml), antiseptinen saippua</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📋 Hoitokirja</h5>
+                        <p>Toimenpiteiden ja havaintojen merkitsemiseen</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🆘 Elvytystoimet - Täydellinen opas</h4>
+                
+                <div class="survival-step">
+                    <h4>🩸 Vakava verenvuoto</h4>
+                    <p><strong>1. Paina suoraan</strong> haavaan puhtaalla kankaalla</p>
+                    <p><strong>2. Aseta uhri makuulle</strong> estääksesi pyörtymisen</p>
+                    <p><strong>3. Nosta raajaa</strong> jos vuoto on raajassa</p>
+                    <p><strong>4. Purista valtimoa</strong> ylävirtaan jos vuoto jatkuu (puristuspisteet)</p>
+                    <p><strong>5. Soita 112</strong> välittömästi runsasta vuotoa varten</p>
+                    <p><strong>6. Aseta kiristysside</strong> vain viimeisenä keinona (merkitse asetusaika)</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🔥 Palovamma</h4>
+                    <p><strong>1. Jäähdytä 15-20 minuuttia</strong> lämmintä veden alla (15-25°C)</p>
+                    <p><strong>2. Poista vaatteet ja korut</strong> ennen turvotuksen ilmaantumista</p>
+                    <p><strong>3. Älä puhkaile rakkuloita</strong> (infektioriski)</p>
+                    <p><strong>4. Älä laita rasvaa</strong> (voi, öljy, kerma)</p>
+                    <p><strong>5. Peitä puhtaalla kankaalla</strong> ja kuivalla</p>
+                    <p><strong>6. Soita 112 jos</strong>: laaja palovamma (> kämmen), kasvoissa, käsissä, nivelissä, tai kemiallinen/sähkön aiheuttama palovamma</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>😵 Huono olo / Tajuttomuus</h4>
+                    <p><strong>1. Tarkista taju</strong>: "Kuuleeko minua?" + kevyt stimulaatio</p>
+                    <p><strong>2. Tarkista hengitys</strong>: katso nouseeko rinta, kuuntele, tunne hengitys</p>
+                    <p><strong>3. Jos tajuton mutta hengittää</strong>: Aseta Toissijaiseen Pelastusasentoon (TPS)</p>
+                    <p><strong>4. Jos tajuton eikä hengitä</strong>: Aloita elvytys (30 painelua/2 puhallusta)</p>
+                    <p><strong>5. Irrota kaulus, solmio, vyö</strong></p>
+                    <p><strong>6. Suojaa lämmöltä/kylmältä</strong> peitolla</p>
+                    <p><strong>7. Soita 112</strong> kuvaillen tarkasti oireet</p>
+                </div>
+                
+                <div class="survival-step">
+                    <h4>🤕 Traumat / Murtuma</h4>
+                    <p><strong>1. Liikuta raajaa</strong> asennossa jossa sen löysit</p>
+                    <p><strong>2. Käytä kylmää</strong> vähentääksesi turvotusta ja kipua</p>
+                    <p><strong>3. Nosta raajaa</strong> jos mahdollista</p>
+                    <p><strong>4. Älä anna mitään syötävää tai juotavaa</strong> (leikkausriski)</p>
+                    <p><strong>5. Tarkkaile sokkin merkkejä</strong>: kalpeus, hikoilu, vilunväreet, levottomuus</p>
+                    <p><strong>6. Kuljeta vain tarvittaessa</strong>, ennakkoon liikunnan estämisellä</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📋 Perheen lääketieteellinen valmius</h4>
+                <ul>
+                    <li><strong>Tavanomaisten lääkkeiden lista</strong> tarkalla annostuksella ja hoidon kestolla</li>
+                    <li><strong>Käynnissä olevien reseptien kopiot</strong> (uusia ennen vanhenemista)</li>
+                    <li><strong>Ammattilaisten yhteystiedot</strong>: oma lääkäri, erikoislääkärit, iltalääkäri</li>
+                    <li><strong>Terveystiedot</strong>: veriryhmä, tunnetut allergiat (lääkkeet, ruoka, muut)</li>
+                    <li><strong>Asiakirja kroonisista sairauksista</strong>: diabetes, verenpainetauti, astma, epilepsia jne.</li>
+                    <li><strong>Ajan tasalla oleva rokotuspassi</strong> kaikille perheenjäsenille</li>
+                    <li><strong>Terveysvakuutukset</strong>: sopimusnumerot, puhelinnumerot, takuut</li>
+                    <li><strong>ICE-yhteystiedot</strong> (In Case of Emergency) ohjelmoituna puhelimeen</li>
+                </ul>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>🎓 PSC1-koulutus:</strong> Ennaltaehkäisevien ja siviilipelastustoimien taso 1 -koulutus on kaikille saatavilla 10-vuotiaasta alkaen. Se kestää 7 tuntia ja maksaa 50-70€. Ota yhteyttä Suomen Punaisen Ristin, Pelastuslaitoksen tai kansalaispuolustusjärjestöjen paikallisosastoihin.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('healthModal')">Sulje</button>
+        </div>
+    </div>
+
+    <!-- Modal Oikeudet & Velvollisuudet -->
+    <div id="rightsModal" class="modal">
+        <div class="modal-content modal-large">
+            <h3 class="modal-title">Perustavanlaatuiset oikeudet ja velvollisuudet</h3>
+            
+            <div class="modal-section">
+                <h4>⚖️ Tasavallan perustukset</h4>
+                <div class="tech-grid">
+                    <div class="tech-item">
+                        <h5>🇫🇷 Perustuslaki 1958</h5>
+                        <p>Peruslaki, joka järjestää julkisen vallan, määrittelee kansalaisten vapaudet ja oikeudet. Perusti V tasavallan.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>📜 Ihmisoikeuksien julistus (1789)</h5>
+                        <p>"Ihmiset syntyvät vapaina ja tasa-arvoisina oikeuksiltaan." 17 perustavanlaatuista artiklaa luonnollisista ja luovuttamattomista oikeuksista.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🤝 Esipuhe 1946</h5>
+                        <p>Perustaa sosiaaliset ja taloudelliset oikeudet: oikeus työhön, terveyteen, koulutukseen, miesten ja naisten tasa-arvo.</p>
+                    </div>
+                    
+                    <div class="tech-item">
+                        <h5>🌈 Ympäristösopimus (2005)</h5>
+                        <p>Integroi ympäristön suojelun perustuslakiin: oikeus elää tasapainoisessa ja terveyttä kunnioittavassa ympäristössä.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🛡️ Perusoikeutesi</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🧑‍⚖️ Siviili- ja poliittiset oikeudet</h5>
+                        <p>Sananvapaus, omantunnonvapaus, uskonnonvapaus. Äänioikeus, yhdistymisoikeus, rauhanomainen mielenosoitus.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🏥 Sosiaaliset ja taloudelliset oikeudet</h5>
+                        <p>Oikeus työhön, terveyteen, koulutukseen, asuntoon, sosiaaliturvaan, riittävään elintasoon.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👶 Erityisoikeudet</h5>
+                        <p>Lasten oikeudet, vammaisten oikeudet, vanhusten oikeudet, miesten ja naisten tasa-arvo.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>⚖️ Oikeudelliset oikeudet</h5>
+                        <p>Syyttömyysolettama, oikeus oikeudenmukaiseen oikeudenkäyntiin, oikeus asianajajaan, suojelu mielivaltaa vastaan.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌍 Ympäristöoikeudet</h5>
+                        <p>Oikeus terveelliseen ympäristöön, tieto riskeistä, osallistuminen ympäristöpäätöksiin.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📱 Digitaaliset oikeudet</h5>
+                        <p>Henkilötietojen suoja (GDPR), vapaa pääsy internetiin, oikeus digitaaliseen unohdukseen.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🤝 Kansalaisvelvollisuutesi</h4>
+                <div class="equipment-list">
+                    <div class="equipment-item">
+                        <h5>🏛️ Siviilivelvollisuudet</h5>
+                        <p>Noudata lakia, maksa verosi, osallistu vaaleihin, toimi valamiehenä jos kutsuttu.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>👨‍👩‍👧‍👦 Sosiaaliset velvollisuudet</h5>
+                        <p>Kunnioita toisten oikeuksia, suojele haavoittuvia ihmisiä, osallistu kansalliseen solidaarisuuteen.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🎖️ Siviilivelvollisuudet</h5>
+                        <p>Osallistu Puolustusvoimien peruskoulutukseen, kunnioita tasavallan symboleja.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🌳 Ympäristövelvollisuudet</h5>
+                        <p>Osallistu ympäristön säilyttämiseen, noudata ympäristömääräyksiä.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>🆘 Hätätilanteiden velvollisuudet</h5>
+                        <p>Anna apua vaarassa oleville (auttamisvelvollisuus), noudata viranomaisten ohjeita.</p>
+                    </div>
+                    <div class="equipment-item">
+                        <h5>📚 Koulutusvelvollisuudet</h5>
+                        <p>Varmista lastesi koulutus, noudata oppivelvollisuutta (3-16 vuotta).</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📞 Hätänumerot oikeuksien puolustamiseksi</h4>
+                <div class="highlight-box">
+                    <p><strong>Oikeusasiamies:</strong> 09 69 39 00 00</p>
+                    <p><strong>Perheviolenssi:</strong> 3919</p>
+                    <p><strong>Lapsi vaarassa:</strong> 119</p>
+                    <p><strong>Syrjintä:</strong> 08 10 00 14 04</p>
+                    <p><strong>Vammaisuus:</strong> 0 800 360 360</p>
+                    <p><strong>Kuluttaja-asiat:</strong> 08 90 90 19 80</p>
+                </div>
+            </div>
+            
+            <div class="modal-section">
+                <h4>📚 Tunnettavat perustekstit</h4>
+                <ul>
+                    <li><strong>Perustuslaki 4. lokakuuta 1958</strong> - Julkisen vallan organisointi</li>
+                    <li><strong>Ihmisen ja kansalaisen oikeuksien julistus (1789)</strong> - Perustavanlaatuiset vapaudet</li>
+                    <li><strong>Perustuslain esipuhe 1946</strong> - Sosiaaliset ja taloudelliset oikeudet</li>
+                    <li><strong>Ympäristösopimus (2005)</strong> - Ympäristöoikeudet</li>
+                    <li><strong>Euroopan ihmisoikeussopimus (1950)</strong> - Oikeuksien suojelu Euroopassa</li>
+                    <li><strong>Lasten oikeuksien yleissopimus (1989)</strong> - Lasten erityisoikeudet</li>
+                    <li><strong>Yleinen ihmisoikeuksien julistus (1948)</strong> - Kansainväliset normit</li>
+                </ul>
+            </div>
+            
+            <div class="modal-section">
+                <h4>🏛️ Oikeuksien suojaamisinstituutiot</h4>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <div class="spec-value">Oikeusasiamies</div>
+                        <div class="spec-label">Riippumaton instituutio</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Euroopan ihmisoikeustuomioistuin</div>
+                        <div class="spec-label">Kansainvälinen tuomioistuin</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Perustuslakineuvosto</div>
+                        <div class="spec-label">Perustuslaillisuuden valvonta</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CNIL</div>
+                        <div class="spec-label">Tietosuoja</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">CGLPL</div>
+                        <div class="spec-label">Vapaudenriiston paikkojen valvoja</div>
+                    </div>
+                    
+                    <div class="spec-item">
+                        <div class="spec-value">Välittäjä</div>
+                        <div class="spec-label">Kiistojen ratkaisu hallinnon kanssa</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="highlight-box success">
+                <p><strong>💡 Tiesitkö?</strong> Ranskassa perustuslaki on normien hierarkian huipulla. Kaikkien lakien on oltava perustuslain ja sen sisältämien perusperiaatteiden mukaisia. Perustuslakineuvosto valvoo tätä yhdenmukaisuutta.</p>
+            </div>
+            
+            <div class="highlight-box warning">
+                <p><strong>⚠️ Hätätilanteessa:</strong> Jotkut oikeudet voidaan tilapäisesti rajoittaa väestön suojelemiseksi (hätätila, luonnonkatastrofi). Näiden rajoitusten on oltava suhteellisia, tilapäisiä ja tuomioistuimen valvomia.</p>
+            </div>
+            
+            <button class="btn-primary" style="width: 100%; justify-content: center; margin-top: 20px;" onclick="closeModal('rightsModal')">Sulje</button>
+        </div>
+    </div>
+
+    <script>
+    // Globaalit muuttujat
+    let filter = 'Koti';
+    let search = '';
+    let categories = [];
+    let faqItems = [];
+
+    // Ladataan JSON-data
+    function loadJSONData() {
+        // Ladataan kategoriat
+        const categoriesJSON = document.getElementById('categoriesData').textContent;
+        categories = JSON.parse(categoriesJSON);
+        
+        // Ladataan FAQ
+        const faqJSON = document.getElementById('faqData').textContent;
+        faqItems = JSON.parse(faqJSON);
+    }
+
+    // IKONIT
+    const ICONS = {
+        emergency: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-1 11h-4v4h-4v-4H6v-4h4V6h4v4h4v4z"/></svg>`,
+        social: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35L10.55 20.03C5.4 15.36 2 12.27 2 8.5C2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.77-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        assoc: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg>`,
+        police: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>`,
+        fire: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13.5.67s.74 2.65.74 4.8c0 2.06-1.35 3.73-3.41 3.73-2.07 0-3.63-1.67-3.63-3.73l.03-.36C5.21 7.51 4 10.62 4 14c0 4.42 3.58 8 8 8s8-3.58 8-8C20 8.61 17.41 3.8 13.5.67zM11.71 19c-1.78 0-3.22-1.4-3.22-3.14 0-1.62 1.05-2.76 2.81-3.12 1.77-.36 3.6-1.21 4.62-2.58.39 1.29.59 2.65.59 4.04 0 2.65-2.15 4.8-4.8 4.8z"/></svg>`,
+        heart: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>`,
+        phone: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>`,
+        world: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>`,
+        kit: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 8h-3V6c0-1.1-.9-2-2-2H9c-1.1 0-2 .9-2 2v2H4c-1.1 0-2 .9-2 2v10h20V10c0-1.1-.9-2-2-2zM9 6h6v2H9V6zm11 12H4v-3h2v1h2v-1h8v1h2v-1h2v3zm0-5h-2v-1h-2v1H8v-1H6v1H4v-3h16v3z"/></svg>`,
+        protocol: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>`,
+        alert: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.9 2 2 2zm6-6v-5c0-3.07-1.63-5.64-4.5-6.32V4c0-.83-.67-1.5-1.5-1.5s-1.5.67-1.5 1.5v.68C7.64 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>`,
+        health: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/></svg>`,
+        wifi: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21l3.6-4.8c-1.2-1-2.4-1.6-3.6-1.6s-2.4.6-3.6 1.6L12 21zm0-18C7.31 3 3.26 5.72 1 9.5l3 4c2.39-2.34 5.26-3.5 8-3.5s5.61 1.16 8 3.5l3-4C20.74 5.72 16.69 3 12 3zm0 6c-2.59 0-5.03 1.11-7 3l3 4c1.38-1.35 3.08-2 5-2s3.62.65 5 2l3-4c-1.97-1.89-4.41-3-7-3z"/></svg>`,
+        rights: `<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-2 16l-4-4 1.41-1.41L10 14.17l6.59-6.59L18 9l-8 8z"/></svg>`
+    };
+
+    // PALVELUT data - KAIKKI 42 PALVELUA
+    const SERVICES = [
+        // HÄTÄ
+        { 
+            id: 1,
+            cat: 'Hätä', 
+            name: 'Hätänumero (EU)', 
+            num: '112', 
+            col: '#EF4444', 
+            icon: ICONS.emergency, 
+            desc: 'Eurooppalainen hätänumero kaikissa EU-maissa. Yhdistää paikallisiin hätäpalveluihin.',
+            detail: '112 toimii kaikissa Euroopan maissa. Se yhdistää sinut maan hätäpalveluihin.'
+        },
+        { 
+            id: 2,
+            cat: 'Hätä', 
+            name: 'Poliisi', 
+            num: '10022', 
+            col: '#0066FF', 
+            icon: ICONS.police, 
+            desc: 'Poliisin hätänumero rikosten, välittömän vaaran ilmoittamiseen tai kiireellisen avun pyytämiseen.',
+            detail: 'Poliisi puuttuu rikoksiin, liikenneonnettomuuksiin, järjestyshäiriöihin.'
+        },
+        { 
+            id: 3,
+            cat: 'Hätä', 
+            name: 'Pelastuslaitos', 
+            num: '112', 
+            col: '#F59E0B', 
+            icon: ICONS.fire, 
+            desc: 'Palokunta tulipaloihin, onnettomuuksiin, tulviin ja kaikenlaisiin pelastustoimiin.',
+            detail: 'Pelastuslaitos puuttuu tulipaloihin, liikenneonnettomuuksiin, ihmisten pelastamiseen, tulviin.'
+        },
+        { 
+            id: 4,
+            cat: 'Hätä', 
+            name: 'Ensihoito', 
+            num: '112', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'Ensihoitopalvelu kiireellisiin sairaanhoitotapauksiin.',
+            detail: 'Ensihoitopalvelu puuttuu kiireellisiin sairaanhoitotapauksiin (onnettomuudet, huono olo, hengitysvaikeudet).'
+        },
+        { 
+            id: 5,
+            cat: 'Hätä', 
+            name: 'Päivystyslääkäri', 
+            num: '116117', 
+            col: '#3B82F6', 
+            icon: ICONS.emergency, 
+            desc: 'Päivystyslääkäri kiireellisiin mutta ei hengenvaarallisiin tapauksiin.',
+            detail: 'Päivystyslääkäri hoitaa kiireellisiä mutta ei hengenvaarallisia tapauksia (korkea kuume, voimakas kipu).'
+        },
+        { 
+            id: 6,
+            cat: 'Hätä', 
+            name: 'Myrkytystietokeskus', 
+            num: '09 471 977', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Neuvoja myrkytyksiin, vaarallisten aineiden niellyksiin tai puremiin.',
+            detail: 'HUS Myrkytystietokeskus. Kerro aineen nimi, nielty määrä, uhrin ikä ja paino.'
+        },
+        { 
+            id: 7,
+            cat: 'Hätä', 
+            name: 'Sähköhäiriöt', 
+            num: '0800 001 100', 
+            col: '#F59E0B', 
+            icon: ICONS.emergency, 
+            desc: 'Caruna sähköhäiriöihin, katkenneisiin sähköjohtoihin tai sähkövaaroihin.',
+            detail: 'Ilmoita sähkökatkokset ja sähkövaarat.'
+        },
+        { 
+            id: 8,
+            cat: 'Hätä', 
+            name: 'Kaasuhäiriöt', 
+            num: '0800 171 171', 
+            col: '#8B5CF6', 
+            icon: ICONS.emergency, 
+            desc: 'Gasgrid kaasuvuotoihin, epäilyttäviin hajuihin tai syöttöongelmiin.',
+            detail: 'Voimakkaan kaasuhajun ilmetessä: älä sytytä valoja, tuuleta, poistu tiloista, soita ulkopuolelta.'
+        },
+        
+        // SOSIAALISET
+        { 
+            id: 9,
+            cat: 'Sosiaaliset', 
+            name: 'Sosiaalipäivystys', 
+            num: '020 696 006', 
+            col: '#0F172A', 
+            icon: ICONS.social, 
+            desc: 'Yöpaikka, kiertävät auttajatyöt ja apua kodittomille.',
+            detail: 'Sosiaalipäivystys ohjaa yöpaikkoihin, organisoi kiertävää auttajatyötä.'
+        },
+        { 
+            id: 10,
+            cat: 'Sosiaaliset', 
+            name: 'Lapsi vaarassa', 
+            num: '116 111', 
+            col: '#EC4899', 
+            icon: ICONS.social, 
+            desc: 'Lasten huostaanotto- ja tapausilmoitukset.',
+            detail: 'Maksuton, luottamuksellinen numero, 24/7. Ilmoita mistä tahansa kaltoinkohtelun tai laiminlyönnin tilanteesta.'
+        },
+        { 
+            id: 11,
+            cat: 'Sosiaaliset', 
+            name: 'Naisten turvakuutolinja', 
+            num: '0800 02400', 
+            col: '#BE185D', 
+            icon: ICONS.social, 
+            desc: 'Kuuntelu, tiedotus ja ohjaus väkivallan uhreiksi joutuneille naisille.',
+            detail: 'Maksuton, anonyymi numero, 24/7. Perheväkivalta, psykologinen väkivalta, seksuaalinen väkivalta.'
+        },
+        { 
+            id: 12,
+            cat: 'Sosiaaliset', 
+            name: 'Päihdepuhelin', 
+            num: '09 454 22000', 
+            col: '#059669', 
+            icon: ICONS.social, 
+            desc: 'Kuuntelu, tiedotus ja apu riippuvuuksiin (huumeet, alkoholi, pelit).',
+            detail: 'Maksuton, anonyymi numero, ma-pe 9-20, la 10-15. Neuvoja, ohjausta hoitokeskuksiin.'
+        },
+        { 
+            id: 13,
+            cat: 'Sosiaaliset', 
+            name: 'Kriisipuhelin', 
+            num: '09 2525 0111', 
+            col: '#3B82F6', 
+            icon: ICONS.heart, 
+            desc: 'Itsemurhan ehkäisy, kuuntelu ja psykologinen tuki.',
+            detail: 'Kansallinen itsemurhan ehkäisyn numero. Hyväksyvä, tuomitsematon kuuntelu, 24/7.'
+        },
+        { 
+            id: 14,
+            cat: 'Sosiaaliset', 
+            name: 'Kansalaisneuvonta', 
+            num: '020 690 550', 
+            col: '#6366F1', 
+            icon: ICONS.phone, 
+            desc: 'Tietoa kaikista suomalaisista julkisista palveluista.',
+            detail: 'Ma-pe 9-16. Tietoa hallintomenettelyistä, oikeuksista, sosiaaliavusta.'
+        },
+        { 
+            id: 15,
+            cat: 'Sosiaaliset', 
+            name: 'Vammaisuusneuvonta', 
+            num: '0295 016 620', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Tietoa oikeuksista, avusta ja tuesta vammaisille.',
+            detail: 'Maksuton numero, ma-pe 9-15. Tietoa vammaistuesta, henkilökohtaisesta avusta, Kela-tuesta.'
+        },
+        { 
+            id: 16,
+            cat: 'Sosiaaliset', 
+            name: 'Mielenterveysapu', 
+            num: '09 4135 0501', 
+            col: '#EC4899', 
+            icon: ICONS.heart, 
+            desc: 'Hyväksyvä ja anonyymi kuuntelu psykologisessa hädässä oleville.',
+            detail: 'Vapaaehtoisten kuuntelijoiden yhdistys, 24/7. Puhu vaikeuksistasi, eristyneisyydestä, henkisestä kärsimyksestä.'
+        },
+        
+        // SUOMALAINEN YHDISTYSET
+        { 
+            id: 17,
+            cat: 'Yhdistykset', 
+            name: 'Vailla vakinaista asuntoa ry', 
+            num: '020 730 1010', 
+            col: '#F43F5E', 
+            icon: ICONS.heart, 
+            desc: 'Ruoka-apu, sosiaalinen integraatio ja tuki köyhimmille.',
+            detail: 'Aterioiden jakelu, sosiaaliset ruokakaupat, integraatioapu. Avoinna marraskuusta maaliskuuhun.'
+        },
+        { 
+            id: 18,
+            cat: 'Yhdistykset', 
+            name: 'Suomen Punainen Risti', 
+            num: '020 741 7330', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Humanitaarinen toiminta, ensiapukoulutus, sosiaalinen apu ja ensiapukoulutus.',
+            detail: 'Hätätapaukset, kiertävä auttajatyö, ruoka-apu, SST/PSC1-koulutus. Paikallistoimintaa ympäri Suomea.'
+        },
+        { 
+            id: 19,
+            cat: 'Yhdistykset', 
+            name: 'Kirkon diakonia', 
+            num: '020 690 110', 
+            col: '#B91C1C', 
+            icon: ICONS.heart, 
+            desc: 'Apua köyhimmille, vastaanotto, majoitus ja taistelu syrjäytymistä vastaan.',
+            detail: 'Päivävastaanotto, ruuanjakelu, asioinnin avustus, koulutuki.'
+        },
+        { 
+            id: 20,
+            cat: 'Yhdistykset', 
+            name: 'Väestöliitto', 
+            num: '020 741 7330', 
+            col: '#1E293B', 
+            icon: ICONS.assoc, 
+            desc: 'Taistelu syrjäytymistä vastaan työn kautta, uudelleenintegrointi ja solidaarinen talous.',
+            detail: 'Väestöliiton yhteisöt tarjoavat majoitusta, työtä kierrätyskeskuksissa, esineiden myyntiä.'
+        },
+        { 
+            id: 21,
+            cat: 'Yhdistykset', 
+            name: 'Suomen eläinsuojeluyhdistys', 
+            num: '09 877 2250', 
+            col: '#D97706', 
+            icon: ICONS.heart, 
+            desc: 'Eläinten suojelu, turvakoti, adoptointi ja taistelu kaltoinkohtelua vastaan.',
+            detail: 'Suomen eläinsuojeluyhdistys. Ilmoita kaltoinkohtelusta, adoptoi eläimiä.'
+        },
+        { 
+            id: 22,
+            cat: 'Yhdistykset', 
+            name: 'Suomen Mielenterveysseura', 
+            num: '09 4135 0500', 
+            col: '#2563EB', 
+            icon: ICONS.heart, 
+            desc: 'Solidaarisuus kaikille, ruoka-apu, vaateapu ja pääsy kulttuuriin.',
+            detail: 'Hätäapu, ruukapaketit, solidaariset lomat, läksyapu.'
+        },
+        { 
+            id: 23,
+            cat: 'Yhdistykset', 
+            name: 'Lääkärit ilman rajoja', 
+            num: '09 684 3000', 
+            col: '#10B981', 
+            icon: ICONS.emergency, 
+            desc: 'Hoito köyhimmille Suomessa ja kansainvälisesti.',
+            detail: 'Ilmaisia terveyskeskuksia, lääketieteellistä kiertävää auttajatyötä, pääsy terveysoikeuksiin.'
+        },
+        { 
+            id: 24,
+            cat: 'Yhdistykset', 
+            name: 'Ruoka-apu', 
+            num: '020 741 7330', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Elintarvikkeiden keräys ja jakelu yhdistyksille.',
+            detail: '79 ruoka-apujärjestöä Suomessa. Huoltavat 5 400 yhdistystä.'
+        },
+        
+        // KANSAINVÄLISET YHDISTYSET
+        { 
+            id: 25,
+            cat: 'Kansainväliset', 
+            name: 'UNICEF Suomi', 
+            num: '020 719 2000', 
+            col: '#3B82F6', 
+            icon: ICONS.world, 
+            desc: 'Yhdistyneiden kansakuntien lastenrahasto. Lasten suojelu maailmassa.',
+            detail: 'Toiminta 190 maassa. Rokottaminen, koulutus, suojelu väkivaltaa vastaan.'
+        },
+        { 
+            id: 26,
+            cat: 'Kansainväliset', 
+            name: 'Lääkärit ilman rajoja', 
+            num: '020 719 2000', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Kiireellinen lääketieteellinen apu konflikti- ja katastrofialueilla.',
+            detail: 'Kansainvälinen lääketieteellinen NGO, joka on läsnä 70 maassa. Hoito haavoittuville väestöille.'
+        },
+        { 
+            id: 27,
+            cat: 'Kansainväliset', 
+            name: 'CARE Suomi', 
+            num: '020 755 9500', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Taistelu köyhyyttä ja epäoikeudenmukaisuuksia vastaan maailmassa.',
+            detail: 'Toiminta 100 maassa. Humanitaariset hätätilanteet, kestävä kehitys.'
+        },
+        { 
+            id: 28,
+            cat: 'Kansainväliset', 
+            name: 'Action contre la Faim Suomi', 
+            num: '020 755 9500', 
+            col: '#059669', 
+            icon: ICONS.world, 
+            desc: 'Taistelu nälkää vastaan maailmassa, ravitsemus ja elintarviketurvallisuus.',
+            detail: 'Läsnä 50 maassa. Ravitsemisohjelmat, vesi ja sanitaatio.'
+        },
+        { 
+            id: 29,
+            cat: 'Kansainväliset', 
+            name: 'WWF Suomi', 
+            num: '09 774 0100', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Ympäristön ja maailmanlaajuisen biodiversiteetin suojelu.',
+            detail: 'Maailman luonnonsäätiö. Uhanalaisten lajien, metsien, valtamerien, ilmaston suojelu.'
+        },
+        { 
+            id: 30,
+            cat: 'Kansainväliset', 
+            name: 'Amnesty International Suomi', 
+            num: '09 645 500', 
+            col: '#8B5CF6', 
+            icon: ICONS.world, 
+            desc: 'Ihmisoikeuksien puolustus maailmassa.',
+            detail: 'Maailmanlaajuinen 10 miljoonan ihmisen liike. Taistelu ihmisoikeuksien puolesta.'
+        },
+        { 
+            id: 31,
+            cat: 'Kansainväliset', 
+            name: 'Handicap International Suomi', 
+            num: '09 684 3000', 
+            col: '#F59E0B', 
+            icon: ICONS.world, 
+            desc: 'Apua vammaisille köyhissä maissa ja konflikti-alueilla.',
+            detail: 'Kuntoutushoito, sosiaalinen integraatio, vammaisuuden ehkäisy.'
+        },
+        { 
+            id: 32,
+            cat: 'Kansainväliset', 
+            name: 'Kansainvälinen Punainen Risti', 
+            num: '+41 22 734 60 01', 
+            col: '#EF4444', 
+            icon: ICONS.world, 
+            desc: 'Humanitaarinen toiminta konflikti-alueilla ympäri maailmaa.',
+            detail: 'Kansainvälinen Punaisen Ristin komitea. Sodan uhrien suojelu.'
+        },
+        { 
+            id: 33,
+            cat: 'Yhdistykset', 
+            name: 'Suomen Pakolaisapu', 
+            num: '020 741 7330', 
+            col: '#1D4ED8', 
+            icon: ICONS.assoc, 
+            desc: 'Aktiivinen solidaarisuusyhteisö siirtolaisten, pakolaisten ja turvapaikanhakijoiden kanssa.',
+            detail: 'Oikeudellinen apu, hallinnollinen seuranta, majoituskeskukset, kielikoulutus.'
+        },
+        { 
+            id: 34,
+            cat: 'Yhdistykset', 
+            name: 'Luonto-Liitto', 
+            num: '09 228 0820', 
+            col: '#10B981', 
+            icon: ICONS.world, 
+            desc: 'Yhdistysten liitto ympäristön suojelua ja elinympäristön puolustusta varten.',
+            detail: 'Oikeudelliset toimet, tietoisuuden lisääminen, biodiversiteetin puolustus, taistelu saasteita vastaan.'
+        },
+        { 
+            id: 35,
+            cat: 'Yhdistykset', 
+            name: 'SOS-Lapsikylät', 
+            num: '020 741 7330', 
+            col: '#F59E0B', 
+            icon: ICONS.heart, 
+            desc: 'Lasten vastaanotto, jotka on erotettu perheistään, vakaassa ja rakastavassa ympäristössä.',
+            detail: 'Vastaanottokylät, perheen vahvistamisohjelmat, nuorten integraatioapu.'
+        },
+        { 
+            id: 36,
+            cat: 'Yhdistykset', 
+            name: 'Ateriapalvelu', 
+            num: '020 730 1010', 
+            col: '#EF4444', 
+            icon: ICONS.heart, 
+            desc: 'Aterioiden ja ruukapakettien jakelu köyhyydessä eläville.',
+            detail: 'Talvikampanjat, solidaariset ruokakaupat, keittotunnit, ammatillinen integraatio.'
+        },
+        { 
+            id: 37,
+            cat: 'Yhdistykset', 
+            name: 'Suomen Säätiö', 
+            num: '09 228 0820', 
+            col: '#3B82F6', 
+            icon: ICONS.assoc, 
+            desc: 'Säätiö, joka tukee hankkeita solidaarisuuden, terveyden, koulutuksen aloilla.',
+            detail: 'Yhdistyshankkeiden rahoitus, hätärahastot, teemahaut.'
+        },
+        { 
+            id: 38,
+            cat: 'Kansainväliset', 
+            name: 'Oxfam Suomi', 
+            num: '020 755 9500', 
+            col: '#DC2626', 
+            icon: ICONS.world, 
+            desc: 'Taistelu epätasa-arvoa ja köyhyyttä vastaan maailmassa.',
+            detail: 'Hätäapu, kestävä kehitys, poliittinen lobbaus, reilu kauppa.'
+        },
+        { 
+            id: 39,
+            cat: 'Kansainväliset', 
+            name: 'Plan International Suomi', 
+            num: '020 755 9500', 
+            col: '#EC4899', 
+            icon: ICONS.world, 
+            desc: 'Lasten oikeuksien puolustus ja tyttöjen ja poikien tasa-arvo maailmassa.',
+            detail: 'Kummiuudet, suojelu väkivaltaa vastaan, koulutus, äitiys- ja lastenterveys.'
+        },
+        { 
+            id: 40,
+            cat: 'Sosiaaliset', 
+            name: 'SETA ry', 
+            num: '09 454 22000', 
+            col: '#8B5CF6', 
+            icon: ICONS.social, 
+            desc: 'Taistelu LGBT-fobioita vastaan ja apu uhreille.',
+            detail: 'Puhelinkuuntelu, oikeudellinen seuranta, puheet kouluissa, tarkkailu.'
+        },
+        { 
+            id: 41,
+            cat: 'Yhdistykset', 
+            name: 'Vanhusten ystävät', 
+            num: '020 741 7330', 
+            col: '#7C3AED', 
+            icon: ICONS.heart, 
+            desc: 'Taistelu vanhusten eristyneisyyttä vastaan.',
+            detail: 'Kotikäynnit, kulttuurikäynnit, solidaariset lomat, hallinnollinen apu.'
+        },
+        { 
+            id: 42,
+            cat: 'Kansainväliset', 
+            name: 'Solidaarisuus International', 
+            num: '020 755 9500', 
+            col: '#F97316', 
+            icon: ICONS.world, 
+            desc: 'Kiireellinen humanitaarinen apu konflikti- ja luonnonkatastrofialueilla.',
+            detail: 'Pääsy juomaveteen, sanitaatio, elintarviketurvallisuus, hätämajoitus.'
+        }
+    ];
+
+    // Modalien hallintafunktiot
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'flex';
+    }
+
+    // Oikeuksien modalin avaaminen
+    function openRightsModal() {
+        openModal('rightsModal');
+    }
+
+    // Hakupalkin näkyvyyden hallinta
+    function toggleSearchBar() {
+        const searchContainer = document.getElementById('searchContainer');
+        const searchInput = document.getElementById('searchInput');
+        
+        // Luokat, joissa hakupalkki näkyy
+        const searchVisibleCategories = ['Kaikki', 'Hätä', 'Sosiaaliset', 'Yhdistykset', 'Kansainväliset'];
+        
+        if (searchVisibleCategories.includes(filter)) {
+            // Näytä hakupalkki
+            searchContainer.style.display = 'block';
+            // Tyhjennä haku, jos tullaan Koti-kategoriasta
+            if (search === '' && searchInput.value !== '') {
+                searchInput.value = '';
+            }
+        } else if (filter === 'Koti') {
+            // Piilota hakupalkki
+            searchContainer.style.display = 'none';
+            // Tyhjennä haku
+            search = '';
+            searchInput.value = '';
+        } else {
+            // Muille luokille (varalta)
+            searchContainer.style.display = 'none';
+            search = '';
+            searchInput.value = '';
+        }
+    }
+
+    // FAQ:n generointi
+    function renderFAQ() {
+        const faqContainer = document.getElementById('faqContainer');
+        
+        if (faqItems.length === 0) return;
+        
+        let html = '';
+        
+        faqItems.forEach((item, index) => {
+            html += `
+                <div class="faq-item">
+                    <button class="faq-question" onclick="toggleFAQ(${index})">
+                        <span>${item.question}</span>
+                        <span class="faq-icon">+</span>
+                    </button>
+                    <div class="faq-answer" id="faqAnswer${index}">
+                        ${item.answer}
+                    </div>
+                </div>
+            `;
+        });
+        
+        faqContainer.innerHTML = html;
+    }
+
+    // FAQ-kysymysten avaaminen/sulkeminen
+    function toggleFAQ(index) {
+        const answer = document.getElementById(`faqAnswer${index}`);
+        const question = answer.previousElementSibling;
+        
+        // Sulje kaikki muut vastaukset
+        document.querySelectorAll('.faq-answer').forEach((ans, i) => {
+            if (i !== index) {
+                ans.classList.remove('show');
+                ans.previousElementSibling.classList.remove('active');
+            }
+        });
+        
+        // Vaihda nykyinen tila
+        answer.classList.toggle('show');
+        question.classList.toggle('active');
+    }
+
+    // Hamburger-valikko
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    function toggleMenu() {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('active');
+    }
+
+    function closeMenu() {
+        hamburger.classList.remove('active');
+        mobileMenu.classList.remove('active');
+    }
+
+    // Kuvausmodalin avaaminen
+    function openDescModal(serviceId) {
+        const service = SERVICES.find(s => s.id === serviceId);
+        if (service) {
+            document.getElementById('descTitle').textContent = service.name;
+            document.getElementById('descText').textContent = service.detail || service.desc;
+            document.getElementById('descNum').innerHTML = `<strong>📞 Numero:</strong> ${service.num}`;
+            
+            const callBtn = document.getElementById('descCallBtn');
+            const callNum = document.getElementById('descCallNum');
+            
+            callBtn.href = `tel:${service.num.replace(/\s/g, '')}`;
+            callNum.textContent = `Soita ${service.num}`;
+            
+            openModal('descModal');
+        }
+    }
+    
+    // Selviytymismodalin avaaminen
+    function openSurvivalModal() {
+        openModal('survivalModal');
+    }
+    
+    // Protokollamodalin avaaminen
+    function openProtocolModal() {
+        openModal('protocolModal');
+    }
+    
+    // Hälytysmodalin avaaminen
+    function openAlertModal() {
+        openModal('alertModal');
+    }
+    
+    // Terveysmodalin avaaminen
+    function openHealthModal() {
+        openModal('healthModal');
+    }
+
+    // Päärenderöintifunktio
+    function render() {
+        const grid = document.getElementById('serviceGrid');
+
+        // Hakupalkin näkyvyyden hallinta
+        toggleSearchBar();
+
+        // Jos ollaan Koti-kategoriassa
+        if (filter === 'Koti') {
+            let html = `
+                <div class="card intro-card">
+                    <div class="intro-badge">MITEN TÄMÄ TOIMII?</div>
+                    <h3 class="card-title">Kuinka käyttää SOS Guidea?</h3>
+                    <p class="card-text">Tämä sivu toimii <strong>100% offline-tilassa</strong> ja tarjoaa pääsyn välttämättömiin tietoihin. Näin navigoidaan ja käytetään kaikkia ominaisuuksia:</p>
+                    
+                    <div class="intro-steps">
+                        <div class="intro-step">
+                            <div class="step-number">1</div>
+                            <div class="intro-step-title">Navigointi luokkien mukaan</div>
+                            <div class="intro-step-desc">Klikkaa suodatinpainikkeita nähdäksesi palvelut luokittain: Hätä, Sosiaaliset, Yhdistykset, Kansainväliset tai Kaikki palvelut.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">2</div>
+                            <div class="intro-step-title">Nopea haku</div>
+                            <div class="intro-step-desc">Luokissa käytä hakupalkkia löytääksesi tietyn palvelun nimen tai kuvauksen perusteella.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">3</div>
+                            <div class="intro-step-title">Pääsy numeroihin</div>
+                            <div class="intro-step-desc">Klikkaa "Soita" soittaaksesi suoraan numeroon tai "?" nähdäksesi palvelun tiedot.</div>
+                        </div>
+                        <div class="intro-step">
+                            <div class="step-number">4</div>
+                            <div class="intro-step-title">Oppaat ja resurssit</div>
+                            <div class="intro-step-desc">Tutki käytännön oppaita: Selviytymisvarusteet, Hätäprotokolla, Hälytys & Viestintä, ja Terveys & ensiapu.</div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openModal('aboutModal')">
+                            <span>Lisätietoja projektista</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                    <p style="margin-top: 20px; font-size: 0.95rem; color: rgba(255,255,255,0.8);">
+                        <strong>⚠️ Tärkeää:</strong> Hätänumeroihin soittaessasi puhelimesi tarvitsee matkapuhelinverkon. Tämä sivu tarjoaa tiedot, mutta puhelut kulkevat puhelinoperaattorisi kautta.
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.rights}
+                        </div>
+                        <span class="tag">OIKEUDET</span>
+                    </div>
+                    <h3 class="card-title">Perustavanlaatuiset oikeudet ja velvollisuudet</h3>
+                    <p class="card-text">Perustuslaki, Ihmisoikeuksien julistus, tasavallan arvot. Tiedä oikeutesi ja velvollisuutesi vaikeissa tilanteissa.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openRightsModal()">
+                            <span>Katso perusteet</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.kit}
+                        </div>
+                        <span class="tag">SELVIYTYMINEN</span>
+                    </div>
+                    <h3 class="card-title">Selviytymisvarusteet</h3>
+                    <p class="card-text">Täydellinen lista välttämättömistä varusteista, jotka on valmisteltava selviytyäksesi hätätilanteista. 12 yksityiskohtaista luokkaa.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openSurvivalModal()">
+                            <span>Katso täydellinen lista</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.protocol}
+                        </div>
+                        <span class="tag">PROTOKOLLA</span>
+                    </div>
+                    <h3 class="card-title">Hätäprotokolla</h3>
+                    <p class="card-text">5 vaihetta, joita noudattaa kriisitilanteessa. Järjestelmällinen menetelmä tehokkaaseen reagointiin. Integroitu PSC1-opas.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openProtocolModal()">
+                            <span>Katso vaiheet yksityiskohtaisesti</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.alert}
+                        </div>
+                        <span class="tag">HÄLYTYS</span>
+                    </div>
+                    <h3 class="card-title">Hälytys & Viestintä</h3>
+                    <p class="card-text">Viralliset hälytysjärjestelmät, viestintävälineet ja perheen hätäsuunnitelma. FR-Alert, SAIP, kansalliset signaalit.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openAlertModal()">
+                            <span>Katso täydelliset järjestelmät</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-icon">
+                            ${ICONS.heart}
+                        </div>
+                        <span class="tag">TERVEYS</span>
+                    </div>
+                    <h3 class="card-title">Terveys & Ensiapu</h3>
+                    <p class="card-text">Ensiapulaukku, elvytystoimet ja hätälääketieteellinen valmius. Täydellinen opas menettelytavoin.</p>
+                    <div class="card-actions">
+                        <button class="card-action-btn" onclick="openHealthModal()">
+                            <span>Katso toimet yksityiskohtaisesti</span>
+                            <span>→</span>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            grid.innerHTML = html;
+            return;
+        }
+
+        // Muille luokille (Kaikki, Hätä, Sosiaaliset jne.)
+        const filtered = SERVICES.filter(s => {
+            const matchesFilter = filter === 'Kaikki' || s.cat === filter;
+            const matchesSearch = s.name.toLowerCase().includes(search.toLowerCase()) || 
+                                s.desc.toLowerCase().includes(search.toLowerCase());
+            return matchesFilter && matchesSearch;
+        });
+
+        const html = filtered.map(s => `
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-icon" style="background: ${s.col}20;">
+                        ${s.icon}
+                    </div>
+                    <span class="tag">${s.cat}</span>
+                </div>
+                <h3 class="card-title">${s.name}</h3>
+                <p class="card-text">${s.desc}</p>
+                <div class="card-actions">
+                    <a href="tel:${s.num.replace(/\s/g, '')}" class="card-action-btn">
+                        <span>${s.num}</span>
+                        <span>📞</span>
+                    </a>
+                    <button class="card-info-btn" onclick="openDescModal(${s.id})">
+                        <span>?</span>
+                    </button>
+                </div>
+            </div>
+        `).join('');
+
+        grid.innerHTML = html;
+    }
+
+    // Alustus
+    window.onload = () => {
+        // Ladataan JSON-data
+        loadJSONData();
+        
+        // Generoidaan FAQ
+        renderFAQ();
+        
+        // Renderöidään alkuperäinen sisältö
+        render();
+
+        // Tapahtumat suodattimille
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                filter = this.getAttribute('data-cat');
+                render();
+            });
+        });
+
+        // Tapahtuma haulle
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            search = e.target.value;
+            render();
+        });
+
+        // Tapahtumat painikkeille
+        document.getElementById('aboutBtn').addEventListener('click', () => {
+            openModal('aboutModal');
+        });
+
+        document.getElementById('aboutBtnMobile').addEventListener('click', () => {
+            openModal('aboutModal');
+            closeMenu();
+        });
+
+        // Hamburger-valikko
+        hamburger.addEventListener('click', toggleMenu);
+
+        // Modalien sulkeminen klikkaamalla ulkopuolelle
+        document.querySelectorAll('.modal').forEach(modal => {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        });
+
+        // Modalien sulkeminen Escape-näppäimellä
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal').forEach(modal => {
+                    modal.style.display = 'none';
+                });
+            }
+        });
+
+        // Suljetaan valikko, kun klikataan linkkiä
+        document.querySelectorAll('.mobile-nav a').forEach(link => {
+            link.addEventListener('click', closeMenu);
+        });
+
+        // Suljetaan valikko, kun klikataan mobiilin "Tietoa meistä" -painiketta
+        document.getElementById('aboutBtnMobile').addEventListener('click', closeMenu);
+
+        // Sujuvat siirtymät ankkurilinkkien klikkauksiin
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                
+                // Jos href on vain "#", estetään oletustoiminto ja ei tehdä mitään
+                if (href === '#') {
+                    e.preventDefault();
+                    return;
+                }
+                
+                // Jos kyseessä on palvelusuodatinlinkki (sisältää "?cat=")
+                if (href.includes('?cat=')) {
+                    e.preventDefault();
+                    const cat = href.split('?cat=')[1];
+                    const filterBtn = document.querySelector(`.filter-btn[data-cat="${cat}"]`);
+                    if (filterBtn) {
+                        // Poistetaan aktiivinen luokka kaikilta ja lisätään klikatulle
+                        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                        filterBtn.classList.add('active');
+                        filter = cat;
+                        render();
+                        
+                        // Siirrytään palvelusektioon
+                        const servicesSection = document.getElementById('services');
+                        if (servicesSection) {
+                            window.scrollTo({
+                                top: servicesSection.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                    return;
+                }
+                
+                // Normaali ankkurilinkki
+                e.preventDefault();
+                const target = document.querySelector(href);
+                
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                    closeMenu();
+                }
+            });
+        });
+
+        // Tarkkailija animaatioille
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        // Tarkkaillaan kortteja
+        document.querySelectorAll('.card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(20px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+    };
+</script>
+
+    <!-- JSON kategorioille -->
+    <script id="categoriesData" type="application/json">
+        [
+            {"id": "Kaikki", "name": "Kaikki"},
+            {"id": "Hätä", "name": "Hätä"},
+            {"id": "Sosiaaliset", "name": "Sosiaaliset"},
+            {"id": "Yhdistykset", "name": "Yhdistykset"},
+            {"id": "Kansainväliset", "name": "Kansainväliset"}
+        ]
+    </script>
+
+    <!-- JSON FAQ:lle - 8 TÄYDELLISTÄ KYSYMYSTÄ -->
+    <script id="faqData" type="application/json">
+        [
+            {
+                "question": "Kuinka pitää mielialan yllä vaikeassa tilanteessa?",
+                "answer": "Pidä huolta itsestäsi yksinkertaisilla rutiineilla: hengitä syvään useita kertoja päivässä, pidä kiitollisuuspäiväkirjaa (kirjaa 3 positiivista asiaa joka päivä), pysy yhteydessä läheisiisi jopa etäisyydestä. Muista, että jokainen tilanne, vaikeakin, on tilapäinen. Harjoita tietoista meditaatiota 10 minuuttia päivässä stressin vähentämiseksi ja mielen selkeyden parantamiseksi."
+            },
+            {
+                "question": "Mitä tehdä, kun ahdistus tulee liian voimakkaaksi?",
+                "answer": "Kokeile 5-4-3-2-1-tekniikkaa: nimeä 5 asiaa, jotka näet, 4 asiaa, joita kosket, 3 asiaa, joita kuulet, 2 asiaa, joita haistat, 1 asia, jota maistat. Tämä tekniikka tuo sinut takaisin nykyhetkeen. Hengitä hitaasti (4 sekuntia sisäänhengitys, 4 taukoa, 6 uloshengitys). Puhu luottamukselliselle henkilölle. Harjoita sydämen kohdennuskolmiota 3 kertaa päivässä. Jos ahdistus jatkuu, ota yhteyttä terveydenhuollon ammattilaiseen."
+            },
+            {
+                "question": "Kuinka tukea läheistä psykologisessa hädässä?",
+                "answer": "Kuuntele tuomitsematta, vahvista hänen tunteitaan ('Ymmärrän, että tunnet itsesi näin'), tarjoa läsnäolosi pakottamatta. Kannusta häntä konsultoimaan ammattilaista tarvittaessa (psykologi, lääkäri). Muistuta häntä, ettei hän ole yksin ja että avun pyytäminen on voiman merkki. Ehdottaa yksinkertaisia yhteisiä aktiviteetteja (kävely, ruoanlaitto, musiikin kuuntelu). Vältä pyytämättömiä neuvoja ja lauseita kuten 'se menee ohi'."
+            },
+            {
+                "question": "Yksinkertaisia harjoituksia stressin vähentämiseen?",
+                "answer": "1) Sydämen kohdennuskolmiota: hengitä sisään 5 sekuntia, ulos 5 sekuntia 5 minuutin ajan. 2) Tietoinen kävely: keskity jokaiseen askeleeseen, maan tuntoon. 3) Itsehieronta käsille tai kasvoille. 4) Positiivinen visualisointi: kuvittele rauhallinen ja turvallinen paikka kaikilla aisteillasi. 5) Terapeuttinen kirjoittaminen: kirjoita ajatuksiasi 10 minuuttia tuomitsematta. 6) Neliskulmainen hengitys: sisäänhengitys 4s, pidä 4s, uloshengitys 4s, pidä 4s."
+            },
+            {
+                "question": "Kuinka ylläpitää sosiaalista verkostoa eristysajan aikana?",
+                "answer": "Järjestä säännöllisiä puheluita perheen ja ystävien kanssa, osallistu verkostoitumiin (lukupiirit, pelit), vaihda positiivisia viestejä. Ehdottaa 'virtuaalisia kahvitteluita' tai jaettuja aterioita videokonferenssien kautta. Liity verkossa toimiviin tukiryhmiin tarvittaessa. Kirjoita kirjeitä tai postikortteja henkilökohtaisempaan kosketukseen. Osallistu paikallisiin yhteisöaktiviteetteihin mahdollisuuden mukaan."
+            },
+            {
+                "question": "Milloin ammattiapua pitää pyytää?",
+                "answer": "Konsultoi ammattilaista, jos koet: voimakasta pysyvää surua (+2 viikkoa), kiinnostuksen menetystä tavanomaisiin aktiviteetteihin, unen/ruokahalun häiriöitä, toistuvia negatiivisia ajatuksia, vaikeuksia toimia päivittäisessä elämässä, itsemurha-ajatuksia. Kuuntelulinjat kuten 09 2525 0111 ovat saatavilla 24/7. Psykologiset konsultaatiot korvataan Sosiaaliturvakeskukselta (8 istuntoa vuodessa)."
+            },
+            {
+                "question": "Kuinka luoda rauhoittava rutiini?",
+                "answer": "Määritä säännölliset ajat unelle (7-9h), aterioille, fyysiselle aktiivisuudelle (30 min/päivä). Sisällytä tietoisia taukohetkiä. Luo lohduttavia rituaaleja (aamutee, hiljainen musiikki illalla). Rajoita altistumista ahdistaville tiedoille, erityisesti ennen nukkumaanmenoa. Aikatauluta miellyttäviä aktiviteetteja joka päivä (lukeminen, musiikki, puutarhanhoito, askartelu). Rakenna päiväsi yksinkertaisilla ja saavutettavilla tavoitteilla."
+            },
+            {
+                "question": "Ilmaisia resursseja mielenterveydelle?",
+                "answer": "• 09 2525 0111: Itsemurhan ehkäisy 24/7 (maksuton)<br>• 09 4135 0501: Mielenterveysapu (hyväksyvä kuuntelu)<br>• 09 454 22000: Päihdepuhelin<br>• Ilmaisia sovelluksia: Headspace (meditaatio), Moodpath (mielialan seuranta), Mindy (THL)<br>• YouTube-kanavat: Psykologian ammattilaiset, Hyvinvointineuvonta<br>• Kirjastojen digitaaliset kirjat (ilmaisia rekisteröinnillä)<br>• Verkossa toimivat vertaisryhmät (yhdistykset)<br>• Nuorisopalvelut (ilmainen vastaanotto)"
+            }
+        ]
+    </script>
+</body>
+</html>
