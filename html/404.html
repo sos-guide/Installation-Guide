@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⛑️ SOS Guide - Page non trouvée</title>
+    <link rel="stylesheet" href="assets/styles.css">
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .error-code {
+            font-size: 8rem;
+            font-weight: 900;
+            line-height: 1;
+            color: var(--red-emergency);
+            margin-bottom: 20px;
+            text-shadow: 0 4px 20px rgba(255, 69, 58, 0.3);
+        }
+
+        .error-emoji {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(-15px); }
+        }
+
+        .error-message {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-color);
+            max-width: 500px;
+            line-height: 1.4;
+        }
+
+        .back-button {
+            background: var(--red-emergency);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 1rem;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 69, 58, 0.4);
+        }
+
+        .back-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(255, 69, 58, 0.5);
+        }
+
+        .back-button:active {
+            transform: scale(0.95);
+        }
+
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            .error-emoji {
+                font-size: 3rem;
+            }
+            .error-message {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-emoji">🚨</div>
+        <div class="error-code">404</div>
+        <div class="error-message">Oups ! La page que vous cherchez n'existe pas ou a été déplacée.</div>
+        <a href="index.html" class="back-button">Retour à l'accueil</a>
+    </div>
+
+    <script>
+        // Synchronisation du thème sombre
+        if (localStorage.getItem('darkMode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+    </script>
+</body>
+</html>
