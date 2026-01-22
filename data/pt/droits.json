@@ -1,0 +1,26 @@
+[
+  {
+    "id": "droit1",
+    "title": "DIREITO À SEGURANÇA",
+    "content": "Toda pessoa tem direito à vida, à liberdade e à segurança pessoal. Em situação de emergência:\n\n• Direito à proteção dos serviços de emergência\n• Direito a assistência médica\n• Direito a informação sobre os riscos\n• Direito a evacuação se necessário",
+    "tag": "DIREITO"
+  },
+  {
+    "id": "devoir1",
+    "title": "DEVER DE SOCORRO",
+    "content": "Toda pessoa deve socorrer uma pessoa em perigo, na medida das suas possibilidades:\n\n• Dever de prestar socorro (Art. 223-6 do Código Penal francês)\n• Dever de alertar os serviços de emergência\n• Dever de não agravar a situação\n• Dever de seguir as instruções",
+    "tag": "DEVER"
+  },
+  {
+    "id": "droit2",
+    "title": "DIREITO À INFORMAÇÃO",
+    "content": "Numa emergência, toda pessoa tem direito:\n\n• A informação clara e compreensível\n• A conhecer os riscos que enfrenta\n• A receber instruções de segurança\n• A ser informada da evolução da situação",
+    "tag": "DIREITO"
+  },
+  {
+    "id": "devoir2",
+    "title": "DEVER DE COOPERAÇÃO",
+    "content": "As pessoas devem cooperar com os serviços de emergência:\n\n• Respeitar as ordens de evacuação\n• Não obstaculizar as operações de socorro\n• Comunicar informações úteis\n• Facilitar o acesso aos locais",
+    "tag": "DEVER"
+  }
+]

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⛑️ SOS-GUIDE | Guide de Survie 100% Hors-ligne</title>
+    <meta name="theme-color" content="#ffffff">
+    
+    <!-- Manifest PWA externe pour éviter les erreurs JSON -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Feuille de style externe -->
+    <link rel="stylesheet" href="assets/styles.css">
+    <link rel="stylesheet" href="assets/styles-outils.css">
+    
+    <style>
+        /* Modal temporaire pour les cartes de survie */
+        .temp-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 3000;
+            padding: 80px 20px 20px;
+            overflow-y: auto;
+            color: white;
+            display: none;
+        }
+        
+        .temp-modal-content {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        .temp-modal-close {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #333;
+            border: none;
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            z-index: 3001;
+            cursor: pointer;
+        }
+        
+        .temp-modal-header {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .temp-modal-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: 900;
+            line-height: 1.3;
+        }
+        
+        .temp-modal-body {
+            background: #222;
+            padding: 25px;
+            border-radius: 20px;
+            line-height: 1.6;
+            white-space: pre-line;
+            text-align: left;
+            margin-bottom: 30px;
+        }
+        
+        .temp-modal-notes {
+            padding: 15px;
+            background: #333;
+            border-radius: 15px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <!-- ÉCRAN DE CHARGEMENT -->
+    <div class="loader" id="loader">
+        <div class="loader-spinner"></div>
+        <div style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8; text-align: center;">Chargement du système de survie...</div>
+    </div>
+
+    <!-- ÉCRAN D'URGENCE -->
+    <div id="urgenceScreen">
+        <h1 class="urgence-title">🚨 URGENCE IMMÉDIATE</h1>
+        
+        <div class="urgence-grid">
+            <a href="tel:15" class="urgence-btn samu">
+                <div class="urgence-num">15</div>
+                <div class="urgence-label">SAMU MÉDICAL</div>
+            </a>
+            <a href="tel:17" class="urgence-btn police">
+                <div class="urgence-num">17</div>
+                <div class="urgence-label">POLICE SÉCURITÉ</div>
+            </a>
+            <a href="tel:18" class="urgence-btn pompiers">
+                <div class="urgence-num">18</div>
+                <div class="urgence-label">POMPIERS INCENDIE</div>
+            </a>
+            <a href="tel:112" class="urgence-btn europe">
+                <div class="urgence-num">112</div>
+                <div class="urgence-label">URGENCE EUROPÉEN</div>
+            </a>
+        </div>
+
+        <button class="skip-urgence" id="skipUrgence">
+            📖 ACCÉDER AU GUIDE COMPLET
+        </button>
+    </div>
+
+    <!-- DRAWER DE NAVIGATION -->
+    <div class="nav-drawer" id="navDrawer">
+        <div class="drawer-header">
+            <div class="drawer-title">MENU</div>
+            <button class="drawer-close" id="drawerClose">✕</button>
+        </div>
+        <div class="drawer-content">
+            <div class="drawer-section">
+                <div class="drawer-section-title" id="drawerSectionsTitle">📚 SECTIONS</div>
+                
+                <a href="#droits" class="drawer-item" data-section="droits">
+                    <span class="drawer-icon">⚖️</span>
+                    <span class="drawer-text" id="drawerDroits">DROITS ET DEVOIRS</span>
+                </a>
+                <a href="#documents" class="drawer-item" data-section="documents">
+                    <span class="drawer-icon">📜</span>
+                    <span class="drawer-text" id="drawerDocuments">DÉCLARATIONS & CONSTITUTIONS</span>
+                </a>
+                <a href="#santeMentale" class="drawer-item" data-section="santeMentale">
+		    <span class="drawer-icon">🧠</span>
+		    <span class="drawer-text" id="drawerSanteMentale">SANTÉ MENTALE</span>
+	        </a>
+            </div>
+            
+            <div class="drawer-footer">
+                <div class="drawer-version">SOS-GUIDE v1.0</div>
+                <div class="drawer-status" id="drawerStatus">● HORS-LIGNE</div>
+            </div>
+        </div>
+    </div>
+    <div class="drawer-overlay" id="drawerOverlay"></div>
+    
+        <!-- MODAL TEMPORAIRE POUR LES CARTES DE SURVIE -->
+    <div class="temp-modal" id="tempModal">
+        <button class="temp-modal-close" id="tempModalClose">✕</button>
+        <div class="temp-modal-content">
+            <div class="temp-modal-header" id="tempModalIcon"></div>
+            <h1 class="temp-modal-title" id="tempModalTitle"></h1>
+            <div class="temp-modal-body" id="tempModalContent"></div>
+        </div>
+    </div>
+
+    <!-- NOTIFICATION -->
+    <div class="notification" id="notification"></div>
+
+    <!-- MODAL DOCUMENT -->
+    <div class="document-modal" id="documentModal">
+        <div class="modal-header">
+            <div>
+                <div class="modal-title" id="modalDocTitle"></div>
+                <div class="modal-date" id="modalDocDate"></div>
+            </div>
+            <button class="modal-close" id="modalClose">✕</button>
+        </div>
+        <div class="modal-content" id="modalDocContent"></div>
+    </div>
+
+    <!-- APPLICATION PRINCIPALE -->
+    <div id="mainApp">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-left">
+                <!-- Bouton hamburger pour ouvrir le drawer -->
+                <button class="nav-hamburger" id="navHamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                
+                <div class="header-title">
+                    <span>⛑️</span>
+                    <span>SOS-GUIDE</span>
+                    <span class="header-badge">HORS-LIGNE</span>
+                </div>
+            </div>
+            
+            <div class="header-right">
+                <!-- Sélecteur de langue -->
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="en">🇬🇧 English</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="it">🇮🇹 Italiano</option>
+                        <option value="pt">🇵🇹 Português</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                        <option value="ru">🇷🇺 Русский</option>
+			<option value="tr">🇹🇷 Türkçe</option>
+			<option value="nl">🇳🇱 Nederlands</option>
+			<option value="sv">🇸🇪 Svenska</option>
+                    </select>
+                </div>
+                
+                <button class="theme-toggle" id="themeToggle">
+                    🌙
+                </button>
+            </div>
+        </header>
+
+        <!-- CONTENU PRINCIPAL -->
+        <div class="content-container" id="contentContainer">
+            <!-- Carte d'accueil améliorée -->
+            <div class="welcome-card" id="welcomeCard">
+                <button class="welcome-close" id="welcomeClose">✕</button>
+                <div class="welcome-icon">👋</div>
+                <div class="welcome-title" id="welcomeTitle">Hey, Bienvenue !</div>
+                <div class="welcome-text" id="welcomeText">
+                    En cas d'urgence, accédez instantanément aux informations essentielles avec SOS-GUIDE. Une application de survie 100% hors-ligne, toujours dans votre poche.
+                </div>
+            </div>
+            
+            <!-- Après welcome-card, AJOUTER -->
+	    <div class="section-title" id="outilsUrgenceSection">
+	        <span>🚨</span>
+	        <span id="sectionOutilsUrgence">OUTILS D'URGENCE</span>
+	    </div>
+	    <div id="outilsUrgenceContainer"></div>
+
+            <!-- Section: Droits et Devoirs -->
+            <div class="section-title" id="droitsSection">
+                <span>⚖️</span>
+                <span id="sectionDroits">DROITS ET DEVOIRS</span>
+            </div>
+            
+            <div id="droitsContainer">
+                <!-- Les cartes de droits seront générées dynamiquement -->
+            </div>
+
+            <!-- Section: Déclarations et Constitutions -->
+            <div class="section-title" id="documentsSection">
+                <span>📜</span>
+                <span id="sectionDocuments">DÉCLARATIONS & CONSTITUTIONS</span>
+            </div>
+            
+            <div id="constitutionsContainer">
+                <!-- Les documents seront générés dynamiquement -->
+            </div>
+            
+            <div class="section-title" id="santeMentaleSection">
+	        <span>🧠</span>
+	        <span id="sectionSanteMentale">SANTÉ MENTALE</span>
+	    </div>
+
+	    <div id="faqContainer">
+	        <!-- Les FAQ seront générées dynamiquement -->
+	    </div>
+        </div>
+    </div>
+
+    <script src="assets/app.js" ></script>
+    <!-- Avant la fermeture de <body>, AJOUTER -->
+    <script src="assets/translations-outils.js"></script>
+    <script src="assets/outils-urgence.js"></script>
+    <script>
+	// Initialiser après chargement
+	document.addEventListener('DOMContentLoaded', () => {
+	if (window.OUTILS_URGENCE) {
+		setTimeout(window.OUTILS_URGENCE.initOutils, 500);
+	}
+		
+	// Arrêter outils quand on quitte
+	document.addEventListener('visibilitychange', () => {
+		if (document.hidden && window.OUTILS_URGENCE) {
+		    window.OUTILS_URGENCE.arreterTout();
+		}
+	    });
+	});
+	</script>
+
+    <!-- FALLBACK SANS JAVASCRIPT -->
+    <noscript>
+        <style>
+            #loader, #urgenceScreen, #mainApp, .nav-drawer, .drawer-overlay { display: none !important; }
+            .noscript-warning {
+                background: #ff7b7b;
+                color: #000;
+                padding: 30px;
+                text-align: center;
+                font-weight: bold;
+                border: 5px solid #ff453a;
+                margin: 20px;
+                border-radius: 15px;
+            }
+            .urgence-grid-noscript {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                padding: 20px;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+            .urgence-btn-noscript {
+                background: white;
+                padding: 25px 15px;
+                text-align: center;
+                border-radius: 20px;
+                text-decoration: none;
+                color: black;
+                font-weight: bold;
+                border-bottom: 8px solid #ff453a;
+                font-size: 1.5rem;
+            }
+            .urgence-num-noscript {
+                font-size: 3rem;
+                font-weight: 900;
+                margin-bottom: 5px;
+            }
+        </style>
+        <div class="noscript-warning">
+            ⚠️ JAVASCRIPT DÉSACTIVÉ - MODE DÉGRADÉ<br><br>
+            L'application nécessite JavaScript pour fonctionner.<br>
+            Activez JavaScript pour accéder à toutes les fonctionnalités.
+        </div>
+        <div style="padding: 20px; text-align: center;">
+            <h1 style="font-size: 2rem; margin-bottom: 30px;">⛑️ SOS-GUIDE</h1>
+            <h2 style="margin-bottom: 20px;">🚨 NUMÉROS D'URGENCE :</h2>
+            <div class="urgence-grid-noscript">
+                <a href="tel:15" class="urgence-btn-noscript" style="border-bottom-color: #ff453a;">
+                    <div class="urgence-num-noscript">15</div>
+                    <div>SAMU MÉDICAL</div>
+                </a>
+                <a href="tel:17" class="urgence-btn-noscript" style="border-bottom-color: #007aff;">
+                    <div class="urgence-num-noscript">17</div>
+                    <div>POLICE</div>
+                </a>
+                <a href="tel:18" class="urgence-btn-noscript" style="border-bottom-color: #ff9500;">
+                    <div class="urgence-num-noscript">18</div>
+                    <div>POMPIERS</div>
+                </a>
+                <a href="tel:112" class="urgence-btn-noscript" style="border-bottom-color: #34c759;">
+                    <div class="urgence-num-noscript">112</div>
+                    <div>URGENCE EU</div>
+                </a>
+            </div>
+            <div style="margin-top: 40px; background: #f2f2f7; padding: 20px; border-radius: 15px; text-align: left;">
+                <h3 style="margin-bottom: 15px;">📋 GUIDE RAPIDE :</h3>
+                <p><strong>RÉANIMATION :</strong> 100-120 compressions/min, ne jamais arrêter</p>
+                <p><strong>HÉMORRAGIE :</strong> Compression directe FORTE, garrot si nécessaire</p>
+                <p><strong>EAU :</strong> Bouillir 10min ou 2 gouttes chlore/L</p>
+                <p><strong>SIGNAL SOS :</strong> 3 courts, 3 longs, 3 courts</p>
+            </div>
+        </div>
+    </noscript>
+</body>
+</html>

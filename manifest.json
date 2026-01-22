@@ -1,0 +1,14 @@
+{
+    "name": "SOS-GUIDE",
+    "short_name": "SOS-GUIDE",
+    "description": "Guide de survie d'urgence 100% hors-ligne",
+    "start_url": ".",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ff453a",
+    "icons": [{
+        "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%23ff453a'/><text y='90' font-size='80' fill='white'>⛑️</text></svg>",
+        "sizes": "any",
+        "type": "image/svg+xml"
+    }]
+}
