@@ -15,8 +15,6 @@
 - ✅ **Raspberry Pi 4 exclusif** - Optimisé pour la puissance et la connectivité du Pi 4
 - ✅ **Réseau Wi-Fi local ouvert** - SSID: `⛑️ SOS Guide` (pas de mot de passe)
 - ✅ **Interface web moderne et responsive** - Compatible mobile/tablete/ordinateur
-- ✅ **Guides de survie complets** - Équipements, protocoles, premiers secours
-- ✅ **FAQ santé mentale** - Support psychologique en situation de crise
 - ✅ **Multi-utilisateurs** - Jusqu'à 50 connexions simultanées (Pi 4 uniquement)
 - ✅ **Faible consommation** - 3-5 watts (fonctionne sur batterie externe)
 - ✅ **Installation rapide** - Moins de 10 minutes
