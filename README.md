@@ -31,26 +31,6 @@
 
 ### 🚨 Services d'Urgence (42 numéros)
 - SAMU (15), Police (17), Pompiers (18), Numéro unique UE (112)
-- SOS Médecins (3624), Centre Anti-Poison, Urgences Gaz/Électricité
-- SAMU Social (115), Enfance en Danger (119), Violences Femmes (3919)
-- Suicide Écoute (3114), Handicap Écoute (0 800 360 360)
-
-### 🤝 Associations & Solidarité
-- Restos du Cœur, Croix-Rouge, Secours Catholique, Emmaüs
-- Médecins du Monde, Banque Alimentaire, Secours Populaire
-- SPA, Petits Frères des Pauvres, SOS Amitié
-
-### 🌍 Organisations Internationales
-- UNICEF, Médecins Sans Frontières, CARE France
-- Action contre la Faim, WWF, Amnesty International
-- Handicap International, Croix-Rouge Internationale
-
-### 📚 Guides Pratiques Complets
-- **Équipements de survie** - Liste complète des 12 catégories essentielles
-- **Protocole d'urgence** - Les 5 étapes à suivre en situation critique
-- **Alerte & communication** - Systèmes d'alerte officiels (FR-Alert, SAIP)
-- **Santé & premiers secours** - Trousse médicale et gestes qui sauvent
-- **FAQ santé mentale** - 8 questions-réponses sur le bien-être en crise
 
 ## 🛠️ Installation sur Raspberry Pi 4
 
