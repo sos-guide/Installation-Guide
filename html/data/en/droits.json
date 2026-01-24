@@ -1,0 +1,27 @@
+[
+  {
+    "id": "droit1",
+    "title": "RIGHT TO SAFETY",
+    "content": "Everyone has the right to life, liberty and security of person. In an emergency situation:\n\n• Right to protection from emergency services\n• Right to medical assistance\n• Right to information about risks\n• Right to evacuation if necessary",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir1",
+    "title": "DUTY TO ASSIST",
+    "content": "Everyone must assist a person in danger, to the extent of their means:\n\n• Duty to provide assistance (Art. 223-6 of the French Penal Code)\n• Duty to call emergency services\n• Duty not to worsen the situation\n• Duty to follow instructions",
+    "tag": "DUTY"
+  },
+  {
+    "id": "droit2",
+    "title": "RIGHT TO INFORMATION",
+    "content": "In an emergency, everyone has the right:\n\n• To clear and understandable information\n• To know the risks faced\n• To receive safety instructions\n• To be informed of the situation's evolution",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir2",
+    "title": "DUTY OF COOPERATION",
+    "content": "Persons must cooperate with emergency services:\n\n• Respect evacuation orders\n• Do not hinder rescue operations\n• Communicate useful information\n• Facilitate access to locations",
+    "tag": "DUTY"
+  }
+]
+
