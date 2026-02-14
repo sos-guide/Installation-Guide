@@ -181,6 +181,7 @@ channel=7
 wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
+ap_isolate=1
 ignore_broadcast_ssid=0
 # Réseau ouvert - pas de mot de passe
 EOF
