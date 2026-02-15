@@ -45,10 +45,11 @@ function toggleFlash() {
 }
 
 function startFlash() {
+  if (OUTILS.flash.actif) return;
   OUTILS.flash.actif = true;
   updateCardUI('flash', true);
-  
-  // Créer div flash
+
+  // Overlay de flash (fond noir/blanc)
   const flashDiv = document.createElement('div');
   flashDiv.id = 'flashSOS';
   flashDiv.style.cssText = `
@@ -56,49 +57,85 @@ function startFlash() {
     top: 0; left: 0;
     width: 100vw; height: 100vh;
     z-index: 9999;
-    background: white;
-    opacity: 0;
-    transition: opacity 0.1s;
+    transition: background-color 0.1s;
   `;
   document.body.appendChild(flashDiv);
-  
-  // Pattern SOS : ... --- ...
+
+  // Bouton d'arrêt (toujours visible)
+  const stopBtn = document.createElement('button');
+  stopBtn.textContent = '✕ ARRÊTER';
+  stopBtn.setAttribute('aria-label', 'Arrêter le flash SOS');
+  stopBtn.style.cssText = `
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 15px 25px;
+    background: rgba(255, 69, 58, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    z-index: 10000;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    backdrop-filter: blur(5px);
+    transition: transform 0.2s, background 0.2s;
+  `;
+  stopBtn.onmouseover = () => {
+    stopBtn.style.transform = 'scale(1.05)';
+    stopBtn.style.background = '#ff2d55';
+  };
+  stopBtn.onmouseout = () => {
+    stopBtn.style.transform = 'scale(1)';
+    stopBtn.style.background = 'rgba(255, 69, 58, 0.9)';
+  };
+  stopBtn.onclick = (e) => {
+    e.stopPropagation();
+    stopFlash();
+  };
+  document.body.appendChild(stopBtn);
+  OUTILS.flash.stopButton = stopBtn;
+
+  // Séquence SOS : 3 courts, 3 longs, 3 courts
+  // Chaque durée est suivie d'un changement de couleur (blanc/noir)
   const pattern = [
-    // 3 courts
-    300, // Flash blanc
-    300, // Noir
-    300, // Blanc
-    // 3 longs
-    700, // Noir
-    700, // Blanc
-    700, // Noir
-    // 3 courts
-    300, // Blanc
-    300, // Noir
-    300  // Blanc
+    300, // blanc
+    300, // noir
+    300, // blanc
+    300, // noir
+    300, // blanc
+    700, // noir
+    700, // blanc
+    700, // noir
+    700, // blanc
+    700, // noir
+    300, // blanc
+    300, // noir
+    300, // blanc
+    300, // noir
+    300  // blanc
   ];
-  
+
   let index = 0;
-  
-  function pulse() {
+
+  const pulse = () => {
     if (!OUTILS.flash.actif) return;
-    
-    // Alterner entre visible (1) et invisible (0)
-    flashDiv.style.opacity = (index % 2 === 0) ? '1' : '0';
-    
-    // Prochain flash après la durée du pattern
+    // Alterner la couleur de fond : blanc pour les indices pairs, noir pour les impairs
+    flashDiv.style.backgroundColor = (index % 2 === 0) ? 'white' : 'black';
     OUTILS.flash.timer = setTimeout(() => {
       index++;
       if (index < pattern.length) {
         pulse();
       } else {
-        // Recommencer après 1 seconde
+        // Fin de séquence : pause 1 seconde (fond noir) puis recommencer
         index = 0;
+        flashDiv.style.backgroundColor = 'black';
         OUTILS.flash.timer = setTimeout(pulse, 1000);
       }
     }, pattern[index]);
-  }
-  
+  };
+
   pulse();
 }
 
@@ -106,9 +143,16 @@ function stopFlash() {
   OUTILS.flash.actif = false;
   clearTimeout(OUTILS.flash.timer);
   OUTILS.flash.timer = null;
-  updateCardUI('flash', false);
+
   const flashDiv = document.getElementById('flashSOS');
   if (flashDiv) flashDiv.remove();
+
+  if (OUTILS.flash.stopButton) {
+    OUTILS.flash.stopButton.remove();
+    OUTILS.flash.stopButton = null;
+  }
+
+  updateCardUI('flash', false);
 }
 
 // === 3. SIFFLET (simple) ===
