@@ -29,7 +29,7 @@
 
 ## 📋 Contenu inclus
 
-### 🚨 Services d'Urgence (42 numéros)
+### 🚨 Services d'Urgence
 - SAMU (15), Police (17), Pompiers (18), Numéro unique UE (112)
 
 ## 🛠️ Installation sur Raspberry Pi 4
