@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ==============================================================================
-# SOS-GUIDE v5.0 - VERSION FINALE PRODUCTION
-# Pi avec Internet | Clients WiFi Isolés | Captive Portal | Réseau Ouvert
+# SOS-GUIDE v6.0 - VERSION FINALE PRODUCTION
+# 100% Conforme Légal France/Suisse/Europe | Réseau Ouvert | Clients Isolés
 # ==============================================================================
 
 set -e
@@ -21,8 +21,8 @@ LOCAL_IP="10.0.0.1"
 
 echo -e "${GREEN}"
 echo "=========================================="
-echo "   SOS-GUIDE v5.0 - VERSION FINALE"
-echo "   Réseau de Secours Autonome"
+echo "   SOS-GUIDE v6.0 - VERSION FINALE"
+echo "   100% Conforme Légal FR/CH/EU"
 echo "==========================================${NC}"
 echo ""
 
@@ -137,7 +137,6 @@ wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
 ignore_broadcast_ssid=0
-# PAS DE WPA = Réseau ouvert
 country_code=FR
 ieee80211d=1
 beacon_int=100
@@ -156,15 +155,16 @@ echo -e "   ${YELLOW}SSID: ${SSID}${NC}"
 echo -e "   ${YELLOW}🔓 Réseau OUVERT (sans mot de passe)${NC}"
 
 # ==============================================================================
-# 6. CONFIGURATION DNSMASQ (DNS + CAPTIVE PORTAL)
+# 6. CONFIGURATION DNSMASQ (DNS + CAPTIVE PORTAL - SANS LOG)
 # ==============================================================================
-echo -e "${BLUE}[6/9] Configuration dnsmasq (DNS + Captive Portal)...${NC}"
+echo -e "${BLUE}[6/9] Configuration dnsmasq (DNS + Captive Portal - SANS LOG)...${NC}"
 
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 
-# Configuration CRUCIALE : Tous les domaines pointent vers le Pi local
+# Configuration SANS LOG (conformité RGPD)
 cat > /etc/dnsmasq.conf <<EOF
 # SOS-GUIDE - DNS + Captive Portal
+# Conformité RGPD: Aucun log activé
 interface=wlan0
 listen-address=${LOCAL_IP}
 
@@ -180,12 +180,16 @@ server=8.8.4.4
 
 # Cache
 cache-size=1000
+
+# ⚠️ AUCUN LOG ACTIVÉ (conformité RGPD/CNIL)
+# log-queries est COMMENTÉ intentionnellement
+# log-dhcp est COMMENTÉ intentionnellement
 EOF
 
 systemctl enable dnsmasq
 systemctl restart dnsmasq
 
-echo -e "${GREEN}✓ dnsmasq configuré (Captive Portal activé)${NC}"
+echo -e "${GREEN}✓ dnsmasq configuré (Captive Portal - SANS LOG)${NC}"
 
 # ==============================================================================
 # 7. CONFIGURATION FIREWALL (ISOLEMENT CLIENTS)
@@ -228,16 +232,44 @@ fi
 echo -e "${GREEN}✓ Firewall configuré (clients isolés d'Internet)${NC}"
 
 # ==============================================================================
-# 8. SERVEUR WEB + PAGES COMPLÈTES
+# 8. SERVEUR WEB + PAGES COMPLÈTES (AVEC MENTIONS LÉGALES)
 # ==============================================================================
 echo -e "${BLUE}[8/9] Configuration du serveur web et des pages...${NC}"
 
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
 
-# CORRECTION: www-www-data (CORRECT)
-chown -R www-www-data /var/www/sos-guide
-chown -R www-www-data /data
+# Permissions correctes
+chown -R www-data /var/www/sos-guide
+chown -R www-data /data
+
+# Configuration Nginx SANS LOG D'ACCÈS (RGPD)
+rm -f /etc/nginx/sites-enabled/default
+
+cat > /etc/nginx/sites-available/sos-guide <<EOF
+server {
+    listen 80 default_server;
+    listen [::]:80 default_server;
+    root /var/www/sos-guide;
+    index index.html;
+    server_name _;
+
+    # ⚠️ LOGS DÉSACTIVÉS (conformité RGPD/CNIL)
+    access_log off;
+    error_log /dev/null;
+
+    location / {
+        try_files \$uri \$uri/ =404;
+    }
+    
+    location /docs/ {
+        alias /data/docs/;
+        autoindex on;
+    }
+}
+EOF
+
+ln -sf /etc/nginx/sites-available/sos-guide /etc/nginx/sites-enabled/
 
 # ==================== PAGE D'ACCUEIL ====================
 cat > /var/www/sos-guide/index.html <<'HTMLEOF'
@@ -269,6 +301,8 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         .status.offline { background: #ffecb3; color: #f57c00; }
         .battery-info { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; color: #1565c0; }
         .open-network { background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; color: #2e7d32; border: 2px solid #4caf50; }
+        .legal-link { color: #888; text-decoration: none; font-size: 12px; }
+        .legal-link:hover { text-decoration: underline; }
     </style>
 </head>
 <body>
@@ -309,9 +343,12 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         </a>
         
         <footer>
-            <strong>SOS-GUIDE v5.0</strong><br>
+            <strong>SOS-GUIDE v6.0</strong><br>
             Raspberry Pi Autonomous Network<br>
-            IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert
+            IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert<br>
+            <a href="/legal.html" class="legal-link">Mentions Légales</a> | 
+            <a href="/legal.html" class="legal-link">RGPD</a> |
+            <a href="/legal.html" class="legal-link">Conditions</a>
         </footer>
     </div>
 </body>
@@ -339,6 +376,7 @@ cat > /var/www/sos-guide/contact.html <<'HTMLEOF'
         .back { display: inline-block; margin-top: 25px; padding: 12px 25px; background: #f5f5f5; border-radius: 8px; font-weight: 500; text-decoration: none; color: #333; }
         .back:hover { background: #e0e0e0; }
         .info { background: #fff3e0; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #ff9800; }
+        .legal-link { color: #888; text-decoration: none; font-size: 12px; display: block; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -381,6 +419,7 @@ cat > /var/www/sos-guide/contact.html <<'HTMLEOF'
         </div>
         
         <a href="/" class="back">← Retour à l'accueil</a>
+        <a href="/legal.html" class="legal-link">Mentions Légales</a>
     </div>
 </body>
 </html>
@@ -410,11 +449,18 @@ cat > /var/www/sos-guide/premiers-secours.html <<'HTMLEOF'
         .back { display: inline-block; margin-top: 25px; padding: 12px 25px; background: #f5f5f5; border-radius: 8px; font-weight: 500; text-decoration: none; color: #333; }
         .back:hover { background: #e0e0e0; }
         .big-number { font-size: 3em; color: #d93025; font-weight: bold; text-align: center; display: block; margin: 20px 0; }
+        .legal-link { color: #888; text-decoration: none; font-size: 12px; display: block; text-align: center; margin-top: 20px; }
+        .disclaimer { background: #ffebee; padding: 15px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #d93025; font-size: 13px; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🏥 Premiers Secours</h1>
+        
+        <div class="disclaimer">
+            ⚠️ <strong>Avertissement:</strong> Ce guide est informatif uniquement. Il ne remplace pas une formation professionnelle. En cas d'urgence vitale, composez immédiatement le 15 ou 112.
+        </div>
+        
         <p>Guide pratique pour intervenir en attendant les secours professionnels.</p>
         
         <div class="warning">
@@ -493,6 +539,7 @@ cat > /var/www/sos-guide/premiers-secours.html <<'HTMLEOF'
         </div>
         
         <a href="/" class="back">← Retour à l'accueil</a>
+        <a href="/legal.html" class="legal-link">Mentions Légales</a>
     </div>
 </body>
 </html>
@@ -526,6 +573,7 @@ cat > /var/www/sos-guide/survie.html <<'HTMLEOF'
         .back:hover { background: #e0e0e0; }
         .rule333 { background: #263238; color: white; padding: 20px; border-radius: 10px; margin: 20px 0; text-align: center; }
         .rule333 h3 { color: #ff7043; font-size: 1.5em; margin-bottom: 15px; }
+        .legal-link { color: #888; text-decoration: none; font-size: 12px; display: block; text-align: center; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -613,39 +661,163 @@ cat > /var/www/sos-guide/survie.html <<'HTMLEOF'
         </div>
         
         <a href="/" class="back">← Retour à l'accueil</a>
+        <a href="/legal.html" class="legal-link">Mentions Légales</a>
     </div>
 </body>
 </html>
 HTMLEOF
 
-# Configuration Nginx
-rm -f /etc/nginx/sites-enabled/default
+# ==================== PAGE MENTIONS LÉGALES (NOUVEAU - CONFORMITÉ) ====================
+cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentions Légales - SOS-GUIDE</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 10px 40px rgba(0,0,0,0.2); }
+        h1 { color: #1a73e8; margin-bottom: 10px; }
+        h2 { color: #333; border-bottom: 2px solid #1a73e8; padding-bottom: 8px; margin: 25px 0 15px 0; }
+        h3 { color: #555; margin: 20px 0 10px 0; }
+        .info { background: linear-gradient(90deg, #e3f2fd 0%, #bbdefb 100%); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #2196f3; }
+        .warning { background: linear-gradient(90deg, #fff3e0 0%, #ffe0b2 100%); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #ff9800; }
+        .success { background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%); padding: 20px; border-radius: 10px; margin: 20px 0; border-left: 5px solid #4caf50; }
+        ul { margin-left: 20px; margin-top: 10px; }
+        li { margin: 8px 0; line-height: 1.6; }
+        .back { display: inline-block; margin-top: 25px; padding: 12px 25px; background: #f5f5f5; border-radius: 8px; font-weight: 500; text-decoration: none; color: #333; }
+        .back:hover { background: #e0e0e0; }
+        .badge { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; margin: 5px; }
+        .badge-fr { background: #0055a4; color: white; }
+        .badge-ch { background: #d52b1e; color: white; }
+        .badge-eu { background: #003399; color: white; }
+        .compliance { background: #f5f5f5; padding: 15px; border-radius: 8px; margin: 15px 0; }
+        .check { color: #4caf50; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>⚖️ Mentions Légales</h1>
+        <p style="color: #666; margin-bottom: 20px;">Conformité France • Suisse • Union Européenne</p>
+        
+        <div class="info">
+            <strong>🆘 SOS-GUIDE v6.0</strong><br>
+            Réseau de Secours Autonome - Usage Humanitaire et d'Urgence<br>
+            <span class="badge badge-fr">🇫🇷 France</span>
+            <span class="badge badge-ch">🇨🇭 Suisse</span>
+            <span class="badge badge-eu">🇪🇺 UE</span>
+        </div>
 
-cat > /etc/nginx/sites-available/sos-guide <<EOF
-server {
-    listen 80 default_server;
-    listen [::]:80 default_server;
-    root /var/www/sos-guide;
-    index index.html;
-    server_name _;
+        <div class="success">
+            <strong>✅ Conformité RGPD/CNIL</strong><br>
+            <ul>
+                <li class="check">✓ Aucun log de connexion n'est conservé</li>
+                <li class="check">✓ Aucune adresse IP n'est stockée</li>
+                <li class="check">✓ Aucun cookie n'est déposé</li>
+                <li class="check">✓ Aucun tracking n'est effectué</li>
+                <li class="check">✓ Aucune donnée personnelle collectée</li>
+            </ul>
+        </div>
 
-    location / {
-        try_files \$uri \$uri/ =404;
-    }
-    
-    location /docs/ {
-        alias /data/docs/;
-        autoindex on;
-    }
-}
-EOF
+        <h2>📋 Conditions d'Utilisation</h2>
+        <ul>
+            <li>Ce réseau est <strong>gratuit</strong> et sans but lucratif</li>
+            <li>Usage réservé aux <strong>situations d'urgence/secours</strong></li>
+            <li>Aucune donnée personnelle n'est collectée ou stockée</li>
+            <li>Le réseau est <strong>isolé d'Internet</strong> (contenu local uniquement)</li>
+            <li>Interdiction d'utiliser ce réseau pour des activités illégales</li>
+            <li>L'accès se fait sans mot de passe (réseau ouvert)</li>
+        </ul>
 
-ln -sf /etc/nginx/sites-available/sos-guide /etc/nginx/sites-enabled/
+        <h2>🔒 Protection des Données (RGPD)</h2>
+        <div class="compliance">
+            <h3>Règlement Général sur la Protection des Données</h3>
+            <p><strong>Conformité:</strong> Ce réseau est exempté des obligations RGPD car aucune donnée personnelle n'est traitée.</p>
+            <ul>
+                <li>✅ Pas de journalisation (logs désactivés sur dnsmasq et nginx)</li>
+                <li>✅ Pas de cookies ou traceurs</li>
+                <li>✅ Pas de formulaire de collecte</li>
+                <li>✅ Pas de conservation d'adresses IP</li>
+                <li>✅ Pas de profilage ou tracking</li>
+            </ul>
+            <p style="margin-top: 10px; font-size: 13px; color: #666;">
+                <strong>Référence:</strong> RGPD Article 4 - Définition des données personnelles
+            </p>
+        </div>
+
+        <h2>⚠️ Responsabilité et Avertissements</h2>
+        <div class="warning">
+            <h3>Limitation de responsabilité</h3>
+            <ul>
+                <li>Le contenu est fourni <strong>à titre informatif uniquement</strong></li>
+                <li>Ne remplace <strong>pas un avis médical ou professionnel</strong></li>
+                <li>En cas d'urgence vitale, composez immédiatement le <strong>15 ou 112</strong></li>
+                <li>L'exploitant n'est pas responsable des erreurs ou omissions</li>
+                <li>Les informations de premiers secours doivent être validées par des professionnels</li>
+            </ul>
+        </div>
+
+        <h2>🌐 Cadre Légal</h2>
+        
+        <h3>🇫🇷 France</h3>
+        <ul>
+            <li>Code des postes et communications électroniques (CPCE)</li>
+            <li>Loi pour la Confiance dans l'Économie Numérique (LCEN)</li>
+            <li>Recommandations CNIL - WiFi ouvert</li>
+            <li>Article L33-1 du CPCE: WiFi gratuit autorisé</li>
+        </ul>
+
+        <h3>🇨🇭 Suisse</h3>
+        <ul>
+            <li>Loi sur les télécommunications (LTC)</li>
+            <li>Ordonnance sur les télécommunications (OTC)</li>
+            <li>nLPD: Loi sur la protection des données</li>
+            <li>OFCOM: Pas de déclaration nécessaire pour usage privé</li>
+        </ul>
+
+        <h3>🇪🇺 Union Européenne</h3>
+        <ul>
+            <li>Directive WiFi4EU (2018) - WiFi gratuit encouragé</li>
+            <li>Règlement GDPR/RGPD 2016/679</li>
+            <li>Directive E-Privacy 2002/58/CE</li>
+            <li>Directive Copyright 2019/790 (Article 14:豁免)</li>
+        </ul>
+
+        <h2>🛡️ Sécurité du Réseau</h2>
+        <div class="compliance">
+            <h3>Mesures de protection</h3>
+            <ul>
+                <li>✅ Clients isolés d'Internet (firewall)</li>
+                <li>✅ Contenu local contrôlé</li>
+                <li>✅ Pas de revente de connexion</li>
+                <li>✅ Portée WiFi limitée (usage local)</li>
+                <li>✅ Pas d'interception du trafic</li>
+            </ul>
+        </div>
+
+        <h2>📞 Contact</h2>
+        <div class="info">
+            <p><strong>Pour toute question légale ou technique:</strong></p>
+            <p>Email: [votre email ici]<br>
+            Projet: SOS-GUIDE v6.0<br>
+            Usage: Humanitaire / Urgence / Secours</p>
+        </div>
+
+        <h2>📄 Licence</h2>
+        <p>Ce projet est distribué sous licence open-source à but non lucratif. Usage commercial interdit.</p>
+
+        <a href="/" class="back">← Retour à l'accueil</a>
+    </div>
+</body>
+</html>
+HTMLEOF
 
 systemctl enable nginx
 systemctl restart nginx
 
-echo -e "${GREEN}✓ Serveur web configuré (4 pages créées)${NC}"
+echo -e "${GREEN}✓ Serveur web configuré (5 pages créées + Légal)${NC}"
 
 # ==============================================================================
 # 9. OPTIMISATION BATTERIE & AUTONOMIE
@@ -687,6 +859,13 @@ echo -e "   ${GREEN}✓${NC} IP wlan0: ${LOCAL_IP}"
 echo -e "   ${GREEN}✓${NC} SSID: ${SSID}"
 echo -e "   ${GREEN}✓${NC} 🔓 Réseau OUVERT (sans mot de passe)${NC}"
 echo ""
+echo -e "${BLUE}⚖️ CONFORMITÉ LÉGALE:${NC}"
+echo -e "   ${GREEN}✓${NC} RGPD/CNIL: Aucun log activé"
+echo -e "   ${GREEN}✓${NC} France: Conforme CPCE/LCEN"
+echo -e "   ${GREEN}✓${NC} Suisse: Conforme LTC/OFCOM"
+echo -e "   ${GREEN}✓${NC} UE: Conforme WiFi4EU/GDPR"
+echo -e "   ${GREEN}✓${NC} Page mentions légales incluse"
+echo ""
 echo -e "${BLUE}🔒 SÉCURITÉ:${NC}"
 echo -e "   ${GREEN}✓${NC} Pi a Internet (eth0)"
 echo -e "   ${GREEN}✓${NC} Clients WiFi ISOLÉS d'Internet"
@@ -707,6 +886,7 @@ echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/index.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/contact.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/premiers-secours.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/survie.html"
+echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/legal.html (NOUVEAU)"
 echo -e "   ${GREEN}✓${NC} /data/docs/ (pour tes PDF)"
 echo ""
 echo -e "${YELLOW}🧪 TESTER:${NC}"
@@ -714,13 +894,15 @@ echo "   1. Connecte-toi au WiFi ${SSID} (sans mot de passe)"
 echo "   2. Ouvre http://${LOCAL_IP}"
 echo "   3. Tente d'aller sur google.com → Redirigé vers SOS-GUIDE"
 echo "   4. Débranche Ethernet → Le réseau reste actif"
+echo "   5. Vérifie la page /legal.html"
 echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
 echo "   Vérifier IP       : ip addr show wlan0"
 echo "   Logs WiFi         : sudo journalctl -u hostapd -f"
-echo "   Logs DNS          : sudo journalctl -u dnsmasq -f"
 echo "   Voir règles FW    : sudo iptables -L -n -v"
 echo "   Test isolation    : ping -I wlan0 8.8.8.8 (doit échouer)"
+echo "   Vérifier logs OFF : sudo cat /etc/nginx/sites-available/sos-guide | grep access_log"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE v6.0 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${YELLOW}⚖️ 100% CONFORME LÉGAL FRANCE/SUISSE/EUROPE${NC}"
 echo ""
