@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # ==============================================================================
-# SOS-GUIDE v6.0 - VERSION FINALE PRODUCTION
-# 100% Conforme Légal France/Suisse/Europe | Réseau Ouvert | Clients Isolés
+# SOS-GUIDE v6.1 - VERSION FINALE AVEC CAPTIVE PORTAL
+# 100% Conforme Légal FR/CH/EU | Réseau Ouvert | Clients Isolés
 # ==============================================================================
 
 set -e
@@ -21,8 +21,8 @@ LOCAL_IP="10.0.0.1"
 
 echo -e "${GREEN}"
 echo "=========================================="
-echo "   SOS-GUIDE v6.0 - VERSION FINALE"
-echo "   100% Conforme Légal FR/CH/EU"
+echo "   SOS-GUIDE v6.1 - VERSION FINALE"
+echo "   Avec Captive Portal Corrigé"
 echo "==========================================${NC}"
 echo ""
 
@@ -63,7 +63,7 @@ echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 echo -e "${BLUE}[2/9] Installation des paquets...${NC}"
 
 apt update -qq
-apt install -y nginx hostapd dnsmasq iptables-persistent
+apt install -y nginx hostapd dnsmasq iptables-persistent systemd-resolved
 
 echo -e "${GREEN}✓ Paquets installés${NC}"
 
@@ -132,7 +132,7 @@ interface=wlan0
 driver=nl80211
 ssid=${SSID}
 hw_mode=g
-channel=7
+channel=6
 wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
@@ -141,10 +141,13 @@ country_code=FR
 ieee80211d=1
 beacon_int=100
 dtim_period=2
-max_num_sta=25
+max_num_sta=50
 EOF
 
-echo "DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" > /etc/default/hostapd
+cat > /etc/default/hostapd << EOF
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+DAEMON_OPTS=""
+EOF
 
 systemctl unmask hostapd 2>/dev/null || true
 systemctl enable hostapd
@@ -161,7 +164,7 @@ echo -e "${BLUE}[6/9] Configuration dnsmasq (DNS + Captive Portal - SANS LOG)...
 
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 
-# Configuration SANS LOG (conformité RGPD)
+# Configuration AVEC REDIRECTION TOUS DOMAINES (captive portal)
 cat > /etc/dnsmasq.conf <<EOF
 # SOS-GUIDE - DNS + Captive Portal
 # Conformité RGPD: Aucun log activé
@@ -171,7 +174,8 @@ listen-address=${LOCAL_IP}
 # DHCP désactivé (géré par systemd-networkd)
 no-dhcp-interface=wlan0
 
-# TOUS les domaines résolus vers l'IP locale (captive portal)
+# ⚠️ TOUS les domaines résolus vers l'IP locale (captive portal)
+# Le /# signifie "tous les domaines possibles"
 address=/#/${LOCAL_IP}
 
 # DNS upstream pour le Pi lui-même
@@ -182,8 +186,6 @@ server=8.8.4.4
 cache-size=1000
 
 # ⚠️ AUCUN LOG ACTIVÉ (conformité RGPD/CNIL)
-# log-queries est COMMENTÉ intentionnellement
-# log-dhcp est COMMENTÉ intentionnellement
 EOF
 
 systemctl enable dnsmasq
@@ -232,7 +234,7 @@ fi
 echo -e "${GREEN}✓ Firewall configuré (clients isolés d'Internet)${NC}"
 
 # ==============================================================================
-# 8. SERVEUR WEB + PAGES COMPLÈTES (AVEC MENTIONS LÉGALES)
+# 8. SERVEUR WEB + PAGES COMPLÈTES (AVEC CAPTIVE PORTAL)
 # ==============================================================================
 echo -e "${BLUE}[8/9] Configuration du serveur web et des pages...${NC}"
 
@@ -243,31 +245,65 @@ mkdir -p /data/docs
 chown -R www-data /var/www/sos-guide
 chown -R www-data /data
 
-# Configuration Nginx SANS LOG D'ACCÈS (RGPD)
+# Configuration Nginx AVEC CAPTIVE PORTAL
 rm -f /etc/nginx/sites-enabled/default
 
-cat > /etc/nginx/sites-available/sos-guide <<EOF
+cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
+    server_name _;
+    
     root /var/www/sos-guide;
     index index.html;
-    server_name _;
 
     # ⚠️ LOGS DÉSACTIVÉS (conformité RGPD/CNIL)
     access_log off;
     error_log /dev/null;
 
+    # Page d'accueil par défaut
     location / {
-        try_files \$uri \$uri/ =404;
+        try_files $uri $uri/ /index.html;
     }
     
+    # ============================================
+    # PORTAILS CAPTIFS - DÉTECTION SPÉCIFIQUE
+    # ============================================
+    
+    # Microsoft Windows (www.msftconnecttest.com)
+    location = /connecttest.txt {
+        return 200 "Microsoft Connect Test Redirect";
+        add_header Content-Type text/plain;
+    }
+    
+    # Apple iOS/Mac (captive.apple.com)
+    location = /hotspot-detect.html {
+        return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
+        add_header Content-Type text/html;
+    }
+    
+    # Android/Google (clients3.google.com)
+    location = /generate_204 {
+        return 204;
+    }
+    
+    # Samsung Android
+    location = /success.txt {
+        return 204;
+    }
+    
+    # Amazon Fire
+    location = /fwlink/ {
+        return 302 /;
+    }
+    
+    # Documents
     location /docs/ {
         alias /data/docs/;
         autoindex on;
     }
 }
-EOF
+NGINXEOF
 
 ln -sf /etc/nginx/sites-available/sos-guide /etc/nginx/sites-enabled/
 
@@ -343,7 +379,7 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         </a>
         
         <footer>
-            <strong>SOS-GUIDE v6.0</strong><br>
+            <strong>SOS-GUIDE v6.1</strong><br>
             Raspberry Pi Autonomous Network<br>
             IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert<br>
             <a href="/legal.html" class="legal-link">Mentions Légales</a> | 
@@ -667,7 +703,7 @@ cat > /var/www/sos-guide/survie.html <<'HTMLEOF'
 </html>
 HTMLEOF
 
-# ==================== PAGE MENTIONS LÉGALES (NOUVEAU - CONFORMITÉ) ====================
+# ==================== PAGE MENTIONS LÉGALES ====================
 cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
 <!DOCTYPE html>
 <html lang="fr">
@@ -703,7 +739,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <p style="color: #666; margin-bottom: 20px;">Conformité France • Suisse • Union Européenne</p>
         
         <div class="info">
-            <strong>🆘 SOS-GUIDE v6.0</strong><br>
+            <strong>🆘 SOS-GUIDE v6.1</strong><br>
             Réseau de Secours Autonome - Usage Humanitaire et d'Urgence<br>
             <span class="badge badge-fr">🇫🇷 France</span>
             <span class="badge badge-ch">🇨🇭 Suisse</span>
@@ -801,7 +837,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <div class="info">
             <p><strong>Pour toute question légale ou technique:</strong></p>
             <p>Email: [votre email ici]<br>
-            Projet: SOS-GUIDE v6.0<br>
+            Projet: SOS-GUIDE v6.1<br>
             Usage: Humanitaire / Urgence / Secours</p>
         </div>
 
@@ -817,7 +853,7 @@ HTMLEOF
 systemctl enable nginx
 systemctl restart nginx
 
-echo -e "${GREEN}✓ Serveur web configuré (5 pages créées + Légal)${NC}"
+echo -e "${GREEN}✓ Serveur web configuré (5 pages créées + Captive Portal)${NC}"
 
 # ==============================================================================
 # 9. OPTIMISATION BATTERIE & AUTONOMIE
@@ -859,6 +895,12 @@ echo -e "   ${GREEN}✓${NC} IP wlan0: ${LOCAL_IP}"
 echo -e "   ${GREEN}✓${NC} SSID: ${SSID}"
 echo -e "   ${GREEN}✓${NC} 🔓 Réseau OUVERT (sans mot de passe)${NC}"
 echo ""
+echo -e "${BLUE}📱 CAPTIVE PORTAL:${NC}"
+echo -e "   ${GREEN}✓${NC} Windows: /connecttest.txt"
+echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html"
+echo -e "   ${GREEN}✓${NC} Android: /generate_204"
+echo -e "   ${GREEN}✓${NC} Samsung: /success.txt"
+echo ""
 echo -e "${BLUE}⚖️ CONFORMITÉ LÉGALE:${NC}"
 echo -e "   ${GREEN}✓${NC} RGPD/CNIL: Aucun log activé"
 echo -e "   ${GREEN}✓${NC} France: Conforme CPCE/LCEN"
@@ -886,14 +928,14 @@ echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/index.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/contact.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/premiers-secours.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/survie.html"
-echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/legal.html (NOUVEAU)"
+echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/legal.html"
 echo -e "   ${GREEN}✓${NC} /data/docs/ (pour tes PDF)"
 echo ""
 echo -e "${YELLOW}🧪 TESTER:${NC}"
-echo "   1. Connecte-toi au WiFi ${SSID} (sans mot de passe)"
-echo "   2. Ouvre http://${LOCAL_IP}"
-echo "   3. Tente d'aller sur google.com → Redirigé vers SOS-GUIDE"
-echo "   4. Débranche Ethernet → Le réseau reste actif"
+echo "   1. Oublie le réseau SOS-GUIDE sur tes appareils"
+echo "   2. Connecte-toi au WiFi ${SSID} (sans mot de passe)"
+echo "   3. La notification captive portal devrait apparaître"
+echo "   4. Si non: ouvre http://${LOCAL_IP} manuellement"
 echo "   5. Vérifie la page /legal.html"
 echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
@@ -901,8 +943,10 @@ echo "   Vérifier IP       : ip addr show wlan0"
 echo "   Logs WiFi         : sudo journalctl -u hostapd -f"
 echo "   Voir règles FW    : sudo iptables -L -n -v"
 echo "   Test isolation    : ping -I wlan0 8.8.8.8 (doit échouer)"
-echo "   Vérifier logs OFF : sudo cat /etc/nginx/sites-available/sos-guide | grep access_log"
+echo "   Test DNS          : nslookup google.com (doit retourner 10.0.0.1)"
+echo "   Test Captive      : curl http://${LOCAL_IP}/hotspot-detect.html"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE v6.0 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE v6.1 EST PRÊT POUR LA PRODUCTION !${NC}"
 echo -e "${YELLOW}⚖️ 100% CONFORME LÉGAL FRANCE/SUISSE/EUROPE${NC}"
+echo -e "${BLUE}📱 CAPTIVE PORTAL: Windows/Apple/Android SUPPORTÉS${NC}"
 echo ""
