@@ -197,7 +197,7 @@ no-dhcp-interface=wlan0
 address=/#/10.0.0.1
 cache-size=1000
 no-resolv
-server=8.8.8.8
+server=1.1.1.1
 server=8.8.4.4
 EOF
 
