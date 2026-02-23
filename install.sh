@@ -2,7 +2,6 @@
 
 # ==============================================================================
 # SOS-GUIDE - INSTALLATION
-# 100% Conforme Légal FR/CH/EU | Réseau Ouvert | Clients Isolés
 # ==============================================================================
 
 set -e
@@ -21,8 +20,8 @@ LOCAL_IP="10.0.0.1"
 
 echo -e "${GREEN}"
 echo "=========================================="
-echo "   SOS-GUIDE v6.1 - VERSION FINALE"
-echo "   Avec Captive Portal Corrigé"
+echo "   SOS-GUIDE v8.0 - VERSION FINALE"
+echo "   dnsmasq (wlan0) + systemd (eth0)"
 echo "==========================================${NC}"
 echo ""
 
@@ -84,7 +83,6 @@ echo -e "${BLUE}[4/9] Configuration systemd-networkd...${NC}"
 
 # Activer systemd-networkd
 systemctl enable systemd-networkd
-systemctl enable systemd-resolved
 
 # Configuration ETH0 (avec Internet - DHCP client)
 cat > /etc/systemd/network/10-eth0.network <<EOF
@@ -105,7 +103,6 @@ Name=wlan0
 [Network]
 Address=${LOCAL_IP}/24
 DHCPServer=yes
-DNS=${LOCAL_IP}
 
 [DHCPServer]
 PoolOffset=100
@@ -115,14 +112,44 @@ EOF
 
 systemctl daemon-reload
 systemctl restart systemd-networkd
-systemctl restart systemd-resolved
 
 echo -e "${GREEN}✓ systemd-networkd configuré${NC}"
 
 # ==============================================================================
-# 5. CONFIGURATION HOSTAPD (RÉSEAU OUVERT - SANS MOT DE PASSE)
+# 5. CONFIGURATION SYSTEMD-RESOLVED (ETH0 SEULEMENT)
 # ==============================================================================
-echo -e "${BLUE}[5/9] Configuration du Point d'Accès WiFi (OUVERT)...${NC}"
+echo -e "${BLUE}[5/9] Configuration systemd-resolved (eth0 uniquement)...${NC}"
+
+# Configuration: systemd-resolved écoute sur localhost, dnsmasq sur wlan0
+mkdir -p /etc/systemd/resolved.conf.d
+
+cat > /etc/systemd/resolved.conf.d/dns.conf <<EOF
+[Resolve]
+# DNS upstream pour le Pi (via eth0 - Internet)
+DNS=8.8.8.8
+DNS=8.8.4.4
+
+# ⚠️ systemd-resolved écoute sur localhost:53
+# dnsmasq écoutera sur wlan0:53 (10.0.0.1) - PAS DE CONFLIT !
+DNSStubListener=yes
+
+# Lire /etc/hosts
+ReadEtcHosts=yes
+EOF
+
+systemctl daemon-reload
+systemctl restart systemd-resolved
+
+# Recréer le lien DNS pour le Pi
+rm -f /etc/resolv.conf
+ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+
+echo -e "${GREEN}✓ systemd-resolved configuré (eth0)${NC}"
+
+# ==============================================================================
+# 6. CONFIGURATION HOSTAPD (RÉSEAU OUVERT - SANS MOT DE PASSE)
+# ==============================================================================
+echo -e "${BLUE}[6/9] Configuration du Point d'Accès WiFi (OUVERT)...${NC}"
 
 mkdir -p /etc/hostapd
 
@@ -132,7 +159,7 @@ interface=wlan0
 driver=nl80211
 ssid=${SSID}
 hw_mode=g
-channel=6
+channel=7
 wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
@@ -141,13 +168,10 @@ country_code=FR
 ieee80211d=1
 beacon_int=100
 dtim_period=2
-max_num_sta=50
+max_num_sta=25
 EOF
 
-cat > /etc/default/hostapd << EOF
-DAEMON_CONF="/etc/hostapd/hostapd.conf"
-DAEMON_OPTS=""
-EOF
+echo "DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" > /etc/default/hostapd
 
 systemctl unmask hostapd 2>/dev/null || true
 systemctl enable hostapd
@@ -158,45 +182,34 @@ echo -e "   ${YELLOW}SSID: ${SSID}${NC}"
 echo -e "   ${YELLOW}🔓 Réseau OUVERT (sans mot de passe)${NC}"
 
 # ==============================================================================
-# 6. CONFIGURATION DNSMASQ (DNS + CAPTIVE PORTAL - SANS LOG)
+# 7. CONFIGURATION DNSMASQ (WLAN0 SEULEMENT - CAPTIVE PORTAL)
 # ==============================================================================
-echo -e "${BLUE}[6/9] Configuration dnsmasq (DNS + Captive Portal - SANS LOG)...${NC}"
+echo -e "${BLUE}[7/9] Configuration dnsmasq (wlan0 - Captive Portal)...${NC}"
 
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 
-# Configuration AVEC REDIRECTION TOUS DOMAINES (captive portal)
+# Configuration: dnsmasq écoute UNIQUEMENT sur wlan0 (10.0.0.1)
 cat > /etc/dnsmasq.conf <<EOF
-# SOS-GUIDE - DNS + Captive Portal
-# Conformité RGPD: Aucun log activé
+bind-interfaces
 interface=wlan0
-listen-address=${LOCAL_IP}
-
-# DHCP désactivé (géré par systemd-networkd)
+listen-address=10.0.0.1
 no-dhcp-interface=wlan0
-
-# ⚠️ TOUS les domaines résolus vers l'IP locale (captive portal)
-# Le /# signifie "tous les domaines possibles"
-address=/#/${LOCAL_IP}
-
-# DNS upstream pour le Pi lui-même
+address=/#/10.0.0.1
+cache-size=1000
+no-resolv
 server=8.8.8.8
 server=8.8.4.4
-
-# Cache
-cache-size=1000
-
-# ⚠️ AUCUN LOG ACTIVÉ (conformité RGPD/CNIL)
 EOF
 
 systemctl enable dnsmasq
 systemctl restart dnsmasq
 
-echo -e "${GREEN}✓ dnsmasq configuré (Captive Portal - SANS LOG)${NC}"
+echo -e "${GREEN}✓ dnsmasq configuré (wlan0 - Captive Portal)${NC}"
 
 # ==============================================================================
-# 7. CONFIGURATION FIREWALL (ISOLEMENT CLIENTS)
+# 8. CONFIGURATION FIREWALL (ISOLEMENT CLIENTS)
 # ==============================================================================
-echo -e "${BLUE}[7/9] Configuration du firewall (clients isolés)...${NC}"
+echo -e "${BLUE}[8/9] Configuration du firewall (clients isolés)...${NC}"
 
 # Nettoyer les règles existantes
 iptables -F
@@ -234,9 +247,9 @@ fi
 echo -e "${GREEN}✓ Firewall configuré (clients isolés d'Internet)${NC}"
 
 # ==============================================================================
-# 8. SERVEUR WEB + PAGES COMPLÈTES (AVEC CAPTIVE PORTAL)
+# 9. SERVEUR WEB + PAGES COMPLÈTES (AVEC CAPTIVE PORTAL)
 # ==============================================================================
-echo -e "${BLUE}[8/9] Configuration du serveur web et des pages...${NC}"
+echo -e "${BLUE}[9/9] Configuration du serveur web et des pages...${NC}"
 
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
@@ -379,7 +392,7 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         </a>
         
         <footer>
-            <strong>SOS-GUIDE v6.1</strong><br>
+            <strong>SOS-GUIDE v8.0</strong><br>
             Raspberry Pi Autonomous Network<br>
             IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert<br>
             <a href="/legal.html" class="legal-link">Mentions Légales</a> | 
@@ -739,7 +752,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <p style="color: #666; margin-bottom: 20px;">Conformité France • Suisse • Union Européenne</p>
         
         <div class="info">
-            <strong>🆘 SOS-GUIDE v6.1</strong><br>
+            <strong>🆘 SOS-GUIDE v8.0</strong><br>
             Réseau de Secours Autonome - Usage Humanitaire et d'Urgence<br>
             <span class="badge badge-fr">🇫🇷 France</span>
             <span class="badge badge-ch">🇨🇭 Suisse</span>
@@ -837,7 +850,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <div class="info">
             <p><strong>Pour toute question légale ou technique:</strong></p>
             <p>Email: [votre email ici]<br>
-            Projet: SOS-GUIDE v6.1<br>
+            Projet: SOS-GUIDE v8.0<br>
             Usage: Humanitaire / Urgence / Secours</p>
         </div>
 
@@ -854,33 +867,6 @@ systemctl enable nginx
 systemctl restart nginx
 
 echo -e "${GREEN}✓ Serveur web configuré (5 pages créées + Captive Portal)${NC}"
-
-# ==============================================================================
-# 9. OPTIMISATION BATTERIE & AUTONOMIE
-# ==============================================================================
-echo -e "${BLUE}[9/9] Optimisation pour autonomie sur batterie...${NC}"
-
-# Désactiver services inutiles
-systemctl disable avahi-daemon 2>/dev/null || true
-systemctl stop avahi-daemon 2>/dev/null || true
-
-# WiFi power_save OFF en mode AP pour stabilité
-iw dev wlan0 set power_save off 2>/dev/null || true
-
-# Script de surveillance batterie (si UPS HAT connecté)
-cat > /usr/local/bin/battery-monitor.sh <<'BASHEOF'
-#!/bin/bash
-# Surveillance batterie - à adapter selon ton UPS HAT
-BATTERY_LOW=10
-# Adapter selon ton matériel UPS HAT
-BASHEOF
-
-chmod +x /usr/local/bin/battery-monitor.sh
-
-# Ajouter au crontab (toutes les 5 minutes)
-(crontab -l 2>/dev/null; echo "*/5 * * * * /usr/local/bin/battery-monitor.sh") | crontab -
-
-echo -e "${GREEN}✓ Optimisation batterie configurée${NC}"
 
 # ==============================================================================
 # 10. VÉRIFICATION FINALE
@@ -915,7 +901,7 @@ echo -e "   ${GREEN}✓${NC} Captive Portal activé"
 echo -e "   ${GREEN}✓${NC} NetworkManager/wpa_supplicant désactivés"
 echo ""
 echo -e "${BLUE}🔧 ÉTAT DES SERVICES:${NC}"
-for service in hostapd dnsmasq nginx systemd-networkd; do
+for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved; do
     if systemctl is-active --quiet $service; then
         echo -e "   ${GREEN}✓${NC} $service: actif"
     else
@@ -945,8 +931,10 @@ echo "   Voir règles FW    : sudo iptables -L -n -v"
 echo "   Test isolation    : ping -I wlan0 8.8.8.8 (doit échouer)"
 echo "   Test DNS          : nslookup google.com (doit retourner 10.0.0.1)"
 echo "   Test Captive      : curl http://${LOCAL_IP}/hotspot-detect.html"
+echo "   Port 53           : sudo ss -tulpn | grep :53"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE v6.1 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE EST PRÊT POUR LA PRODUCTION !${NC}"
 echo -e "${YELLOW}⚖️ 100% CONFORME LÉGAL FRANCE/SUISSE/EUROPE${NC}"
 echo -e "${BLUE}📱 CAPTIVE PORTAL: Windows/Apple/Android SUPPORTÉS${NC}"
+echo -e "${GREEN}🔧 ARCHITECTURE: dnsmasq (wlan0) + systemd (eth0)${NC}"
 echo ""
