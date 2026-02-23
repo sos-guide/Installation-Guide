@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # ==============================================================================
-# SOS-GUIDE v6.1 - VERSION FINALE AVEC CAPTIVE PORTAL
+# SOS-GUIDE - INSTALLATION
 # 100% Conforme Légal FR/CH/EU | Réseau Ouvert | Clients Isolés
 # ==============================================================================
 
