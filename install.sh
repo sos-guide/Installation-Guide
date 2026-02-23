@@ -2,7 +2,7 @@
 
 # ==============================================================================
 # SOS-GUIDE v5.0 - VERSION FINALE PRODUCTION
-# Pi avec Internet | Clients WiFi Isolés | Captive Portal | Batterie
+# Pi avec Internet | Clients WiFi Isolés | Captive Portal | Réseau Ouvert
 # ==============================================================================
 
 set -e
@@ -17,8 +17,7 @@ NC='\033[0m'
 
 # Configuration
 SSID="SOS-GUIDE"
-WIFI_PASS="SOS-SECOURS-2024"
-LOCAL_IP="192.168.4.1"
+LOCAL_IP="10.0.0.1"
 
 echo -e "${GREEN}"
 echo "=========================================="
@@ -121,12 +120,13 @@ systemctl restart systemd-resolved
 echo -e "${GREEN}✓ systemd-networkd configuré${NC}"
 
 # ==============================================================================
-# 5. CONFIGURATION HOSTAPD
+# 5. CONFIGURATION HOSTAPD (RÉSEAU OUVERT - SANS MOT DE PASSE)
 # ==============================================================================
-echo -e "${BLUE}[5/9] Configuration du Point d'Accès WiFi...${NC}"
+echo -e "${BLUE}[5/9] Configuration du Point d'Accès WiFi (OUVERT)...${NC}"
 
 mkdir -p /etc/hostapd
 
+# Configuration SANS WPA (réseau ouvert)
 cat > /etc/hostapd/hostapd.conf <<EOF
 interface=wlan0
 driver=nl80211
@@ -137,11 +137,7 @@ wmm_enabled=0
 macaddr_acl=0
 auth_algs=1
 ignore_broadcast_ssid=0
-wpa=2
-wpa_passphrase=${WIFI_PASS}
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-rsn_pairwise=CCMP
+# PAS DE WPA = Réseau ouvert
 country_code=FR
 ieee80211d=1
 beacon_int=100
@@ -157,7 +153,7 @@ systemctl restart hostapd
 
 echo -e "${GREEN}✓ hostapd configuré${NC}"
 echo -e "   ${YELLOW}SSID: ${SSID}${NC}"
-echo -e "   ${YELLOW}Pass: ${WIFI_PASS}${NC}"
+echo -e "   ${YELLOW}🔓 Réseau OUVERT (sans mot de passe)${NC}"
 
 # ==============================================================================
 # 6. CONFIGURATION DNSMASQ (DNS + CAPTIVE PORTAL)
@@ -239,7 +235,7 @@ echo -e "${BLUE}[8/9] Configuration du serveur web et des pages...${NC}"
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
 
-# CORRECTION: www-data:www-data (CORRECT)
+# CORRECTION: www-www-data (CORRECT)
 chown -R www-www-data /var/www/sos-guide
 chown -R www-www-data /data
 
@@ -272,12 +268,18 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         .status.online { background: #e8f5e9; color: #2e7d32; }
         .status.offline { background: #ffecb3; color: #f57c00; }
         .battery-info { background: #e3f2fd; padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; color: #1565c0; }
+        .open-network { background: linear-gradient(90deg, #e8f5e9 0%, #c8e6c9 100%); padding: 15px; border-radius: 8px; margin: 20px 0; text-align: center; color: #2e7d32; border: 2px solid #4caf50; }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>🆘 SOS-GUIDE</h1>
         <p class="subtitle">Réseau de Secours Autonome</p>
+        
+        <div class="open-network">
+            <strong>🔓 Réseau Ouvert</strong><br>
+            Connexion libre sans mot de passe - Accès immédiat aux ressources de secours
+        </div>
         
         <div id="net-status" class="status offline">
             ⚠️ Mode Hors-Ligne Activé | Réseau Local Sécurisé
@@ -309,7 +311,7 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         <footer>
             <strong>SOS-GUIDE v5.0</strong><br>
             Raspberry Pi Autonomous Network<br>
-            IP: 192.168.4.1 | SSID: SOS-GUIDE
+            IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert
         </footer>
     </div>
 </body>
@@ -683,7 +685,7 @@ echo ""
 echo -e "${BLUE}📡 CONFIGURATION RÉSEAU:${NC}"
 echo -e "   ${GREEN}✓${NC} IP wlan0: ${LOCAL_IP}"
 echo -e "   ${GREEN}✓${NC} SSID: ${SSID}"
-echo -e "   ${GREEN}✓${NC} Mot de passe: ${WIFI_PASS}"
+echo -e "   ${GREEN}✓${NC} 🔓 Réseau OUVERT (sans mot de passe)${NC}"
 echo ""
 echo -e "${BLUE}🔒 SÉCURITÉ:${NC}"
 echo -e "   ${GREEN}✓${NC} Pi a Internet (eth0)"
@@ -708,8 +710,8 @@ echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/survie.html"
 echo -e "   ${GREEN}✓${NC} /data/docs/ (pour tes PDF)"
 echo ""
 echo -e "${YELLOW}🧪 TESTER:${NC}"
-echo "   1. Connecte-toi au WiFi ${SSID}"
-echo "   2. Ouvre http://192.168.4.1"
+echo "   1. Connecte-toi au WiFi ${SSID} (sans mot de passe)"
+echo "   2. Ouvre http://${LOCAL_IP}"
 echo "   3. Tente d'aller sur google.com → Redirigé vers SOS-GUIDE"
 echo "   4. Débranche Ethernet → Le réseau reste actif"
 echo ""
