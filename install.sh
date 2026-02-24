@@ -15,12 +15,13 @@ MAGENTA='\033[0;35m'
 NC='\033[0m'
 
 # Configuration
-SSID="SOS-GUIDE"
+SSID="⛑️ SOS-GUIDE"
 LOCAL_IP="10.0.0.1"
+WIFI_PASS="Secours2024!"
 
 echo -e "${GREEN}"
 echo "=========================================="
-echo "   SOS-GUIDE v8.0 - VERSION FINALE"
+echo "   SOS-GUIDE v8.1 - VERSION FINALE"
 echo "   dnsmasq (wlan0) + systemd (eth0)"
 echo "==========================================${NC}"
 echo ""
@@ -28,7 +29,7 @@ echo ""
 # ==============================================================================
 # 1. NETTOYAGE DES GESTIONNAIRES CONFLICTUELS
 # ==============================================================================
-echo -e "${BLUE}[1/9] Nettoyage des gestionnaires réseau conflictuels...${NC}"
+echo -e "${BLUE}[1/10] Nettoyage des gestionnaires réseau conflictuels...${NC}"
 
 # Stop et disable bluetooth
 systemctl stop bluetooth 2>/dev/null || true
@@ -49,6 +50,14 @@ systemctl mask wpa_supplicant 2>/dev/null || true
 systemctl stop dhcpcd 2>/dev/null || true
 systemctl disable dhcpcd 2>/dev/null || true
 
+# Stop avahi-daemon
+systemctl stop avahi-daemon 2>/dev/null || true
+systemctl stop avahi-daemon.socket 2>/dev/null || true
+systemctl disable avahi-daemon 2>/dev/null || true
+systemctl disable avahi-daemon.socket 2>/dev/null || true
+systemctl mask avahi-daemon 2>/dev/null || true
+systemctl mask avahi-daemon.socket 2>/dev/null || true
+
 # Tuer les processus résiduels
 pkill -f wpa_supplicant 2>/dev/null || true
 pkill -f NetworkManager 2>/dev/null || true
@@ -59,17 +68,18 @@ echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 # ==============================================================================
 # 2. INSTALLATION DES PAQUETS
 # ==============================================================================
-echo -e "${BLUE}[2/9] Installation des paquets...${NC}"
+echo -e "${BLUE}[2/10] Installation des paquets...${NC}"
 
 apt update -qq
-apt install -y nginx hostapd dnsmasq iptables-persistent systemd-resolved
+apt dist-upgrade
+apt install -y nginx hostapd dnsmasq iptables-persistent netfilter-persistent systemd-resolved watchdog
 
 echo -e "${GREEN}✓ Paquets installés${NC}"
 
 # ==============================================================================
 # 3. CONFIGURATION PAYS WIFI
 # ==============================================================================
-echo -e "${BLUE}[3/9] Configuration du pays WiFi...${NC}"
+echo -e "${BLUE}[3/10] Configuration du pays WiFi...${NC}"
 
 echo "country=FR" > /etc/wpa_supplicant/wpa_supplicant.conf
 rfkill unblock wifi
@@ -79,7 +89,7 @@ echo -e "${GREEN}✓ Pays WiFi configuré${NC}"
 # ==============================================================================
 # 4. CONFIGURATION SYSTEMD-NETWORKD (ETH + WLAN)
 # ==============================================================================
-echo -e "${BLUE}[4/9] Configuration systemd-networkd...${NC}"
+echo -e "${BLUE}[4/10] Configuration systemd-networkd...${NC}"
 
 # Activer systemd-networkd
 systemctl enable systemd-networkd
@@ -91,7 +101,9 @@ Name=eth0
 
 [Network]
 DHCP=yes
-DNS=8.8.8.8
+IPv6AcceptRA=no
+IPv6DHCP=no
+DNS=1.1.1.1
 DNS=8.8.4.4
 EOF
 
@@ -101,13 +113,16 @@ cat > /etc/systemd/network/20-wlan0-ap.network <<EOF
 Name=wlan0
 
 [Network]
-Address=${LOCAL_IP}/24
-DHCPServer=yes
+Address=10.0.0.1/24
+IPv6AcceptRA=no
+IPv6LinkLocalAddressGenerationMode=none
+IPv6Token=none
 
-[DHCPServer]
-PoolOffset=100
-PoolSize=50
-DNS=${LOCAL_IP}
+[Link]
+WakeOnLan=off
+
+[WLAN]
+PowerSave=off
 EOF
 
 systemctl daemon-reload
@@ -118,7 +133,7 @@ echo -e "${GREEN}✓ systemd-networkd configuré${NC}"
 # ==============================================================================
 # 5. CONFIGURATION SYSTEMD-RESOLVED (ETH0 SEULEMENT)
 # ==============================================================================
-echo -e "${BLUE}[5/9] Configuration systemd-resolved (eth0 uniquement)...${NC}"
+echo -e "${BLUE}[5/10] Configuration systemd-resolved (eth0 uniquement)...${NC}"
 
 # Configuration: systemd-resolved écoute sur localhost, dnsmasq sur wlan0
 mkdir -p /etc/systemd/resolved.conf.d
@@ -126,7 +141,7 @@ mkdir -p /etc/systemd/resolved.conf.d
 cat > /etc/systemd/resolved.conf.d/dns.conf <<EOF
 [Resolve]
 # DNS upstream pour le Pi (via eth0 - Internet)
-DNS=8.8.8.8
+DNS=1.1.1.1
 DNS=8.8.4.4
 
 # ⚠️ systemd-resolved écoute sur localhost:53
@@ -147,44 +162,49 @@ ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 echo -e "${GREEN}✓ systemd-resolved configuré (eth0)${NC}"
 
 # ==============================================================================
-# 6. CONFIGURATION HOSTAPD (RÉSEAU OUVERT - SANS MOT DE PASSE)
+# 6. CONFIGURATION HOSTAPD
 # ==============================================================================
-echo -e "${BLUE}[6/9] Configuration du Point d'Accès WiFi (OUVERT)...${NC}"
+echo -e "${BLUE}[6/10] Configuration du Point d'Accès WiFi...${NC}"
 
 mkdir -p /etc/hostapd
 
-# Configuration SANS WPA (réseau ouvert)
+# Configuration
 cat > /etc/hostapd/hostapd.conf <<EOF
 interface=wlan0
 driver=nl80211
 ssid=${SSID}
 hw_mode=g
-channel=7
-wmm_enabled=0
-macaddr_acl=0
-auth_algs=1
-ignore_broadcast_ssid=0
+channel=11
+wmm_enabled=1
+beacon_int=50
+dtim_period=1
+max_num_sta=50
 country_code=FR
 ieee80211d=1
-beacon_int=100
-dtim_period=2
-max_num_sta=25
+
+wpa=2
+wpa_passphrase=${WIFI_PASS}
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=CCMP
+rsn_pairwise=CCMP
+wpa_strict_rekey=0
 EOF
 
-echo "DAEMON_CONF=\"/etc/hostapd/hostapd.conf\"" > /etc/default/hostapd
+cat > /etc/default/hostapd << EOF
+DAEMON_CONF="/etc/hostapd/hostapd.conf"
+DAEMON_OPTS=""
+EOF
 
 systemctl unmask hostapd 2>/dev/null || true
 systemctl enable hostapd
 systemctl restart hostapd
 
 echo -e "${GREEN}✓ hostapd configuré${NC}"
-echo -e "   ${YELLOW}SSID: ${SSID}${NC}"
-echo -e "   ${YELLOW}🔓 Réseau OUVERT (sans mot de passe)${NC}"
 
 # ==============================================================================
 # 7. CONFIGURATION DNSMASQ (WLAN0 SEULEMENT - CAPTIVE PORTAL)
 # ==============================================================================
-echo -e "${BLUE}[7/9] Configuration dnsmasq (wlan0 - Captive Portal)...${NC}"
+echo -e "${BLUE}[7/10] Configuration dnsmasq (wlan0 - Captive Portal)...${NC}"
 
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 
@@ -193,12 +213,27 @@ cat > /etc/dnsmasq.conf <<EOF
 bind-interfaces
 interface=wlan0
 listen-address=10.0.0.1
-no-dhcp-interface=wlan0
+
+dhcp-range=10.0.0.100,10.0.0.200,12h
+dhcp-option=3,10.0.0.1
+dhcp-option=6,10.0.0.1
+dhcp-rapid-commit
+
+# DNS menteur global
 address=/#/10.0.0.1
-cache-size=1000
+
 no-resolv
-server=1.1.1.1
-server=8.8.4.4
+no-hosts
+
+# Optimisation captive portal
+cache-size=0
+local-ttl=1
+min-cache-ttl=1
+neg-ttl=1
+
+# Optimisation DHCP
+dhcp-lease-max=100
+dhcp-no-override
 EOF
 
 systemctl enable dnsmasq
@@ -207,49 +242,46 @@ systemctl restart dnsmasq
 echo -e "${GREEN}✓ dnsmasq configuré (wlan0 - Captive Portal)${NC}"
 
 # ==============================================================================
-# 8. CONFIGURATION FIREWALL (ISOLEMENT CLIENTS)
+# 8. CONFIGURATION FIREWALL (VERSION CORRIGÉE)
 # ==============================================================================
-echo -e "${BLUE}[8/9] Configuration du firewall (clients isolés)...${NC}"
-
-# Nettoyer les règles existantes
+echo -e "${BLUE}[8/10] Configuration du firewall...${NC}"
 iptables -F
 iptables -t nat -F
 iptables -t filter -F
-
-# Politique par défaut : ACCEPT (le Pi a internet)
-iptables -P INPUT ACCEPT
-iptables -P FORWARD ACCEPT
+iptables -P INPUT DROP
+iptables -A INPUT -i lo -j ACCEPT
+iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
 
-# Autoriser le trafic local entre wlan0 et le Pi
+# ✅ SSH AUTORISÉ SUR ETH0 !
+iptables -A INPUT -i eth0 -p tcp --dport 22 -j ACCEPT
+
+# wlan0 - Captive Portal
+iptables -A INPUT -i wlan0 -p udp --dport 67:68 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 53 -j ACCEPT
 iptables -A INPUT -i wlan0 -p udp --dport 53 -j ACCEPT
 iptables -A INPUT -i wlan0 -p icmp -j ACCEPT
 
-# Autoriser le Pi à accéder à Internet via eth0 (pour lui seul)
-iptables -A OUTPUT -o eth0 -j ACCEPT
-iptables -A INPUT -i eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT
+# eth0 - Internet (Pi seulement)
+iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -i eth0 -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -i eth0 -p icmp -j ACCEPT
 
-# Bloquer le forwarding wlan0 -> eth0 (clients isolés d'Internet)
+# 🔒 BLOQUER forwarding wlan0 -> eth0
 iptables -A FORWARD -i wlan0 -o eth0 -j DROP
 
-# Sauvegarder les règles
 mkdir -p /etc/iptables
 iptables-save > /etc/iptables/rules.v4
-
-# Activer la persistance
-if command -v netfilter-persistent &> /dev/null; then
-    netfilter-persistent save 2>/dev/null || true
-fi
-
-echo -e "${GREEN}✓ Firewall configuré (clients isolés d'Internet)${NC}"
+netfilter-persistent save 2>/dev/null || true
+echo -e "${GREEN}✓ Firewall configuré (SSH autorisé sur eth0)${NC}"
 
 # ==============================================================================
 # 9. SERVEUR WEB + PAGES COMPLÈTES (AVEC CAPTIVE PORTAL)
 # ==============================================================================
-echo -e "${BLUE}[9/9] Configuration du serveur web et des pages...${NC}"
+echo -e "${BLUE}[9/10] Configuration du serveur web et des pages...${NC}"
 
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
@@ -270,44 +302,54 @@ server {
     root /var/www/sos-guide;
     index index.html;
 
-    # ⚠️ LOGS DÉSACTIVÉS (conformité RGPD/CNIL)
     access_log off;
     error_log /dev/null;
 
-    # Page d'accueil par défaut
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-    
     # ============================================
-    # PORTAILS CAPTIFS - DÉTECTION SPÉCIFIQUE
+    # SONDES CAPTIVES - RÉPONSES EXACTES
     # ============================================
     
-    # Microsoft Windows (www.msftconnecttest.com)
+    # Microsoft Windows 10/11
     location = /connecttest.txt {
-        return 200 "Microsoft Connect Test Redirect";
-        add_header Content-Type text/plain;
+        default_type text/plain;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
+        add_header Pragma "no-cache";
+        add_header X-Accel-Buffering "no";
+        return 200 "Microsoft Connect Test";
     }
     
-    # Apple iOS/Mac (captive.apple.com)
+    # Apple iOS / macOS - CORRECTION: Redirection 302
     location = /hotspot-detect.html {
-        return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
-        add_header Content-Type text/html;
+        default_type text/html;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
+        add_header Pragma "no-cache";
+        return 302 http://10.0.0.1/;
     }
     
-    # Android/Google (clients3.google.com)
+    # Android / Google - CORRECTION: Redirection 302
     location = /generate_204 {
-        return 204;
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 302 http://10.0.0.1/;
     }
     
     # Samsung Android
     location = /success.txt {
+        default_type text/plain;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
         return 204;
     }
     
     # Amazon Fire
     location = /fwlink/ {
-        return 302 /;
+        return 302 http://10.0.0.1/;
+    }
+    
+    # ============================================
+    # TOUT LE RESTE -> PORTAIL SOS-GUIDE
+    # ============================================
+    location / {
+        try_files $uri $uri/ /index.html;
     }
     
     # Documents
@@ -359,11 +401,6 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         <h1>🆘 SOS-GUIDE</h1>
         <p class="subtitle">Réseau de Secours Autonome</p>
         
-        <div class="open-network">
-            <strong>🔓 Réseau Ouvert</strong><br>
-            Connexion libre sans mot de passe - Accès immédiat aux ressources de secours
-        </div>
-        
         <div id="net-status" class="status offline">
             ⚠️ Mode Hors-Ligne Activé | Réseau Local Sécurisé
         </div>
@@ -392,9 +429,9 @@ cat > /var/www/sos-guide/index.html <<'HTMLEOF'
         </a>
         
         <footer>
-            <strong>SOS-GUIDE v8.0</strong><br>
+            <strong>SOS-GUIDE v8.1</strong><br>
             Raspberry Pi Autonomous Network<br>
-            IP: 10.0.0.1 | SSID: SOS-GUIDE | 🔓 Ouvert<br>
+            IP: 10.0.0.1 | SSID: SOS-GUIDE<br>
             <a href="/legal.html" class="legal-link">Mentions Légales</a> | 
             <a href="/legal.html" class="legal-link">RGPD</a> |
             <a href="/legal.html" class="legal-link">Conditions</a>
@@ -752,7 +789,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <p style="color: #666; margin-bottom: 20px;">Conformité France • Suisse • Union Européenne</p>
         
         <div class="info">
-            <strong>🆘 SOS-GUIDE v8.0</strong><br>
+            <strong>🆘 SOS-GUIDE v8.1</strong><br>
             Réseau de Secours Autonome - Usage Humanitaire et d'Urgence<br>
             <span class="badge badge-fr">🇫🇷 France</span>
             <span class="badge badge-ch">🇨🇭 Suisse</span>
@@ -850,7 +887,7 @@ cat > /var/www/sos-guide/legal.html <<'HTMLEOF'
         <div class="info">
             <p><strong>Pour toute question légale ou technique:</strong></p>
             <p>Email: [votre email ici]<br>
-            Projet: SOS-GUIDE v8.0<br>
+            Projet: SOS-GUIDE v8.1<br>
             Usage: Humanitaire / Urgence / Secours</p>
         </div>
 
@@ -868,8 +905,82 @@ systemctl restart nginx
 
 echo -e "${GREEN}✓ Serveur web configuré (5 pages créées + Captive Portal)${NC}"
 
+cat <<EOF | sudo tee /etc/sysctl.d/60-disable-ipv6.conf
+net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1
+net.ipv6.conf.lo.disable_ipv6 = 1
+net.ipv6.conf.wlan0.disable_ipv6 = 1
+net.ipv6.conf.eth0.disable_ipv6 = 1
+EOF
+
+sysctl -p /etc/sysctl.d/60-disable-ipv6.conf
+
 # ==============================================================================
-# 10. VÉRIFICATION FINALE
+# 10. CONFIGURATION WATCHDOG (AUTO-REBOOT EN CAS DE PLANTAGE)
+# ==============================================================================
+echo -e "${BLUE}[10/10] Configuration du Watchdog (sécurité matérielle)...${NC}"
+
+# 1. Activer le watchdog matériel dans le firmware
+if [ -f /boot/firmware/config.txt ]; then
+    BOOT_CONFIG="/boot/firmware/config.txt"
+elif [ -f /boot/config.txt ]; then
+    BOOT_CONFIG="/boot/config.txt"
+else
+    echo -e "${YELLOW}⚠️ Fichier config.txt non trouvé${NC}"
+    BOOT_CONFIG=""
+fi
+
+if [ -n "$BOOT_CONFIG" ]; then
+    if grep -q "^dtparam=watchdog" "$BOOT_CONFIG"; then
+        sed -i 's/^dtparam=watchdog=.*/dtparam=watchdog=on/' "$BOOT_CONFIG"
+    else
+        echo "dtparam=watchdog=on" >> "$BOOT_CONFIG"
+    fi
+fi
+
+# 2. Charger le module watchdog immédiatement
+modprobe bcm2835_wdt 2>/dev/null || true
+
+# 3. Vérifier que /dev/watchdog existe
+if [ ! -e /dev/watchdog ]; then
+    echo -e "${YELLOW}⚠️ /dev/watchdog non disponible - activation différée au prochain reboot${NC}"
+    # Solution de repli: watchdog logiciel via systemd
+    mkdir -p /etc/systemd/system.conf.d
+    cat > /etc/systemd/system.conf.d/watchdog.conf <<EOF
+[Manager]
+RuntimeWatchdogSec=14s
+ShutdownWatchdogSec=10min
+EOF
+    systemctl daemon-reload
+else
+    # 4. Configuration du service watchdog
+    cat > /etc/watchdog.conf <<'EOF'
+watchdog-device = /dev/watchdog
+watchdog-timeout = 14
+max-load-1 = 24
+max-load-5 = 18
+max-load-15 = 12
+realtime = yes
+priority = 1
+EOF
+
+    # 5. Activer et démarrer watchdog
+    systemctl unmask watchdog 2>/dev/null || true
+    systemctl enable watchdog 2>/dev/null || true
+    systemctl start watchdog 2>/dev/null || true
+fi
+
+# 6. Vérification
+sleep 2
+if systemctl is-active --quiet watchdog 2>/dev/null; then
+    echo -e "${GREEN}✓ Watchdog configuré (auto-reboot en cas de plantage)${NC}"
+else
+    echo -e "${YELLOW}⚠️ Watchdog: activation au prochain reboot nécessaire${NC}"
+    echo -e "${YELLOW}   (Redémarrez le Pi avec: sudo reboot)${NC}"
+fi
+
+# ==============================================================================
+# 11. VÉRIFICATION FINALE
 # ==============================================================================
 echo ""
 echo -e "${GREEN}=========================================="
@@ -879,12 +990,12 @@ echo ""
 echo -e "${BLUE}📡 CONFIGURATION RÉSEAU:${NC}"
 echo -e "   ${GREEN}✓${NC} IP wlan0: ${LOCAL_IP}"
 echo -e "   ${GREEN}✓${NC} SSID: ${SSID}"
-echo -e "   ${GREEN}✓${NC} 🔓 Réseau OUVERT (sans mot de passe)${NC}"
+echo -e "   ${GREEN}✓${NC} Mot de passe: ${WIFI_PASS}${NC}"
 echo ""
 echo -e "${BLUE}📱 CAPTIVE PORTAL:${NC}"
 echo -e "   ${GREEN}✓${NC} Windows: /connecttest.txt"
-echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html"
-echo -e "   ${GREEN}✓${NC} Android: /generate_204"
+echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html (302)"
+echo -e "   ${GREEN}✓${NC} Android: /generate_204 (302)"
 echo -e "   ${GREEN}✓${NC} Samsung: /success.txt"
 echo ""
 echo -e "${BLUE}⚖️ CONFORMITÉ LÉGALE:${NC}"
@@ -899,9 +1010,10 @@ echo -e "   ${GREEN}✓${NC} Pi a Internet (eth0)"
 echo -e "   ${GREEN}✓${NC} Clients WiFi ISOLÉS d'Internet"
 echo -e "   ${GREEN}✓${NC} Captive Portal activé"
 echo -e "   ${GREEN}✓${NC} NetworkManager/wpa_supplicant désactivés"
+echo -e "   ${GREEN}✓${NC} Watchdog activé (auto-reboot)"
 echo ""
 echo -e "${BLUE}🔧 ÉTAT DES SERVICES:${NC}"
-for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved; do
+for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved watchdog; do
     if systemctl is-active --quiet $service; then
         echo -e "   ${GREEN}✓${NC} $service: actif"
     else
@@ -917,13 +1029,6 @@ echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/survie.html"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/legal.html"
 echo -e "   ${GREEN}✓${NC} /data/docs/ (pour tes PDF)"
 echo ""
-echo -e "${YELLOW}🧪 TESTER:${NC}"
-echo "   1. Oublie le réseau SOS-GUIDE sur tes appareils"
-echo "   2. Connecte-toi au WiFi ${SSID} (sans mot de passe)"
-echo "   3. La notification captive portal devrait apparaître"
-echo "   4. Si non: ouvre http://${LOCAL_IP} manuellement"
-echo "   5. Vérifie la page /legal.html"
-echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
 echo "   Vérifier IP       : ip addr show wlan0"
 echo "   Logs WiFi         : sudo journalctl -u hostapd -f"
@@ -932,9 +1037,11 @@ echo "   Test isolation    : ping -I wlan0 8.8.8.8 (doit échouer)"
 echo "   Test DNS          : nslookup google.com (doit retourner 10.0.0.1)"
 echo "   Test Captive      : curl http://${LOCAL_IP}/hotspot-detect.html"
 echo "   Port 53           : sudo ss -tulpn | grep :53"
+echo "   Watchdog status   : sudo systemctl status watchdog"
 echo ""
 echo -e "${MAGENTA}🚀 SOS-GUIDE EST PRÊT POUR LA PRODUCTION !${NC}"
 echo -e "${YELLOW}⚖️ 100% CONFORME LÉGAL FRANCE/SUISSE/EUROPE${NC}"
 echo -e "${BLUE}📱 CAPTIVE PORTAL: Windows/Apple/Android SUPPORTÉS${NC}"
 echo -e "${GREEN}🔧 ARCHITECTURE: dnsmasq (wlan0) + systemd (eth0)${NC}"
+echo -e "${GREEN}🛡️ WATCHDOG: Auto-reboot activé en cas de plantage${NC}"
 echo ""
