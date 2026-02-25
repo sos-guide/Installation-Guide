@@ -21,7 +21,7 @@ WIFI_PASS="Secours2024!"
 
 echo -e "${GREEN}"
 echo "=========================================="
-echo "   SOS-GUIDE v8.1 - VERSION FINALE"
+echo "   SOS-GUIDE - VERSION FINALE"
 echo "   dnsmasq (wlan0) + systemd (eth0)"
 echo "==========================================${NC}"
 echo ""
@@ -58,12 +58,54 @@ systemctl disable avahi-daemon.socket 2>/dev/null || true
 systemctl mask avahi-daemon 2>/dev/null || true
 systemctl mask avahi-daemon.socket 2>/dev/null || true
 
+# Stop ModemManager
+systemctl stop ModemManager 2>/dev/null || true
+systemctl disable ModemManager 2>/dev/null || true
+systemctl mask ModemManager 2>/dev/null || true
+
 # Tuer les processus résiduels
 pkill -f wpa_supplicant 2>/dev/null || true
 pkill -f NetworkManager 2>/dev/null || true
 
 sleep 2
 echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
+
+# NTP - Synchronisation horloge
+cat > /etc/systemd/timesyncd.conf <<EOF
+[Time]
+# Serveurs NTP (seront ignorés si pas d'Internet)
+NTP=0.pool.ntp.org 1.pool.ntp.org
+FallbackNTP=1.1.1.1
+# Ne pas échouer si NTP indisponible
+RootDistanceMaxSec=30
+PollIntervalMinSec=32
+PollIntervalMaxSec=2048
+EOF
+
+systemctl enable systemd-timesyncd
+systemctl restart systemd-timesyncd
+timedatectl set-ntp true
+echo -e "${GREEN}✓ Date configurer${NC}"
+
+# Attendre synchronisation
+echo "⏳ Synchronisation de l'heure (30 secondes)..."
+sleep 30
+
+# Vérifier
+echo ""
+echo "📅 Date actuelle :"
+timedatectl status | grep "Local time"
+echo ""
+
+mkdir -p /etc/nginx/ssl
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+  -keyout /etc/nginx/ssl/sos-guide.key \
+  -out /etc/nginx/ssl/sos-guide.crt \
+  -subj "/C=FR/ST=France/L=Paris/O=SOS-GUIDE/CN=10.0.0.1"
+
+chmod 600 /etc/nginx/ssl/sos-guide.key
+chmod 644 /etc/nginx/ssl/sos-guide.crt
+chown root:root /etc/nginx/ssl/sos-guide.*
 
 # ==============================================================================
 # 2. INSTALLATION DES PAQUETS
@@ -214,10 +256,42 @@ bind-interfaces
 interface=wlan0
 listen-address=10.0.0.1
 
-dhcp-range=10.0.0.100,10.0.0.200,12h
+dhcp-range=10.0.0.100,10.0.0.200,255.255.255.0,24h
 dhcp-option=3,10.0.0.1
 dhcp-option=6,10.0.0.1
 dhcp-rapid-commit
+
+# ============================================
+# 🔴 DOMAINES ANDROID - REDIRECTION CRITIQUE
+# ============================================
+address=/connectivitycheck.gstatic.com/10.0.0.1
+address=/clients3.google.com/10.0.0.1
+address=/clients4.google.com/10.0.0.1
+address=/www.google.com/10.0.0.1
+address=/google.com/10.0.0.1
+address=/android.clients.google.com/10.0.0.1
+address=/connectivitycheck.android.com/10.0.0.1
+
+# ============================================
+# 🍎 DOMAINES APPLE
+# ============================================
+address=/captive.apple.com/10.0.0.1
+address=/hotspot.eap.apple.com/10.0.0.1
+address=/www.apple.com/10.0.0.1
+
+# ============================================
+# 🪟 DOMAINES MICROSOFT
+# ============================================
+address=/msftconnecttest.com/10.0.0.1
+address=/www.msftconnecttest.com/10.0.0.1
+address=/dns.msftncsi.com/10.0.0.1
+
+# ============================================
+# 📱 AUTRES FABRICANTS
+# ============================================
+address=/connectivitycheck.platform.hicloud.com/10.0.0.1
+address=/connect.rom.miui.com/10.0.0.1
+address=/wifi.vivo.com.cn/10.0.0.1
 
 # DNS menteur global
 address=/#/10.0.0.1
@@ -234,6 +308,8 @@ neg-ttl=1
 # Optimisation DHCP
 dhcp-lease-max=100
 dhcp-no-override
+
+port=53
 EOF
 
 systemctl enable dnsmasq
@@ -293,55 +369,85 @@ chown -R www-data /data
 # Configuration Nginx AVEC CAPTIVE PORTAL
 rm -f /etc/nginx/sites-enabled/default
 
-cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
+# Modifier la configuration nginx pour réponses ultra-rapides
+sudo cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
 server {
     listen 80 default_server;
     listen [::]:80 default_server;
+    listen 443 ssl default_server;
+    listen [::]:443 ssl default_server;
     server_name _;
-    
     root /var/www/sos-guide;
     index index.html;
-
+    
+    # Certificat SSL
+    ssl_certificate /etc/nginx/ssl/sos-guide.crt;
+    ssl_certificate_key /etc/nginx/ssl/sos-guide.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+    ssl_session_cache shared:SSL:1m;
+    ssl_session_timeout 5m;    
+    
+    # Désactiver les logs pour performance
     access_log off;
     error_log /dev/null;
-
+    
     # ============================================
-    # SONDES CAPTIVES - RÉPONSES EXACTES
+    # OPTIMISATIONS GÉNÉRALES
+    # ============================================
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    keepalive_timeout 3;
+    types_hash_max_size 2048;
+    
+    # ============================================
+    # SONDES CAPTIVES - RÉPONSES ULTRA-RAPIDES
     # ============================================
     
-    # Microsoft Windows 10/11
-    location = /connecttest.txt {
-        default_type text/plain;
-        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
-        add_header Pragma "no-cache";
-        add_header X-Accel-Buffering "no";
-        return 200 "Microsoft Connect Test";
-    }
-    
-    # Apple iOS / macOS - CORRECTION: Redirection 302
-    location = /hotspot-detect.html {
+    # Android probes
+    location = /generate_204 {
         default_type text/html;
-        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
-        add_header Pragma "no-cache";
+        add_header Cache-Control "no-store";
+        add_header Connection "close";
         return 302 http://10.0.0.1/;
     }
     
-    # Android / Google - CORRECTION: Redirection 302
-    location = /generate_204 {
+    location = /generate_205 {
         default_type text/html;
         add_header Cache-Control "no-store";
         return 302 http://10.0.0.1/;
     }
     
-    # Samsung Android
+    # Apple
+    location = /hotspot-detect.html {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        add_header Connection "close";
+        return 302 http://10.0.0.1/;
+    }
+    
+    # Windows
+    location = /connecttest.txt {
+        default_type text/plain;
+        add_header Cache-Control "no-store";
+        return 200 "Microsoft Connect Test";
+    }
+    
+    # Samsung
     location = /success.txt {
         default_type text/plain;
-        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
+        add_header Cache-Control "no-store";
         return 204;
     }
     
     # Amazon Fire
     location = /fwlink/ {
+        return 302 http://10.0.0.1/;
+    }
+    
+    # Huawei
+    location = /connectivitycheck.platform.hicloud.com/generate_204 {
         return 302 http://10.0.0.1/;
     }
     
@@ -361,6 +467,8 @@ server {
 NGINXEOF
 
 ln -sf /etc/nginx/sites-available/sos-guide /etc/nginx/sites-enabled/
+nginx -t
+systemctl restart nginx
 
 # ==================== PAGE D'ACCUEIL ====================
 cat > /var/www/sos-guide/index.html <<'HTMLEOF'
