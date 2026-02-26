@@ -314,37 +314,37 @@ echo -e "${GREEN}✓ dnsmasq configuré (wlan0 - Captive Portal)${NC}"
 # 8. CONFIGURATION FIREWALL (VERSION CORRIGÉE)
 # ==============================================================================
 echo -e "${BLUE}[8/10] Configuration du firewall...${NC}"
+# Flush complet
 iptables -F
 iptables -t nat -F
-iptables -t filter -F
+iptables -t mangle -F
+
+# Politiques par défaut ultra-strictes
 iptables -P INPUT DROP
-iptables -A INPUT -i lo -j ACCEPT
-iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 iptables -P FORWARD DROP
 iptables -P OUTPUT ACCEPT
 
-# ✅ SSH AUTORISÉ SUR ETH0 !
-iptables -A INPUT -i eth0 -p tcp --dport 22 -j ACCEPT
+# Loopback
+iptables -A INPUT -i lo -j ACCEPT
 
-# wlan0 - Captive Portal
-iptables -A INPUT -i wlan0 -p udp --dport 67:68 -j ACCEPT
-iptables -A INPUT -i wlan0 -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -i wlan0 -p tcp --dport 443 -j ACCEPT
-iptables -A INPUT -i wlan0 -p tcp --dport 53 -j ACCEPT
+# Connexions déjà établies
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
+
+# DNS (dnsmasq)
 iptables -A INPUT -i wlan0 -p udp --dport 53 -j ACCEPT
-iptables -A INPUT -i wlan0 -p icmp -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 53 -j ACCEPT
 
-# eth0 - Internet (Pi seulement)
-iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
-iptables -A INPUT -i eth0 -p tcp --dport 443 -j ACCEPT
-iptables -A INPUT -i eth0 -p icmp -j ACCEPT
+# Nginx HTTP (port 80)
+iptables -A INPUT -i wlan0 -p tcp --dport 80 -j ACCEPT
 
-# Redirection captive (80 et 443 vers lighttpd)
-iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 80
+# REDIRECT HTTPS → Nginx (captive sur port 80)
 iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 80
 
-# 🔒 BLOQUER forwarding wlan0 -> eth0
-iptables -A FORWARD -i wlan0 -o eth0 -j DROP
+# Tout le reste sur wlan0 = DROP (aucun autre port ouvert)
+iptables -A INPUT -i wlan0 -j DROP
+
+# Pas de forwarding internet (sécurité absolue)
+iptables -A FORWARD -j DROP
 
 mkdir -p /etc/iptables
 iptables-save > /etc/iptables/rules.v4
@@ -468,9 +468,9 @@ nginx -t
 systemctl restart nginx
 
 # ==================== PAGE D'ACCUEIL ====================
-cp -r html/ /var/www/html
-chown -R www-data:www-data /var/www/html
-chmod -R 755 /var/www/html
+cp -r html/ /var/www/sos-guide
+chown -R www-data:www-data /var/www/sos-guide
+chmod -R 755 /var/www/sos-guide
 
 systemctl enable nginx
 systemctl restart nginx
