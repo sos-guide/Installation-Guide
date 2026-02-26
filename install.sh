@@ -17,7 +17,6 @@ NC='\033[0m'
 # Configuration
 SSID="⛑️ SOS-GUIDE"
 LOCAL_IP="10.0.0.1"
-WIFI_PASS="Secours2024!"
 
 echo -e "${GREEN}"
 echo "=========================================="
