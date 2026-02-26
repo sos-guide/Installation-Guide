@@ -253,6 +253,9 @@ dhcp-option=3,10.0.0.1
 dhcp-option=6,10.0.0.1
 dhcp-rapid-commit
 
+# DNS menteur global
+address=/#/10.0.0.1
+
 # ============================================
 # 🔴 DOMAINES ANDROID - REDIRECTION CRITIQUE
 # ============================================
@@ -284,9 +287,6 @@ address=/dns.msftncsi.com/10.0.0.1
 address=/connectivitycheck.platform.hicloud.com/10.0.0.1
 address=/connect.rom.miui.com/10.0.0.1
 address=/wifi.vivo.com.cn/10.0.0.1
-
-# DNS menteur global
-address=/#/10.0.0.1
 
 no-resolv
 no-hosts
@@ -338,6 +338,10 @@ iptables -A INPUT -i wlan0 -p icmp -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 80 -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 443 -j ACCEPT
 iptables -A INPUT -i eth0 -p icmp -j ACCEPT
+
+# Redirection captive (80 et 443 vers lighttpd)
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j REDIRECT --to-port 80
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 -j REDIRECT --to-port 80
 
 # 🔒 BLOQUER forwarding wlan0 -> eth0
 iptables -A FORWARD -i wlan0 -o eth0 -j DROP
@@ -464,7 +468,9 @@ nginx -t
 systemctl restart nginx
 
 # ==================== PAGE D'ACCUEIL ====================
-cp html/ /var/www/html
+cp -r html/ /var/www/html
+chown -R www-data:www-data /var/www/html
+chmod -R 755 /var/www/html
 
 systemctl enable nginx
 systemctl restart nginx
