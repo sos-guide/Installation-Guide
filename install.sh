@@ -146,7 +146,7 @@ cat > /etc/systemd/resolved.conf.d/dns.conf <<EOF
 [Resolve]
 DNS=1.1.1.1 8.8.4.4
 FallbackDNS=
-DNSStubListener=yes
+DNSStubListener=no
 DNSOverTLS=no
 LLMNR=no
 MulticastDNS=no
@@ -213,9 +213,7 @@ dhcp-range=10.0.0.100,10.0.0.200,255.255.255.0,24h
 dhcp-option=3,${LOCAL_IP}
 dhcp-option=6,${LOCAL_IP}
 dhcp-rapid-commit
-# DNS menteur global : tout pointe vers le portail
-address=/#/${LOCAL_IP}
-# 🔴 ANDROID - Probes de connectivité (Liste Complète V1.0)
+
 address=/connectivitycheck.gstatic.com/${LOCAL_IP}
 address=/clients3.google.com/${LOCAL_IP}
 address=/clients4.google.com/${LOCAL_IP}
@@ -223,18 +221,22 @@ address=/www.google.com/${LOCAL_IP}
 address=/google.com/${LOCAL_IP}
 address=/android.clients.google.com/${LOCAL_IP}
 address=/connectivitycheck.android.com/${LOCAL_IP}
-# 🍎 APPLE - Captive portal detection
+
 address=/captive.apple.com/${LOCAL_IP}
 address=/hotspot.eap.apple.com/${LOCAL_IP}
 address=/www.apple.com/${LOCAL_IP}
-# 🪟 MICROSOFT - NCSI probes
+
 address=/msftconnecttest.com/${LOCAL_IP}
 address=/www.msftconnecttest.com/${LOCAL_IP}
 address=/dns.msftncsi.com/${LOCAL_IP}
-# 📱 AUTRES FABRICANTS (Liste Complète V1.0)
+
 address=/connectivitycheck.platform.hicloud.com/${LOCAL_IP}
 address=/connect.rom.miui.com/${LOCAL_IP}
 address=/wifi.vivo.com.cn/${LOCAL_IP}
+
+# DNS menteur global : tout pointe vers le portail
+address=/#/${LOCAL_IP}
+
 no-resolv
 no-hosts
 # Logs désactivés (RGPD + performance)
