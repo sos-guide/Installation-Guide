@@ -62,7 +62,7 @@ pkill -f NetworkManager 2>/dev/null || true
 systemctl disable getty@tty2.service 2>/dev/null || true
 systemctl disable getty@tty3.service 2>/dev/null || true
 # Empêcher reboot magique via SysRq (sécurité physique)
-echo 1 > /proc/sys/kernel/sysrq
+echo 0 > /proc/sys/kernel/sysrq
 sleep 2
 echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 
@@ -179,7 +179,6 @@ ieee80211n=1
 # Sécurité WPA2 (Ajout Critique)
 wpa=2
 wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
 rsn_pairwise=CCMP
 wpa_passphrase=${WPA_PASSPHRASE}
 EOF
