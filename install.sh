@@ -180,6 +180,7 @@ chmod 600 /root/wifi_key.txt
 systemctl unmask hostapd 2>/dev/null || true
 systemctl enable hostapd
 systemctl restart hostapd
+sleep 3
 echo -e "${GREEN}✓ hostapd configuré (WPA2 Sécurisé)${NC}"
 echo -e "${YELLOW}⚠️ CLÉ WIFI GÉNÉRÉE : ${WPA_PASSPHRASE}${NC}"
 echo -e "${YELLOW}   (À noter sur le boîtier physique)${NC}"
@@ -191,7 +192,7 @@ echo -e "${BLUE}[7/12] Configuration dnsmasq (wlan0 - Captive Portal)...${NC}"
 echo "DNSMASQ_EXCEPT=lo" | sudo tee -a /etc/default/dnsmasq > /dev/null
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 cat > /etc/dnsmasq.conf <<EOF
-bind-interfaces
+bind-dynamic
 interface=wlan0
 listen-address=${LOCAL_IP}
 
@@ -240,6 +241,7 @@ port=53
 EOF
 systemctl enable dnsmasq
 systemctl restart dnsmasq
+sleep 2  # ← AJOUTÉ
 echo -e "${GREEN}✓ dnsmasq configuré (wlan0 - Captive Portal)${NC}"
 
 # ==============================================================================
@@ -265,6 +267,7 @@ iptables -A INPUT -i eth0 -p tcp --dport 22 -m conntrack --ctstate ESTABLISHED,R
 
 # HTTP UNIQUEMENT (port 443 supprimé)
 iptables -A INPUT -p tcp --dport 80 -m limit --limit 30/second --limit-burst 200 -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 443 -j ACCEPT
 
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
@@ -318,6 +321,8 @@ echo -e "${GREEN}✓ Clients WiFi JAMAIS Internet${NC}"
 echo -e "${BLUE}[9/12] Configuration du serveur web (HTTP + Toutes Sondes)...${NC}"
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
+mkdir -p /etc/ssl/private
+mkdir -p /etc/ssl/certs
 
 if [ -d "html" ]; then
     cp -r html/* /var/www/sos-guide/
@@ -326,12 +331,26 @@ fi
 chown -R www-data:www-data /var/www/sos-guide
 chmod -R 755 /var/www/sos-guide
 
+# ==============================================================================
+# GÉNÉRATION CERTIFICAT SSL (Pour bloc HTTPS iOS 17+)
+# ==============================================================================
+echo "🔐 Génération certificat SSL auto-signé (HTTPS redirect uniquement)..."
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/ssl/private/sos-guide.key \
+    -out /etc/ssl/certs/sos-guide.crt \
+    -subj "/C=FR/ST=Emergency/L=Local/O=SOS-GUIDE/CN=10.0.0.1"
+chmod 600 /etc/ssl/private/sos-guide.key
+echo -e "${GREEN}✓ Certificat SSL généré${NC}"
+
 rm -f /etc/nginx/sites-enabled/default
 cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
 # ==============================================================================
-# SOS-GUIDE - Configuration Nginx (HTTP-ONLY)
+# SOS-GUIDE - Configuration Nginx (HTTP-ONLY + HTTPS Redirect)
 # ==============================================================================
 
+# ==============================================================================
+# BLOC HTTP (80) : CONTENU PRINCIPAL
+# ==============================================================================
 server {
     listen 80 default_server;
     server_name _;
@@ -348,55 +367,63 @@ server {
     types_hash_max_size 2048;
 
     # ============================================
-    # SONDES CAPTIVES - RÉPONSES ULTRA-RAPIDES
+    # SONDES CAPTIVES - RÉPONSES CORRECTES
     # ============================================
-    
+
+    # Android Google - DOIT retourner 204 vide
     location = /generate_204 {
-        default_type text/html;
-        add_header Cache-Control "no-store, no-cache, must-revalidate";
+        default_type text/plain;
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
+        add_header Content-Length "0";
         add_header Connection "close";
-        add_header X-Robots-Tag "noindex, nofollow";
-        return 302 http://10.0.0.1/;
+        return 204;
     }
-    
+
+    # Android alternatif
     location = /generate_205 {
-        default_type text/html;
+        default_type text/plain;
         add_header Cache-Control "no-store";
-        return 302 http://10.0.0.1/;
+        return 204;
     }
-    
+
+    # Apple - DOIT retourner HTML valide avec META
     location = /hotspot-detect.html {
         default_type text/html;
-        add_header Cache-Control "no-store, no-cache, must-revalidate";
+        add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
         add_header Connection "close";
         add_header X-Robots-Tag "noindex, nofollow";
-        return 302 http://10.0.0.1/;
+        return 200 '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=http://10.0.0.1/"/></head><body></body></html>';
     }
-    
+
+    # Windows
     location = /connecttest.txt {
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 200 "Microsoft Connect Test";
     }
-    
+
+    # Samsung
     location = /success.txt {
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 204;
     }
-    
+
+    # Amazon Fire OS
     location = /fwlink/ {
         default_type text/html;
         add_header Cache-Control "no-store";
         return 302 http://10.0.0.1/;
     }
-    
+
+    # Huawei/HiLink
     location ~* ^/connectivitycheck\.platform\.hicloud\.com {
         default_type text/html;
         add_header Cache-Control "no-store";
         return 302 http://10.0.0.1/;
     }
-    
+
+    # Xiaomi
     location ~* ^/connect\.rom\.miui\.com {
         default_type text/html;
         add_header Cache-Control "no-store";
@@ -459,6 +486,26 @@ server {
         access_log off;
         log_not_found off;
     }
+}
+
+# ==============================================================================
+# BLOC HTTPS (443) : REDIRECTION VERS HTTP (SÉPARÉ !)
+# ==============================================================================
+server {
+    listen 443 ssl;
+    server_name _;
+
+    # Certificat auto-signé (juste pour accepter connexion iOS 17+)
+    ssl_certificate /etc/ssl/certs/sos-guide.crt;
+    ssl_certificate_key /etc/ssl/private/sos-guide.key;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5:!3DES;
+
+    access_log off;
+    error_log /dev/null;
+
+    # Redirection immédiate vers HTTP
+    return 301 http://$host$request_uri;
 }
 NGINXEOF
 
@@ -636,8 +683,8 @@ echo -e "   ${YELLOW}   (À noter sur affichage papier)${NC}"
 echo ""
 echo -e "${BLUE}📱 CAPTIVE PORTAL:${NC}"
 echo -e "   ${GREEN}✓${NC} Windows: /connecttest.txt → 200"
-echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html → 302"
-echo -e "   ${GREEN}✓${NC} Android: /generate_204 → 302"
+echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html → 200 + META"
+echo -e "   ${GREEN}✓${NC} Android: /generate_204 → 204"
 echo -e "   ${GREEN}✓${NC} Samsung: /success.txt → 204"
 echo ""
 echo -e "${BLUE}⚖️ CONFORMITÉ LÉGALE:${NC}"
@@ -679,6 +726,6 @@ echo "   Port 80           : sudo ss -tulpn | grep :80"
 echo "   Watchdog status   : sudo systemctl status watchdog"
 echo "   Hash intégrité    : sha256sum -c /root/integrity.hash"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE v3.0 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE v1.0 EST PRÊT POUR LA PRODUCTION !${NC}"
 echo -e "${YELLOW}⚠️ N'OUBLIEZ PAS DE NOTER LA CLÉ WIFI SUR LE BOÎTIER${NC}"
 echo ""
