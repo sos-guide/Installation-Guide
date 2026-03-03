@@ -27,6 +27,15 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
+if ! ip link show wlan0 &>/dev/null; then
+    echo -e "${RED}❌ Interface wlan0 non détectée — vérifiez que le WiFi est actif${NC}"
+    exit 1
+fi
+
+if ! ip link show eth0 &>/dev/null; then
+    echo -e "${YELLOW}⚠️  Interface eth0 non détectée — le Pi n'aura pas accès Internet${NC}"
+fi
+
 # ==============================================================================
 # 1. NETTOYAGE
 # ==============================================================================
@@ -42,7 +51,7 @@ pkill -f wpa_supplicant 2>/dev/null || true
 pkill -f NetworkManager 2>/dev/null || true
 systemctl disable getty@tty2.service 2>/dev/null || true
 systemctl disable getty@tty3.service 2>/dev/null || true
-echo 0 > /proc/sys/kernel/sysrq
+echo 1 > /proc/sys/kernel/sysrq
 sleep 2
 echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 
@@ -60,8 +69,14 @@ systemctl enable systemd-timesyncd
 systemctl restart systemd-timesyncd
 timedatectl set-ntp true
 echo -e "${GREEN}✓ Configuration NTP${NC}"
-echo "⏳ Synchronisation de l'heure (30 secondes)..."
-sleep 30
+echo "⏳ Attente synchronisation NTP (max 60s)..."
+for i in $(seq 1 12); do
+    if timedatectl show --property=NTPSynchronized --value 2>/dev/null | grep -q "yes"; then
+        echo -e "${GREEN}✓ Heure synchronisée${NC}"
+        break
+    fi
+    sleep 5
+done
 echo "📅 Date actuelle : $(date '+%a %d/%m/%Y %H:%M:%S')"
 echo ""
 
@@ -139,6 +154,10 @@ echo -e "${GREEN}✓ systemd-resolved configuré (eth0)${NC}"
 # 6. HOSTAPD
 # ==============================================================================
 echo -e "${BLUE}[6/12] Configuration du Point d'Accès WiFi (WPA2)...${NC}"
+TS=$(date +%Y%m%d_%H%M%S)
+[ -d /etc/nginx ] && cp -a /etc/nginx /etc/nginx.bak.$TS 2>/dev/null || true
+[ -d /etc/hostapd ] && cp -a /etc/hostapd /etc/hostapd.bak.$TS 2>/dev/null || true
+[ -f /etc/dnsmasq.conf ] && cp /etc/dnsmasq.conf /etc/dnsmasq.conf.bak.$TS 2>/dev/null || true
 mkdir -p /etc/hostapd
 cat > /etc/hostapd/hostapd.conf <<EOF
 interface=wlan0
@@ -305,11 +324,31 @@ mkdir -p /data/docs
 mkdir -p /etc/ssl/private
 mkdir -p /etc/ssl/certs
 
-if [ -d "html" ]; then
+if [ -d "html" ] && [ -f "html/index.html" ]; then
     cp -r html/* /var/www/sos-guide/
     echo -e "${GREEN}✓ Fichiers HTML copiés dans /var/www/sos-guide/${NC}"
 else
-    echo -e "${YELLOW}⚠️  Dossier html/ absent — contenu web non copié${NC}"
+    echo -e "${YELLOW}⚠️  Dossier html/ absent ou incomplet — création d'une page d'accueil minimale${NC}"
+    cat > /var/www/sos-guide/index.html <<'HTMLEOF'
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>⛑️ SOS-GUIDE</title>
+<style>body{font-family:sans-serif;text-align:center;padding:2em;background:#1a1a2e;color:#eee}
+h1{color:#e94560}p{font-size:1.2em}.num{font-size:2em;color:#e94560;font-weight:bold}</style>
+</head>
+<body>
+<h1>⛑️ SOS-GUIDE</h1>
+<p>Système d'information d'urgence actif</p>
+<hr>
+<p>🚨 Numéros d'urgence</p>
+<p><span class="num">15</span> SAMU &nbsp;
+   <span class="num">17</span> Police &nbsp;
+   <span class="num">18</span> Pompiers &nbsp;
+   <span class="num">112</span> Urgences EU</p>
+</body></html>
+HTMLEOF
+    echo -e "${GREEN}✓ Page d'accueil minimale créée${NC}"
 fi
 
 chown -R www-data:www-data /var/www/sos-guide
@@ -613,8 +652,7 @@ else
 fi
 
 if [ -f /root/integrity.hash ]; then
-    if [ ! -f /etc/rc.local ]; then
-        cat > /etc/rc.local << 'RCEOF'
+    cat > /usr/local/bin/sos-guide-boot-check.sh << 'BOOTEOF'
 #!/bin/bash
 if [ -f /root/integrity.hash ]; then
     sha256sum -c /root/integrity.hash >/dev/null 2>&1 || {
@@ -622,8 +660,6 @@ if [ -f /root/integrity.hash ]; then
         poweroff
     }
 fi
-
-sleep 5
 
 if ! iptables -C FORWARD -i wlan0 -o eth0 -j DROP 2>/dev/null; then
     logger "SOS-GUIDE: CRITIQUE - Isolation Internet COMPROMISE"
@@ -638,32 +674,125 @@ if iptables -t nat -L POSTROUTING -n 2>/dev/null | grep -q "MASQUERADE\|SNAT"; t
     logger "SOS-GUIDE: ALERTE - Règle NAT sortante détectée (SUPPRIMÉE)"
     iptables -t nat -F POSTROUTING
 fi
+BOOTEOF
+    chmod +x /usr/local/bin/sos-guide-boot-check.sh
 
-exit 0
-RCEOF
-        chmod +x /etc/rc.local
-        if ! systemctl list-unit-files 2>/dev/null | grep -q rc-local; then
-            cat > /etc/systemd/system/rc-local.service << 'SVC'
+    cat > /etc/systemd/system/sos-guide-boot.service << 'SVC'
 [Unit]
-Description=/etc/rc.local Compatibility
-ConditionPathExists=/etc/rc.local
+Description=SOS-GUIDE Boot Integrity & Firewall Check
+After=network.target iptables.service netfilter-persistent.service
+Wants=network.target
+
 [Service]
-Type=forking
-ExecStart=/etc/rc.local start
-TimeoutSec=0
-StandardOutput=tty
+Type=oneshot
+ExecStartPre=/bin/sleep 5
+ExecStart=/usr/local/bin/sos-guide-boot-check.sh
 RemainAfterExit=yes
+StandardOutput=journal
+StandardError=journal
+
 [Install]
 WantedBy=multi-user.target
 SVC
-            systemctl daemon-reload
-            systemctl enable rc-local.service 2>/dev/null || true
-        fi
-    fi
-    echo -e "${GREEN}✓ Vérification d'intégrité au boot activée${NC}"
+
+    systemctl daemon-reload
+    systemctl enable sos-guide-boot.service 2>/dev/null || true
+    echo -e "${GREEN}✓ Service sos-guide-boot.service activé (remplace rc.local)${NC}"
 else
     echo -e "${YELLOW}⚠️  Hash d'intégrité non généré - vérification désactivée${NC}"
 fi
+
+# ==============================================================================
+# HEALTH CHECK TIMER (toutes les 5 minutes)
+# ==============================================================================
+cat > /usr/local/bin/sos-guide-health.sh << 'HEALTHEOF'
+#!/bin/bash
+ERRORS=0
+
+for svc in hostapd dnsmasq nginx; do
+    if ! systemctl is-active --quiet $svc; then
+        logger "SOS-GUIDE: SERVICE $svc DOWN - redémarrage"
+        systemctl restart $svc 2>/dev/null || true
+        ERRORS=$((ERRORS+1))
+    fi
+done
+
+if ! iptables -C FORWARD -i wlan0 -o eth0 -j DROP 2>/dev/null; then
+    logger "SOS-GUIDE: ISOLATION COMPROMISE - restauration firewall"
+    iptables -P FORWARD DROP
+    iptables -A FORWARD -i wlan0 -o eth0 -j DROP
+    iptables -A FORWARD -i wlan0 -j DROP
+    ERRORS=$((ERRORS+1))
+fi
+
+[ $ERRORS -gt 0 ] && logger "SOS-GUIDE: health-check: $ERRORS anomalie(s) corrigée(s)"
+exit 0
+HEALTHEOF
+chmod +x /usr/local/bin/sos-guide-health.sh
+
+cat > /etc/systemd/system/sos-guide-health.service << 'SVC'
+[Unit]
+Description=SOS-GUIDE Health Check
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sos-guide-health.sh
+SVC
+
+cat > /etc/systemd/system/sos-guide-health.timer << 'TMR'
+[Unit]
+Description=SOS-GUIDE Health Check toutes les 5 minutes
+
+[Timer]
+OnBootSec=2min
+OnUnitActiveSec=5min
+Unit=sos-guide-health.service
+
+[Install]
+WantedBy=timers.target
+TMR
+
+systemctl daemon-reload
+systemctl enable sos-guide-health.timer
+systemctl start sos-guide-health.timer
+echo -e "${GREEN}✓ Health check timer activé (toutes les 5 min)${NC}"
+
+# ==============================================================================
+# CERTIFICAT SSL - RENOUVELLEMENT AUTOMATIQUE (annuel)
+# ==============================================================================
+cat > /usr/local/bin/sos-guide-renew-cert.sh << 'CERTEOF'
+#!/bin/bash
+openssl req -x509 -nodes -days 365 -newkey rsa:2048     -keyout /etc/ssl/private/sos-guide.key     -out /etc/ssl/certs/sos-guide.crt     -subj "/C=FR/ST=Emergency/L=Local/O=SOS-GUIDE/CN=10.0.0.1" 2>/dev/null
+chmod 600 /etc/ssl/private/sos-guide.key
+systemctl reload nginx 2>/dev/null || true
+logger "SOS-GUIDE: Certificat SSL renouvelé"
+CERTEOF
+chmod +x /usr/local/bin/sos-guide-renew-cert.sh
+
+cat > /etc/systemd/system/sos-guide-renew-cert.service << 'SVC'
+[Unit]
+Description=SOS-GUIDE SSL Certificate Renewal
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/sos-guide-renew-cert.sh
+SVC
+
+cat > /etc/systemd/system/sos-guide-renew-cert.timer << 'TMR'
+[Unit]
+Description=Renouvellement certificat SSL SOS-GUIDE (annuel)
+
+[Timer]
+OnCalendar=annually
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+TMR
+
+systemctl daemon-reload
+systemctl enable sos-guide-renew-cert.timer
+echo -e "${GREEN}✓ Renouvellement SSL automatique activé (annuel)${NC}"
 
 # ==============================================================================
 # RÉSUMÉ FINAL
@@ -707,6 +836,18 @@ for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved watchdog;
         echo -e "   ${RED}✗${NC} $service: inactif"
     fi
 done
+for service in sos-guide-boot sos-guide-renew-cert.timer; do
+    if systemctl is-enabled --quiet $service 2>/dev/null; then
+        echo -e "   ${GREEN}✓${NC} $service: activé (déclenchement différé)"
+    else
+        echo -e "   ${RED}✗${NC} $service: non activé"
+    fi
+done
+if systemctl is-active --quiet sos-guide-health.timer 2>/dev/null; then
+    echo -e "   ${GREEN}✓${NC} sos-guide-health.timer: actif"
+else
+    echo -e "   ${RED}✗${NC} sos-guide-health.timer: inactif"
+fi
 echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
 echo "   IP wlan0       : ip addr show wlan0"
