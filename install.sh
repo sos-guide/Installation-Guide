@@ -1,10 +1,9 @@
 #!/bin/bash
 # ==============================================================================
-# SOS-GUIDE - INSTALLATION MASTER SÉCURISÉE v1.0
+# SOS-GUIDE - INSTALLATION MASTER SÉCURISÉE v1.1
 # ==============================================================================
 set -e
 
-# Couleurs pour l'affichage
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -12,43 +11,33 @@ BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
 NC='\033[0m'
 
-# Configuration
 SSID="⛑️ SOS-GUIDE"
 LOCAL_IP="10.0.0.1"
-WLAN_SUBNET="10.0.0.0/24"
-# Génération d'une clé WPA2 forte (12 caractères aléatoires)
 WPA_PASSPHRASE=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 12)
 
 echo -e "${GREEN}"
 echo "================================================"
 echo "   SOS-GUIDE - Emergency Offline Survival System"
-echo "================================================${NC}"
+echo "   v1.1 - Installation Sécurisée"
+echo -e "================================================${NC}"
 echo ""
 
+if [ "$(id -u)" -ne 0 ]; then
+    echo -e "${RED}❌ Ce script doit être exécuté en root (sudo ./install.sh)${NC}"
+    exit 1
+fi
+
 # ==============================================================================
-# 1. NETTOYAGE DES GESTIONNAIRES CONFLICTUELS
+# 1. NETTOYAGE
 # ==============================================================================
 echo -e "${BLUE}[1/12] Nettoyage des gestionnaires réseau conflictuels...${NC}"
-systemctl stop bluetooth 2>/dev/null || true
-systemctl disable bluetooth 2>/dev/null || true
-systemctl mask bluetooth 2>/dev/null || true
-systemctl stop NetworkManager 2>/dev/null || true
-systemctl disable NetworkManager 2>/dev/null || true
-systemctl mask NetworkManager 2>/dev/null || true
-systemctl stop wpa_supplicant 2>/dev/null || true
-systemctl disable wpa_supplicant 2>/dev/null || true
-systemctl mask wpa_supplicant 2>/dev/null || true
+for svc in bluetooth NetworkManager wpa_supplicant avahi-daemon avahi-daemon.socket ModemManager; do
+    systemctl stop $svc 2>/dev/null || true
+    systemctl disable $svc 2>/dev/null || true
+    systemctl mask $svc 2>/dev/null || true
+done
 systemctl stop dhcpcd 2>/dev/null || true
 systemctl disable dhcpcd 2>/dev/null || true
-systemctl stop avahi-daemon 2>/dev/null || true
-systemctl stop avahi-daemon.socket 2>/dev/null || true
-systemctl disable avahi-daemon 2>/dev/null || true
-systemctl disable avahi-daemon.socket 2>/dev/null || true
-systemctl mask avahi-daemon 2>/dev/null || true
-systemctl mask avahi-daemon.socket 2>/dev/null || true
-systemctl stop ModemManager 2>/dev/null || true
-systemctl disable ModemManager 2>/dev/null || true
-systemctl mask ModemManager 2>/dev/null || true
 pkill -f wpa_supplicant 2>/dev/null || true
 pkill -f NetworkManager 2>/dev/null || true
 systemctl disable getty@tty2.service 2>/dev/null || true
@@ -58,12 +47,11 @@ sleep 2
 echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 
 # ==============================================================================
-# NTP - Synchronisation horloge
+# NTP
 # ==============================================================================
 cat > /etc/systemd/timesyncd.conf <<EOF
 [Time]
 NTP=0.pool.ntp.org 1.pool.ntp.org
-FallbackNTP=1.1.1.1
 RootDistanceMaxSec=30
 PollIntervalMinSec=32
 PollIntervalMaxSec=2048
@@ -74,11 +62,11 @@ timedatectl set-ntp true
 echo -e "${GREEN}✓ Configuration NTP${NC}"
 echo "⏳ Synchronisation de l'heure (30 secondes)..."
 sleep 30
-echo "📅 Date actuelle : $(timedatectl status | grep 'Local time' | awk '{print $2,$3}')"
+echo "📅 Date actuelle : $(date '+%a %d/%m/%Y %H:%M:%S')"
 echo ""
 
 # ==============================================================================
-# 2. INSTALLATION DES PAQUETS
+# 2. PAQUETS
 # ==============================================================================
 echo -e "${BLUE}[2/12] Installation des paquets...${NC}"
 apt update -qq
@@ -87,7 +75,7 @@ apt install -y nginx hostapd dnsmasq iptables-persistent netfilter-persistent sy
 echo -e "${GREEN}✓ Paquets installés${NC}"
 
 # ==============================================================================
-# 3. CONFIGURATION PAYS WIFI
+# 3. PAYS WIFI
 # ==============================================================================
 echo -e "${BLUE}[3/12] Configuration du pays WiFi...${NC}"
 echo "country=FR" > /etc/wpa_supplicant/wpa_supplicant.conf
@@ -95,7 +83,7 @@ rfkill unblock wifi
 echo -e "${GREEN}✓ Pays WiFi configuré (FR)${NC}"
 
 # ==============================================================================
-# 4. CONFIGURATION SYSTEMD-NETWORKD
+# 4. SYSTEMD-NETWORKD
 # ==============================================================================
 echo -e "${BLUE}[4/12] Configuration systemd-networkd...${NC}"
 systemctl enable systemd-networkd
@@ -128,7 +116,7 @@ systemctl restart systemd-networkd
 echo -e "${GREEN}✓ systemd-networkd configuré${NC}"
 
 # ==============================================================================
-# 5. CONFIGURATION SYSTEMD-RESOLVED
+# 5. SYSTEMD-RESOLVED
 # ==============================================================================
 echo -e "${BLUE}[5/12] Configuration systemd-resolved (eth0 uniquement)...${NC}"
 mkdir -p /etc/systemd/resolved.conf.d
@@ -148,7 +136,7 @@ ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
 echo -e "${GREEN}✓ systemd-resolved configuré (eth0)${NC}"
 
 # ==============================================================================
-# 6. CONFIGURATION HOSTAPD (SÉCURISÉ WPA2)
+# 6. HOSTAPD
 # ==============================================================================
 echo -e "${BLUE}[6/12] Configuration du Point d'Accès WiFi (WPA2)...${NC}"
 mkdir -p /etc/hostapd
@@ -171,7 +159,7 @@ wpa_key_mgmt=WPA-PSK
 rsn_pairwise=CCMP
 wpa_passphrase=${WPA_PASSPHRASE}
 EOF
-cat > /etc/default/hostapd << EOF
+cat > /etc/default/hostapd <<EOF
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 DAEMON_OPTS=""
 EOF
@@ -182,21 +170,19 @@ systemctl enable hostapd
 systemctl restart hostapd
 sleep 3
 echo -e "${GREEN}✓ hostapd configuré (WPA2 Sécurisé)${NC}"
-echo -e "${YELLOW}⚠️ CLÉ WIFI GÉNÉRÉE : ${WPA_PASSPHRASE}${NC}"
-echo -e "${YELLOW}   (À noter sur le boîtier physique)${NC}"
+echo -e "${YELLOW}⚠️  CLÉ WIFI : $(cat /root/wifi_key.txt) (À noter sur le boîtier)${NC}" >&2
 
 # ==============================================================================
-# 7. CONFIGURATION DNSMASQ (TOUTES SONDES + OPTION 114)
+# 7. DNSMASQ
 # ==============================================================================
 echo -e "${BLUE}[7/12] Configuration dnsmasq (wlan0 - Captive Portal)...${NC}"
-echo "DNSMASQ_EXCEPT=lo" | sudo tee -a /etc/default/dnsmasq > /dev/null
+echo "DNSMASQ_EXCEPT=lo" >> /etc/default/dnsmasq
 mv /etc/dnsmasq.conf /etc/dnsmasq.conf.bak 2>/dev/null || true
 cat > /etc/dnsmasq.conf <<EOF
 bind-dynamic
 interface=wlan0
 listen-address=${LOCAL_IP}
 
-# DHCP Configuration
 dhcp-range=10.0.0.100,10.0.0.200,255.255.255.0,24h
 dhcp-option=3,${LOCAL_IP}
 dhcp-option=6,${LOCAL_IP}
@@ -219,11 +205,10 @@ address=/www.apple.com/${LOCAL_IP}
 address=/msftconnecttest.com/${LOCAL_IP}
 address=/www.msftconnecttest.com/${LOCAL_IP}
 address=/dns.msftncsi.com/${LOCAL_IP}
+address=/www.msftncsi.com/${LOCAL_IP}
 address=/connectivitycheck.platform.hicloud.com/${LOCAL_IP}
 address=/connect.rom.miui.com/${LOCAL_IP}
 address=/wifi.vivo.com.cn/${LOCAL_IP}
-
-# DNS menteur global
 address=/#/${LOCAL_IP}
 address=/sos.guide/${LOCAL_IP}
 
@@ -234,18 +219,17 @@ cache-size=0
 local-ttl=1
 min-cache-ttl=1
 neg-ttl=1
-
 dns-forward-max=50
 min-port=4096
 port=53
 EOF
 systemctl enable dnsmasq
 systemctl restart dnsmasq
-sleep 2  # ← AJOUTÉ
+sleep 2
 echo -e "${GREEN}✓ dnsmasq configuré (wlan0 - Captive Portal)${NC}"
 
 # ==============================================================================
-# 8. CONFIGURATION FIREWALL (ISOLATION TOTALE WLAN0 - HTTP ONLY)
+# 8. FIREWALL
 # ==============================================================================
 echo -e "${BLUE}[8/12] Configuration du firewall (Isolation TOTALE wlan0)...${NC}"
 
@@ -265,27 +249,17 @@ iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m conntrack --ctstate NEW -m limit --limit 3/min --limit-burst 3 -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-# HTTP UNIQUEMENT (port 443 supprimé)
-iptables -A INPUT -p tcp --dport 80 -m limit --limit 30/second --limit-burst 200 -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 80 -m limit --limit 30/second --limit-burst 200 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 443 -j ACCEPT
-
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
-
 iptables -A INPUT -i wlan0 -p udp --dport 67 -j ACCEPT
 iptables -A INPUT -i wlan0 -p udp --dport 68 -j ACCEPT
-
 iptables -A INPUT -i wlan0 -p udp --dport 53 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 53 -j ACCEPT
-
-# Nginx HTTP UNIQUEMENT (port 443 supprimé)
-iptables -A INPUT -i wlan0 -p tcp --dport 80 -j ACCEPT
-
 iptables -A INPUT -i wlan0 -j DROP
 
-# NAT - REDIRECTION HTTP VERS PORTAIL
 iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination ${LOCAL_IP}:80
 
-# ISOLATION TOTALE
 iptables -A FORWARD -i wlan0 -o wlan0 -j DROP
 iptables -A FORWARD -i wlan0 -o eth0 -j DROP
 iptables -A FORWARD -i wlan0 -j DROP
@@ -294,31 +268,38 @@ iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACC
 mkdir -p /etc/iptables
 iptables-save > /etc/iptables/rules.v4
 
-if ! grep -q "DNAT.*10.0.0.1" /etc/iptables/rules.v4; then
-    echo -e "${RED}❌ ERREUR CRITIQUE: Règles NAT non sauvegardées${NC}"
+if ! iptables -C FORWARD -i wlan0 -o eth0 -j DROP 2>/dev/null; then
+    echo -e "${RED}❌ ERREUR CRITIQUE: Règle d'isolation Internet manquante${NC}"
     exit 1
 fi
-
-if ! grep -q "\-A FORWARD -i wlan0 -o eth0 -j DROP" /etc/iptables/rules.v4; then
-    echo -e "${RED}❌ ERREUR CRITIQUE: Isolation Internet non sauvegardée${NC}"
-    exit 1
-fi
-
-if ! grep -q "\-A FORWARD -i wlan0 -j DROP" /etc/iptables/rules.v4; then
+if ! iptables -C FORWARD -i wlan0 -j DROP 2>/dev/null; then
     echo -e "${RED}❌ ERREUR CRITIQUE: Filet de sécurité wlan0 manquant${NC}"
+    exit 1
+fi
+if ! iptables -t nat -C PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination ${LOCAL_IP}:80 2>/dev/null; then
+    echo -e "${RED}❌ ERREUR CRITIQUE: Règle NAT PREROUTING manquante${NC}"
     exit 1
 fi
 
 netfilter-persistent save 2>/dev/null || true
 echo 1 > /proc/sys/net/ipv4/ip_forward
-
 echo -e "${GREEN}✓ Firewall configuré (Isolation TOTALE wlan0)${NC}"
 echo -e "${GREEN}✓ Clients WiFi JAMAIS Internet${NC}"
 
 # ==============================================================================
-# 9. SERVEUR WEB HTTP-ONLY + CAPTIVE PORTAL
+# 9. SERVEUR WEB
 # ==============================================================================
 echo -e "${BLUE}[9/12] Configuration du serveur web (HTTP + Toutes Sondes)...${NC}"
+
+if [ -d "/var/www/sos-guide" ]; then
+    echo -e "${YELLOW}ℹ️  Réinstallation détectée — déverrouillage du contenu web...${NC}"
+    chattr -R -i /var/www/sos-guide/ 2>/dev/null && \
+        echo -e "${GREEN}✓ chattr -i levé${NC}" || \
+        echo -e "${YELLOW}⚠️  chattr -i : rien à lever${NC}"
+    chmod -R u+w /var/www/sos-guide/ 2>/dev/null || true
+    echo -e "${GREEN}✓ Permissions d'écriture rétablies${NC}"
+fi
+
 mkdir -p /var/www/sos-guide
 mkdir -p /data/docs
 mkdir -p /etc/ssl/private
@@ -326,15 +307,15 @@ mkdir -p /etc/ssl/certs
 
 if [ -d "html" ]; then
     cp -r html/* /var/www/sos-guide/
+    echo -e "${GREEN}✓ Fichiers HTML copiés dans /var/www/sos-guide/${NC}"
+else
+    echo -e "${YELLOW}⚠️  Dossier html/ absent — contenu web non copié${NC}"
 fi
 
 chown -R www-data:www-data /var/www/sos-guide
 chmod -R 755 /var/www/sos-guide
 
-# ==============================================================================
-# GÉNÉRATION CERTIFICAT SSL (Pour bloc HTTPS iOS 17+)
-# ==============================================================================
-echo "🔐 Génération certificat SSL auto-signé (HTTPS redirect uniquement)..."
+echo "🔐 Génération certificat SSL auto-signé..."
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
     -keyout /etc/ssl/private/sos-guide.key \
     -out /etc/ssl/certs/sos-guide.crt \
@@ -343,14 +324,8 @@ chmod 600 /etc/ssl/private/sos-guide.key
 echo -e "${GREEN}✓ Certificat SSL généré${NC}"
 
 rm -f /etc/nginx/sites-enabled/default
-cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
-# ==============================================================================
-# SOS-GUIDE - Configuration Nginx (HTTP-ONLY + HTTPS Redirect)
-# ==============================================================================
 
-# ==============================================================================
-# BLOC HTTP (80) : CONTENU PRINCIPAL
-# ==============================================================================
+cat > /etc/nginx/sites-available/sos-guide <<'NGINXEOF'
 server {
     listen 80 default_server;
     server_name _;
@@ -366,11 +341,6 @@ server {
     keepalive_timeout 3;
     types_hash_max_size 2048;
 
-    # ============================================
-    # SONDES CAPTIVES - RÉPONSES CORRECTES
-    # ============================================
-
-    # Android Google - DOIT retourner 204 vide
     location = /generate_204 {
         default_type text/plain;
         add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
@@ -379,91 +349,71 @@ server {
         return 204;
     }
 
-    # Android alternatif
     location = /generate_205 {
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 204;
     }
 
-    # Apple - DOIT retourner HTML valide avec META
     location = /hotspot-detect.html {
         default_type text/html;
         add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
         add_header Connection "close";
         add_header X-Robots-Tag "noindex, nofollow";
-        return 200 '<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0;url=http://10.0.0.1/"/></head><body></body></html>';
+        return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
     }
 
-    # Windows
+    location = /library/test/success.html {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
+    }
+
     location = /connecttest.txt {
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 200 "Microsoft Connect Test";
     }
 
-    # Samsung
+    location = /ncsi.txt {
+        default_type text/plain;
+        add_header Cache-Control "no-store";
+        return 200 "Microsoft NCSI";
+    }
+
     location = /success.txt {
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 204;
     }
 
-    # Amazon Fire OS
     location = /fwlink/ {
         default_type text/html;
         add_header Cache-Control "no-store";
         return 302 http://10.0.0.1/;
     }
 
-    # Huawei/HiLink
-    location ~* ^/connectivitycheck\.platform\.hicloud\.com {
-        default_type text/html;
-        add_header Cache-Control "no-store";
-        return 302 http://10.0.0.1/;
-    }
-
-    # Xiaomi
-    location ~* ^/connect\.rom\.miui\.com {
-        default_type text/html;
-        add_header Cache-Control "no-store";
-        return 302 http://10.0.0.1/;
-    }
-    
-    # ============================================
-    # ENDPOINTS UTILITAIRES
-    # ============================================
-    
     location = /health {
         access_log off;
         default_type text/plain;
-        add_header Content-Type text/plain;
         add_header Cache-Control "no-store";
         return 200 "OK\n";
     }
-    
+
     location = /ping {
         access_log off;
         default_type text/plain;
         add_header Cache-Control "no-store";
         return 200 "SOS-GUIDE reachable\n";
     }
-    
-    # ============================================
-    # DOCUMENTS PDF
-    # ============================================
+
     location /docs/ {
         alias /data/docs/;
-        autoindex on;
-        autoindex_exact_size off;
-        autoindex_localtime on;
+        autoindex off;
         add_header Cache-Control "public, max-age=3600";
         add_header X-Content-Type-Options "nosniff";
     }
-    
-    # ============================================
-    # CONTENU PRINCIPAL
-    # ============================================
+
     location / {
         try_files $uri $uri/ /index.html;
         add_header Cache-Control "no-store, no-cache, must-revalidate";
@@ -473,14 +423,13 @@ server {
         add_header X-Frame-Options "SAMEORIGIN";
         add_header X-Robots-Tag "noindex, nofollow";
     }
-    
-    # Protection fichiers sensibles
+
     location ~ /\. {
         deny all;
         access_log off;
         log_not_found off;
     }
-    
+
     location ~* \.(env|ini|log|sh|sql|conf|cfg)$ {
         deny all;
         access_log off;
@@ -488,14 +437,10 @@ server {
     }
 }
 
-# ==============================================================================
-# BLOC HTTPS (443) : REDIRECTION VERS HTTP (SÉPARÉ !)
-# ==============================================================================
 server {
-    listen 443 ssl;
+    listen 443 ssl default_server;
     server_name _;
 
-    # Certificat auto-signé (juste pour accepter connexion iOS 17+)
     ssl_certificate /etc/ssl/certs/sos-guide.crt;
     ssl_certificate_key /etc/ssl/private/sos-guide.key;
     ssl_protocols TLSv1.2 TLSv1.3;
@@ -504,8 +449,56 @@ server {
     access_log off;
     error_log /dev/null;
 
-    # Redirection immédiate vers HTTP
-    return 301 http://$host$request_uri;
+    root /var/www/sos-guide;
+    index index.html;
+
+    location = /hotspot-detect.html {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
+    }
+
+    location / {
+        try_files $uri $uri/ /index.html;
+        add_header Cache-Control "no-store, no-cache, must-revalidate";
+        add_header X-Content-Type-Options "nosniff";
+    }
+}
+
+server {
+    listen 80;
+    server_name connectivitycheck.platform.hicloud.com;
+    access_log off;
+    error_log /dev/null;
+    location / {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 302 http://10.0.0.1/;
+    }
+}
+
+server {
+    listen 80;
+    server_name connect.rom.miui.com;
+    access_log off;
+    error_log /dev/null;
+    location / {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 302 http://10.0.0.1/;
+    }
+}
+
+server {
+    listen 80;
+    server_name wifi.vivo.com.cn;
+    access_log off;
+    error_log /dev/null;
+    location / {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 302 http://10.0.0.1/;
+    }
 }
 NGINXEOF
 
@@ -513,29 +506,39 @@ ln -sf /etc/nginx/sites-available/sos-guide /etc/nginx/sites-enabled/
 nginx -t
 systemctl restart nginx
 systemctl enable nginx
-echo -e "${GREEN}✓ Serveur web configuré (HTTP + Toutes Sondes)${NC}"
+echo -e "${GREEN}✓ Serveur web configuré (HTTP + HTTPS + Toutes Sondes)${NC}"
 
 # ==============================================================================
-# 10. MONTAGE LECTURE SEULE (WEB)
+# 10. VERROUILLAGE WEB
 # ==============================================================================
 echo -e "${BLUE}[10/12] Verrouillage du contenu Web (Read-Only)...${NC}"
-if ! grep -q "/var/www.*bind,ro" /etc/fstab; then
-    echo "/var/www /var/www none bind,ro 0 0" >> /etc/fstab
-    mount -o remount,bind,ro /var/www 2>/dev/null || true
+
+sed -i '/\/var\/www.*bind/d' /etc/fstab 2>/dev/null || true
+
+chmod -R a-w /var/www/sos-guide/
+echo -e "${GREEN}✓ /var/www/sos-guide/ protégé (chmod a-w)${NC}"
+
+if command -v chattr &>/dev/null; then
+    chattr -R +i /var/www/sos-guide/ 2>/dev/null && \
+        echo -e "${GREEN}✓ /var/www/sos-guide/ verrouillé (chattr +i)${NC}" || \
+        echo -e "${YELLOW}⚠️  chattr non supporté sur ce FS (ext4 requis)${NC}"
+else
+    echo -e "${YELLOW}⚠️  chattr non disponible — protection chmod uniquement${NC}"
 fi
-echo -e "${GREEN}✓ /var/www monté en lecture seule (fstab)${NC}"
+
+echo -e "${YELLOW}   ℹ️  Pour modifier le contenu : chattr -R -i /var/www/sos-guide/ && chmod -R u+w /var/www/sos-guide/${NC}"
 
 # ==============================================================================
-# SYSTCTL - Optimisations réseau et sécurité
+# SYSCTL
 # ==============================================================================
-cat <<EOF | sudo tee /etc/sysctl.d/60-disable-ipv6.conf
+cat > /etc/sysctl.d/60-disable-ipv6.conf <<EOF
 net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1
 net.ipv6.conf.lo.disable_ipv6 = 1
 net.ipv6.conf.wlan0.disable_ipv6 = 1
 net.ipv6.conf.eth0.disable_ipv6 = 1
 EOF
-cat <<EOF | sudo tee /etc/sysctl.d/50-anti-spoofing.conf
+cat > /etc/sysctl.d/50-anti-spoofing.conf <<EOF
 net.ipv4.ip_forward = 1
 net.ipv4.conf.all.forwarding = 1
 net.ipv4.conf.wlan0.forwarding = 1
@@ -549,15 +552,14 @@ sysctl -p /etc/sysctl.d/60-disable-ipv6.conf 2>/dev/null || true
 echo -e "${GREEN}✓ Optimisations sysctl appliquées${NC}"
 
 # ==============================================================================
-# 11. CONFIGURATION WATCHDOG
+# 11. WATCHDOG
 # ==============================================================================
-echo -e "${BLUE}[11/12] Configuration du Watchdog (sécurité matérielle)...${NC}"
+echo -e "${BLUE}[11/12] Configuration du Watchdog...${NC}"
 if [ -f /boot/firmware/config.txt ]; then
     BOOT_CONFIG="/boot/firmware/config.txt"
 elif [ -f /boot/config.txt ]; then
     BOOT_CONFIG="/boot/config.txt"
 else
-    echo -e "${YELLOW}⚠️ Fichier config.txt non trouvé${NC}"
     BOOT_CONFIG=""
 fi
 if [ -n "$BOOT_CONFIG" ]; then
@@ -569,7 +571,7 @@ if [ -n "$BOOT_CONFIG" ]; then
 fi
 modprobe bcm2835_wdt 2>/dev/null || true
 if [ ! -e /dev/watchdog ]; then
-    echo -e "${YELLOW}⚠️ /dev/watchdog non disponible - fallback logiciel${NC}"
+    echo -e "${YELLOW}⚠️  /dev/watchdog non disponible - fallback logiciel${NC}"
     mkdir -p /etc/systemd/system.conf.d
     cat > /etc/systemd/system.conf.d/watchdog.conf <<EOF
 [Manager]
@@ -595,11 +597,11 @@ sleep 2
 if systemctl is-active --quiet watchdog 2>/dev/null; then
     echo -e "${GREEN}✓ Watchdog configuré (auto-reboot)${NC}"
 else
-    echo -e "${YELLOW}⚠️ Watchdog: activation au prochain reboot${NC}"
+    echo -e "${YELLOW}⚠️  Watchdog: activation au prochain reboot${NC}"
 fi
 
 # ==============================================================================
-# 12. INTÉGRITÉ & FINALISATION (SANS CERTIFICATS SSL)
+# 12. INTÉGRITÉ & FINALISATION
 # ==============================================================================
 echo -e "${BLUE}[12/12] Vérification d'intégrité & Finalisation...${NC}"
 
@@ -607,17 +609,13 @@ if [ -f "integrity.hash" ]; then
     mv integrity.hash /root/integrity.hash
 else
     find /var/www/sos-guide -type f -exec sha256sum {} \; > /root/integrity.hash
-    find /etc/nginx/sites-available/sos-guide -type f -exec sha256sum {} \; >> /root/integrity.hash
+    sha256sum /etc/nginx/sites-available/sos-guide >> /root/integrity.hash
 fi
 
 if [ -f /root/integrity.hash ]; then
     if [ ! -f /etc/rc.local ]; then
         cat > /etc/rc.local << 'RCEOF'
 #!/bin/bash
-# ==============================================================================
-# SOS-GUIDE - Vérifications Critiques au Démarrage
-# ==============================================================================
-
 if [ -f /root/integrity.hash ]; then
     sha256sum -c /root/integrity.hash >/dev/null 2>&1 || {
         logger "SOS-GUIDE: INTEGRITE COMPROMISE - SHUTDOWN"
@@ -664,46 +662,42 @@ SVC
     fi
     echo -e "${GREEN}✓ Vérification d'intégrité au boot activée${NC}"
 else
-    echo -e "${YELLOW}⚠️ Hash d'intégrité non généré - vérification désactivée${NC}"
+    echo -e "${YELLOW}⚠️  Hash d'intégrité non généré - vérification désactivée${NC}"
 fi
 
 # ==============================================================================
-# 13. VÉRIFICATION FINALE & RÉSUMÉ
+# RÉSUMÉ FINAL
 # ==============================================================================
 echo ""
 echo -e "${GREEN}=========================================="
-echo "   ✅ CONFIGURATION TERMINÉE !"
-echo "==========================================${NC}"
+echo "   ✅ CONFIGURATION TERMINÉE ! v1.1"
+echo -e "==========================================${NC}"
 echo ""
 echo -e "${BLUE}📡 CONFIGURATION RÉSEAU:${NC}"
-echo -e "   ${GREEN}✓${NC} IP wlan0: ${LOCAL_IP}"
-echo -e "   ${GREEN}✓${NC} SSID: ${SSID}"
-echo -e "   ${YELLOW}⚠️ CLÉ WIFI GÉNÉRÉE : ${WPA_PASSPHRASE}${NC}"
-echo -e "   ${YELLOW}   (À noter sur affichage papier)${NC}"
+echo -e "   ${GREEN}✓${NC} IP wlan0 : ${LOCAL_IP}"
+echo -e "   ${GREEN}✓${NC} SSID     : ${SSID}"
+echo -e "   ${YELLOW}⚠️  CLÉ WIFI : $(cat /root/wifi_key.txt)${NC}"
+echo -e "   ${YELLOW}   → À coller sur le boîtier physique !${NC}"
 echo ""
 echo -e "${BLUE}📱 CAPTIVE PORTAL:${NC}"
-echo -e "   ${GREEN}✓${NC} Windows: /connecttest.txt → 200"
-echo -e "   ${GREEN}✓${NC} Apple: /hotspot-detect.html → 200 + META"
-echo -e "   ${GREEN}✓${NC} Android: /generate_204 → 204"
-echo -e "   ${GREEN}✓${NC} Samsung: /success.txt → 204"
+echo -e "   ${GREEN}✓${NC} Apple iOS/macOS : /hotspot-detect.html → 200 + 'Success'"
+echo -e "   ${GREEN}✓${NC} Android Google  : /generate_204 → 204"
+echo -e "   ${GREEN}✓${NC} Windows 10/11   : /connecttest.txt + /ncsi.txt → 200"
+echo -e "   ${GREEN}✓${NC} Samsung         : /success.txt → 204"
+echo -e "   ${GREEN}✓${NC} Huawei          : server_name hicloud.com → 302"
+echo -e "   ${GREEN}✓${NC} Xiaomi          : server_name miui.com → 302"
+echo -e "   ${GREEN}✓${NC} iOS 17+         : HTTPS 443 → page portail directe"
 echo ""
-echo -e "${BLUE}⚖️ CONFORMITÉ LÉGALE:${NC}"
-echo -e "   ${GREEN}✓${NC} RGPD/CNIL: Aucun log activé"
-echo -e "   ${GREEN}✓${NC} France: Conforme CPCE/LCEN"
-echo -e "   ${GREEN}✓${NC} Suisse: Conforme LTC/OFCOM"
-echo -e "   ${GREEN}✓${NC} UE: Conforme WiFi4EU/GDPR"
-echo ""
-echo -e "${BLUE}🔒 SÉCURITÉ RENFORCÉE:${NC}"
-echo -e "   ${GREEN}✓${NC} Pi a Internet (eth0)"
+echo -e "${BLUE}🔒 SÉCURITÉ:${NC}"
+echo -e "   ${GREEN}✓${NC} Pi accède Internet via eth0"
 echo -e "   ${GREEN}✓${NC} Clients WiFi ISOLÉS d'Internet"
 echo -e "   ${GREEN}✓${NC} Isolation client-client (ap_isolate)"
-echo -e "   ${GREEN}✓${NC} Firewall: SSH rate-limited (3/min)"
-echo -e "   ${GREEN}✓${NC} Firewall: DHCP 67/68 Autorisé"
-echo -e "   ${GREEN}✓${NC} Firewall: Anti-Spoofing & Invalid Drop"
-echo -e "   ${GREEN}✓${NC} HTTP-ONLY: Pas de certificat SSL"
-echo -e "   ${GREEN}✓${NC} Web: Lecture Seule (fstab)"
-echo -e "   ${GREEN}✓${NC} Watchdog: Auto-reboot activé"
-echo -e "   ${GREEN}✓${NC} Intégrité: Hash SHA256 + rc.local"
+echo -e "   ${GREEN}✓${NC} SSH rate-limited (3/min) sur eth0"
+echo -e "   ${GREEN}✓${NC} Port 80 rate-limited (wlan0)"
+echo -e "   ${GREEN}✓${NC} Port 443 ouvert (iOS 17+)"
+echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/ verrouillé (chattr +i + chmod a-w)"
+echo -e "   ${GREEN}✓${NC} Watchdog auto-reboot actif"
+echo -e "   ${GREEN}✓${NC} Intégrité SHA256 vérifiée au boot"
 echo ""
 echo -e "${BLUE}🔧 ÉTAT DES SERVICES:${NC}"
 for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved watchdog; do
@@ -715,17 +709,18 @@ for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved watchdog;
 done
 echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
-echo "   Vérifier IP       : ip addr show wlan0"
-echo "   Logs WiFi         : sudo journalctl -u hostapd -f"
-echo "   Voir règles FW    : sudo iptables -L -n -v"
-echo "   Test isolation    : ping -I wlan0 8.8.8.8 (doit échouer)"
-echo "   Test DNS          : nslookup google.com ${LOCAL_IP} (→ ${LOCAL_IP})"
-echo "   Test Captive      : curl -I http://${LOCAL_IP}/hotspot-detect.html"
-echo "   Health check      : curl http://${LOCAL_IP}/health"
-echo "   Port 80           : sudo ss -tulpn | grep :80"
-echo "   Watchdog status   : sudo systemctl status watchdog"
-echo "   Hash intégrité    : sha256sum -c /root/integrity.hash"
+echo "   IP wlan0       : ip addr show wlan0"
+echo "   Logs WiFi      : journalctl -u hostapd -f"
+echo "   Règles FW      : iptables -L -n -v"
+echo "   Test isolation : ping -I wlan0 8.8.8.8  (doit échouer)"
+echo "   Test DNS       : nslookup google.com ${LOCAL_IP}  (→ ${LOCAL_IP})"
+echo "   Test Apple     : curl -I http://${LOCAL_IP}/hotspot-detect.html"
+echo "   Test Android   : curl -I http://${LOCAL_IP}/generate_204"
+echo "   Test Windows   : curl http://${LOCAL_IP}/connecttest.txt"
+echo "   Health check   : curl http://${LOCAL_IP}/health"
+echo "   Intégrité      : sha256sum -c /root/integrity.hash"
+echo "   Clé WiFi       : cat /root/wifi_key.txt"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE v1.0 EST PRÊT POUR LA PRODUCTION !${NC}"
-echo -e "${YELLOW}⚠️ N'OUBLIEZ PAS DE NOTER LA CLÉ WIFI SUR LE BOÎTIER${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE v1.1 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${YELLOW}⚠️  N'OUBLIEZ PAS DE NOTER LA CLÉ WIFI SUR LE BOÎTIER${NC}"
 echo ""
