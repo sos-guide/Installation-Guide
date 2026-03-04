@@ -365,9 +365,7 @@ server {
     location = /generate_204 {
         default_type text/plain;
         add_header Cache-Control "no-store, no-cache, must-revalidate, max-age=0";
-        add_header Content-Length "0";
-        add_header Connection "close";
-        return 204;
+        return 302 http://10.0.0.1/;
     }
 
     location = /generate_205 {
