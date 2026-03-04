@@ -123,9 +123,6 @@ chmod +x install.sh
 
 # 4. Exécuter en root
 sudo ./install.sh
-
-# 5. Noter la clé WiFi générée (affichée à la fin)
-cat /root/wifi_key.txt
 ```
 
 **⏱️ Temps d'installation :** 10-15 minutes (inclut mise à jour système)
@@ -140,7 +137,6 @@ cat /root/wifi_key.txt
 # 1. Télécharger l'image (.img.gz)
 # 2. Flasher avec BalenaEtcher ou Raspberry Pi Imager
 # 3. Insérer la carte SD et démarrer
-# 4. La clé WiFi est dans /root/wifi_key.txt
 ```
 
 ---
@@ -151,22 +147,13 @@ cat /root/wifi_key.txt
 
 1. **Ouvrir les paramètres Wi-Fi** de votre appareil (téléphone, tablette, ordinateur)
 2. **Rechercher le réseau** : `⛑️ SOS-GUIDE`
-3. **Se connecter** avec la clé WPA2 affichée sur le boîtier
+3. **Se connecter**
 4. **Le portail s'ouvre automatiquement** dans votre navigateur
-5. **Si non automatique** : Ouvrir un navigateur et aller sur `http://10.0.0.1`
+5. **Si non automatique** : Ouvrir un navigateur et aller sur `http://10.0.0.1` ou `http://sos.guide`
 
 ### Pour l'administrateur :
 
 ```bash
-# Adresse IP du Pi
-IP : 10.0.0.1
-
-# SSH (depuis eth0 uniquement)
-ssh pi@10.0.0.1 -p 22
-
-# Clé WiFi (à noter sur le boîtier)
-cat /root/wifi_key.txt
-
 # Logs en temps réel
 sudo journalctl -u hostapd -f
 sudo journalctl -u dnsmasq -f
@@ -314,7 +301,6 @@ vcgencmd measure_temp
 
 - ⚠️ **Le Pi PEUT accéder à Internet** via eth0 (pour mises à jour)
 - ⚠️ **Les clients WiFi NE PEUVENT PAS accéder à Internet**
-- ⚠️ **La clé WiFi est à noter sur le boîtier** (stockée dans `/root/wifi_key.txt`)
 - ⚠️ **SSH n'est accessible QUE depuis eth0** (pas depuis wlan0)
 
 ---
@@ -333,7 +319,7 @@ vcgencmd measure_temp
 │              ┌──────────┴──────────┐                        │
 │              │                     │                        │
 │         [hostapd]            [dnsmasq]                      │
-│        WPA2 + AP              DHCP + DNS                    │
+│        Open + AP              DHCP + DNS                    │
 │              │                     │                        │
 │              └──────────┬──────────┘                        │
 │                         │                                   │
@@ -350,7 +336,7 @@ vcgencmd measure_temp
 
 ### Flux réseau
 
-1. **Client se connecte** → WPA2 authentication (hostapd)
+1. **Client se connecte** → Open (hostapd)
 2. **Client reçoit IP** → DHCP (dnsmasq) + Option 114 (URL portail)
 3. **Client teste Internet** → DNS spoofing vers 10.0.0.1
 4. **Portail s'affiche** → HTTP 200/204 selon sonde (nginx)
@@ -409,7 +395,6 @@ Ce projet est distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE
 - **Site web** : [sos-guide.fr](https://sos-guide.fr)
 - **GitHub** : [github.com/sos-guide](https://github.com/sos-guide)
 - **Email** : contact@sos-guide.fr
-- **Documentation** : [sos-guide.fr/docs](https://sos-guide.fr/docs)
 
 ---
 
