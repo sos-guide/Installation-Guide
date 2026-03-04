@@ -21,7 +21,7 @@ ETH_IFACE=${ETH_IFACE:-eth0}
 echo -e "${GREEN}"
 echo "================================================"
 echo "   SOS-GUIDE - Emergency Offline Survival System"
-echo "   v1.6 - Installation Sécurisée"
+echo "   v1.0 - Installation Sécurisée"
 echo -e "================================================${NC}"
 echo ""
 
