@@ -712,7 +712,7 @@ SVC
 
 systemctl daemon-reload
 systemctl enable sos-guide-boot.service 2>/dev/null || true
-echo -e "${GREEN}✓ Service sos-guide-boot.service activé (remplace rc.local)${NC}"
+echo -e "${GREEN}✓ Service sos-guide-boot.service activé ${NC}"
 
 # ==============================================================================
 # HEALTH CHECK TIMER (toutes les 5 minutes)
@@ -878,7 +878,7 @@ else
 fi
 
 if command -v curl &>/dev/null; then
-    curl -s -o /dev/null -w "%{http_code}" http://${LOCAL_IP}/generate_204 | grep -q "204" \
+    curl -s -o /dev/null -w "%{http_code}" http://${LOCAL_IP}/generate_204 | grep -q "302" \
         && { echo -e "   ${GREEN}✓${NC} Probe Android (generate_204)"; TESTS_OK=$((TESTS_OK+1)); } \
         || echo -e "   ${RED}✗${NC} Probe Android échouée"
 else
