@@ -1,6 +1,6 @@
 #!/bin/bash
 # ==============================================================================
-# SOS-GUIDE - INSTALLATION MASTER SÉCURISÉE v1.1
+# SOS-GUIDE - INSTALLATION v1.0
 # ==============================================================================
 set -e
 
@@ -9,16 +9,19 @@ GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
 MAGENTA='\033[0;35m'
+CYAN='\033[0;36m'
 NC='\033[0m'
 
 SSID="⛑️ SOS-GUIDE"
 LOCAL_IP="10.0.0.1"
-WPA_PASSPHRASE=$(tr -dc 'A-Za-z0-9' < /dev/urandom | head -c 12)
+
+WIFI_IFACE=${WIFI_IFACE:-$(ip -o link show | awk -F': ' '/wl/{print $2; exit}')}
+ETH_IFACE=${ETH_IFACE:-eth0}
 
 echo -e "${GREEN}"
 echo "================================================"
 echo "   SOS-GUIDE - Emergency Offline Survival System"
-echo "   v1.1 - Installation Sécurisée"
+echo "   v1.6 - Installation Sécurisée"
 echo -e "================================================${NC}"
 echo ""
 
@@ -27,13 +30,16 @@ if [ "$(id -u)" -ne 0 ]; then
     exit 1
 fi
 
-if ! ip link show wlan0 &>/dev/null; then
-    echo -e "${RED}❌ Interface wlan0 non détectée — vérifiez que le WiFi est actif${NC}"
+if [ -z "${WIFI_IFACE}" ]; then
+    echo -e "${RED}❌ Aucune interface WiFi détectée — branchez un dongle ou activez le WiFi${NC}"
+    echo -e "${YELLOW}   Override manuel : WIFI_IFACE=wlan0 sudo bash install.sh${NC}"
     exit 1
 fi
 
-if ! ip link show eth0 &>/dev/null; then
-    echo -e "${YELLOW}⚠️  Interface eth0 non détectée — le Pi n'aura pas accès Internet${NC}"
+echo -e "${CYAN}📡 Interface WiFi détectée : ${BOLD}${WIFI_IFACE}${NC}"
+
+if ! ip link show "${ETH_IFACE}" &>/dev/null; then
+    echo -e "${YELLOW}⚠️  Interface ${ETH_IFACE} non détectée — le Pi n'aura pas accès Internet${NC}"
 fi
 
 # ==============================================================================
@@ -51,7 +57,8 @@ pkill -f wpa_supplicant 2>/dev/null || true
 pkill -f NetworkManager 2>/dev/null || true
 systemctl disable getty@tty2.service 2>/dev/null || true
 systemctl disable getty@tty3.service 2>/dev/null || true
-echo 1 > /proc/sys/kernel/sysrq
+
+echo 0 > /proc/sys/kernel/sysrq
 sleep 2
 echo -e "${GREEN}✓ Gestionnaires conflictuels désactivés${NC}"
 
@@ -86,7 +93,8 @@ echo ""
 echo -e "${BLUE}[2/12] Installation des paquets...${NC}"
 apt update -qq
 apt dist-upgrade -y
-apt install -y nginx hostapd dnsmasq iptables-persistent netfilter-persistent systemd-resolved watchdog e2fsprogs
+apt install -y nginx hostapd dnsmasq iptables-persistent netfilter-persistent \
+    systemd-resolved watchdog e2fsprogs curl dnsutils
 echo -e "${GREEN}✓ Paquets installés${NC}"
 
 # ==============================================================================
@@ -153,7 +161,7 @@ echo -e "${GREEN}✓ systemd-resolved configuré (eth0)${NC}"
 # ==============================================================================
 # 6. HOSTAPD
 # ==============================================================================
-echo -e "${BLUE}[6/12] Configuration du Point d'Accès WiFi (WPA2)...${NC}"
+echo -e "${BLUE}[6/12] Configuration du Point d'Accès WiFi (réseau ouvert)...${NC}"
 TS=$(date +%Y%m%d_%H%M%S)
 [ -d /etc/nginx ] && cp -a /etc/nginx /etc/nginx.bak.$TS 2>/dev/null || true
 [ -d /etc/hostapd ] && cp -a /etc/hostapd /etc/hostapd.bak.$TS 2>/dev/null || true
@@ -168,28 +176,23 @@ channel=11
 wmm_enabled=1
 beacon_int=50
 dtim_period=1
-max_num_sta=50
+max_num_sta=20
 country_code=FR
 ap_isolate=1
 ieee80211d=1
 ieee80211n=1
-wpa=2
-wpa_key_mgmt=WPA-PSK
-rsn_pairwise=CCMP
-wpa_passphrase=${WPA_PASSPHRASE}
+auth_algs=1
+wpa=0
 EOF
 cat > /etc/default/hostapd <<EOF
 DAEMON_CONF="/etc/hostapd/hostapd.conf"
 DAEMON_OPTS=""
 EOF
-echo "${WPA_PASSPHRASE}" > /root/wifi_key.txt
-chmod 600 /root/wifi_key.txt
 systemctl unmask hostapd 2>/dev/null || true
 systemctl enable hostapd
 systemctl restart hostapd
 sleep 3
-echo -e "${GREEN}✓ hostapd configuré (WPA2 Sécurisé)${NC}"
-echo -e "${YELLOW}⚠️  CLÉ WIFI : $(cat /root/wifi_key.txt) (À noter sur le boîtier)${NC}" >&2
+echo -e "${GREEN}✓ hostapd configuré (réseau ouvert — sans mot de passe)${NC}"
 
 # ==============================================================================
 # 7. DNSMASQ
@@ -201,46 +204,16 @@ cat > /etc/dnsmasq.conf <<EOF
 bind-dynamic
 interface=wlan0
 listen-address=${LOCAL_IP}
-
-dhcp-range=10.0.0.100,10.0.0.200,255.255.255.0,24h
+dhcp-authoritative
+dhcp-range=${LOCAL_IP%.*}.100,${LOCAL_IP%.*}.200,12h
 dhcp-option=3,${LOCAL_IP}
 dhcp-option=6,${LOCAL_IP}
-dhcp-option=114,http://10.0.0.1/
-dhcp-authoritative
-dhcp-rapid-commit
-dhcp-lease-max=50
-dhcp-no-override
-
-address=/connectivitycheck.gstatic.com/${LOCAL_IP}
-address=/clients3.google.com/${LOCAL_IP}
-address=/clients4.google.com/${LOCAL_IP}
-address=/www.google.com/${LOCAL_IP}
-address=/google.com/${LOCAL_IP}
-address=/android.clients.google.com/${LOCAL_IP}
-address=/connectivitycheck.android.com/${LOCAL_IP}
-address=/captive.apple.com/${LOCAL_IP}
-address=/hotspot.eap.apple.com/${LOCAL_IP}
-address=/www.apple.com/${LOCAL_IP}
-address=/msftconnecttest.com/${LOCAL_IP}
-address=/www.msftconnecttest.com/${LOCAL_IP}
-address=/dns.msftncsi.com/${LOCAL_IP}
-address=/www.msftncsi.com/${LOCAL_IP}
-address=/connectivitycheck.platform.hicloud.com/${LOCAL_IP}
-address=/connect.rom.miui.com/${LOCAL_IP}
-address=/wifi.vivo.com.cn/${LOCAL_IP}
+dhcp-option=114,"http://${LOCAL_IP}/"
 address=/#/${LOCAL_IP}
-address=/sos.guide/${LOCAL_IP}
-
 no-resolv
 no-hosts
-log-queries=0
 cache-size=0
-local-ttl=1
-min-cache-ttl=1
-neg-ttl=1
-dns-forward-max=50
-min-port=4096
-port=53
+log-queries=0
 EOF
 systemctl enable dnsmasq
 systemctl restart dnsmasq
@@ -268,8 +241,8 @@ iptables -A INPUT -p tcp --tcp-flags ALL ALL -j DROP
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m conntrack --ctstate NEW -m limit --limit 3/min --limit-burst 3 -j ACCEPT
 iptables -A INPUT -i eth0 -p tcp --dport 22 -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
-iptables -A INPUT -i wlan0 -p tcp --dport 80 -m limit --limit 30/second --limit-burst 200 -j ACCEPT
-iptables -A INPUT -i wlan0 -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 80  -m limit --limit 30/second --limit-burst 200 -j ACCEPT
+iptables -A INPUT -i wlan0 -p tcp --dport 443 -m limit --limit 30/second --limit-burst 200 -j ACCEPT
 iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 iptables -A INPUT -i wlan0 -p udp --dport 67 -j ACCEPT
 iptables -A INPUT -i wlan0 -p udp --dport 68 -j ACCEPT
@@ -277,10 +250,13 @@ iptables -A INPUT -i wlan0 -p udp --dport 53 -j ACCEPT
 iptables -A INPUT -i wlan0 -p tcp --dport 53 -j ACCEPT
 iptables -A INPUT -i wlan0 -j DROP
 
-iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination ${LOCAL_IP}:80
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 80 \
+    -j DNAT --to-destination ${LOCAL_IP}:80
+iptables -t nat -A PREROUTING -i wlan0 -p tcp --dport 443 \
+    -j DNAT --to-destination ${LOCAL_IP}:80
 
 iptables -A FORWARD -i wlan0 -o wlan0 -j DROP
-iptables -A FORWARD -i wlan0 -o eth0 -j DROP
+iptables -A FORWARD -i wlan0 -o eth0  -j DROP
 iptables -A FORWARD -i wlan0 -j DROP
 iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
 
@@ -295,14 +271,20 @@ if ! iptables -C FORWARD -i wlan0 -j DROP 2>/dev/null; then
     echo -e "${RED}❌ ERREUR CRITIQUE: Filet de sécurité wlan0 manquant${NC}"
     exit 1
 fi
-if ! iptables -t nat -C PREROUTING -i wlan0 -p tcp --dport 80 -j DNAT --to-destination ${LOCAL_IP}:80 2>/dev/null; then
-    echo -e "${RED}❌ ERREUR CRITIQUE: Règle NAT PREROUTING manquante${NC}"
+if ! iptables -t nat -C PREROUTING -i wlan0 -p tcp --dport 80 \
+        -j DNAT --to-destination ${LOCAL_IP}:80 2>/dev/null; then
+    echo -e "${RED}❌ ERREUR CRITIQUE: Règle NAT PREROUTING port 80 manquante${NC}"
+    exit 1
+fi
+if ! iptables -t nat -C PREROUTING -i wlan0 -p tcp --dport 443 \
+        -j DNAT --to-destination ${LOCAL_IP}:80 2>/dev/null; then
+    echo -e "${RED}❌ ERREUR CRITIQUE: Règle NAT PREROUTING port 443 manquante${NC}"
     exit 1
 fi
 
 netfilter-persistent save 2>/dev/null || true
 echo 1 > /proc/sys/net/ipv4/ip_forward
-echo -e "${GREEN}✓ Firewall configuré (Isolation TOTALE wlan0)${NC}"
+echo -e "${GREEN}✓ Firewall configuré (Isolation TOTALE wlan0, HTTP+HTTPS redirigés)${NC}"
 echo -e "${GREEN}✓ Clients WiFi JAMAIS Internet${NC}"
 
 # ==============================================================================
@@ -423,7 +405,13 @@ server {
     location = /success.txt {
         default_type text/plain;
         add_header Cache-Control "no-store";
-        return 204;
+        return 200 "success";
+    }
+
+    location = /canonical.html {
+        default_type text/html;
+        add_header Cache-Control "no-store";
+        return 200 '<meta http-equiv="refresh" content="0;url=http://10.0.0.1/"><title>Success</title>';
     }
 
     location = /fwlink/ {
@@ -497,6 +485,12 @@ server {
         return 200 '<HTML><HEAD><TITLE>Success</TITLE></HEAD><BODY>Success</BODY></HTML>';
     }
 
+    location = /success.txt {
+        default_type text/plain;
+        add_header Cache-Control "no-store";
+        return 200 "success";
+    }
+
     location / {
         try_files $uri $uri/ /index.html;
         add_header Cache-Control "no-store, no-cache, must-revalidate";
@@ -553,7 +547,6 @@ echo -e "${GREEN}✓ Serveur web configuré (HTTP + HTTPS + Toutes Sondes)${NC}"
 echo -e "${BLUE}[10/12] Verrouillage du contenu Web (Read-Only)...${NC}"
 
 sed -i '/\/var\/www.*bind/d' /etc/fstab 2>/dev/null || true
-
 chmod -R a-w /var/www/sos-guide/
 echo -e "${GREEN}✓ /var/www/sos-guide/ protégé (chmod a-w)${NC}"
 
@@ -565,7 +558,8 @@ else
     echo -e "${YELLOW}⚠️  chattr non disponible — protection chmod uniquement${NC}"
 fi
 
-echo -e "${YELLOW}   ℹ️  Pour modifier le contenu : chattr -R -i /var/www/sos-guide/ && chmod -R u+w /var/www/sos-guide/${NC}"
+echo -e "${YELLOW}   ℹ️  Pour modifier le contenu web :${NC}"
+echo -e "   ${CYAN}chattr -R -i /var/www/sos-guide/ && chmod -R u+w /var/www/sos-guide/${NC}"
 
 # ==============================================================================
 # SYSCTL
@@ -585,10 +579,37 @@ net.ipv4.conf.all.arp_ignore = 1
 net.ipv4.conf.all.arp_announce = 2
 net.ipv4.conf.all.accept_source_route = 0
 net.ipv4.conf.all.accept_redirects = 0
+# [FIX 3] sysrq désactivé en production
+kernel.sysrq = 0
 EOF
 sysctl -p /etc/sysctl.d/50-anti-spoofing.conf 2>/dev/null || true
 sysctl -p /etc/sysctl.d/60-disable-ipv6.conf 2>/dev/null || true
-echo -e "${GREEN}✓ Optimisations sysctl appliquées${NC}"
+echo -e "${GREEN}✓ Optimisations sysctl appliquées (sysrq=0)${NC}"
+
+echo -e "${BLUE}[⚡] Optimisations économie d'énergie (usage batterie)...${NC}"
+
+if command -v tvservice &>/dev/null; then
+    tvservice -o 2>/dev/null && echo -e "${GREEN}✓ HDMI désactivé${NC}" || true
+elif [ -f /sys/class/drm/card0/enabled ]; then
+    echo off > /sys/class/drm/card0/enabled 2>/dev/null || true
+fi
+
+grep -q "tvservice -o" /etc/rc.local 2>/dev/null || \
+    sed -i 's|^exit 0|tvservice -o 2>/dev/null \|\| true\nexit 0|' /etc/rc.local 2>/dev/null || true
+
+if [ -f /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor ]; then
+    echo ondemand > /sys/devices/system/cpu/cpu0/cpufreq/scaling_governor 2>/dev/null || true
+    echo -e "${GREEN}✓ Gouverneur CPU → ondemand${NC}"
+fi
+
+if ! grep -q "tmpfs /var/log/nginx" /etc/fstab 2>/dev/null; then
+    echo "tmpfs /var/log/nginx tmpfs defaults,noatime,nosuid,mode=0755,size=10m 0 0" >> /etc/fstab
+    mkdir -p /var/log/nginx
+    mount -t tmpfs tmpfs /var/log/nginx 2>/dev/null || true
+    echo -e "${GREEN}✓ Logs nginx en tmpfs (économie écriture SD)${NC}"
+fi
+
+echo -e "${GREEN}✓ Économie d'énergie configurée${NC}"
 
 # ==============================================================================
 # 11. WATCHDOG
@@ -644,15 +665,11 @@ fi
 # ==============================================================================
 echo -e "${BLUE}[12/12] Vérification d'intégrité & Finalisation...${NC}"
 
-if [ -f "integrity.hash" ]; then
-    mv integrity.hash /root/integrity.hash
-else
-    find /var/www/sos-guide -type f -exec sha256sum {} \; > /root/integrity.hash
-    sha256sum /etc/nginx/sites-available/sos-guide >> /root/integrity.hash
-fi
+find /var/www/sos-guide -type f -exec sha256sum {} \; > /root/integrity.hash
+sha256sum /etc/nginx/sites-available/sos-guide >> /root/integrity.hash
+echo -e "${GREEN}✓ Hash d'intégrité généré (/root/integrity.hash)${NC}"
 
-if [ -f /root/integrity.hash ]; then
-    cat > /usr/local/bin/sos-guide-boot-check.sh << 'BOOTEOF'
+cat > /usr/local/bin/sos-guide-boot-check.sh << 'BOOTEOF'
 #!/bin/bash
 if [ -f /root/integrity.hash ]; then
     sha256sum -c /root/integrity.hash >/dev/null 2>&1 || {
@@ -675,9 +692,9 @@ if iptables -t nat -L POSTROUTING -n 2>/dev/null | grep -q "MASQUERADE\|SNAT"; t
     iptables -t nat -F POSTROUTING
 fi
 BOOTEOF
-    chmod +x /usr/local/bin/sos-guide-boot-check.sh
+chmod +x /usr/local/bin/sos-guide-boot-check.sh
 
-    cat > /etc/systemd/system/sos-guide-boot.service << 'SVC'
+cat > /etc/systemd/system/sos-guide-boot.service << 'SVC'
 [Unit]
 Description=SOS-GUIDE Boot Integrity & Firewall Check
 After=network.target iptables.service netfilter-persistent.service
@@ -695,12 +712,9 @@ StandardError=journal
 WantedBy=multi-user.target
 SVC
 
-    systemctl daemon-reload
-    systemctl enable sos-guide-boot.service 2>/dev/null || true
-    echo -e "${GREEN}✓ Service sos-guide-boot.service activé (remplace rc.local)${NC}"
-else
-    echo -e "${YELLOW}⚠️  Hash d'intégrité non généré - vérification désactivée${NC}"
-fi
+systemctl daemon-reload
+systemctl enable sos-guide-boot.service 2>/dev/null || true
+echo -e "${GREEN}✓ Service sos-guide-boot.service activé (remplace rc.local)${NC}"
 
 # ==============================================================================
 # HEALTH CHECK TIMER (toutes les 5 minutes)
@@ -762,7 +776,10 @@ echo -e "${GREEN}✓ Health check timer activé (toutes les 5 min)${NC}"
 # ==============================================================================
 cat > /usr/local/bin/sos-guide-renew-cert.sh << 'CERTEOF'
 #!/bin/bash
-openssl req -x509 -nodes -days 365 -newkey rsa:2048     -keyout /etc/ssl/private/sos-guide.key     -out /etc/ssl/certs/sos-guide.crt     -subj "/C=FR/ST=Emergency/L=Local/O=SOS-GUIDE/CN=10.0.0.1" 2>/dev/null
+openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+    -keyout /etc/ssl/private/sos-guide.key \
+    -out /etc/ssl/certs/sos-guide.crt \
+    -subj "/C=FR/ST=Emergency/L=Local/O=SOS-GUIDE/CN=10.0.0.1" 2>/dev/null
 chmod 600 /etc/ssl/private/sos-guide.key
 systemctl reload nginx 2>/dev/null || true
 logger "SOS-GUIDE: Certificat SSL renouvelé"
@@ -794,36 +811,134 @@ systemctl daemon-reload
 systemctl enable sos-guide-renew-cert.timer
 echo -e "${GREEN}✓ Renouvellement SSL automatique activé (annuel)${NC}"
 
+cat > /usr/local/bin/sos-guide-update-content.sh << 'UPDATEEOF'
+#!/bin/bash
+# ==============================================================
+# SOS-GUIDE — Mise à jour du contenu web
+# Usage : sudo bash /usr/local/bin/sos-guide-update-content.sh
+# ==============================================================
+set -e
+RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; NC='\033[0m'
+
+if [ "$(id -u)" -ne 0 ]; then
+    echo -e "${RED}Root requis : sudo bash $0${NC}"
+    exit 1
+fi
+
+echo -e "${YELLOW}[1/3] Déverrouillage du contenu web...${NC}"
+chattr -R -i /var/www/sos-guide/ 2>/dev/null || true
+chmod -R u+w /var/www/sos-guide/
+echo -e "${GREEN}✓ Contenu déverrouillé${NC}"
+echo ""
+echo -e "${YELLOW}Modifiez vos fichiers dans /var/www/sos-guide/${NC}"
+echo -e "Appuyez sur [Entrée] quand vous avez terminé..."
+read -r
+
+echo -e "${YELLOW}[2/3] Reverrouillage...${NC}"
+chown -R www-data:www-data /var/www/sos-guide/
+chmod -R a-w /var/www/sos-guide/
+chattr -R +i /var/www/sos-guide/ 2>/dev/null || true
+echo -e "${GREEN}✓ Contenu reverrouillé${NC}"
+
+echo -e "${YELLOW}[3/3] Régénération du hash d'intégrité...${NC}"
+find /var/www/sos-guide -type f -exec sha256sum {} \; > /root/integrity.hash
+sha256sum /etc/nginx/sites-available/sos-guide >> /root/integrity.hash
+echo -e "${GREEN}✓ Hash régénéré — le boot-check ne bloquera pas${NC}"
+echo ""
+echo -e "${GREEN}✅ Mise à jour terminée. Testez : curl http://10.0.0.1/${NC}"
+UPDATEEOF
+chmod +x /usr/local/bin/sos-guide-update-content.sh
+echo -e "${GREEN}✓ Script de mise à jour créé (/usr/local/bin/sos-guide-update-content.sh)${NC}"
+
 # ==============================================================================
 # RÉSUMÉ FINAL
 # ==============================================================================
+echo -e "\n${BLUE}🧪 Lancement des tests de validation...${NC}"
+TESTS_OK=0
+TESTS_TOTAL=5
+
+if command -v nslookup &>/dev/null; then
+    nslookup google.com ${LOCAL_IP} 2>/dev/null | grep -q "${LOCAL_IP}" \
+        && { echo -e "   ${GREEN}✓${NC} DNS wildcard fonctionnel (nslookup)"; TESTS_OK=$((TESTS_OK+1)); } \
+        || echo -e "   ${RED}✗${NC} DNS wildcard échoué"
+elif command -v getent &>/dev/null; then
+    getent hosts google.com 2>/dev/null | grep -q "${LOCAL_IP}" \
+        && { echo -e "   ${GREEN}✓${NC} DNS wildcard fonctionnel (getent)"; TESTS_OK=$((TESTS_OK+1)); } \
+        || echo -e "   ${RED}✗${NC} DNS wildcard échoué"
+else
+    echo -e "   ${YELLOW}⚠️${NC}  Test DNS ignoré (nslookup/getent non disponibles)"
+    TESTS_TOTAL=$((TESTS_TOTAL-1))
+fi
+
+if command -v curl &>/dev/null; then
+    curl -s -o /dev/null -w "%{http_code}" http://${LOCAL_IP}/hotspot-detect.html | grep -q "200" \
+        && { echo -e "   ${GREEN}✓${NC} Probe iOS (hotspot-detect.html)"; TESTS_OK=$((TESTS_OK+1)); } \
+        || echo -e "   ${RED}✗${NC} Probe iOS échouée"
+else
+    echo -e "   ${YELLOW}⚠️${NC}  Test iOS ignoré (curl non disponible)"
+    TESTS_TOTAL=$((TESTS_TOTAL-1))
+fi
+
+if command -v curl &>/dev/null; then
+    curl -s -o /dev/null -w "%{http_code}" http://${LOCAL_IP}/generate_204 | grep -q "204" \
+        && { echo -e "   ${GREEN}✓${NC} Probe Android (generate_204)"; TESTS_OK=$((TESTS_OK+1)); } \
+        || echo -e "   ${RED}✗${NC} Probe Android échouée"
+else
+    echo -e "   ${YELLOW}⚠️${NC}  Test Android ignoré (curl non disponible)"
+    TESTS_TOTAL=$((TESTS_TOTAL-1))
+fi
+
+if command -v curl &>/dev/null; then
+    [ "$(curl -s http://${LOCAL_IP}/success.txt)" = "success" ] \
+        && { echo -e "   ${GREEN}✓${NC} Probe Firefox (success.txt)"; TESTS_OK=$((TESTS_OK+1)); } \
+        || echo -e "   ${RED}✗${NC} Probe Firefox échouée"
+else
+    echo -e "   ${YELLOW}⚠️${NC}  Test Firefox ignoré (curl non disponible)"
+    TESTS_TOTAL=$((TESTS_TOTAL-1))
+fi
+
+if ! ping -c1 -W1 -I wlan0 8.8.8.8 &>/dev/null; then
+    echo -e "   ${GREEN}✓${NC} Isolation Internet active (wlan0)"
+    TESTS_OK=$((TESTS_OK+1))
+else
+    echo -e "   ${RED}✗${NC} ALERTE : wlan0 peut accéder à Internet !"
+fi
+
+echo ""
+if [ $TESTS_OK -eq $TESTS_TOTAL ]; then
+    echo -e "${GREEN}🎉 Tous les tests sont au vert (${TESTS_OK}/${TESTS_TOTAL})${NC}"
+else
+    echo -e "${YELLOW}⚠️  ${TESTS_OK}/${TESTS_TOTAL} tests réussis — vérifiez les échecs ci-dessus${NC}"
+fi
+
 echo ""
 echo -e "${GREEN}=========================================="
-echo "   ✅ CONFIGURATION TERMINÉE ! v1.1"
+echo "   ✅ CONFIGURATION TERMINÉE ! v1.6"
 echo -e "==========================================${NC}"
 echo ""
 echo -e "${BLUE}📡 CONFIGURATION RÉSEAU:${NC}"
-echo -e "   ${GREEN}✓${NC} IP wlan0 : ${LOCAL_IP}"
-echo -e "   ${GREEN}✓${NC} SSID     : ${SSID}"
-echo -e "   ${YELLOW}⚠️  CLÉ WIFI : $(cat /root/wifi_key.txt)${NC}"
-echo -e "   ${YELLOW}   → À coller sur le boîtier physique !${NC}"
+echo -e "   ${GREEN}✓${NC} Interface : ${WIFI_IFACE}"
+echo -e "   ${GREEN}✓${NC} IP wlan0  : ${LOCAL_IP}"
+echo -e "   ${GREEN}✓${NC} SSID      : ${SSID}"
+echo -e "   ${GREEN}✓${NC} Sécurité  : AUCUNE — réseau ouvert (accès immédiat)"
 echo ""
 echo -e "${BLUE}📱 CAPTIVE PORTAL:${NC}"
-echo -e "   ${GREEN}✓${NC} Apple iOS/macOS : /hotspot-detect.html → 200 + 'Success'"
-echo -e "   ${GREEN}✓${NC} Android Google  : /generate_204 → 204"
-echo -e "   ${GREEN}✓${NC} Windows 10/11   : /connecttest.txt + /ncsi.txt → 200"
-echo -e "   ${GREEN}✓${NC} Samsung         : /success.txt → 204"
-echo -e "   ${GREEN}✓${NC} Huawei          : server_name hicloud.com → 302"
-echo -e "   ${GREEN}✓${NC} Xiaomi          : server_name miui.com → 302"
-echo -e "   ${GREEN}✓${NC} iOS 17+         : HTTPS 443 → page portail directe"
+echo -e "   ${GREEN}✓${NC} Apple iOS/macOS     : /hotspot-detect.html → 200 + 'Success'"
+echo -e "   ${GREEN}✓${NC} Android Google      : /generate_204 → 204"
+echo -e "   ${GREEN}✓${NC} Windows 10/11       : /connecttest.txt + /ncsi.txt → 200"
+echo -e "   ${GREEN}✓${NC} Samsung One UI      : /generate_204 → 204 (héritage Android)"
+echo -e "   ${GREEN}✓${NC} Firefox             : /success.txt → 200 + 'success' [FIX 2]"
+echo -e "   ${GREEN}✓${NC} Huawei              : server_name hicloud.com → 302"
+echo -e "   ${GREEN}✓${NC} Xiaomi              : server_name miui.com → 302"
+echo -e "   ${GREEN}✓${NC} iOS 14+ HTTPS       : DNAT 443→80 + /hotspot-detect.html [FIX 1]"
 echo ""
 echo -e "${BLUE}🔒 SÉCURITÉ:${NC}"
 echo -e "   ${GREEN}✓${NC} Pi accède Internet via eth0"
 echo -e "   ${GREEN}✓${NC} Clients WiFi ISOLÉS d'Internet"
 echo -e "   ${GREEN}✓${NC} Isolation client-client (ap_isolate)"
-echo -e "   ${GREEN}✓${NC} SSH rate-limited (3/min) sur eth0"
-echo -e "   ${GREEN}✓${NC} Port 80 rate-limited (wlan0)"
-echo -e "   ${GREEN}✓${NC} Port 443 ouvert (iOS 17+)"
+echo -e "   ${GREEN}✓${NC} Réseau WiFi ouvert (pas de mot de passe)"
+echo -e "   ${GREEN}✓${NC} HTTP + HTTPS redirigés (ports 80 + 443) [FIX 1]"
+echo -e "   ${GREEN}✓${NC} sysrq désactivé (kernel.sysrq=0) [FIX 3]"
 echo -e "   ${GREEN}✓${NC} /var/www/sos-guide/ verrouillé (chattr +i + chmod a-w)"
 echo -e "   ${GREEN}✓${NC} Watchdog auto-reboot actif"
 echo -e "   ${GREEN}✓${NC} Intégrité SHA256 vérifiée au boot"
@@ -838,7 +953,7 @@ for service in hostapd dnsmasq nginx systemd-networkd systemd-resolved watchdog;
 done
 for service in sos-guide-boot sos-guide-renew-cert.timer; do
     if systemctl is-enabled --quiet $service 2>/dev/null; then
-        echo -e "   ${GREEN}✓${NC} $service: activé (déclenchement différé)"
+        echo -e "   ${GREEN}✓${NC} $service: activé"
     else
         echo -e "   ${RED}✗${NC} $service: non activé"
     fi
@@ -850,18 +965,19 @@ else
 fi
 echo ""
 echo -e "${YELLOW}🔧 COMMANDES UTILES:${NC}"
-echo "   IP wlan0       : ip addr show wlan0"
-echo "   Logs WiFi      : journalctl -u hostapd -f"
-echo "   Règles FW      : iptables -L -n -v"
-echo "   Test isolation : ping -I wlan0 8.8.8.8  (doit échouer)"
-echo "   Test DNS       : nslookup google.com ${LOCAL_IP}  (→ ${LOCAL_IP})"
-echo "   Test Apple     : curl -I http://${LOCAL_IP}/hotspot-detect.html"
-echo "   Test Android   : curl -I http://${LOCAL_IP}/generate_204"
-echo "   Test Windows   : curl http://${LOCAL_IP}/connecttest.txt"
-echo "   Health check   : curl http://${LOCAL_IP}/health"
-echo "   Intégrité      : sha256sum -c /root/integrity.hash"
-echo "   Clé WiFi       : cat /root/wifi_key.txt"
+echo "   IP wlan0          : ip addr show wlan0"
+echo "   Logs WiFi         : journalctl -u hostapd -f"
+echo "   Règles FW         : iptables -L -n -v"
+echo "   Test isolation    : ping -I wlan0 8.8.8.8  (doit échouer)"
+echo "   Test DNS          : nslookup google.com ${LOCAL_IP}  (→ ${LOCAL_IP})"
+echo "   Test Apple        : curl -I http://${LOCAL_IP}/hotspot-detect.html"
+echo "   Test Android      : curl -I http://${LOCAL_IP}/generate_204"
+echo "   Test Windows      : curl http://${LOCAL_IP}/connecttest.txt"
+echo "   Test Firefox      : curl http://${LOCAL_IP}/success.txt"
+echo "   Health check      : curl http://${LOCAL_IP}/health"
+echo "   Intégrité         : sha256sum -c /root/integrity.hash"
+echo "   Màj contenu web   : sudo bash /usr/local/bin/sos-guide-update-content.sh"
 echo ""
-echo -e "${MAGENTA}🚀 SOS-GUIDE v1.1 EST PRÊT POUR LA PRODUCTION !${NC}"
+echo -e "${MAGENTA}🚀 SOS-GUIDE v1.6 EST PRÊT POUR LA PRODUCTION !${NC}"
 echo -e "${YELLOW}⚠️  N'OUBLIEZ PAS DE NOTER LA CLÉ WIFI SUR LE BOÎTIER${NC}"
 echo ""
