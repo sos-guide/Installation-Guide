@@ -174,11 +174,6 @@ ping -I wlan0 8.8.8.8
 # Test DNS spoofing
 nslookup google.com 10.0.0.1
 
-# Test portail captif
-curl -I http://10.0.0.1/hotspot-detect.html
-curl -I http://10.0.0.1/generate_204
-curl http://10.0.0.1/connecttest.txt
-
 # Vérification intégrité
 sha256sum -c /root/integrity.hash
 
