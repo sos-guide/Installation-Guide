@@ -52,18 +52,6 @@
 - ✅ **Aucun log** - RGPD compliant, pas de traces utilisateurs
 - ✅ **Installation rapide** - Moins de 15 minutes
 
-### 📱 Portail Captif Compatible
-
-| Système | Sonde | Réponse | Détection |
-|---------|-------|---------|-----------|
-| **Apple iOS/macOS** | `hotspot-detect.html` | 200 + HTML META | ✅ Auto |
-| **Android** | `generate_204` | 204 No Content | ✅ Auto |
-| **Windows 10/11** | `connecttest.txt` | 200 Texte | ✅ Auto |
-| **Samsung** | `success.txt` | 204 No Content | ✅ Auto |
-| **Huawei** | `connectivitycheck.platform.hicloud.com` | 302 Redirect | ✅ Auto |
-| **Xiaomi** | `connect.rom.miui.com` | 302 Redirect | ✅ Auto |
-| **Amazon Fire** | `fwlink/` | 302 Redirect | ✅ Auto |
-
 ---
 
 ## 🖥️ Démonstration en ligne
