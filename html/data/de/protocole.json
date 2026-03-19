@@ -1,0 +1,53 @@
+[
+  {
+    "title": "1. SITUATION EINSCHÄTZEN",
+    "type": "list",
+    "items": [
+      "Bleiben Sie ruhig – atmen Sie tief durch, bevor Sie handeln",
+      "Analysieren Sie die Gefahren: Feuer, Rauch, Einsturz, Gas, Strom",
+      "Schützen Sie sich zuerst, bevor Sie andere retten",
+      "Identifizieren Sie Notausgänge"
+    ]
+  },
+  {
+    "title": "2. RETTUNGSDIENSTE ALARMIEREN",
+    "type": "list",
+    "items": [
+      "Wählen Sie die passende Nummer (15, 17, 18, 112)",
+      "Geben Sie an: Ihren Namen, die genaue Adresse, die Art des Problems",
+      "Nennen Sie Anzahl und Zustand der Verletzten, besondere Gefahren",
+      "Legen Sie nicht zuerst auf, folgen Sie den Anweisungen"
+    ]
+  },
+  {
+    "title": "3. VERLETZTE SCHÜTZEN",
+    "type": "list",
+    "items": [
+      "Bringen Sie Verletzte wenn möglich in Sicherheit",
+      "Kennzeichnen Sie den Bereich, um weitere Unfälle zu vermeiden",
+      "Stellen Sie Gas und Strom ab, wenn Sie dies gefahrlos tun können",
+      "Halten Sie Schaulustige fern"
+    ]
+  },
+  {
+    "title": "4. ERSTE HILFE LEISTEN",
+    "type": "list",
+    "items": [
+      "Prüfen Sie Bewusstsein und Atmung",
+      "Lagern Sie den Verletzten in der stabilen Seitenlage, wenn er bewusstlos ist, aber atmet",
+      "Stoppen Sie Blutungen mit einem sauberen Tuch",
+      "Führen Sie eine Herzdruckmassage durch, wenn Sie ausgebildet sind",
+      "Wärmen Sie Verletzte mit einer Rettungsdecke"
+    ]
+  },
+  {
+    "title": "5. AUF RETTUNGSKRÄFTE WARTEN",
+    "type": "list",
+    "items": [
+      "Halten Sie die Zufahrt für Rettungsfahrzeuge frei",
+      "Machen Sie auf sich aufmerksam (Lampe, Pfeife, Fahne)",
+      "Geben Sie Informationen beim Eintreffen der Rettungskräfte weiter",
+      "Befolgen Sie deren Anweisungen"
+    ]
+  }
+]

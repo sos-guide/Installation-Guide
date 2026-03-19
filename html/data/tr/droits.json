@@ -1,0 +1,26 @@
+[
+  {
+    "id": "droit1",
+    "title": "GÜVENLİK HAKKI",
+    "content": "Herkesin yaşam, özgürlük ve kişi güvenliği hakkı vardır. Acil bir durumda:\n\n• Acil durum hizmetlerinden korunma hakkı\n• Tıbbi yardım alma hakkı\n• Riskler hakkında bilgi alma hakkı\n• Gerektiğinde tahliye edilme hakkı",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir1",
+    "title": "YARDIM ETME GÖREVİ",
+    "content": "Herkes, imkanları ölçüsünde, tehlikede olan bir kişiye yardım etmelidir:\n\n• Yardım sağlama görevi (Fransız Ceza Kanunu Madde 223-6)\n• Acil durum hizmetlerini arama görevi\n• Durumu kötüleştirmeme görevi\n• Talimatlara uyma görevi",
+    "tag": "DUTY"
+  },
+  {
+    "id": "droit2",
+    "title": "BİLGİ EDİNME HAKKI",
+    "content": "Acil bir durumda herkesin hakkıdır:\n\n• Açık ve anlaşılır bilgi alma\n• Karşı karşıya olunan riskleri bilme\n• Güvenlik talimatları alma\n• Durumun gelişimi hakkında bilgilendirilme",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir2",
+    "title": "İŞBİRLİĞİ GÖREVİ",
+    "content": "Kişiler acil durum hizmetleri ile işbirliği yapmalıdır:\n\n• Tahliye emirlerine uyma\n• Kurtarma operasyonlarını engellememe\n• Yararlı bilgileri iletme\n• Yerlere erişimi kolaylaştırma",
+    "tag": "DUTY"
+  }
+]

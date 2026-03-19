@@ -1,0 +1,53 @@
+[
+  {
+    "title": "1. VALUTARE la situazione",
+    "type": "list",
+    "items": [
+      "Mantieni la calma – respira profondamente prima di agire",
+      "Analizza i pericoli: fuoco, fumo, crollo, gas, elettricità",
+      "Proteggi te stesso prima di soccorrere gli altri",
+      "Individua le uscite di emergenza"
+    ]
+  },
+  {
+    "title": "2. ALLERTARE i soccorsi",
+    "type": "list",
+    "items": [
+      "Componi il numero appropriato (15, 17, 18, 112)",
+      "Fornisci: il tuo nome, l'indirizzo esatto, la natura del problema",
+      "Precisa il numero e le condizioni delle vittime, i pericoli particolari",
+      "Non riattaccare per primo, segui le istruzioni"
+    ]
+  },
+  {
+    "title": "3. PROTEGGERE le vittime",
+    "type": "list",
+    "items": [
+      "Metti in sicurezza le vittime se possibile",
+      "Segnala la zona per evitare altri incidenti",
+      "Interrompi gas ed elettricità se puoi farlo senza rischi",
+      "Allontana i curiosi"
+    ]
+  },
+  {
+    "title": "4. SOCCORRERE con le manovre di base",
+    "type": "list",
+    "items": [
+      "Verifica la coscienza e la respirazione",
+      "Posiziona la vittima in PLS (Posizione Laterale di Sicurezza) se è incosciente ma respira",
+      "Comprimi le emorragie con un panno pulito",
+      "Pratica la RCP (massaggio cardiaco) se sei formato",
+      "Riscalda le vittime con una coperta termica"
+    ]
+  },
+  {
+    "title": "5. ATTENDERE i soccorsi",
+    "type": "list",
+    "items": [
+      "Libera l'accesso per i veicoli di soccorso",
+      "Segnala la tua presenza (lampada, fischietto, bandiera)",
+      "Trasmetti le informazioni all'arrivo dei soccorsi",
+      "Segui le loro istruzioni"
+    ]
+  }
+]

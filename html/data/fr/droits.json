@@ -1,0 +1,26 @@
+[
+  {
+    "id": "droit1",
+    "title": "DROIT À LA SÉCURITÉ",
+    "content": "Toute personne a droit à la vie, à la liberté et à la sûreté de sa personne. En situation d'urgence :\n\n• Droit à la protection des secours\n• Droit à l'assistance médicale\n• Droit à l'information sur les risques\n• Droit à l'évacuation si nécessaire",
+    "tag": "DROIT"
+  },
+  {
+    "id": "devoir1",
+    "title": "DEVOIR D'ASSISTANCE",
+    "content": "Toute personne doit porter assistance à autrui en danger, dans la mesure de ses moyens :\n\n• Devoir de porter secours (art. 223-6 CP)\n• Devoir d'appeler les secours\n• Devoir de ne pas aggraver la situation\n• Devoir de respecter les consignes",
+    "tag": "DEVOIR"
+  },
+  {
+    "id": "droit2",
+    "title": "DROIT À L'INFORMATION",
+    "content": "En situation d'urgence, toute personne a droit :\n\n• À une information claire et compréhensible\n• À connaître les risques encourus\n• À recevoir des consignes de sécurité\n• À être informée de l'évolution de la situation",
+    "tag": "DROIT"
+  },
+  {
+    "id": "devoir2",
+    "title": "DEVOIR DE COOPÉRATION",
+    "content": "Les personnes doivent collaborer avec les services de secours :\n\n• Respecter les ordres d'évacuation\n• Ne pas entraver l'action des secours\n• Communiquer les informations utiles\n• Faciliter l'accès aux lieux",
+    "tag": "DEVOIR"
+  }
+]
