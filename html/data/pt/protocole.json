@@ -1,0 +1,53 @@
+[
+  {
+    "title": "1. AVALIAR a situação",
+    "type": "list",
+    "items": [
+      "Mantenha a calma – respire fundo antes de agir",
+      "Analise os perigos: fogo, fumaça, desabamento, gás, eletricidade",
+      "Proteja-se primeiro antes de socorrer os outros",
+      "Identifique as saídas de emergência"
+    ]
+  },
+  {
+    "title": "2. ALERTAR os serviços de emergência",
+    "type": "list",
+    "items": [
+      "Disque o número adequado (15, 17, 18, 112)",
+      "Informe: seu nome, o endereço exato, a natureza do problema",
+      "Especifique o número e o estado das vítimas, perigos particulares",
+      "Não desligue primeiro, siga as instruções"
+    ]
+  },
+  {
+    "title": "3. PROTEGER as vítimas",
+    "type": "list",
+    "items": [
+      "Coloque as vítimas em segurança se possível",
+      "Sinalize a zona para evitar outros acidentes",
+      "Corte o gás e a eletricidade se puder fazê-lo sem risco",
+      "Afaste os curiosos"
+    ]
+  },
+  {
+    "title": "4. SOCORRER com os gestos básicos",
+    "type": "list",
+    "items": [
+      "Verifique a consciência e a respiração",
+      "Coloque a vítima em PLS (Posição Lateral de Segurança) se estiver inconsciente mas respirar",
+      "Comprima as hemorragias com um pano limpo",
+      "Pratique a RCP (massagem cardíaca) se estiver treinado",
+      "Aqueça as vítimas com uma manta térmica"
+    ]
+  },
+  {
+    "title": "5. AGUARDAR os serviços de emergência",
+    "type": "list",
+    "items": [
+      "Libere o acesso para os veículos de emergência",
+      "Sinalize a sua presença (lanterna, apito, bandeira)",
+      "Transmita as informações à chegada dos serviços de emergência",
+      "Siga as suas instruções"
+    ]
+  }
+]

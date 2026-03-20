@@ -1,0 +1,53 @@
+[
+  {
+    "title": "1. BEDÖM situationen",
+    "type": "list",
+    "items": [
+      "Håll dig lugn – andas djupt innan du agerar",
+      "Analysera farorna: brand, rök, ras, gas, el",
+      "Skydda dig själv först innan du räddar andra",
+      "Identifiera nödutgångar"
+    ]
+  },
+  {
+    "title": "2. LARMA räddningstjänsten",
+    "type": "list",
+    "items": [
+      "Ring rätt nummer (15, 17, 18, 112)",
+      "Uppge: ditt namn, exakt adress, problemets art",
+      "Ange antal och tillstånd på drabbade, särskilda faror",
+      "Lägg inte på först, följ instruktionerna"
+    ]
+  },
+  {
+    "title": "3. SKYDDA de drabbade",
+    "type": "list",
+    "items": [
+      "För om möjligt de drabbade i säkerhet",
+      "Markera området för att undvika ytterligare olyckor",
+      "Stäng av gas och el om du kan göra det utan risk",
+      "Håll nyfikna på avstånd"
+    ]
+  },
+  {
+    "title": "4. GE första hjälpen",
+    "type": "list",
+    "items": [
+      "Kontrollera medvetande och andning",
+      "Lägg den skadade i stabilt sidoläge om den är medvetslös men andas",
+      "Stoppa blödningar med en ren trasa",
+      "Utför HLR (hjärtkompressioner) om du är utbildad",
+      "Värm de drabbade med en överlevnadsfilt"
+    ]
+  },
+  {
+    "title": "5. VÄNTA på räddningstjänsten",
+    "type": "list",
+    "items": [
+      "Röj åtkomst för räddningsfordon",
+      "Signalera din närvaro (lampa, visselpipa, flagga)",
+      "Överlämna information när hjälpen anländer",
+      "Följ deras instruktioner"
+    ]
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": "droit1",
+    "title": "RÄTT TILL SÄKERHET",
+    "content": "Var och en har rätt till liv, frihet och personlig säkerhet. I en nödsituation:\n\n• Rätt till skydd från räddningstjänster\n• Rätt till medicinsk hjälp\n• Rätt till information om risker\n• Rätt till evakuering vid behov",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir1",
+    "title": "SKYLDIGHET ATT HJÄLPA",
+    "content": "Var och en måste bistå en person i fara, i den mån de har möjlighet:\n\n• Skyldighet att ge hjälp (Art. 223-6 i franska strafflagen)\n• Skyldighet att ringa räddningstjänster\n• Skyldighet att inte förvärra situationen\n• Skyldighet att följa instruktioner",
+    "tag": "DUTY"
+  },
+  {
+    "id": "droit2",
+    "title": "RÄTT TILL INFORMATION",
+    "content": "I en nödsituation har var och en rätt:\n\n• Till tydlig och förståelig information\n• Att veta vilka risker man står inför\n• Att få säkerhetsinstruktioner\n• Att bli informerad om situationens utveckling",
+    "tag": "RIGHT"
+  },
+  {
+    "id": "devoir2",
+    "title": "SAMARBETSSKYLDIGHET",
+    "content": "Personer måste samarbeta med räddningstjänster:\n\n• Respektera evakueringsorder\n• Inte hindra räddningsinsatser\n• Kommunisera användbar information\n• Underlätta tillgång till platser",
+    "tag": "DUTY"
+  }
+]

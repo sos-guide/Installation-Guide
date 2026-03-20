@@ -1,0 +1,26 @@
+[
+  {
+    "id": "droit1",
+    "title": "RECHT AUF SICHERHEIT",
+    "content": "Jeder hat das Recht auf Leben, Freiheit und Sicherheit der Person. In einer Notfallsituation:\n\n• Recht auf Schutz durch Rettungsdienste\n• Recht auf medizinische Hilfe\n• Recht auf Information über Risiken\n• Recht auf Evakuierung bei Notwendigkeit",
+    "tag": "RECHT"
+  },
+  {
+    "id": "devoir1",
+    "title": "HILFSPFLICHT",
+    "content": "Jeder muss einer Person in Gefahr helfen, im Rahmen seiner Möglichkeiten:\n\n• Pflicht zur Hilfeleistung (Art. 223-6 des französischen Strafgesetzbuches)\n• Pflicht, Rettungsdienste zu alarmieren\n• Pflicht, die Situation nicht zu verschlimmern\n• Pflicht, Anweisungen zu befolgen",
+    "tag": "PFLICHT"
+  },
+  {
+    "id": "droit2",
+    "title": "RECHT AUF INFORMATION",
+    "content": "In einem Notfall hat jeder das Recht:\n\n• Auf klare und verständliche Informationen\n• Die bestehenden Risiken zu kennen\n• Sicherheitsanweisungen zu erhalten\n• Über die Entwicklung der Lage informiert zu werden",
+    "tag": "RECHT"
+  },
+  {
+    "id": "devoir2",
+    "title": "KOOPERATIONSPFLICHT",
+    "content": "Personen müssen mit den Rettungsdiensten zusammenarbeiten:\n\n• Evakuierungsanordnungen beachten\n• Rettungsarbeiten nicht behindern\n• Nützliche Informationen mitteilen\n• Zugang zu Orten ermöglichen",
+    "tag": "PFLICHT"
+  }
+]

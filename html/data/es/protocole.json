@@ -1,0 +1,53 @@
+[
+  {
+    "title": "1. EVALUAR la situación",
+    "type": "list",
+    "items": [
+      "Mantén la calma – respira profundamente antes de actuar",
+      "Analiza los peligros: fuego, humo, derrumbe, gas, electricidad",
+      "Protégete primero antes de ayudar a otros",
+      "Identifica las salidas de emergencia"
+    ]
+  },
+  {
+    "title": "2. ALERTAR a los servicios de emergencia",
+    "type": "list",
+    "items": [
+      "Marca el número adecuado (15, 17, 18, 112)",
+      "Da: tu nombre, la dirección exacta, la naturaleza del problema",
+      "Precisa el número y estado de las víctimas, peligros especiales",
+      "No cuelgues primero, sigue las instrucciones"
+    ]
+  },
+  {
+    "title": "3. PROTEGER a las víctimas",
+    "type": "list",
+    "items": [
+      "Pon a las víctimas a salvo si es posible",
+      "Señaliza la zona para evitar más accidentes",
+      "Corta el gas y la electricidad si puedes hacerlo sin riesgo",
+      "Aleja a los curiosos"
+    ]
+  },
+  {
+    "title": "4. SOCORRER con los gestos básicos",
+    "type": "list",
+    "items": [
+      "Verifica la conciencia y la respiración",
+      "Coloca a la víctima en PLS (Posición Lateral de Seguridad) si está inconsciente pero respira",
+      "Comprime las hemorragias con un paño limpio",
+      "Practica la RCP (masaje cardíaco) si estás capacitado",
+      "Calienta a las víctimas con una manta térmica"
+    ]
+  },
+  {
+    "title": "5. ESPERAR a los servicios de emergencia",
+    "type": "list",
+    "items": [
+      "Despeja el acceso para los vehículos de emergencia",
+      "Señaliza tu presencia (linterna, silbato, bandera)",
+      "Transmite la información a la llegada de los servicios de emergencia",
+      "Sigue sus instrucciones"
+    ]
+  }
+]
