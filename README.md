@@ -30,7 +30,6 @@
 
 ### 🌐 Réseau & Connectivité
 - ✅ **Fonctionne 100% hors-ligne** - Aucune connexion internet nécessaire pour les clients
-- ✅ **Wi-Fi sécurisé WPA2** - Clé générée aléatoirement (12 caractères)
 - ✅ **SSID personnalisé** : `⛑️ SOS-GUIDE`
 - ✅ **Interface web moderne et responsive** - Compatible mobile/tablete/ordinateur
 - ✅ **Multi-utilisateurs** - Jusqu'à 50 connexions simultanées
