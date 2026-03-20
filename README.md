@@ -5,7 +5,6 @@
 [![Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/sos-guide/Installation-Guide)
 [![Debian](https://img.shields.io/badge/Debian-Trixie-red.svg)](https://www.debian.org/)
 [![Raspberry Pi](https://img.shields.io/badge/Raspberry%20Pi-4%20%7C%205-green.svg)](https://www.raspberrypi.com/)
-[![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
 ---
 
