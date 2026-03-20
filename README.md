@@ -1,6 +1,6 @@
 # ⛑️ SOS-GUIDE - Système d'Information Citoyen Résilient
 
-**Solution open-source basée sur Raspberry Pi pour situations d'urgence et zones sans connexion internet**
+**Solution basée sur Raspberry Pi pour situations d'urgence et zones sans connexion internet**
 
 [![Version](https://img.shields.io/badge/version-1.0-blue.svg)](https://github.com/sos-guide/Installation-Guide)
 [![Debian](https://img.shields.io/badge/Debian-Trixie-red.svg)](https://www.debian.org/)
