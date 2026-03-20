@@ -54,15 +54,6 @@
 
 ---
 
-## 🖥️ Démonstration en ligne
-
-- **Page de présentation** : [sos-guide.fr](https://sos-guide.fr)
-- **Démo interactive** : [sos-guide.fr/demo.html](https://sos-guide.fr/demo.html)
-
-> *Note : La démo en ligne nécessite une connexion internet. Le système réel fonctionne **sans internet** sur Raspberry Pi.*
-
----
-
 ## 📋 Contenu inclus par défaut
 
 ### 🚨 Services d'Urgence
@@ -114,18 +105,6 @@ sudo ./install.sh
 ```
 
 **⏱️ Temps d'installation :** 10-15 minutes (inclut mise à jour système)
-
----
-
-### 📀 Méthode 2 : Image système complète
-
-*Disponible prochainement - Image pré-configurée pour flashage direct*
-
-```bash
-# 1. Télécharger l'image (.img.gz)
-# 2. Flasher avec BalenaEtcher ou Raspberry Pi Imager
-# 3. Insérer la carte SD et démarrer
-```
 
 ---
 
@@ -201,24 +180,6 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-## 🐛 Dépannage
-
-### Le portail captif ne s'affiche pas automatiquement
-
-```bash
-# 1. Vérifier que les services tournent
-sudo systemctl status hostapd dnsmasq nginx
-
-# 2. Tester manuellement
-http://10.0.0.1
-
-# 3. Vider le cache DNS du téléphone
-# → Mode avion ON/OFF ou oublier le réseau
-
-# 4. Vérifier les sondes
-curl -v http://10.0.0.1/hotspot-detect.html
-```
-
 ### Impossible de se connecter en WiFi
 
 ```bash
@@ -249,18 +210,6 @@ sudo dmesg | tail -50
 
 # 4. Vérifier le watchdog
 sudo systemctl status watchdog
-```
-
-### Problème de température
-
-```bash
-# Vérifier température
-vcgencmd measure_temp
-
-# Si > 80°C :
-# → Ajouter dissipateur
-# → Ajouter ventilateur
-# → Vérifier boîtier ventilé
 ```
 
 ---
@@ -348,19 +297,6 @@ Ouvrez une issue sur GitHub avec :
 - Version de l'OS
 - Logs d'erreur (`journalctl -u hostapd -n 100`)
 - Étapes pour reproduire
-
-### Proposer une amélioration
-1. Forker le projet
-2. Créer une branche (`git checkout -b feature/ma-fonctionnalite`)
-3. Committer les changements (`git commit -am 'Ajout fonctionnalité'`)
-4. Pusher (`git push origin feature/ma-fonctionnalite`)
-5. Ouvrir une Pull Request
-
----
-
-## 📄 Licence
-
-Ce projet est distribué sous licence **MIT**. Voir le fichier [LICENSE](LICENSE) pour plus de détails.
 
 ---
 
