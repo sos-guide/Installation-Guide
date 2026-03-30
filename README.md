@@ -52,24 +52,6 @@
 
 ---
 
-## 📋 Contenu inclus par défaut
-
-### 🚨 Services d'Urgence
-- **SAMU** : 15
-- **Police** : 17
-- **Pompiers** : 18
-- **Numéro unique UE** : 112
-- **SOS Médecins** : 36 24
-- **Centre Antipoison** : Variable par région
-
-### 📄 Documents (optionnel)
-- Plans d'évacuation (PDF)
-- Consignes de sécurité
-- Numéros locaux utiles
-- Cartes de la zone
-
----
-
 ## 🛠️ Installation sur Raspberry Pi
 
 ### 🟠 **PRÉ-REQUIS OBLIGATOIRES**
@@ -82,7 +64,7 @@
 | **OS** | Debian Trixie (Bookworm) | 🔴 Critique |
 | **Boîtier** | Avec ventilation | 🟡 Recommandé |
 | **Dissipateur** | Heat sinks ou ventilateur | 🟡 Recommandé |
-| **Batterie** | Powerbank 10000mAh+ | 🟢 Optionnel |
+| **Batterie** | Powerbank/EcoFlow | 🟢 Optionnel |
 
 ---
 
@@ -176,24 +158,6 @@ sudo shutdown now
 sudo apt update && sudo apt upgrade -y
 ```
 
----
-
-### Impossible de se connecter en WiFi
-
-```bash
-# 1. Vérifier la clé WiFi
-cat /root/wifi_key.txt
-
-# 2. Vérifier hostapd
-sudo journalctl -u hostapd -n 50
-
-# 3. Redémarrer le WiFi
-sudo systemctl restart hostapd
-
-# 4. Vérifier le pays WiFi
-sudo iw reg get  # Doit afficher FR
-```
-
 ### Le Pi ne démarre pas correctement
 
 ```bash
@@ -205,9 +169,6 @@ sudo fsck /dev/mmcblk0p2
 
 # 3. Consulter les logs
 sudo dmesg | tail -50
-
-# 4. Vérifier le watchdog
-sudo systemctl status watchdog
 ```
 
 ---
@@ -220,12 +181,6 @@ sudo systemctl status watchdog
 |------------|--------|-------------|
 | **Isolation Internet** | ✅ Active | Clients WiFi ne peuvent pas sortir |
 | **Isolation client-client** | ✅ Active | Les utilisateurs ne se voient pas |
-| **SSH rate-limited** | ✅ Active | 3 connexions/minute max sur eth0 |
-| **Anti-spoofing** | ✅ Active | Paquets invalides rejetés |
-| **IPv6 désactivé** | ✅ Active | Pas de fuite IPv6 |
-| **Watchdog** | ✅ Active | Redémarrage auto si plantage |
-| **Intégrité fichiers** | ✅ Active | Hash SHA256 vérifié au boot |
-| **Lecture seule /var/www** | ✅ Active | Contenu web protégé en écriture |
 
 ### Ce qu'il faut savoir
 
@@ -269,7 +224,7 @@ sudo systemctl status watchdog
 1. **Client se connecte** → Open (hostapd)
 2. **Client reçoit IP** → DHCP (dnsmasq) + Option 114 (URL portail)
 3. **Client teste Internet** → DNS spoofing vers 10.0.0.1
-4. **Portail s'affiche** → HTTP 200/204 selon sonde (nginx)
+4. **Portail s'affiche** → HTTP 304 selon sonde (nginx)
 5. **Client navigue** → Contenu local uniquement ( FORWARD DROP)
 
 ---
