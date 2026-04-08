@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#0a0d14">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="description" content="SOS-GUIDE - Urgences, santé mentale, annuaire associatif + survie en lieu public">
 <title>⛑️ SOS-GUIDE</title>
 <style>
 /* --- VARIABLES & RESET --- */
@@ -31,8 +30,20 @@
   --r:        14px;
   --r-lg:     20px;
 }
+body.light-mode {
+  --bg:       #f8fafc;
+  --bg1:      #f1f5f9;
+  --bg2:      #e2e8f0;
+  --card:     #ffffff;
+  --card-h:   #fef9c3;
+  --border:   rgba(0,0,0,.08);
+  --border-h: rgba(0,0,0,.15);
+  --text:     #0f172a;
+  --sub:      #475569;
+  --muted:    #94a3b8;
+}
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
@@ -44,7 +55,6 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
 a { color: inherit; text-decoration: none; }
 ::-webkit-scrollbar { width: 4px; }
 ::-webkit-scrollbar-thumb { background: var(--bg2); border-radius: 4px; }
-
 /* --- BARRE DE NAVIGATION --- */
 #nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 800;
@@ -56,6 +66,10 @@ a { color: inherit; text-decoration: none; }
   padding: 0 1.25rem;
   gap: .75rem;
   color: #e8edf5;
+}
+body.light-mode #nav {
+  background: rgba(248,250,252,.92);
+  color: #0f172a;
 }
 .nav-logo {
   font-weight: 800;
@@ -75,7 +89,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.2rem;
   transition: all .15s;
 }
 .nav-btn:hover {
@@ -83,7 +97,15 @@ a { color: inherit; text-decoration: none; }
   color: #e8edf5;
   border-color: rgba(255,255,255,.2);
 }
-/* Hamburger menu button : toujours blanc */
+body.light-mode .nav-btn {
+  background: rgba(0,0,0,.04);
+  border-color: rgba(0,0,0,.1);
+  color: #334155;
+}
+body.light-mode .nav-btn:hover {
+  background: rgba(0,0,0,.1);
+  color: #0f172a;
+}
 .hamburger {
   width: 40px;
   height: 40px;
@@ -102,14 +124,20 @@ a { color: inherit; text-decoration: none; }
 .hamburger:hover {
   background: rgba(255,255,255,.1);
 }
+body.light-mode .hamburger:hover {
+  background: rgba(0,0,0,.08);
+}
 .hamburger span {
   width: 22px;
   height: 2px;
-  background: #ffffff !important;  /* FORCÉ BLANC, quel que soit le thème */
+  background: #ffffff !important;
   border-radius: 2px;
   transition: 0.2s;
 }
-/* Side drawer */
+body.light-mode .hamburger span {
+  background: #0f172a !important;
+}
+/* --- DRAWER (menu latéral) --- */
 .drawer-overlay {
   position: fixed;
   top: 0;
@@ -181,7 +209,93 @@ a { color: inherit; text-decoration: none; }
   border-color: var(--red);
   color: var(--red);
 }
-/* --- LAYOUT PRINCIPAL --- */
+/* --- MODAL DE SÉLECTION DE LANGUE (grille de cartes) --- */
+.lang-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s, opacity 0.2s ease;
+}
+.lang-modal-overlay.active {
+  visibility: visible;
+  opacity: 1;
+}
+.lang-modal-container {
+  background: var(--card);
+  border-radius: var(--r-lg);
+  max-width: 800px;
+  width: 90%;
+  max-height: 85vh;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 40px rgba(0,0,0,0.5);
+  animation: modalFadeIn 0.2s ease;
+}
+.lang-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg1);
+  border-radius: var(--r-lg) var(--r-lg) 0 0;
+}
+.lang-modal-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+.lang-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--sub);
+}
+.lang-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  padding: 1.5rem;
+}
+.lang-card {
+  background: var(--bg1);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.lang-card:hover {
+  background: var(--card-h);
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+.lang-flag {
+  font-size: 1.8rem;
+}
+.lang-name {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text);
+}
+@keyframes modalFadeIn {
+  from { transform: scale(0.96); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+/* --- LAYOUT PRINCIPAL (identique à avant) --- */
 .main {
   padding-top: calc(var(--nav-h) + 1.5rem);
   padding-bottom: 2rem;
@@ -190,9 +304,7 @@ a { color: inherit; text-decoration: none; }
   padding-left: 1.25rem;
   padding-right: 1.25rem;
 }
-#mainContent {
-  display: none;
-}
+#mainContent { display: none; }
 #splashScreen {
   height: 100vh;
   display: flex;
@@ -258,22 +370,14 @@ a { color: inherit; text-decoration: none; }
   border-color: rgba(255,255,255,0.8);
   transform: scale(1.02);
 }
-.extra-numbers {
-  margin-top: 2rem;
-  font-size: 0.85rem;
-  background: rgba(0,0,0,0.2);
-  border-radius: 40px;
-  padding: 0.5rem 1rem;
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  justify-content: center;
+body.light-mode .btn-guide {
+  background: rgba(0,0,0,0.08);
+  border-color: rgba(0,0,0,0.2);
+  color: #0f172a;
 }
-.extra-numbers span { color: var(--cyan); font-weight: bold; }
-/* --- HERO --- */
-.hero {
-  text-align: center;
-  margin-bottom: 2rem;
+body.light-mode .btn-guide:hover {
+  background: rgba(0,0,0,0.15);
+  border-color: rgba(0,0,0,0.4);
 }
 .hero-icon { font-size: 4rem; margin-bottom: 0.5rem; }
 .hero-title {
@@ -287,11 +391,7 @@ a { color: inherit; text-decoration: none; }
   max-width: 480px;
   margin: 0 auto;
 }
-
-/* --- SECTION OUTILS (6 cartes) --- */
-.outils-section {
-  margin-top: 2.5rem;
-}
+.outils-section { margin-top: 2.5rem; }
 .outils-title {
   font-weight: 700;
   font-size: 1.3rem;
@@ -352,14 +452,15 @@ a { color: inherit; text-decoration: none; }
   background: var(--muted);
   transition: all .2s;
 }
-
-/* --- GRILLE POUR CARTES (TAILLES UNIFORMES) --- */
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   gap: 1rem;
   margin-top: 0.5rem;
   margin-bottom: 2rem;
+}
+@media (min-width: 700px) {
+  .cards-grid { grid-template-columns: repeat(3, 1fr); }
 }
 .doc-card {
   background: var(--card);
@@ -404,8 +505,6 @@ a { color: inherit; text-decoration: none; }
   word-break: break-word;
   max-width: 100%;
 }
-
-/* Sections sans déroulement */
 .docs-section, .mental-section, .asso-section {
   margin-top: 2rem;
   margin-bottom: 1rem;
@@ -418,8 +517,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   gap: .5rem;
 }
-
-/* --- RESPIRATION OVERLAY --- */
+/* --- OVERLAYS OUTILS --- */
 #respirationOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -430,9 +528,7 @@ a { color: inherit; text-decoration: none; }
   align-items: center;
   justify-content: center;
 }
-#respirationOverlay.active {
-  display: flex;
-}
+#respirationOverlay.active { display: flex; }
 .respiration-circle {
   width: 200px;
   height: 200px;
@@ -467,7 +563,6 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
   cursor: pointer;
 }
-/* --- FLASHLIGHT --- */
 #flashlightOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -475,9 +570,7 @@ a { color: inherit; text-decoration: none; }
   background: white;
   display: none;
 }
-#flashlightOverlay.active {
-  display: block;
-}
+#flashlightOverlay.active { display: block; }
 .flashlight-stop {
   position: absolute;
   bottom: 2rem;
@@ -492,7 +585,6 @@ a { color: inherit; text-decoration: none; }
   font-weight: 700;
   cursor: pointer;
 }
-/* --- FLASH SOS OVERLAY --- */
 #flashOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -526,7 +618,6 @@ a { color: inherit; text-decoration: none; }
   z-index: 10000;
   backdrop-filter: blur(4px);
 }
-/* --- CPR METRONOME --- */
 #cprOverlay {
   position: fixed;
   top: 0; left: 0; right: 0; bottom: 0;
@@ -538,9 +629,7 @@ a { color: inherit; text-decoration: none; }
   justify-content: center;
   backdrop-filter: blur(4px);
 }
-#cprOverlay.active {
-  display: flex;
-}
+#cprOverlay.active { display: flex; }
 .cpr-metronome {
   text-align: center;
   color: white;
@@ -578,18 +667,14 @@ a { color: inherit; text-decoration: none; }
   color: white;
   cursor: pointer;
 }
-.cpr-controls button:hover {
-  background: rgba(255,255,255,0.3);
-}
-.cpr-stop {
-  background: var(--red) !important;
-}
+.cpr-controls button:hover { background: rgba(255,255,255,0.3); }
+.cpr-stop { background: var(--red) !important; }
 .cpr-status {
   margin-top: 1rem;
   font-size: 0.9rem;
   opacity: 0.8;
 }
-/* --- MODAL STYLES + BOUTON ÉCOUTER --- */
+/* --- MODAL CONTENU (guides, etc.) --- */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -620,10 +705,6 @@ a { color: inherit; text-decoration: none; }
   border: 1px solid var(--border);
   box-shadow: 0 25px 40px rgba(0,0,0,0.5);
   animation: modalFadeIn 0.2s ease;
-}
-@keyframes modalFadeIn {
-  from { transform: scale(0.96); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
 }
 .modal-header {
   display: flex;
@@ -664,107 +745,15 @@ a { color: inherit; text-decoration: none; }
   color: var(--text);
   line-height: 1.6;
 }
-.modal-body p, .modal-body ul, .modal-body li {
-  margin-bottom: 0.75rem;
-}
-.modal-body ul {
-  padding-left: 1.2rem;
-}
-.modal-body strong {
-  color: var(--blue);
-}
-.listen-btn {
-  background: rgba(34,197,94,0.2);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin: 0 1.5rem 1.5rem auto;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--green);
-  cursor: pointer;
-  transition: 0.2s;
-}
-.listen-btn:hover {
-  background: var(--green);
-  color: #fff;
-}
+.modal-body p, .modal-body ul, .modal-body li { margin-bottom: 0.75rem; }
+.modal-body ul { padding-left: 1.2rem; }
+.modal-body strong { color: var(--blue); }
 body.light-mode .modal-container {
   background: #ffffff;
   border-color: #e2e8f0;
 }
-body.light-mode .modal-header {
-  background: #f1f5f9;
-}
-body.light-mode .modal-body {
-  color: #0f172a;
-}
-/* --- MODAL MORSE --- */
-.morse-modal .modal-body input, .morse-modal .modal-body select, .morse-modal .modal-body textarea {
-  width: 100%;
-  padding: 12px;
-  margin: 10px 0;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-radius: var(--r);
-  color: var(--text);
-  font-size: 1rem;
-}
-.morse-modal .modal-body button {
-  background: var(--blue);
-  color: white;
-  border: none;
-  border-radius: 30px;
-  padding: 10px 20px;
-  margin: 8px 5px;
-  cursor: pointer;
-}
-.morse-modal .modal-body button.stop-morse {
-  background: var(--red);
-}
-.morse-radio-group {
-  display: flex;
-  gap: 20px;
-  align-items: center;
-  margin: 10px 0;
-}
-/* --- THÈME CLAIR --- */
-body.light-mode {
-  --bg:#f0f4f8; --bg1:#e8eef5; --bg2:#dde6f0;
-  --card:#ffffff; --card-h:#f5f8fc;
-  --border:rgba(0,0,0,.08); --border-h:rgba(0,0,0,.14);
-  --text:#0f172a; --sub:#475569; --muted:#94a3b8;
-}
-body.light-mode .nav-btn {
-  background: rgba(0,0,0,.05);
-  border-color: rgba(0,0,0,.1);
-  color: #334155;
-}
-body.light-mode .nav-btn:hover {
-  background: rgba(0,0,0,.12);
-  color: #0f172a;
-}
-body.light-mode #respirationOverlay {
-  background: rgba(240,244,248,.95);
-}
-body.light-mode .btn-guide {
-  background: rgba(0,0,0,0.08);
-  border-color: rgba(0,0,0,0.3);
-  color: #0f172a;
-}
-body.light-mode .btn-guide:hover {
-  background: rgba(0,0,0,0.15);
-}
-body.light-mode .drawer {
-  background: #ffffff;
-}
-body.light-mode .drawer-nav a {
-  background: #f1f5f9;
-  border-color: #e2e8f0;
-}
+body.light-mode .modal-header { background: #f1f5f9; }
+body.light-mode .modal-body { color: #0f172a; }
 </style>
 </head>
 <body>
@@ -778,306 +767,373 @@ body.light-mode .drawer-nav a {
     <span><em>SOS</em>-GUIDE</span>
   </div>
   <div class="nav-right">
+    <button class="nav-btn" id="langBtn" aria-label="Changer de langue">🇫🇷</button>
     <button class="nav-btn" id="themeToggle" aria-label="Changer de thème">🌙</button>
   </div>
 </nav>
 
-<!-- SIDE DRAWER -->
+<!-- DRAWER -->
 <div id="drawerOverlay" class="drawer-overlay">
   <div class="drawer">
     <div class="drawer-header">
-      <span>📋 Navigation</span>
+      <span id="drawerTitle"></span>
       <button class="drawer-close" id="drawerCloseBtn">&times;</button>
     </div>
-    <div class="drawer-nav">
-      <a href="#" data-scroll="outils-section">🛠️ Outils d'urgence</a>
-      <a href="#" data-scroll="guides-section">📚 Guides pratiques</a>
-      <a href="#" data-scroll="asso-section">🤝 Annuaire associatif</a>
-      <a href="#" data-scroll="mental-section">🧠 Santé mentale</a>
+    <div class="drawer-nav" id="drawerNav"></div>
+  </div>
+</div>
+
+<!-- MODAL DE SÉLECTION DE LANGUE (avec cartes) -->
+<div id="langModal" class="lang-modal-overlay">
+  <div class="lang-modal-container">
+    <div class="lang-modal-header">
+      <h3 id="langModalTitle">🌐</h3>
+      <button class="lang-modal-close" id="langModalCloseBtn">&times;</button>
     </div>
+    <div class="lang-grid" id="langGrid"></div>
   </div>
 </div>
 
-<!-- ÉCRAN D'ACCUEIL NUMÉROS D'URGENCE -->
-<div id="splashScreen">
-  <div class="hero-icon">⛑️</div>
-  <h1 class="hero-title">Gardez votre calme !</h1>
-  <p class="hero-sub">Ce portail fonctionne sans Internet et permet de vous guider en cas de crise et situation urgente. Vous pouvez appeler les numéros d’urgence avec votre réseau mobile (4G/5G).</p>
-  <div class="urgence-grid">
-    <a href="tel:15" class="urgence-card"><div class="urgence-number">15</div><div class="urgence-name">SAMU (médical)</div></a>
-    <a href="tel:18" class="urgence-card"><div class="urgence-number">18</div><div class="urgence-name">Pompiers</div></a>
-    <a href="tel:112" class="urgence-card"><div class="urgence-number">112</div><div class="urgence-name">Urgences Europe</div></a>
-    <a href="tel:17" class="urgence-card"><div class="urgence-number">17</div><div class="urgence-name">Police secours</div></a>
-  </div>
-  <button class="btn-guide" id="accessGuideBtn">📋 ACCÉDER AU GUIDE COMPLET</button>
-</div>
-
-<!-- CONTENU PRINCIPAL -->
+<!-- SPLASH & MAIN CONTENT -->
+<div id="splashScreen"></div>
 <div id="mainContent">
   <div class="main">
-
     <div id="outils-section" class="outils-section">
-      <h2 class="outils-title">🛠️ Outils d'urgence</h2>
+      <h2 class="outils-title" id="outilsTitle"></h2>
       <div id="outilsContainer"></div>
     </div>
-
     <div id="guides-section" class="docs-section">
-      <div class="section-title">📚 Guides pratiques</div>
+      <div class="section-title" id="guidesTitle"></div>
       <div id="docsCardsGrid" class="cards-grid"></div>
     </div>
-    
     <div id="asso-section" class="asso-section">
-      <div class="section-title">🤝 Annuaire associatif</div>
+      <div class="section-title" id="assosTitle"></div>
       <div id="assoCardsGrid" class="cards-grid"></div>
     </div>
-
     <div id="mental-section" class="mental-section">
-      <div class="section-title">🧠 Guide santé mentale</div>
+      <div class="section-title" id="mentalTitle"></div>
       <div id="mentalCardsGrid" class="cards-grid"></div>
     </div>
   </div>
 </div>
 
-<!-- MODAL GÉNÉRIQUE -->
+<!-- MODAL CONTENU (guides, etc.) -->
 <div id="docModal" class="modal-overlay">
   <div class="modal-container">
     <div class="modal-header">
-      <h3><span id="modalIcon">📘</span> <span id="modalTitle">Titre</span></h3>
+      <h3><span id="modalIcon">📘</span> <span id="modalTitle"></span></h3>
       <button class="modal-close" id="closeModalBtn">&times;</button>
     </div>
-    <div class="modal-body" id="modalBodyContent">Contenu...</div>
-    <div style="display: flex; justify-content: flex-end;"><button id="listenModalBtn" class="listen-btn">🔊 Écouter</button></div>
+    <div class="modal-body" id="modalBodyContent"></div>
   </div>
 </div>
 
 <!-- OVERLAYS OUTILS -->
-<div id="flashOverlay"><button class="flash-stop-btn" onclick="stopFlash()">ARRÊTER LE FLASH</button></div>
-<div id="respirationOverlay"><div class="respiration-circle" id="respirationCircle">Inspirez</div><div class="respiration-text">4s Inspirez — 4s Bloquez — 6s Expirez</div><button class="respiration-stop" onclick="stopRespiration()">STOP</button></div>
-<div id="flashlightOverlay"><button class="flashlight-stop" onclick="stopFlashlight()">ÉTEINDRE</button></div>
-<div id="cprOverlay"><div class="cpr-metronome"><div class="cpr-bpm" id="cprBpm">110 BPM</div><div class="cpr-beat" id="cprBeat"></div><div class="cpr-controls"><button id="cprMinus">-10 BPM</button><button id="cprPlus">+10 BPM</button><button id="cprStop" class="cpr-stop">ARRÊTER</button></div><div class="cpr-status" id="cprStatus">Rythme recommandé : 100-120 compressions/min</div></div></div>
+<div id="flashOverlay"><button class="flash-stop-btn" id="flashStopBtn"></button></div>
+<div id="respirationOverlay">
+  <div class="respiration-circle" id="respirationCircle"></div>
+  <div class="respiration-text" id="respirationText"></div>
+  <button class="respiration-stop" id="respirationStopBtn"></button>
+</div>
+<div id="flashlightOverlay"><button class="flashlight-stop" id="flashlightStopBtn"></button></div>
+<div id="cprOverlay">
+  <div class="cpr-metronome">
+    <div class="cpr-bpm" id="cprBpm">110 BPM</div>
+    <div class="cpr-beat" id="cprBeat"></div>
+    <div class="cpr-controls">
+      <button id="cprStopBtn" class="cpr-stop"></button>
+    </div>
+    <div class="cpr-status" id="cprStatus"></div>
+  </div>
+</div>
 
 <script>
-// =================== DONNÉES STATIQUES AVEC DESCRIPTIONS TRÈS COURTES ===================
-const fallbackDocs = [
-  { icon: "🫀", title: "Arrêt cardiaque", desc: "RCP 30:2, 100-120/min", content: "<strong>Protocole :</strong><br><ul><li>1️⃣ Sécuriser, alerter 15/112</li><li>2️⃣ Vérifier conscience/respiration (10s)</li><li>3️⃣ Si inconscient et ne respire pas : 30 compressions (100-120/min, 5-6cm)</li><li>4️⃣ Utiliser un DAE dès que possible</li><li>5️⃣ Alterner 30:2 si formé</li></ul><p><strong>Ne jamais interrompre les compressions inutilement.</strong></p>" },
-  { icon: "🛌", title: "PLS", desc: "Position latérale sécurité", content: "<strong>Pour une personne inconsciente qui respire :</strong><br><ul><li>👉 Placer le bras côté victime à angle droit</li><li>👉 Ramener l'autre bras sur la poitrine</li><li>👉 Replier la jambe opposée</li><li>👉 Tourner la victime sur le côté en maintenant la tête</li><li>👉 Incliner la tête pour dégager les voies aériennes</li><li>✅ Appeler le 15, surveiller la respiration jusqu'à l'arrivée des secours</li></ul>" },
-  { icon: "🧠", title: "Épilepsie", desc: "Protéger tête, ne pas entraver", content: "<strong>Conduite à tenir :</strong><br><ul><li>✅ Protéger la tête (coussin, vêtement)</li><li>✅ Éloigner les objets dangereux</li><li>❌ Ne pas mettre d'objet dans la bouche</li><li>❌ Ne pas restreindre les mouvements</li><li>⏱️ Appeler le 15 si : première crise, durée >5 min, blessure, difficulté respiratoire</li><li>Après la crise, mettre en PLS</li></ul>" },
-  { icon: "🩸", title: "Hémorragie", desc: "Compression directe", content: "<strong>Arrêter un saignement abondant :</strong><ul><li>🔴 Compresser directement avec un tissu propre</li><li>🔴 Maintenir pression ferme, ne pas relâcher</li><li>🔴 Si le sang traverse, ajouter un nouveau tampon sans enlever le premier</li><li>🔴 Allonger la victime, appeler le 15</li><li>⚠️ Garrot uniquement en dernier recours par un professionnel</li></ul>" },
-  { icon: "🍎", title: "Étouffement", desc: "Heimlich / tapes dos", content: "<strong>Adulte :</strong><ul><li>Encourager à tousser</li><li>5 tapes dans le dos</li><li>5 compressions abdominales (poing au-dessus du nombril, pousser vers l'intérieur et vers le haut)</li><li>Alterner jusqu'à expulsion ou perte de connaissance</li><li>Si inconscient : débuter RCP</li></ul>" },
-  { icon: "🔥", title: "Incendie", desc: "Ramper, ne pas courir", content: "<strong>Règles :</strong><ul><li>❌ Ne pas utiliser les ascenseurs</li><li>✅ Se baisser pour éviter les fumées (ramper)</li><li>✅ Fermer les portes derrière soi</li><li>✅ Si vêtements en feu : STOP - DROP - ROLL</li><li>✅ Alerter les pompiers (18/112) depuis un endroit sûr</li></ul>" },
-  { icon: "⚡", title: "DAE", desc: "Suivre voix, placer patchs", content: "<strong>Défibrillateur :</strong><ul><li>1️⃣ Allumer l'appareil</li><li>2️⃣ Suivre les instructions vocales</li><li>3️⃣ Déshabiller le torse, placer les électrodes (position indiquée)</li><li>4️⃣ Ne pas toucher la victime pendant l'analyse</li><li>5️⃣ Si choc recommandé : éloignez-vous et appuyez sur le bouton</li><li>6️⃣ Reprendre immédiatement les compressions</li></ul>" },
-  { icon: "🤧", title: "Allergie grave", desc: "Anaphylaxie → 15 + adrénaline", content: "<strong>Signes :</strong> gonflement, urticaire, difficulté à respirer, malaise.<br><strong>Conduite :</strong><ul><li>✅ Allonger la victime (ou demi-assise si gêne respiratoire)</li><li>✅ Utiliser un auto-injecteur d'adrénaline si disponible (type Anapen, EpiPen)</li><li>✅ Appeler le 15 immédiatement</li><li>❌ Ne rien donner à boire ou manger</li></ul>" },
-  { icon: "🍬", title: "Hypoglycémie", desc: "Sucre si conscient", content: "<strong>Symptômes :</strong> sueurs, faiblesse, confusion, pâleur.<br><strong>Action :</strong><ul><li>Si conscient et peut avaler : donner du sucre (boisson sucrée, 2 morceaux de sucre, jus de fruit)</li><li>Amélioration rapide (5-10 min)</li><li>Si inconscient : PLS, appeler le 15, ne pas donner à boire</li><li>Si connu diabétique : chercher un glucomètre</li></ul>" },
-  { icon: "🏃", title: "Attentat", desc: "S'enfuir, se cacher, alerter", content: "<strong>Protocole international : S'enfuir, se cacher, alerter</strong><br><ul><li>🏃‍♂️ S'enfuir si possible, ne pas courir en groupe, sortir de la zone</li><li>🚪 Se cacher : fermer porte, éteindre lumière, se mettre à l'abri des tirs, éteindre son téléphone</li><li>📞 Alerter le 17 (police) uniquement quand en sécurité, décrire la situation</li><li>❌ Ne pas s'approcher des forces de sécurité les mains dans les poches</li><li>✅ Appliquer les gestes de premiers secours après la sécurisation</li></ul>" },
-  { icon: "💧", title: "Noyade", desc: "RCP immédiate, pas de vidage", content: "<strong>Conduite :</strong><ul><li>🆘 Sortir la victime de l'eau rapidement</li><li>✅ Vérifier conscience et respiration</li><li>❌ Ne pas tenter de vider l'eau des poumons (inutile et dangereux)</li><li>💨 Si ne respire pas : commencer la RCP (30 compressions / 2 insufflations)</li><li>📞 Alerter le 15 ou 112, utiliser un DAE si disponible</li><li>🩱 Couvrir la victime pour éviter l'hypothermie</li></ul>" },
-  { icon: "📞", title: "Appel 15/112", desc: "Lieu, état, ne pas raccrocher", content: "<strong>Informations clés :</strong><br><ul><li>📍 Lieu précis (adresse, étage, point d'accès)</li><li>👥 Nombre de victimes</li><li>🩺 État : conscient ? respire ? saigne ?</li><li>⚡ Événement : accident, malaise, incendie...</li><li>📞 Ne pas raccrocher le premier, suivre les instructions</li><li>📱 Utiliser le haut-parleur si possible</li></ul>" }
+// =================== LISTE DES LANGUES DISPONIBLES ===================
+const availableLanguages = [
+  { code: 'fr', flag: '🇫🇷', label: 'Français' },
+  { code: 'en', flag: '🇬🇧', label: 'English' },
+  { code: 'es', flag: '🇪🇸', label: 'Español' },
+  { code: 'de', flag: '🇩🇪', label: 'Deutsch' },
+  { code: 'it', flag: '🇮🇹', label: 'Italiano' },
+  { code: 'pt', flag: '🇵🇹', label: 'Português' },
+  { code: 'nl', flag: '🇳🇱', label: 'Nederlands' },
+  { code: 'pl', flag: '🇵🇱', label: 'Polski' },
+  { code: 'ru', flag: '🇷🇺', label: 'Русский' },
+  { code: 'ar', flag: '🇸🇦', label: 'العربية' },
+  { code: 'zh', flag: '🇨🇳', label: '中文' },
+  { code: 'ja', flag: '🇯🇵', label: '日本語' },
+  { code: 'tr', flag: '🇹🇷', label: 'Türkçe' },
+  { code: 'el', flag: '🇬🇷', label: 'Ελληνικά' },
+  { code: 'sv', flag: '🇸🇪', label: 'Svenska' },
+  { code: 'da', flag: '🇩🇰', label: 'Dansk' },
+  { code: 'no', flag: '🇳🇴', label: 'Norsk' },
+  { code: 'fi', flag: '🇫🇮', label: 'Suomi' },
+  { code: 'cs', flag: '🇨🇿', label: 'Čeština' },
+  { code: 'hu', flag: '🇭🇺', label: 'Magyar' },
+  { code: 'ro', flag: '🇷🇴', label: 'Română' },
+  { code: 'uk', flag: '🇺🇦', label: 'Українська' },
+  { code: 'he', flag: '🇮🇱', label: 'עברית' },
+  { code: 'th', flag: '🇹🇭', label: 'ไทย' },
+  { code: 'vi', flag: '🇻🇳', label: 'Tiếng Việt' },
+  { code: 'ko', flag: '🇰🇷', label: '한국어' },
+  { code: 'hi', flag: '🇮🇳', label: 'हिन्दी' }
 ];
 
-const mentalHealthData = [
-  { icon: "🧘", title: "Cohérence cardiaque", desc: "5-5-5 apaisant", content: "<strong>Respiration 5-5-5 :</strong><br>Inspirez 5s, expirez 5s, pause 5s. Répéter 5 minutes. Effet calmant immédiat." },
-  { icon: "🧠", title: "Anxiété 3-3-3", desc: "Ancrage visuel/auditif/moteur", content: "<strong>Technique d'ancrage :</strong><br>Nommez 3 choses que vous voyez, 3 sons que vous entendez, bougez 3 parties de votre corps." },
-  { icon: "📞", title: "Soutien psy 3114", desc: "Gratuit 24/7", content: "<strong>Numéro d'écoute : 3114</strong> (gratuit, professionnels). Urgence psychiatrique : 15." },
-  { icon: "💤", title: "Prévention burn-out", desc: "Repos, activité, consulter", content: "<strong>Signes :</strong> épuisement, cynisme, inefficacité. Pause, activité physique, consulter." }
-];
-
-const associationsData = [
-  { icon: "🩸", name: "Croix-Rouge", desc: "Secours, formation", content: "Croix-Rouge française<br>Secours, formation aux gestes qui sauvent.<br><strong>📞 Contact :</strong> 3639 / 0800 858 858" },
-  { icon: "🤝", name: "Secours Populaire", desc: "Aide alimentaire", content: "Secours Populaire<br>Aide alimentaire, vestimentaire, solidarité.<br><strong>📞 Contact :</strong> 03 44 53 68 70" },
-  { icon: "⚓", name: "SNSM", desc: "Sauvetage en mer 196", content: "SNSM (Sauvetage en Mer)<br>Sauvetage maritime.<br><strong>📞 Contact :</strong> 196 (urgence)" },
-  { icon: "🧸", name: "Allô Enfance 119", desc: "Protection mineurs", content: "Allô Enfance en Danger<br>Protection des mineurs.<br><strong>📞 Contact :</strong> 119" }
-];
-
-// --- ÉTAT GLOBAL & VARIABLES ---
-let currentModalContentRaw = "";
-let speechUtterance = null;
+let currentLang = 'fr';
+let appData = null;
 let flashActive = false, respirationActive = false, flashlightActive = false, soundActive = false, cprActive = false;
 let flashInterval = null, respirationTimeout = null;
-let cprInterval = null, cprBpm = 110;
+let cprInterval = null;
 let cprAudioCtx = null;
 let soundCtx = null, soundOsc = null, soundGain = null;
 
-// Morse
-let morseActive = false, morseTimeout = null, morseAudioCtx = null;
-let morsePattern = [];
+function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-// --- MODAL & AUDIO ---
-const modalOverlay = document.getElementById('docModal');
-const modalTitleElem = document.getElementById('modalTitle');
-const modalIconElem = document.getElementById('modalIcon');
-const modalBodyElem = document.getElementById('modalBodyContent');
-const closeModalBtn = document.getElementById('closeModalBtn');
-const listenBtn = document.getElementById('listenModalBtn');
-
-function stripHtml(html) { let tmp = document.createElement('div'); tmp.innerHTML = html; return tmp.textContent || tmp.innerText || ""; }
-function openModalWithContent(icon, title, htmlContent) {
-  modalIconElem.textContent = icon || "📘";
-  modalTitleElem.textContent = title;
-  modalBodyElem.innerHTML = htmlContent;
-  currentModalContentRaw = stripHtml(htmlContent);
-  modalOverlay.classList.add('active');
-  document.body.style.overflow = 'hidden';
-  if (speechUtterance) window.speechSynthesis.cancel();
-}
-function closeModal() { modalOverlay.classList.remove('active'); document.body.style.overflow = ''; if (speechUtterance) window.speechSynthesis.cancel(); }
-listenBtn.addEventListener('click', () => {
-  if (!currentModalContentRaw.trim()) return;
-  if (speechUtterance) window.speechSynthesis.cancel();
-  speechUtterance = new SpeechSynthesisUtterance(currentModalContentRaw);
-  speechUtterance.lang = 'fr-FR';
-  speechUtterance.rate = 0.9;
-  window.speechSynthesis.speak(speechUtterance);
-});
-
-// --- RENDU DES CARTES ---
-function renderDocsCards() {
-  const grid = document.getElementById('docsCardsGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  fallbackDocs.forEach(doc => {
-    const card = document.createElement('div');
-    card.className = 'doc-card';
-    card.innerHTML = `<div class="doc-card-icon">${escapeHtml(doc.icon)}</div><div class="doc-card-title">${escapeHtml(doc.title)}</div><div class="doc-card-desc">${escapeHtml(doc.desc)}</div>`;
-    card.addEventListener('click', () => openModalWithContent(doc.icon, doc.title, doc.content));
-    grid.appendChild(card);
-  });
-}
-function renderMentalCards() {
-  const grid = document.getElementById('mentalCardsGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  mentalHealthData.forEach(item => {
-    const card = document.createElement('div');
-    card.className = 'doc-card';
-    card.innerHTML = `<div class="doc-card-icon">${escapeHtml(item.icon)}</div><div class="doc-card-title">${escapeHtml(item.title)}</div><div class="doc-card-desc">${escapeHtml(item.desc)}</div>`;
-    card.addEventListener('click', () => openModalWithContent(item.icon, item.title, item.content));
-    grid.appendChild(card);
-  });
-}
-function renderAssoCards() {
-  const grid = document.getElementById('assoCardsGrid');
-  if (!grid) return;
-  grid.innerHTML = '';
-  associationsData.forEach(asso => {
-    const card = document.createElement('div');
-    card.className = 'doc-card';
-    card.innerHTML = `<div class="doc-card-icon">${escapeHtml(asso.icon)}</div><div class="doc-card-title">${escapeHtml(asso.name)}</div><div class="doc-card-desc">${escapeHtml(asso.desc)}</div>`;
-    card.addEventListener('click', () => openModalWithContent(asso.icon, asso.name, asso.content));
-    grid.appendChild(card);
-  });
-}
-
-// --- OUTILS EXISTANTS ---
 function updateOutilUI(id, actif) {
   const card = document.querySelector(`[data-outil="${id}"]`);
   const status = document.getElementById(`status-${id}`);
   if (card) card.classList.toggle('active', actif);
   if (status) status.style.background = actif ? 'var(--green)' : '';
 }
-function toggleFlash() { flashActive ? stopFlash() : startFlash(); }
+
+// Flash SOS
 function startFlash() { if (flashActive) return; flashActive = true; updateOutilUI('flash', true); const overlay = document.getElementById('flashOverlay'); overlay.classList.add('active'); const pattern = [{ color: 'white', dur: 300 },{ color: 'black', dur: 300 },{ color: 'white', dur: 300 },{ color: 'black', dur: 300 },{ color: 'white', dur: 300 },{ color: 'black', dur: 300 },{ color: 'white', dur: 700 },{ color: 'black', dur: 700 },{ color: 'white', dur: 700 },{ color: 'black', dur: 700 },{ color: 'white', dur: 700 },{ color: 'black', dur: 700 },{ color: 'white', dur: 300 },{ color: 'black', dur: 300 },{ color: 'white', dur: 300 },{ color: 'black', dur: 300 },{ color: 'white', dur: 300 },{ color: 'black', dur: 1000 }]; let idx = 0; function step() { if (!flashActive) return; overlay.style.backgroundColor = pattern[idx].color; flashInterval = setTimeout(() => { idx = (idx + 1) % pattern.length; step(); }, pattern[idx].dur); } step(); }
 function stopFlash() { flashActive = false; if (flashInterval) clearTimeout(flashInterval); const overlay = document.getElementById('flashOverlay'); overlay.classList.remove('active'); overlay.style.backgroundColor = ''; updateOutilUI('flash', false); }
-function toggleRespiration() { respirationActive ? stopRespiration() : startRespiration(); }
-function startRespiration() { if (respirationActive) return; respirationActive = true; updateOutilUI('respiration', true); const overlay = document.getElementById('respirationOverlay'); const circle = document.getElementById('respirationCircle'); overlay.classList.add('active'); function cycle() { if (!respirationActive) return; circle.textContent = 'Inspirez'; respirationTimeout = setTimeout(() => { if (!respirationActive) return; circle.textContent = 'Bloquez'; respirationTimeout = setTimeout(() => { if (!respirationActive) return; circle.textContent = 'Expirez'; respirationTimeout = setTimeout(cycle, 6000); }, 4000); }, 4000); } cycle(); }
+window.stopFlash = stopFlash;
+function toggleFlash() { flashActive ? stopFlash() : startFlash(); }
+
+// Respiration
+function startRespiration() { if (respirationActive) return; respirationActive = true; updateOutilUI('respiration', true); const overlay = document.getElementById('respirationOverlay'); const circle = document.getElementById('respirationCircle'); overlay.classList.add('active'); const texts = appData.respirationTexts; function cycle() { if (!respirationActive) return; circle.textContent = texts.inhale; respirationTimeout = setTimeout(() => { if (!respirationActive) return; circle.textContent = texts.hold; respirationTimeout = setTimeout(() => { if (!respirationActive) return; circle.textContent = texts.exhale; respirationTimeout = setTimeout(cycle, 6000); }, 4000); }, 4000); } cycle(); document.getElementById('respirationText').textContent = texts.instruction; }
 function stopRespiration() { respirationActive = false; if (respirationTimeout) clearTimeout(respirationTimeout); const overlay = document.getElementById('respirationOverlay'); overlay.classList.remove('active'); updateOutilUI('respiration', false); }
-function toggleFlashlight() { flashlightActive ? stopFlashlight() : startFlashlight(); }
-function startFlashlight() { if (confirm("⚠️ Lampe torche : écran blanc lumineux (consommation élevée). Continuer ?")) { flashlightActive = true; updateOutilUI('flashlight', true); document.getElementById('flashlightOverlay').classList.add('active'); } }
+window.stopRespiration = stopRespiration;
+function toggleRespiration() { respirationActive ? stopRespiration() : startRespiration(); }
+
+// Lampe torche
+function startFlashlight() { flashlightActive = true; updateOutilUI('flashlight', true); document.getElementById('flashlightOverlay').classList.add('active'); }
 function stopFlashlight() { flashlightActive = false; updateOutilUI('flashlight', false); document.getElementById('flashlightOverlay').classList.remove('active'); }
-function toggleSoundAlarm() { soundActive ? stopSoundAlarm() : startSoundAlarm(); }
+window.stopFlashlight = stopFlashlight;
+function toggleFlashlight() { flashlightActive ? stopFlashlight() : startFlashlight(); }
+
+// Alarme sonore
 function startSoundAlarm() { if (soundActive) return; try { soundCtx = new (window.AudioContext || window.webkitAudioContext)(); soundOsc = soundCtx.createOscillator(); soundGain = soundCtx.createGain(); soundOsc.type = 'sawtooth'; soundOsc.frequency.value = 880; soundGain.gain.value = 0.4; soundOsc.connect(soundGain); soundGain.connect(soundCtx.destination); soundOsc.start(); soundActive = true; updateOutilUI('soundAlarm', true); if (soundCtx.state === 'suspended') soundCtx.resume(); } catch(e) { console.warn(e); } }
 function stopSoundAlarm() { if (!soundActive) return; try { if (soundOsc) soundOsc.stop(); if (soundCtx) soundCtx.close(); } catch(e) {} soundOsc = null; soundGain = null; soundCtx = null; soundActive = false; updateOutilUI('soundAlarm', false); }
-function toggleCprMetronome() { cprActive ? stopCprMetronome() : startCprMetronome(); }
+function toggleSoundAlarm() { soundActive ? stopSoundAlarm() : startSoundAlarm(); }
+
+// CPR Metronome (fixe 110 BPM)
+function playCprBeep() { if (!cprActive) return; try { if (!cprAudioCtx) cprAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (cprAudioCtx.state === 'suspended') cprAudioCtx.resume(); const now = cprAudioCtx.currentTime; const osc = cprAudioCtx.createOscillator(); const gain = cprAudioCtx.createGain(); osc.type = 'sine'; osc.frequency.value = 880; gain.gain.value = 0.25; gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.25); osc.connect(gain); gain.connect(cprAudioCtx.destination); osc.start(); osc.stop(now + 0.25); } catch(e) { console.warn(e); } }
+function startCprInterval() { if (cprInterval) clearInterval(cprInterval); const intervalMs = 60000 / 110; cprInterval = setInterval(() => { if (!cprActive) return; playCprBeep(); const beat = document.getElementById('cprBeat'); beat.classList.add('active'); setTimeout(() => beat.classList.remove('active'), 100); }, intervalMs); }
+function updateCprBpmDisplay() { document.getElementById('cprBpm').innerHTML = "110 BPM"; const status = document.getElementById('cprStatus'); if (status && appData) status.innerHTML = appData.cprMessages.good; }
 function startCprMetronome() { if (cprActive) return; cprActive = true; updateOutilUI('cprMetronome', true); document.getElementById('cprOverlay').classList.add('active'); updateCprBpmDisplay(); startCprInterval(); }
 function stopCprMetronome() { cprActive = false; if (cprInterval) clearInterval(cprInterval); if (cprAudioCtx) cprAudioCtx.close(); cprAudioCtx = null; document.getElementById('cprOverlay').classList.remove('active'); updateOutilUI('cprMetronome', false); }
-function startCprInterval() { if (cprInterval) clearInterval(cprInterval); const intervalMs = 60000 / cprBpm; cprInterval = setInterval(() => { if (!cprActive) return; playCprBeep(); const beat = document.getElementById('cprBeat'); beat.classList.add('active'); setTimeout(() => beat.classList.remove('active'), 100); }, intervalMs); }
-function playCprBeep() { if (!cprActive) return; try { if (!cprAudioCtx) cprAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); if (cprAudioCtx.state === 'suspended') cprAudioCtx.resume(); const now = cprAudioCtx.currentTime; const osc = cprAudioCtx.createOscillator(); const gain = cprAudioCtx.createGain(); osc.type = 'sine'; osc.frequency.value = 880; gain.gain.value = 0.25; gain.gain.exponentialRampToValueAtTime(0.00001, now + 0.25); osc.connect(gain); gain.connect(cprAudioCtx.destination); osc.start(); osc.stop(now + 0.25); } catch(e) { console.warn(e); } }
-function changeCprBpm(delta) { let newBpm = cprBpm + delta; if (newBpm < 60) newBpm = 60; if (newBpm > 160) newBpm = 160; cprBpm = newBpm; updateCprBpmDisplay(); if (cprActive) startCprInterval(); }
-function updateCprBpmDisplay() { document.getElementById('cprBpm').innerText = cprBpm + " BPM"; const status = document.getElementById('cprStatus'); if (cprBpm >= 100 && cprBpm <= 120) status.innerHTML = "✅ Rythme recommandé pour la RCP (100-120 compressions/min)"; else status.innerHTML = "⚠️ Rythme non optimal. Réglez entre 100 et 120 BPM."; }
+function toggleCprMetronome() { cprActive ? stopCprMetronome() : startCprMetronome(); }
 
-// --- NAVIGATION DRAWER + AFFICHAGE CONTENU ---
-function revealMainContentAndScroll(targetId) {
-  const splash = document.getElementById('splashScreen');
-  const main = document.getElementById('mainContent');
-  if (splash.style.display !== 'none') {
-    splash.style.display = 'none';
-    main.style.display = 'block';
-  }
-  setTimeout(() => {
-    const target = document.getElementById(targetId);
-    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }, 100);
-}
-
-// --- RENDU OUTILS (6 CARTES) ---
-function renderOutils() {
-  const cont = document.getElementById('outilsContainer');
-  if (!cont) return;
-  cont.innerHTML = `
-    <div class="outil-card" data-outil="flash" onclick="toggleFlash()"><div class="outil-icon">🔦</div><div class="outil-title">Flash SOS</div><div class="outil-desc">Signal lumineux SOS</div><div class="outil-status" id="status-flash"></div></div>
-    <div class="outil-card" data-outil="respiration" onclick="toggleRespiration()"><div class="outil-icon">🧘</div><div class="outil-title">Respiration</div><div class="outil-desc">4-4-6 anti-stress</div><div class="outil-status" id="status-respiration"></div></div>
-    <div class="outil-card" data-outil="flashlight" onclick="toggleFlashlight()"><div class="outil-icon">💡</div><div class="outil-title">Lampe torche</div><div class="outil-desc">Écran blanc lumineux</div><div class="outil-status" id="status-flashlight"></div></div>
-    <div class="outil-card" data-outil="soundAlarm" onclick="toggleSoundAlarm()"><div class="outil-icon">🔊</div><div class="outil-title">Alerte sonore</div><div class="outil-desc">Bip continu</div><div class="outil-status" id="status-soundAlarm"></div></div>
-    <div class="outil-card" data-outil="cprMetronome" onclick="toggleCprMetronome()"><div class="outil-icon">❤️</div><div class="outil-title">Métronome RCP</div><div class="outil-desc">(100-120 bpm)</div><div class="outil-status" id="status-cprMetronome"></div></div>
+// Rendu des sections
+function renderSplash() {
+  const splashDiv = document.getElementById('splashScreen');
+  if (!splashDiv || !appData) return;
+  const urgences = appData.urgences || [];
+  const urgGrid = urgences.map(u => `<a href="tel:${u.tel}" class="urgence-card"><div class="urgence-number">${escapeHtml(u.number)}</div><div class="urgence-name">${escapeHtml(u.name)}</div></a>`).join('');
+  splashDiv.innerHTML = `
+    <div class="hero-icon">⛑️</div>
+    <h1 class="hero-title">${escapeHtml(appData.splash.title)}</h1>
+    <p class="hero-sub">${escapeHtml(appData.splash.subtitle)}</p>
+    <div class="urgence-grid">${urgGrid}</div>
+    <button class="btn-guide" id="accessGuideBtn">${escapeHtml(appData.splash.guideButton)}</button>
   `;
+  const guideBtn = document.getElementById('accessGuideBtn');
+  if (guideBtn) guideBtn.onclick = () => { document.getElementById('splashScreen').style.display = 'none'; document.getElementById('mainContent').style.display = 'block'; };
 }
-function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){ if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-// --- INIT & EVENT LISTENERS ---
-document.getElementById('accessGuideBtn').addEventListener('click', () => {
-  document.getElementById('splashScreen').style.display = 'none';
-  document.getElementById('mainContent').style.display = 'block';
-});
-const drawerOverlay = document.getElementById('drawerOverlay');
-const hamburgerBtn = document.getElementById('hamburgerBtn');
-const drawerCloseBtn = document.getElementById('drawerCloseBtn');
-function openDrawer() { drawerOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
-function closeDrawer() { drawerOverlay.classList.remove('active'); document.body.style.overflow = ''; }
-hamburgerBtn.addEventListener('click', openDrawer);
-drawerCloseBtn.addEventListener('click', closeDrawer);
-drawerOverlay.addEventListener('click', (e) => { if (e.target === drawerOverlay) closeDrawer(); });
-document.querySelectorAll('.drawer-nav a').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    const targetId = link.getAttribute('data-scroll');
-    if (targetId) revealMainContentAndScroll(targetId);
-    closeDrawer();
+function renderOutils() {
+  const container = document.getElementById('outilsContainer');
+  if (!container || !appData) return;
+  const outils = appData.outils || [];
+  container.innerHTML = outils.map(outil => `
+    <div class="outil-card" data-outil="${outil.id}" onclick="window['toggle${outil.func}']()">
+      <div class="outil-icon">${outil.icon}</div>
+      <div class="outil-title">${escapeHtml(outil.title)}</div>
+      <div class="outil-desc">${escapeHtml(outil.desc)}</div>
+      <div class="outil-status" id="status-${outil.id}"></div>
+    </div>
+  `).join('');
+}
+
+function renderCards(containerId, items, clickHandler) {
+  const container = document.getElementById(containerId);
+  if (!container) return;
+  container.innerHTML = items.map(item => `
+    <div class="doc-card" data-idx="${items.indexOf(item)}">
+      <div class="doc-card-icon">${escapeHtml(item.icon)}</div>
+      <div class="doc-card-title">${escapeHtml(item.title || item.name)}</div>
+      <div class="doc-card-desc">${escapeHtml(item.desc)}</div>
+    </div>
+  `).join('');
+  Array.from(container.children).forEach((card, idx) => {
+    card.addEventListener('click', () => clickHandler(items[idx]));
+  });
+}
+
+function openModal(item) {
+  if (!item) return;
+  document.getElementById('modalIcon').textContent = item.icon || '📘';
+  document.getElementById('modalTitle').textContent = item.title || item.name;
+  document.getElementById('modalBodyContent').innerHTML = item.content;
+  document.getElementById('docModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderAll() {
+  if (!appData) return;
+  document.getElementById('outilsTitle').innerHTML = appData.sections.outilsTitle;
+  document.getElementById('guidesTitle').innerHTML = appData.sections.guidesTitle;
+  document.getElementById('assosTitle').innerHTML = appData.sections.assosTitle;
+  document.getElementById('mentalTitle').innerHTML = appData.sections.mentalTitle;
+  document.getElementById('drawerTitle').innerHTML = appData.drawer.title;
+  const drawerNav = document.getElementById('drawerNav');
+  if (drawerNav) {
+    drawerNav.innerHTML = appData.drawer.links.map(link => `<a href="#" data-scroll="${link.scroll}">${link.icon} ${link.label}</a>`).join('');
+    drawerNav.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = a.getAttribute('data-scroll');
+        if (targetId) {
+          document.getElementById('splashScreen').style.display = 'none';
+          document.getElementById('mainContent').style.display = 'block';
+          setTimeout(() => { const el = document.getElementById(targetId); if(el) el.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 100);
+        }
+        document.getElementById('drawerOverlay').classList.remove('active');
+        document.body.style.overflow = '';
+      });
+    });
+  }
+  // Mise à jour des boutons techniques
+  if (appData.buttons) {
+    const flashStop = document.getElementById('flashStopBtn');
+    if (flashStop) flashStop.textContent = appData.buttons.flashStop;
+    const respirationStop = document.getElementById('respirationStopBtn');
+    if (respirationStop) respirationStop.textContent = appData.buttons.respirationStop;
+    const flashlightStop = document.getElementById('flashlightStopBtn');
+    if (flashlightStop) flashlightStop.textContent = appData.buttons.flashlightStop;
+    const cprStop = document.getElementById('cprStopBtn');
+    if (cprStop) cprStop.textContent = appData.buttons.cprStop;
+  }
+  renderSplash();
+  renderOutils();
+  renderCards('docsCardsGrid', appData.guides, openModal);
+  renderCards('assoCardsGrid', appData.associations, openModal);
+  renderCards('mentalCardsGrid', appData.mental, openModal);
+  // Attacher les fonctions globales
+  window.toggleFlash = toggleFlash;
+  window.toggleRespiration = toggleRespiration;
+  window.toggleFlashlight = toggleFlashlight;
+  window.toggleSoundAlarm = toggleSoundAlarm;
+  window.toggleCprMetronome = toggleCprMetronome;
+}
+
+async function loadLanguage(lang) {
+  try {
+    const response = await fetch(`data/${lang}.json`);
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const data = await response.json();
+    appData = data;
+    currentLang = lang;
+    localStorage.setItem('sos_lang', lang);
+    document.documentElement.lang = lang;
+    // Mettre à jour le drapeau dans le bouton
+    const found = availableLanguages.find(l => l.code === lang);
+    const langBtn = document.getElementById('langBtn');
+    if (found) langBtn.textContent = found.flag;
+    else langBtn.textContent = '🌐';
+    renderAll();
+  } catch (err) {
+    console.error("Erreur chargement langue:", err);
+    document.getElementById('splashScreen').innerHTML = `<div style="color:red; text-align:center; margin-top:20vh;">❌ Erreur de chargement des données (${lang}). Vérifiez que le fichier data/${lang}.json existe.</div>`;
+  }
+}
+
+// Génération du contenu du modal de sélection de langue (grille de cartes)
+function populateLangModal() {
+  const grid = document.getElementById('langGrid');
+  if (!grid) return;
+  grid.innerHTML = '';
+  availableLanguages.forEach(lang => {
+    const card = document.createElement('div');
+    card.className = 'lang-card';
+    card.innerHTML = `
+      <div class="lang-flag">${lang.flag}</div>
+      <div class="lang-name">${escapeHtml(lang.label)}</div>
+    `;
+    card.addEventListener('click', () => {
+      loadLanguage(lang.code);
+      closeLangModal();
+    });
+    grid.appendChild(card);
+  });
+}
+
+function openLangModal() {
+  const modal = document.getElementById('langModal');
+  if (modal) modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLangModal() {
+  const modal = document.getElementById('langModal');
+  if (modal) modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  // Thème
+  (function initTheme() {
+    let savedTheme = 'dark';
+    try { const stored = localStorage.getItem('sos_theme'); if (stored !== null) savedTheme = stored; else savedTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; } catch(e) {}
+    const isLight = savedTheme === 'light';
+    document.body.classList.toggle('light-mode', isLight);
+    const themeBtn = document.getElementById('themeToggle');
+    if (themeBtn) themeBtn.textContent = isLight ? '☀️' : '🌙';
+  })();
+  // Remplir le modal de langues
+  populateLangModal();
+  // Charger la langue sauvegardée ou français par défaut
+  let savedLang = 'fr';
+  try { if (localStorage.getItem('sos_lang')) savedLang = localStorage.getItem('sos_lang'); } catch(e) {}
+  loadLanguage(savedLang);
+  // Événements UI
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const isLight = document.body.classList.toggle('light-mode');
+    localStorage.setItem('sos_theme', isLight ? 'light' : 'dark');
+    document.getElementById('themeToggle').textContent = isLight ? '☀️' : '🌙';
+  });
+  // Drawer
+  const drawerOverlay = document.getElementById('drawerOverlay');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+  const drawerCloseBtn = document.getElementById('drawerCloseBtn');
+  hamburgerBtn.onclick = () => { drawerOverlay.classList.add('active'); document.body.style.overflow = 'hidden'; };
+  drawerCloseBtn.onclick = () => { drawerOverlay.classList.remove('active'); document.body.style.overflow = ''; };
+  drawerOverlay.addEventListener('click', (e) => { if (e.target === drawerOverlay) { drawerOverlay.classList.remove('active'); document.body.style.overflow = ''; } });
+  // Modal langue
+  const langBtn = document.getElementById('langBtn');
+  const langModalClose = document.getElementById('langModalCloseBtn');
+  const langModalOverlay = document.getElementById('langModal');
+  langBtn.addEventListener('click', openLangModal);
+  langModalClose.addEventListener('click', closeLangModal);
+  langModalOverlay.addEventListener('click', (e) => { if (e.target === langModalOverlay) closeLangModal(); });
+  // Modal document (guides)
+  const docModalOverlay = document.getElementById('docModal');
+  const closeModalBtn = document.getElementById('closeModalBtn');
+  closeModalBtn.onclick = () => { docModalOverlay.classList.remove('active'); document.body.style.overflow = ''; };
+  docModalOverlay.addEventListener('click', (e) => { if (e.target === docModalOverlay) { docModalOverlay.classList.remove('active'); document.body.style.overflow = ''; } });
+  // CPR stop
+  document.getElementById('cprStopBtn')?.addEventListener('click', () => toggleCprMetronome());
+  // Nettoyage avant fermeture
+  window.addEventListener('beforeunload', () => {
+    if (soundActive) stopSoundAlarm();
+    if (flashActive) stopFlash();
+    if (respirationActive) stopRespiration();
+    if (flashlightActive) stopFlashlight();
+    if (cprActive) stopCprMetronome();
   });
 });
-
-const savedTheme = localStorage.getItem('sos_theme');
-const isDark = savedTheme !== 'light';
-document.body.classList.toggle('light-mode', !isDark);
-const themeBtn = document.getElementById('themeToggle');
-if (themeBtn) themeBtn.textContent = isDark ? '🌙' : '☀️';
-themeBtn.addEventListener('click', () => {
-  const isLight = document.body.classList.toggle('light-mode');
-  localStorage.setItem('sos_theme', isLight ? 'light' : 'dark');
-  themeBtn.textContent = isLight ? '☀️' : '🌙';
-});
-
-closeModalBtn.addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-document.getElementById('cprMinus')?.addEventListener('click', () => changeCprBpm(-10));
-document.getElementById('cprPlus')?.addEventListener('click', () => changeCprBpm(10));
-document.getElementById('cprStop')?.addEventListener('click', () => toggleCprMetronome());
-document.getElementById('closeMorseModalBtn')?.addEventListener('click', closeMorseModal);
-document.getElementById('morseModal')?.addEventListener('click', (e) => { if (e.target === document.getElementById('morseModal')) closeMorseModal(); });
-document.getElementById('startMorseBtn')?.addEventListener('click', startMorseFromInput);
-document.getElementById('stopMorseBtn')?.addEventListener('click', () => { if (morseActive) stopMorseSignal(); document.getElementById('startMorseBtn').disabled = false; });
-
-window.addEventListener('beforeunload', () => {
-  if (soundActive) stopSoundAlarm();
-  if (flashActive) stopFlash();
-  if (respirationActive) stopRespiration();
-  if (flashlightActive) stopFlashlight();
-  if (cprActive) stopCprMetronome();
-  if (speechUtterance) window.speechSynthesis.cancel();
-  if (morseActive) stopMorseSignal();
-});
-
-renderOutils();
-renderDocsCards();
-renderMentalCards();
-renderAssoCards();
 </script>
 </body>
 </html>

@@ -1,0 +1,94 @@
+{
+  "language": "ro",
+  "buttons": {
+    "flashStop": "OPREȘTE FLASH",
+    "respirationStop": "STOP",
+    "flashlightStop": "STINGE",
+    "cprStop": "OPREȘTE"
+  },
+  "splash": {
+    "title": "Rămâneți calm!",
+    "subtitle": "Acest portal funcționează fără internet și vă ghidează în situații de criză și urgență. Puteți suna la numerele de urgență prin rețeaua dvs. mobilă (4G/5G).",
+    "guideButton": "📋 ACCESAȚI GHIDUL COMPLET"
+  },
+  "urgences": [
+    { "number": "15", "name": "SAMU (medical)", "tel": "15" },
+    { "number": "18", "name": "Pompieri", "tel": "18" },
+    { "number": "112", "name": "Urgențe Europa", "tel": "112" },
+    { "number": "17", "name": "Poliție", "tel": "17" }
+  ],
+  "sections": {
+    "outilsTitle": "🛠️ Instrumente de urgență",
+    "guidesTitle": "📚 Ghiduri practice",
+    "assosTitle": "🤝 Director de asociații",
+    "mentalTitle": "🧠 Ghid de sănătate mintală"
+  },
+  "outils": [
+    { "id": "flash", "icon": "🔦", "title": "Flash SOS", "desc": "Semnal luminos SOS", "func": "Flash" },
+    { "id": "respiration", "icon": "🧘", "title": "Respirație", "desc": "4-4-6 anti-stres", "func": "Respiration" },
+    { "id": "flashlight", "icon": "💡", "title": "Lanternă", "desc": "Ecran alb luminos", "func": "Flashlight" },
+    { "id": "soundAlarm", "icon": "🔊", "title": "Alarmă sonoră", "desc": "Bip continuu", "func": "SoundAlarm" },
+    { "id": "cprMetronome", "icon": "❤️", "title": "Metronom RCP", "desc": "100-120 bpm", "func": "CprMetronome" }
+  ],
+  "drawer": {
+    "title": "📋 Navigare",
+    "links": [
+      { "icon": "🛠️", "label": "Instrumente de urgență", "scroll": "outils-section" },
+      { "icon": "📚", "label": "Ghiduri practice", "scroll": "guides-section" },
+      { "icon": "🤝", "label": "Asociații", "scroll": "asso-section" },
+      { "icon": "🧠", "label": "Sănătate mintală", "scroll": "mental-section" }
+    ]
+  },
+  "respirationTexts": {
+    "inhale": "Inspiră",
+    "hold": "Ține",
+    "exhale": "Expiră",
+    "instruction": "4s inspir — 4s ține — 6s expir"
+  },
+  "cprMessages": {
+    "good": "✅ Ritm RCP recomandat (100-100 compresii/min)",
+    "bad": "⚠️ Ritm neoptim. Setați între 100-120 BPM."
+  },
+  "guides": [
+    { "icon": "🫀", "title": "Stop cardiac", "desc": "RCP 30:2, 100-120/min", "content": "<strong>Protocol:</strong><br><ul><li>1️⃣ Asigurați zona, sunați 15/112</li><li>2️⃣ Verificați conștiința/respirația (10s)</li><li>3️⃣ Dacă inconștient și nu respiră: 30 compresii (100-120/min, adâncime 5-6cm)</li><li>4️⃣ Folosiți un DEA cât mai repede</li><li>5️⃣ Alternați 30:2 dacă sunteți instruit</li></ul><p><strong>Nu întrerupeți compresiile inutil.</strong></p>" },
+    { "icon": "🛌", "title": "Poziția laterală de siguranță", "desc": "Poziție laterală sigură", "content": "<strong>Pentru o persoană inconștientă care respiră:</strong><br><ul><li>👉 Puneți brațul victimei în unghi drept</li><li>👉 Aduceți celălalt braț pe piept</li><li>👉 Îndoiți piciorul opus</li><li>👉 Rotiți victima pe o parte susținând capul</li><li>👉 Înclinați capul pentru a deschide căile respiratorii</li><li>✅ Sunați 15, monitorizați respirația până la sosirea ajutorului</li></ul>" },
+    { "icon": "🧠", "title": "Epilepsie", "desc": "Protejați capul, nu împiedicați", "content": "<strong>Ce trebuie să faceți:</strong><br><ul><li>✅ Protejați capul (pernă, haină)</li><li>✅ Îndepărtați obiectele periculoase</li><li>❌ Nu băgați nimic în gură</li><li>❌ Nu restricționați mișcările</li><li>⏱️ Sunați 15 dacă: primul atac, durată >5 min, rănire, dificultăți de respirație</li><li>După atac, puneți în poziție laterală de siguranță</li></ul>" },
+    { "icon": "🩸", "title": "Hemoragie", "desc": "Compresiune directă", "content": "<strong>Opriți sângerarea abundentă:</strong><ul><li>🔴 Compresați direct cu o cârpă curată</li><li>🔴 Mențineți presiune fermă, nu slăbiți</li><li>🔴 Dacă sângele se infiltrează, adăugați o altă cârpă fără a o îndepărta pe prima</li><li>🔴 Culcați victima, sunați 15</li><li>⚠️ Garou doar ca ultimă soluție de către un profesionist</li></ul>" },
+    { "icon": "🍎", "title": "Sufocare", "desc": "Heimlich / lovituri pe spate", "content": "<strong>Adult:</strong><ul><li>Încurajați să tușească</li><li>5 lovituri pe spate</li><li>5 compresiuni abdominale (pumn deasupra buricului, împingeți înăuntru și în sus)</li><li>Alternați până la eliminare sau pierderea conștienței</li><li>Dacă inconștient: începeți RCP</li></ul>" },
+    { "icon": "🔥", "title": "Incendiu", "desc": "Târâți-vă, nu fugiți", "content": "<strong>Reguli:</strong><ul><li>❌ Nu folosiți lifturi</li><li>✅ Stați jos pentru a evita fumul (târâiți-vă)</li><li>✅ Închideți ușile în urma dvs.</li><li>✅ Dacă hainele iau foc: STOP - PLOA - ROSTOGOLEȘTE-TE</li><li>✅ Alertați pompierii (18/112) dintr-un loc sigur</li></ul>" },
+    { "icon": "⚡", "title": "DEA", "desc": "Urmați vocea, plasați plasturi", "content": "<strong>Defibrilator:</strong><ul><li>1️⃣ Porniți dispozitivul</li><li>2️⃣ Urmați instrucțiunile vocale</li><li>3️⃣ Descoperiți toracele, plasați electrozii conform indicațiilor</li><li>4️⃣ Nu atingeți victima în timpul analizei</li><li>5️⃣ Dacă se recomandă șoc: îndepărtați-vă și apăsați butonul</li><li>6️⃣ Reluați imediat compresiile</li></ul>" },
+    { "icon": "🤧", "title": "Alergie severă", "desc": "Anafilaxie → 15 + adrenalină", "content": "<strong>Semne:</strong> umflare, urticarie, dificultăți de respirație, leșin.<br><strong>Acțiune:</strong><ul><li>✅ Culcați victima (sau semi-șezând dacă dificultăți de respirație)</li><li>✅ Folosiți un auto-injector de adrenalină dacă este disponibil (Anapen, EpiPen)</li><li>✅ Sunați imediat 15</li><li>❌ Nu dați nimic de băut sau mâncat</li></ul>" },
+    { "icon": "🍬", "title": "Hipoglicemie", "desc": "Zahăr dacă este conștient", "content": "<strong>Simptome:</strong> transpirație, slăbiciune, confuzie, paloare.<br><strong>Acțiune:</strong><ul><li>Dacă este conștient și poate înghiți: dați zahăr (băutură dulce, 2 cuburi de zahăr, suc)</li><li>Îmbunătățire rapidă (5-10 min)</li><li>Dacă inconștient: poziție laterală de siguranță, sunați 15, nu dați lichide</li><li>Dacă diabetic cunoscut: găsiți glucometrul</li></ul>" },
+    { "icon": "🏃", "title": "Atac terorist", "desc": "Fugi, ascunde-te, alertează", "content": "<strong>Protocol internațional: Fugi, Ascunde-te, Alertează</strong><br><ul><li>🏃‍♂️ Fugi dacă este posibil, nu fugi în grup, părăsește zona</li><li>🚪 Ascunde-te: încuie ușa, stinge lumina, adăpostește-te de focuri, pune telefonul pe silențios</li><li>📞 Alertează poliția (17) doar când ești în siguranță, descrie situația</li><li>❌ Nu te apropia de forțele de ordine cu mâinile în buzunare</li><li>✅ Acordă primul ajutor după asigurarea zonei</li></ul>" },
+    { "icon": "💧", "title": "Înec", "desc": "RCP imediată, nu goliți apa", "content": "<strong>Acțiune:</strong><ul><li>🆘 Scoateți victima din apă rapid</li><li>✅ Verificați conștiința și respirația</li><li>❌ Nu încercați să goliți apa din plămâni (inutil și periculos)</li><li>💨 Dacă nu respiră: începeți RCP (30 compresii / 2 insuflări)</li><li>📞 Sunați 15 sau 112, folosiți DEA dacă este disponibil</li><li>🩱 Acoperiți victima pentru a evita hipotermia</li></ul>" },
+    { "icon": "📞", "title": "Apel 15/112", "desc": "Loc, stare, nu închideți", "content": "<strong>Informații cheie:</strong><br><ul><li>📍 Loc exact (adresă, etaj, punct de acces)</li><li>👥 Numărul victimelor</li><li>🩺 Stare: conștient? respiră? sângerează?</li><li>⚡ Eveniment: accident, stare de rău, incendiu...</li><li>📞 Nu închideți primul, urmați instrucțiunile</li><li>📱 Folosiți difuzorul dacă este posibil</li></ul>" }
+  ],
+  "mental": [
+    { "icon": "🧘", "title": "Coerență cardiacă", "desc": "5-5-5 calmant", "content": "<strong>Respirație 5-5-5:</strong><br>Inspirați 5s, expirați 5s, pauză 5s. Repetați 5 minute. Efect calmant imediat." },
+    { "icon": "🧠", "title": "Anxietate 3-3-3", "desc": "Ancorare vizuală/auditivă/motorie", "content": "<strong>Tehnică de ancorare:</strong><br>Numiți 3 lucruri pe care le vedeți, 3 sunete pe care le auziți, mișcați 3 părți ale corpului." },
+    { "icon": "📞", "title": "Suport psihologic 3114", "desc": "Gratuit 24/7", "content": "<strong>Linie de ascultare: 3114</strong> (gratuit, profesioniști). Urgență psihiatrică: 15." },
+    { "icon": "💤", "title": "Prevenirea epuizării profesionale", "desc": "Odihnă, activitate, consultație", "content": "<strong>Semne:</strong> epuizare, cinism, ineficiență. Pauză, activitate fizică, consultație." },
+    { "icon": "🌿", "title": "Meditație rapidă", "desc": "5 minute de calm", "content": "Așezați-vă confortabil, concentrați-vă pe respirație. Lăsați gândurile să treacă fără a le judeca." },
+    { "icon": "🆘", "title": "Prevenirea sinuciderii", "desc": "Apel gratuit 3114", "content": "Dacă aveți gânduri suicidare: sunați <strong>3114</strong> (24/7, anonim). Nu sunteți singur, ajutorul este disponibil." },
+    { "icon": "🎨", "title": "Art-terapie", "desc": "Exprimarea emoțiilor", "content": "<strong>Exercițiu:</strong> Desenați sau scrieți ce simțiți fără a judeca. Exprimarea creativă reduce stresul și anxietatea." },
+    { "icon": "🚶", "title": "Mers conștient", "desc": "Ancorare corporală", "content": "Mergeți încet, concentrați-vă pe fiecare pas, senzația solului, respirația dvs. 10 minute pe zi îmbunătățesc starea de spirit." },
+    { "icon": "📖", "title": "Jurnal de recunoștință", "desc": "3 lucruri pozitive", "content": "În fiecare seară, notați 3 mici lucruri pozitive din zi. Această practică întărește rezistența psihologică." },
+    { "icon": "🧩", "title": "Gestionarea ruminațiilor", "desc": "Opriți gândurile negative", "content": "<strong>Tehnica STOP:</strong> Stop (spuneți STOP mental), Respirați, Observați-vă senzațiile, Continuați cu o acțiune constructivă." },
+    { "icon": "🤝", "title": "Grupuri de suport", "desc": "Ascultare și împărtășire", "content": "Alăturați-vă grupurilor de suport (asociații, centre de tineret). Împărtășirea experiențelor alină suferința." },
+    { "icon": "📱", "title": "Aplicații pentru sănătate mintală", "desc": "Petit Bambou, Mind, Respire", "content": "Aplicații gratuite: <strong>Petit Bambou</strong> (meditație), <strong>Mind</strong> (TCC), <strong>Respire</strong> (coerență cardiacă)." }
+  ],
+  "associations": [
+    { "icon": "🩸", "name": "Crucea Roșie", "desc": "Salvare, formare", "content": "Crucea Roșie Română<br>Salvare, cursuri de prim ajutor.<br><strong>📞 Contact:</strong> 0371 076 500" },
+    { "icon": "🤝", "name": "Banca pentru Alimente", "desc": "Ajutor alimentar", "content": "Banca pentru Alimente<br>Ajutor alimentar și îmbrăcăminte, solidaritate.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "⚓", "name": "ARSVOM", "desc": "Salvare pe mare 196", "content": "ARSVOM<br>Salvare pe mare.<br><strong>📞 Contact:</strong> 196 (urgență)" },
+    { "icon": "🧸", "name": "Salvați Copiii 116111", "desc": "Protecția minorilor", "content": "Salvați Copiii<br>Protecția minorilor.<br><strong>📞 Contact:</strong> 116111" },
+    { "icon": "🍲", "name": "Asociația Omenia", "desc": "Ajutor alimentar", "content": "Asociația Omenia<br>Distribuire de mese, sprijin social.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "🏠", "name": "Asociația Casa Ioana", "desc": "Lupta împotriva lipsei de adăpost", "content": "Asociația Casa Ioana<br>Adăpost de urgență, prevenirea evacuărilor.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "👩‍🦽", "name": "Asociația Națională a Surzilor", "desc": "Handicap și accesibilitate", "content": "Asociația Națională a Surzilor<br>Sprijin pentru persoanele cu dizabilități, apărarea drepturilor.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "🚺", "name": "FILIA", "desc": "Violența împotriva femeilor", "content": "FILIA<br>Ascultare, însoțire, adăpost de urgență.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "🌈", "name": "Accept", "desc": "Excluderea tinerilor LGBT+", "content": "Accept<br>Adăpost și sprijin pentru tinerii LGBT+ victime ale homofobiei.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "🧓", "name": "Asociația pentru Vârsta a Treia", "desc": "Seniori izolați", "content": "Asociația pentru Vârsta a Treia<br>Legături sociale, ajutor concret, vizite la domiciliu.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "🩺", "name": "ARAS", "desc": "Lupta împotriva HIV", "content": "ARAS<br>Prevenție, testare, sprijin psihologic.<br><strong>📞 Contact:</strong> 021 123 4567" },
+    { "icon": "🌍", "name": "Salvați Copiii România", "desc": "Solidaritate internațională", "content": "Salvați Copiii România<br>Ajun de urgență, integrare, microcredite.<br><strong>📞 Contact:</strong> 021 123 4567" }
+  ]
+}

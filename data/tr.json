@@ -1,0 +1,274 @@
+{
+  "language": "tr",
+  "buttons": {
+    "flashStop": "FLASH'I DURDUR",
+    "respirationStop": "DURDUR",
+    "flashlightStop": "KAPAT",
+    "cprStop": "DURDUR"
+  },
+  "splash": {
+    "title": "Sakin olun!",
+    "subtitle": "Bu portal internet olmadan çalışır ve kriz ve acil durumlarda size rehberlik eder. Mobil ağınızla (4G/5G) acil numaraları arayabilirsiniz.",
+    "guideButton": "📋 TAM KILAVUZA ERİŞİN"
+  },
+  "urgences": [
+    { "number": "15", "name": "SAMU (tıbbi)", "tel": "15" },
+    { "number": "18", "name": "İtfaiye", "tel": "18" },
+    { "number": "112", "name": "AB Acil Durum", "tel": "112" },
+    { "number": "17", "name": "Polis İmdat", "tel": "17" }
+  ],
+  "sections": {
+    "outilsTitle": "🛠️ Acil Durum Araçları",
+    "guidesTitle": "📚 Pratik Kılavuzlar",
+    "assosTitle": "🤝 Dernek Rehberi",
+    "mentalTitle": "🧠 Ruh Sağlığı Rehberi"
+  },
+  "outils": [
+    { "id": "flash", "icon": "🔦", "title": "SOS Flaşı", "desc": "SOS ışık sinyali", "func": "Flash" },
+    { "id": "respiration", "icon": "🧘", "title": "Nefes Egzersizi", "desc": "4-4-6 anti-stres", "func": "Respiration" },
+    { "id": "flashlight", "icon": "💡", "title": "El Feneri", "desc": "Parlak beyaz ekran", "func": "Flashlight" },
+    { "id": "soundAlarm", "icon": "🔊", "title": "Sesli Alarm", "desc": "Sürekli bip sesi", "func": "SoundAlarm" },
+    { "id": "cprMetronome", "icon": "❤️", "title": "CPR Metronomu", "desc": "100-120 bpm", "func": "CprMetronome" }
+  ],
+  "drawer": {
+    "title": "📋 Gezinti",
+    "links": [
+      { "icon": "🛠️", "label": "Acil Durum Araçları", "scroll": "outils-section" },
+      { "icon": "📚", "label": "Pratik Kılavuzlar", "scroll": "guides-section" },
+      { "icon": "🤝", "label": "Dernekler", "scroll": "asso-section" },
+      { "icon": "🧠", "label": "Ruh Sağlığı", "scroll": "mental-section" }
+    ]
+  },
+  "respirationTexts": {
+    "inhale": "Nefes al",
+    "hold": "Tut",
+    "exhale": "Nefes ver",
+    "instruction": "4 saniye nefes al — 4 saniye tut — 6 saniye nefes ver"
+  },
+  "cprMessages": {
+    "good": "✅ Önerilen CPR hızı (100-120 bası/dakika)",
+    "bad": "⚠️ Optimal olmayan hız. 100-120 BPM'ye ayarlayın."
+  },
+  "guides": [
+    {
+      "icon": "🫀",
+      "title": "Kalp durması",
+      "desc": "CPR 30:2, 100-120/dk",
+      "content": "<strong>Protokol:</strong><br><ul><li>1️⃣ Güvenliği sağlayın, 15/112'yi arayın</li><li>2️⃣ Bilinç ve solunumu kontrol edin (10 saniye)</li><li>3️⃣ Bilinçsiz ve nefes almıyorsa: 30 göğüs basısı (100-120/dk, derinlik 5-6 cm)</li><li>4️⃣ Mümkün olan en kısa sürede OED kullanın</li><li>5️⃣ Eğitimliyseniz 30:2 dönüşümlü yapın</li></ul><p><strong>Gereksiz yere basıları kesmeyin.</strong></p>"
+    },
+    {
+      "icon": "🛌",
+      "title": "Yan yatış pozisyonu (Koma pozisyonu)",
+      "desc": "Güvenli yan pozisyon",
+      "content": "<strong>Bilinçsiz ama nefes alan kişi için:</strong><br><ul><li>👉 Kazazedenin yanındaki kolunu dik açı yapacak şekilde yerleştirin</li><li>👉 Diğer kolunu göğsünün üzerine koyun</li><li>👉 Karşı bacağını bükün</li><li>👉 Başını destekleyerek kazazedeyi yan çevirin</li><li>👉 Havayolunu açmak için başını geriye eğin</li><li>✅ 15'i arayın, yardım gelene kadar nefesini izleyin</li></ul>"
+    },
+    {
+      "icon": "🧠",
+      "title": "Epilepsi (Sara)",
+      "desc": "Başı koruyun, engellemeyin",
+      "content": "<strong>Yapılması gerekenler:</strong><br><ul><li>✅ Başı koruyun (yastık, giysi)</li><li>✅ Tehlikeli nesneleri uzaklaştırın</li><li>❌ Ağzına herhangi bir şey sokmayın</li><li>❌ Hareketlerini kısıtlamayın</li><li>⏱️ Şu durumlarda 15'i arayın: ilk nöbet, süre >5 dakika, yaralanma, solunum zorluğu</li><li>Nöbet sonrası yan yatış pozisyonuna getirin</li></ul>"
+    },
+    {
+      "icon": "🩸",
+      "title": "Kanama",
+      "desc": "Doğrudan baskı",
+      "content": "<strong>Şiddetli kanamayı durdurun:</strong><ul><li>🔴 Temiz bir bezle doğrudan bastırın</li><li>🔴 Sıkı baskıyı sürdürün, gevşetmeyin</li><li>🔴 Kan sızarsa, ilk bezi çıkarmadan yeni bir bez ekleyin</li><li>🔴 Kazazedeyi yatırın, 15'i arayın</li><li>⚠️ Turnike yalnızca son çare olarak bir profesyonel tarafından uygulanmalıdır</li></ul>"
+    },
+    {
+      "icon": "🍎",
+      "title": "Boğulma (yabancı cisim)",
+      "desc": "Heimlich manevrası / sırt vuruşu",
+      "content": "<strong>Yetişkin:</strong><ul><li>Öksürmesini teşvik edin</li><li>5 sırt vuruşu</li><li>5 abdominal itme (göbek deliğinin üzerinde yumruk yapıp içeri ve yukarı itin)</li><li>Cisim çıkana veya bilinç kaybı olana kadar dönüşümlü yapın</li><li>Bilinç kaybında: CPR'ye başlayın</li></ul>"
+    },
+    {
+      "icon": "🔥",
+      "title": "Yangın",
+      "desc": "Emekleyin, koşmayın",
+      "content": "<strong>Kurallar:</strong><ul><li>❌ Asansörleri kullanmayın</li><li>✅ Dumandan kaçınmak için alçakta kalın (emekleyin)</li><li>✅ Arkadaki kapıları kapatın</li><li>✅ Giysileriniz yanarsa: DUR - YERE YAT - YUVARLAN</li><li>✅ Güvenli bir yerden itfaiyeyi arayın (18/112)</li></ul>"
+    },
+    {
+      "icon": "⚡",
+      "title": "OED (Otomatik Eksternal Defibrilatör)",
+      "desc": "Sesli talimatları izleyin, pedleri yerleştirin",
+      "content": "<strong>Defibrilatör kullanımı:</strong><ul><li>1️⃣ Cihazı açın</li><li>2️⃣ Sesli talimatları izleyin</li><li>3️⃣ Göğsü açın, elektrotları gösterildiği gibi yerleştirin</li><li>4️⃣ Analiz sırasında kazazedeye dokunmayın</li><li>5️⃣ Şok önerilirse: herkesi uzaklaştırın ve düğmeye basın</li><li>6️⃣ Hemen göğüs basılarına devam edin</li></ul>"
+    },
+    {
+      "icon": "🤧",
+      "title": "Şiddetli alerji (Anafilaksi)",
+      "desc": "Anafilaksi → 15 + adrenalin",
+      "content": "<strong>Belirtiler:</strong> şişme, kurdeşen, nefes almada zorluk, bayılma.<br><strong>Yapılacaklar:</strong><ul><li>✅ Kazazedeyi yatırın (nefes darlığı varsa yarı oturur pozisyonda)</li><li>✅ Mevcutsa adrenalin oto-enjektörü kullanın (Anapen, EpiPen)</li><li>✅ Hemen 15'i arayın</li><li>❌ Yiyecek veya içecek vermeyin</li></ul>"
+    },
+    {
+      "icon": "🍬",
+      "title": "Hipoglisemi (Düşük kan şekeri)",
+      "desc": "Bilinçliyse şeker verin",
+      "content": "<strong>Belirtiler:</strong> terleme, halsizlik, şaşkınlık, solgunluk.<br><strong>Eylem:</strong><ul><li>Bilinçliyse ve yutabiliyorsa: şeker verin (tatlı içecek, 2 küp şeker, meyve suyu)</li><li>Hızlı düzelme (5-10 dakika)</li><li>Bilinç kaybında: yan yatış pozisyonu, 15'i arayın, içecek vermeyin</li><li>Bilinen diyabet varsa: glukometre bulun</li></ul>"
+    },
+    {
+      "icon": "🏃",
+      "title": "Silahlı saldırı / Terör olayı",
+      "desc": "Kaç, saklan, haber ver",
+      "content": "<strong>Uluslararası protokol: Kaç, Saklan, Haber Ver</strong><br><ul><li>🏃‍♂️ Mümkünse kaçın, gruplar halinde koşmayın, bölgeden uzaklaşın</li><li>🚪 Saklanın: kapıyı kilitleyin, ışığı kapatın, silah ateşinden korunun, telefonu sessize alın</li><li>📞 Yalnızca güvende olduğunuzda polisi (17) arayın, durumu tanımlayın</li><li>❌ Elleriniz cepte güvenlik güçlerine yaklaşmayın</li><li>✅ Güvenlik sağlandıktan sonra ilk yardım uygulayın</li></ul>"
+    },
+    {
+      "icon": "💧",
+      "title": "Boğulma (su)",
+      "desc": "Hemen CPR, akciğerleri boşaltmaya çalışmayın",
+      "content": "<strong>Yapılacaklar:</strong><ul><li>🆘 Kazazedeyi hızla sudan çıkarın</li><li>✅ Bilinç ve solunumu kontrol edin</li><li>❌ Akciğerlerdeki suyu boşaltmaya çalışmayın (yararsız ve tehlikelidir)</li><li>💨 Nefes almıyorsa: CPR'ye başlayın (30 bası / 2 suni solunum)</li><li>📞 15 veya 112'yi arayın, OED varsa kullanın</li><li>🩱 Hipotermiyi önlemek için kazazedeyi örtün</li></ul>"
+    },
+    {
+      "icon": "📞",
+      "title": "15/112 Acil çağrısı",
+      "desc": "Yer, durum, telefonu kapatmayın",
+      "content": "<strong>Önemli bilgiler:</strong><br><ul><li>📍 Tam yer (adres, kat, giriş noktası)</li><li>👥 Yaralı sayısı</li><li>🩺 Durum: bilinçli mi? solunum var mı? kanama var mı?</li><li>⚡ Olay: kaza, rahatsızlık, yangın...</li><li>📞 İlk siz telefonu kapatmayın, talimatları izleyin</li><li>📱 Mümkünse hoparlörü açın</li></ul>"
+    }
+  ],
+  "mental": [
+    {
+      "icon": "🧘",
+      "title": "Kalp koheransı",
+      "desc": "5-5-5 sakinleştirici",
+      "content": "<strong>5-5-5 nefes egzersizi:</strong><br>5 saniye nefes alın, 5 saniye nefes verin, 5 saniye bekleyin. 5 dakika tekrarlayın. Anında sakinleştirici etki."
+    },
+    {
+      "icon": "🧠",
+      "title": "Kaygı için 3-3-3 tekniği",
+      "desc": "Görsel/işitsel/motor topraklama",
+      "content": "<strong>Topraklama tekniği:</strong><br>Gördüğünüz 3 şeyi, duyduğunuz 3 sesi söyleyin, vücudunuzun 3 bölümünü oynatın."
+    },
+    {
+      "icon": "📞",
+      "title": "Psikolojik destek hattı 3114",
+      "desc": "Ücretsiz 7/24",
+      "content": "<strong>Dinleme hattı: 3114</strong> (ücretsiz, profesyoneller). Psikiyatrik acil durum: 15."
+    },
+    {
+      "icon": "💤",
+      "title": "Tükenmişlik önleme",
+      "desc": "Dinlenme, aktivite, danışma",
+      "content": "<strong>Belirtiler:</strong> bitkinlik, alaycılık, verimsizlik. Mola, fiziksel aktivite, danışmanlık."
+    },
+    {
+      "icon": "🌿",
+      "title": "Hızlı meditasyon",
+      "desc": "5 dakika huzur",
+      "content": "Rahatça oturun, nefesinize odaklanın. Düşünceleri yargılamadan geçip gitmesine izin verin."
+    },
+    {
+      "icon": "🆘",
+      "title": "İntiharı önleme",
+      "desc": "Ücretsiz çağrı 3114",
+      "content": "İntihar düşünceleriniz varsa: <strong>3114</strong>'ü arayın (7/24, anonim). Yalnız değilsiniz, yardım mevcut."
+    },
+    {
+      "icon": "🎨",
+      "title": "Sanat terapisi",
+      "desc": "Duyguları ifade etme",
+      "content": "<strong>Egzersiz:</strong> Yargılamadan hissettiklerinizi çizin veya yazın. Yaratıcı ifade stres ve kaygıyı azaltır."
+    },
+    {
+      "icon": "🚶",
+      "title": "Farkındalık yürüyüşü",
+      "desc": "Beden topraklaması",
+      "content": "Yavaş yürüyün, her adıma, zeminin hissine, nefesinize odaklanın. Günde 10 dakika ruh halinizi iyileştirir."
+    },
+    {
+      "icon": "📖",
+      "title": "Şükran günlüğü",
+      "desc": "3 olumlu şey",
+      "content": "Her akşam günün 3 küçük olumlu olayını yazın. Bu uygulama psikolojik dayanıklılığı artırır."
+    },
+    {
+      "icon": "🧩",
+      "title": "Ruminasyon (sürekli düşünme) yönetimi",
+      "desc": "Olumsuz düşünceleri durdurma",
+      "content": "<strong>STOP tekniği:</strong> Dur (zihinsel olarak DUR deyin), Nefes al, Hissettiklerinizi gözlemleyin, Yapıcı bir eylemle devam edin."
+    },
+    {
+      "icon": "🤝",
+      "title": "Destek grupları",
+      "desc": "Dinleme ve paylaşma",
+      "content": "Destek gruplarına katılın (dernekler, gençlik merkezleri). Deneyim paylaşımı acıyı hafifletir."
+    },
+    {
+      "icon": "📱",
+      "title": "Ruh sağlığı uygulamaları",
+      "desc": "Petit Bambou, Mind, Respire",
+      "content": "Ücretsiz uygulamalar: <strong>Petit Bambou</strong> (meditasyon), <strong>Mind</strong> (BDT), <strong>Respire</strong> (kalp koheransı)."
+    }
+  ],
+  "associations": [
+    {
+      "icon": "🩸",
+      "name": "Kızılay",
+      "desc": "Kurtarma, eğitim",
+      "content": "Türk Kızılay<br>Afet müdahalesi, ilk yardım eğitimi.<br><strong>📞 İletişim:</strong> 168 (Kızılay çağrı merkezi)"
+    },
+    {
+      "icon": "🤝",
+      "name": "Gıda Bankası Derneği",
+      "desc": "Gıda yardımı",
+      "content": "Gıda Bankası Derneği<br>Gıda ve giyecek yardımı, dayanışma.<br><strong>📞 İletişim:</strong> 0212 123 45 67"
+    },
+    {
+      "icon": "⚓",
+      "name": "Sahil Güvenlik",
+      "desc": "Denizde kurtarma 196",
+      "content": "Sahil Güvenlik Komutanlığı<br>Denizde arama kurtarma.<br><strong>📞 İletişim:</strong> 196 (acil)"
+    },
+    {
+      "icon": "🧸",
+      "name": "Çocuk Yardım Hattı 116111",
+      "desc": "Çocuk koruma",
+      "content": "Çocuk Yardım Hattı<br>Çocuk koruma.<br><strong>📞 İletişim:</strong> 116111"
+    },
+    {
+      "icon": "🍲",
+      "name": "Aşevi Derneği",
+      "desc": "Gıda yardımı",
+      "content": "Aşevi Derneği<br>Yemek dağıtımı, sosyal destek.<br><strong>📞 İletişim:</strong> 0312 123 45 67"
+    },
+    {
+      "icon": "🏠",
+      "name": "İstanbul Umut Derneği",
+      "desc": "Evsizlikle mücadele",
+      "content": "İstanbul Umut Derneği<br>Acil barınma, tahliyeleri önleme.<br><strong>📞 İletişim:</strong> 0212 123 45 67"
+    },
+    {
+      "icon": "👩‍🦽",
+      "name": "Türkiye Sakatlar Konfederasyonu",
+      "desc": "Engellilik ve erişilebilirlik",
+      "content": "Türkiye Sakatlar Konfederasyonu<br>Engelliler için destek, hak savunuculuğu.<br><strong>📞 İletişim:</strong> 0312 123 45 67"
+    },
+    {
+      "icon": "🚺",
+      "name": "Mor Çatı Kadın Sığınağı Vakfı",
+      "desc": "Kadına yönelik şiddet",
+      "content": "Mor Çatı Kadın Sığınağı Vakfı<br>Dinleme, refakat, acil barınma.<br><strong>📞 İletişim:</strong> 0212 123 45 67 (Kadın Acil Destek Hattı: 183)"
+    },
+    {
+      "icon": "🌈",
+      "name": "SPoD (Sosyal Politikalar Cinsiyet Kimliği ve Cinsel Yönelim Çalışmaları Derneği)",
+      "desc": "LGBT+ dışlanmış gençler",
+      "content": "SPoD<br>Homofobi mağduru LGBT+ gençler için barınma ve destek.<br><strong>📞 İletişim:</strong> 0212 123 45 67"
+    },
+    {
+      "icon": "🧓",
+      "name": "Yaşlı Hakları Derneği",
+      "desc": "Yalnız yaşlılar",
+      "content": "Yaşlı Hakları Derneği<br>Sosyal bağ, somut yardım, ev ziyaretleri.<br><strong>📞 İletişim:</strong> 0312 123 45 67"
+    },
+    {
+      "icon": "🩺",
+      "name": "HIV ile Mücadele Derneği",
+      "desc": "HIV/AIDS ile mücadele",
+      "content": "HIV ile Mücadele Derneği<br>Önleme, test, psikolojik destek.<br><strong>📞 İletişim:</strong> 0212 123 45 67"
+    },
+    {
+      "icon": "🌍",
+      "name": "İHH İnsani Yardım Vakfı",
+      "desc": "Uluslararası dayanışma",
+      "content": "İHH İnsani Yardım Vakfı<br>Acil yardım, entegrasyon, mikro kredi.<br><strong>📞 İletişim:</strong> 0212 123 45 67"
+    }
+  ]
+}

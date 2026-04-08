@@ -1,0 +1,94 @@
+{
+  "language": "pl",
+  "buttons": {
+    "flashStop": "ZATRZYMAJ LAMPĘ",
+    "respirationStop": "STOP",
+    "flashlightStop": "WYŁĄCZ",
+    "cprStop": "ZATRZYMAJ"
+  },
+  "splash": {
+    "title": "Zachowaj spokój!",
+    "subtitle": "Ten portal działa bez Internetu i pomaga w sytuacjach kryzysowych i nagłych. Możesz dzwonić na numery alarmowe za pomocą sieci komórkowej (4G/5G).",
+    "guideButton": "📋 PRZEJDŹ DO PEŁNEGO PRZEWODNIKA"
+  },
+  "urgences": [
+    { "number": "15", "name": "SAMU (medyczny)", "tel": "15" },
+    { "number": "18", "name": "Straż pożarna", "tel": "18" },
+    { "number": "112", "name": "Numer alarmowy UE", "tel": "112" },
+    { "number": "17", "name": "Policja", "tel": "17" }
+  ],
+  "sections": {
+    "outilsTitle": "🛠️ Narzędzia ratunkowe",
+    "guidesTitle": "📚 Praktyczne przewodniki",
+    "assosTitle": "🤝 Spis organizacji",
+    "mentalTitle": "🧠 Przewodnik po zdrowiu psychicznym"
+  },
+  "outils": [
+    { "id": "flash", "icon": "🔦", "title": "SOS Flash", "desc": "Sygnał świetlny SOS", "func": "Flash" },
+    { "id": "respiration", "icon": "🧘", "title": "Oddychanie", "desc": "4-4-6 anty-stres", "func": "Respiration" },
+    { "id": "flashlight", "icon": "💡", "title": "Latarka", "desc": "Jasny biały ekran", "func": "Flashlight" },
+    { "id": "soundAlarm", "icon": "🔊", "title": "Alarm dźwiękowy", "desc": "Ciągły pisk", "func": "SoundAlarm" },
+    { "id": "cprMetronome", "icon": "❤️", "title": "Metronom RKO", "desc": "100-120 bpm", "func": "CprMetronome" }
+  ],
+  "drawer": {
+    "title": "📋 Nawigacja",
+    "links": [
+      { "icon": "🛠️", "label": "Narzędzia ratunkowe", "scroll": "outils-section" },
+      { "icon": "📚", "label": "Praktyczne przewodniki", "scroll": "guides-section" },
+      { "icon": "🤝", "label": "Organizacje", "scroll": "asso-section" },
+      { "icon": "🧠", "label": "Zdrowie psychiczne", "scroll": "mental-section" }
+    ]
+  },
+  "respirationTexts": {
+    "inhale": "Wdech",
+    "hold": "Wstrzymaj",
+    "exhale": "Wydech",
+    "instruction": "4s wdech — 4s wstrzymaj — 6s wydech"
+  },
+  "cprMessages": {
+    "good": "✅ Zalecane tempo RKO (100-120 uciśnięć/min)",
+    "bad": "⚠️ Nieoptymalne tempo. Ustaw 100-120 BPM."
+  },
+  "guides": [
+    { "icon": "🫀", "title": "Zatrzymanie akcji serca", "desc": "RKO 30:2, 100-120/min", "content": "<strong>Protokół:</strong><br><ul><li>1️⃣ Zabezpiecz, zadzwoń 15/112</li><li>2️⃣ Sprawdź przytomność/oddech (10s)</li><li>3️⃣ Jeśli nieprzytomny i nie oddycha: 30 uciśnięć (100-120/min, głębokość 5-6cm)</li><li>4️⃣ Użyj AED tak szybko, jak to możliwe</li><li>5️⃣ Naprzemiennie 30:2 jeśli przeszkolony</li></ul><p><strong>Nie przerywaj niepotrzebnie uciśnięć.</strong></p>" },
+    { "icon": "🛌", "title": "Pozycja boczna", "desc": "Pozycja bezpieczna", "content": "<strong>Dla nieprzytomnej osoby oddychającej:</strong><br><ul><li>👉 Ramię poszkodowanego ułóż pod kątem prostym</li><li>👉 Drugie ramię połóż na klatce piersiowej</li><li>👉 Zegnij przeciwną nogę</li><li>👉 Obróć poszkodowanego na bok, podtrzymując głowę</li><li>👉 Odchyl głowę, aby udrożnić drogi oddechowe</li><li>✅ Zadzwoń po 15, monitoruj oddech do przyjazdu pomocy</li></ul>" },
+    { "icon": "🧠", "title": "Padaczka", "desc": "Chroń głowę, nie powstrzymuj", "content": "<strong>Postępowanie:</strong><br><ul><li>✅ Chroń głowę (poduszka, ubranie)</li><li>✅ Usuń niebezpieczne przedmioty</li><li>❌ Nie wkładaj niczego do ust</li><li>❌ Nie ograniczaj ruchów</li><li>⏱️ Zadzwoń na 15 jeśli: pierwszy napad, czas >5 min, uraz, trudności z oddychaniem</li><li>Po napadzie ułóż w pozycji bocznej</li></ul>" },
+    { "icon": "🩸", "title": "Krwotok", "desc": "Bezpośredni ucisk", "content": "<strong>Zatrzymaj obfite krwawienie:</strong><ul><li>🔴 Uciskaj bezpośrednio czystą szmatką</li><li>🔴 Utrzymuj mocny ucisk, nie zwalniaj</li><li>🔴 Jeśli krew przesiąka, dodaj kolejną szmatkę, nie usuwając pierwszej</li><li>🔴 Połóż poszkodowanego, zadzwoń na 15</li><li>⚠️ Staza tylko w ostateczności przez profesjonalistę</li></ul>" },
+    { "icon": "🍎", "title": "Zadławienie", "desc": "Heimlich / uderzenia w plecy", "content": "<strong>Dorosły:</strong><ul><li>Zachęć do kaszlu</li><li>5 uderzeń między łopatkami</li><li>5 uciśnięć nadbrzusza (pięść nad pępkiem, pchnij do wewnątrz i do góry)</li><li>Naprzemiennie aż do usunięcia lub utraty przytomności</li><li>Przy utracie przytomności: rozpocznij RKO</li></ul>" },
+    { "icon": "🔥", "title": "Pożar", "desc": "Czołgaj się, nie biegnij", "content": "<strong>Zasady:</strong><ul><li>❌ Nie używaj wind</li><li>✅ Trzymaj się nisko, aby uniknąć dymu (czołgaj się)</li><li>✅ Zamykaj drzwi za sobą</li><li>✅ Jeśli ubranie się pali: STOP - PADNIJ - TURLaj</li><li>✅ Zaalarmuj straż pożarną (18/112) z bezpiecznego miejsca</li></ul>" },
+    { "icon": "⚡", "title": "AED", "desc": "Postępuj zgodnie z głosem, umieść elektrody", "content": "<strong>Defibrylator:</strong><ul><li>1️⃣ Włącz urządzenie</li><li>2️⃣ Postępuj zgodnie z instrukcjami głosowymi</li><li>3️⃣ Odsłoń klatkę piersiową, umieść elektrody (zgodnie z rysunkiem)</li><li>4️⃣ Nie dotykaj poszkodowanego podczas analizy</li><li>5️⃣ Jeśli zalecany wstrząs: usuń się i naciśnij przycisk</li><li>6️⃣ Natychmiast wznowić uciśnięcia</li></ul>" },
+    { "icon": "🤧", "title": "Ciężka alergia", "desc": "Anafilaksja → 15 + adrenalina", "content": "<strong>Objawy:</strong> obrzęk, pokrzywka, trudności z oddychaniem, omdlenie.<br><strong>Postępowanie:</strong><ul><li>✅ Połóż poszkodowanego (lub półsiedząco przy trudnościach z oddychaniem)</li><li>✅ Użyj autoiniektora adrenaliny, jeśli dostępny (Anapen, EpiPen)</li><li>✅ Natychmiast zadzwoń na 15</li><li>❌ Nie podawaj nic do picia ani jedzenia</li></ul>" },
+    { "icon": "🍬", "title": "Hipoglikemia", "desc": "Cukier jeśli przytomny", "content": "<strong>Objawy:</strong> pocenie się, osłabienie, splątanie, bladość.<br><strong>Działanie:</strong><ul><li>Jeśli przytomny i może przełykać: podaj cukier (słodki napój, 2 kostki cukru, sok)</li><li>Szybka poprawa (5-10 min)</li><li>Przy utracie przytomności: pozycja boczna, zadzwoń na 15, nie podawaj nic do picia</li><li>Jeśli znany diabetyk: znajdź glukometr</li></ul>" },
+    { "icon": "🏃", "title": "Zamach", "desc": "Uciekaj, ukryj się, zaalarmuj", "content": "<strong>Protokół międzynarodowy: Uciekaj, Ukryj się, Zaalarmuj</strong><br><ul><li>🏃‍♂️ Uciekaj jeśli to możliwe, nie biegaj w grupie, opuść strefę</li><li>🚪 Ukryj się: zamknij drzwi, zgaś światło, schroń się przed strzałami, wycisz telefon</li><li>📞 Zaalarmuj policję (17) tylko gdy bezpieczny, opisz sytuację</li><li>❌ Nie zbliżaj się do służb z rękami w kieszeniach</li><li>✅ Udziel pierwszej pomocy po zabezpieczeniu</li></ul>" },
+    { "icon": "💧", "title": "Utonięcie", "desc": "Natychmiastowa RKO, nie opróżniaj", "content": "<strong>Postępowanie:</strong><ul><li>🆘 Szybko wyciągnij poszkodowanego z wody</li><li>✅ Sprawdź przytomność i oddech</li><li>❌ Nie próbuj opróżniać płuc z wody (bezużyteczne i niebezpieczne)</li><li>💨 Jeśli nie oddycha: rozpocznij RKO (30 uciśnięć / 2 oddechy ratownicze)</li><li>📞 Zadzwoń na 15 lub 112, użyj AED jeśli dostępny</li><li>🩱 Przykryj poszkodowanego, aby uniknąć hipotermii</li></ul>" },
+    { "icon": "📞", "title": "Dzwonienie pod 15/112", "desc": "Miejsce, stan, nie rozłączaj się", "content": "<strong>Kluczowe informacje:</strong><br><ul><li>📍 Dokładne miejsce (adres, piętro, punkt dostępu)</li><li>👥 Liczba ofiar</li><li>🩺 Stan: przytomny? oddycha? krwawi?</li><li>⚡ Zdarzenie: wypadek, złe samopoczucie, pożar...</li><li>📞 Nie rozłączaj się pierwszy, postępuj zgodnie z instrukcjami</li><li>📱 Użyj głośnomówiącego jeśli to możliwe</li></ul>" }
+  ],
+  "mental": [
+    { "icon": "🧘", "title": "Spójność serca", "desc": "5-5-5 uspokajające", "content": "<strong>Oddech 5-5-5:</strong><br>Wdech 5s, wydech 5s, pauza 5s. Powtarzaj przez 5 minut. Natychmiastowe działanie uspokajające." },
+    { "icon": "🧠", "title": "Lęk 3-3-3", "desc": "Kotwiczenie wzrokowe/słuchowe/ruchowe", "content": "<strong>Technika kotwiczenia:</strong><br>Wymień 3 rzeczy, które widzisz, 3 dźwięki, które słyszysz, porusz 3 częściami ciała." },
+    { "icon": "📞", "title": "Wsparcie psychologiczne 3114", "desc": "Bezpłatne 24/7", "content": "<strong>Linia słuchowa: 3114</strong> (bezpłatna, profesjonaliści). Nagły wypadek psychiatryczny: 15." },
+    { "icon": "💤", "title": "Zapobieganie wypaleniu", "desc": "Odpoczynek, aktywność, konsultacja", "content": "<strong>Objawy:</strong> wyczerpanie, cynizm, nieskuteczność. Przerwa, aktywność fizyczna, konsultacja." },
+    { "icon": "🌿", "title": "Szybka medytacja", "desc": "5 minut spokoju", "content": "Usiądź wygodnie, skup się na oddechu. Pozwól myślom przepływać bez oceniania." },
+    { "icon": "🆘", "title": "Zapobieganie samobójstwom", "desc": "Bezpłatny telefon 3114", "content": "W przypadku myśli samobójczych: zadzwoń pod <strong>3114</strong> (24/7, anonimowo). Nie jesteś sam, pomoc jest dostępna." },
+    { "icon": "🎨", "title": "Arteterapia", "desc": "Wyrażanie emocji", "content": "<strong>Ćwiczenie:</strong> Narysuj lub napisz, co czujesz, bez oceniania. Ekspresja twórcza zmniejsza stres i lęk." },
+    { "icon": "🚶", "title": "Uważny spacer", "desc": "Kotwiczenie ciała", "content": "Idź powoli, skup się na każdym kroku, odczuciu podłoża, swoim oddechu. 10 minut dziennie poprawia nastrój." },
+    { "icon": "📖", "title": "Dziennik wdzięczności", "desc": "3 pozytywne rzeczy", "content": "Każdego wieczoru zapisz 3 małe pozytywne rzeczy z dnia. Ta praktyka wzmacnia odporność psychiczną." },
+    { "icon": "🧩", "title": "Radzenie sobie z ruminacjami", "desc": "Zatrzymaj negatywne myśli", "content": "<strong>Technika STOP:</strong> Stop (powiedz STOP w myślach), Oddychaj, Obserwuj swoje odczucia, Kontynuuj konstruktywne działanie." },
+    { "icon": "🤝", "title": "Grupy wsparcia", "desc": "Słuchanie i dzielenie się", "content": "Dołącz do grup wsparcia (stowarzyszenia, domy młodzieży). Dzielenie się doświadczeniami łagodzi cierpienie." },
+    { "icon": "📱", "title": "Aplikacje zdrowia psychicznego", "desc": "Petit Bambou, Mind, Respire", "content": "Darmowe aplikacje: <strong>Petit Bambou</strong> (medytacja), <strong>Mind</strong> (CBT), <strong>Respire</strong> (spójność serca)." }
+  ],
+  "associations": [
+    { "icon": "🩸", "name": "Czerwony Krzyż", "desc": "Ratownictwo, szkolenia", "content": "Polski Czerwony Krzyż<br>Ratownictwo, szkolenia z pierwszej pomocy.<br><strong>📞 Kontakt:</strong> 22 326 12 00" },
+    { "icon": "🤝", "name": "Caritas Polska", "desc": "Pomoc żywnościowa", "content": "Caritas Polska<br>Pomoc żywnościowa, odzieżowa, solidarność.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "⚓", "name": "Morska Służba Poszukiwania i Ratownictwa", "desc": "Ratownictwo morskie 196", "content": "Morska Służba Poszukiwania i Ratownictwa<br>Ratownictwo morskie.<br><strong>📞 Kontakt:</strong> 196 (alarm)" },
+    { "icon": "🧸", "name": "116111", "desc": "Ochrona małoletnich", "content": "Telefon Zaufania dla Dzieci<br>Ochrona małoletnich.<br><strong>📞 Kontakt:</strong> 116111" },
+    { "icon": "🍲", "name": "Bank Żywności", "desc": "Pomoc żywnościowa", "content": "Bank Żywności<br>Dystrybucja posiłków, wsparcie społeczne.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "🏠", "name": "Salezjański Wolontariat Misyjny", "desc": "Walka z bezdomnością", "content": "Salezjański Wolontariat Misyjny<br>Schronienie awaryjne, zapobieganie eksmisjom.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "👩‍🦽", "name": "Polskie Stowarzyszenie na rzecz Osób z Niepełnosprawnością Intelektualną", "desc": "Niepełnosprawność i dostępność", "content": "PSONI<br>Wsparcie dla osób niepełnosprawnych, obrona praw.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "🚺", "name": "Feminoteka", "desc": "Przemoc wobec kobiet", "content": "Feminoteka<br>Słuchanie, towarzyszenie, schronienie awaryjne.<br><strong>📞 Kontakt:</strong> 801 120 002 (Niebieska Linia)" },
+    { "icon": "🌈", "name": "Kampania Przeciw Homofobii", "desc": "Wykluczenie młodzieży LGBT+", "content": "Kampania Przeciw Homofobii<br>Schronienie i wsparcie dla młodzieży LGBT+ ofiar homofobii.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "🧓", "name": "Fundacja dla Seniorów", "desc": "Osoby starsze izolowane", "content": "Fundacja dla Seniorów<br>Więzi społeczne, konkretna pomoc, wizyty domowe.<br><strong>📞 Kontakt:</strong> 22 123 45 67" },
+    { "icon": "🩺", "name": "Krajowe Centrum ds. AIDS", "desc": "Walka z HIV", "content": "Krajowe Centrum ds. AIDS<br>Profilaktyka, testowanie, wsparcie psychologiczne.<br><strong>📞 Kontakt:</strong> 800 123 456" },
+    { "icon": "🌍", "name": "Polska Akcja Humanitarna", "desc": "Solidarność międzynarodowa", "content": "Polska Akcja Humanitarna<br>Pomoc doraźna, integracja, mikropożyczki.<br><strong>📞 Kontakt:</strong> 22 123 45 67" }
+  ]
+}

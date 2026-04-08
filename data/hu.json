@@ -1,0 +1,94 @@
+{
+  "language": "hu",
+  "buttons": {
+    "flashStop": "VILLOGÁS LEÁLLÍTÁSA",
+    "respirationStop": "LEÁLLÍT",
+    "flashlightStop": "KIKAPCSOL",
+    "cprStop": "LEÁLLÍT"
+  },
+  "splash": {
+    "title": "Maradjon nyugodt!",
+    "subtitle": "Ez a portál internet nélkül működik, és segít válság- és vészhelyzetekben. Hívhatja a segélyhívó számokat mobilhálózatán keresztül (4G/5G).",
+    "guideButton": "📋 TELJES ÚTMUTATÓ ELÉRÉSE"
+  },
+  "urgences": [
+    { "number": "15", "name": "SAMU (orvosi)", "tel": "15" },
+    { "number": "18", "name": "Tűzoltók", "tel": "18" },
+    { "number": "112", "name": "EU segélyhívó", "tel": "112" },
+    { "number": "17", "name": "Rendőrség", "tel": "17" }
+  ],
+  "sections": {
+    "outilsTitle": "🛠️ Vészhelyzeti eszközök",
+    "guidesTitle": "📚 Gyakorlati útmutatók",
+    "assosTitle": "🤝 Egyesületi névjegyzék",
+    "mentalTitle": "🧠 Mentálhigiénés útmutató"
+  },
+  "outils": [
+    { "id": "flash", "icon": "🔦", "title": "SOS villogás", "desc": "SOS fényjelzés", "func": "Flash" },
+    { "id": "respiration", "icon": "🧘", "title": "Légzés", "desc": "4-4-6 stresszoldó", "func": "Respiration" },
+    { "id": "flashlight", "icon": "💡", "title": "Zseblámpa", "desc": "Fényes fehér képernyő", "func": "Flashlight" },
+    { "id": "soundAlarm", "icon": "🔊", "title": "Hangjelzés", "desc": "Folyamatos sípolás", "func": "SoundAlarm" },
+    { "id": "cprMetronome", "icon": "❤️", "title": "CPR metronóm", "desc": "100-120 bpm", "func": "CprMetronome" }
+  ],
+  "drawer": {
+    "title": "📋 Navigáció",
+    "links": [
+      { "icon": "🛠️", "label": "Vészhelyzeti eszközök", "scroll": "outils-section" },
+      { "icon": "📚", "label": "Gyakorlati útmutatók", "scroll": "guides-section" },
+      { "icon": "🤝", "label": "Egyesületek", "scroll": "asso-section" },
+      { "icon": "🧠", "label": "Mentálhigiéné", "scroll": "mental-section" }
+    ]
+  },
+  "respirationTexts": {
+    "inhale": "Belégzés",
+    "hold": "Visszatartás",
+    "exhale": "Kilégzés",
+    "instruction": "4s belégzés — 4s visszatartás — 6s kilégzés"
+  },
+  "cprMessages": {
+    "good": "✅ Ajánlott CPR tempó (100-120 nyomás/perc)",
+    "bad": "⚠️ Nem optimális tempó. Állítsa 100-120 BPM-re."
+  },
+  "guides": [
+    { "icon": "🫀", "title": "Szívmegállás", "desc": "CPR 30:2, 100-120/perc", "content": "<strong>Protokoll:</strong><br><ul><li>1️⃣ Biztosítsa a helyszínt, hívja a 15/112-t</li><li>2️⃣ Ellenőrizze a tudatot/légzést (10mp)</li><li>3️⃣ Ha eszméletlen és nem lélegzik: 30 mellkaskompresszió (100-120/perc, mélység 5-6 cm)</li><li>4️⃣ Használjon AED-t amilyen hamar csak lehet</li><li>5️⃣ Váltogassa 30:2 arányban ha képzett</li></ul><p><strong>Ne szakítsa meg szükségtelenül a kompressziókat.</strong></p>" },
+    { "icon": "🛌", "title": "Stabil oldalfekvés", "desc": "Biztonságos oldalpozíció", "content": "<strong>Eszméletlen, de lélegző személy számára:</strong><br><ul><li>👉 Helyezze az áldozat karját derékszögbe</li><li>👉 A másik kart tegye a mellkasra</li><li>👉 Hajlítsa be a szemközti lábat</li><li>👉 Fordítsa oldalra az áldozatot, miközben támasztja a fejét</li><li>👉 Döntse hátra a fejet a légutak megnyitásához</li><li>✅ Hívja a 15-öt, figyelje a légzést a segítség megérkezéséig</li></ul>" },
+    { "icon": "🧠", "title": "Epilepszia", "desc": "Védje a fejet, ne korlátozza", "content": "<strong>Teendők:</strong><br><ul><li>✅ Védje a fejet (párna, ruha)</li><li>✅ Távolítsa el a veszélyes tárgyakat</li><li>❌ Ne tegyen semmit a szájába</li><li>❌ Ne korlátozza a mozgását</li><li>⏱️ Hívja a 15-öt ha: első roham, időtartam >5 perc, sérülés, légzési nehézség</li><li>Roham után helyezze stabil oldalfekvésbe</li></ul>" },
+    { "icon": "🩸", "title": "Vérzés", "desc": "Közvetlen nyomás", "content": "<strong>Erős vérzés megállítása:</strong><ul><li>🔴 Nyomja közvetlenül tiszta ruhával</li><li>🔴 Tartsa a erős nyomást, ne engedje el</li><li>🔴 Ha a vér átszivárog, tegyen egy új ruhát az első eltávolítása nélkül</li><li>🔴 Fektesse le az áldozatot, hívja a 15-öt</li><li>⚠️ Érszorító csak végső esetben szakember által</li></ul>" },
+    { "icon": "🍎", "title": "Fulladás", "desc": "Heimlich / hátba csapkodás", "content": "<strong>Felnőtt:</strong><ul><li>Ösztönözze a köhögésre</li><li>5 hátba csapás</li><li>5 hasi nyomás (ököl a köldök felett, nyomja befelé és felfelé)</li><li>Váltogassa a távozásig vagy eszméletvesztésig</li><li>Eszméletvesztés esetén: kezdje meg a CPR-t</li></ul>" },
+    { "icon": "🔥", "title": "Tűz", "desc": "Kússzon, ne fusson", "content": "<strong>Szabályok:</strong><ul><li>❌ Ne használjon lifteket</li><li>✅ Maradjon alacsonyan a füst elkerülése végett (kússzon)</li><li>✅ Csukja be maga után az ajtókat</li><li>✅ Ha a ruhája lángra kap: ÁLLJ MEG - EDD LE - GURULJ</li><li>✅ Értesítse a tűzoltókat (18/112) biztonságos helyről</li></ul>" },
+    { "icon": "⚡", "title": "AED", "desc": "Kövesse a hangot, helyezze fel a tapaszokat", "content": "<strong>Defibrillátor:</strong><ul><li>1️⃣ Kapcsolja be a készüléket</li><li>2️⃣ Kövesse a hangutasításokat</li><li>3️⃣ Mutassa meg a mellkast, helyezze fel az elektródákat az ábra szerint</li><li>4️⃣ Az elemzés alatt ne érintse az áldozatot</li><li>5️⃣ Ha sokk javasolt: lépjen hátra és nyomja meg a gombot</li><li>6️⃣ Azonnal folytassa a kompressziókat</li></ul>" },
+    { "icon": "🤧", "title": "Súlyos allergia", "desc": "Anafilaxia → 15 + adrenalin", "content": "<strong>Jelek:</strong> duzzanat, csalánkiütés, légzési nehézség, ájulás.<br><strong>Teendők:</strong><ul><li>✅ Fektesse le az áldozatot (vagy félig ülő helyzetbe légzési nehézség esetén)</li><li>✅ Használjon adrenalin autoinjektort ha elérhető (Anapen, EpiPen)</li><li>✅ Azonnal hívja a 15-öt</li><li>❌ Ne adjon sem inni, sem enni</li></ul>" },
+    { "icon": "🍬", "title": "Hipoglikémia", "desc": "Cukor ha eszméleténél van", "content": "<strong>Tünetek:</strong> izzadás, gyengeség, zavartság, sápadtság.<br><strong>Teendő:</strong><ul><li>Ha eszméleténél van és tud nyelni: adjon cukrot (édes ital, 2 kockacukor, gyümölcslé)</li><li>Gyors javulás (5-10 perc)</li><li>Eszméletvesztés esetén: stabil oldalfekvés, hívja a 15-öt, ne adjon inni</li><li>Ha ismert cukorbeteg: keresse meg a vércukormérőt</li></ul>" },
+    { "icon": "🏃", "title": "Támadás", "desc": "Menekülj, bújj el, jelezz", "content": "<strong>Nemzetközi protokoll: Menekülj, Bújj el, Jelezz</strong><br><ul><li>🏃‍♂️ Menekülj ha lehetséges, ne fuss csoportban, hagyd el a területet</li><li>🚪 Bújj el: zárd be az ajtót, kapcsold le a villanyt, rejtőzz el a lövések elől, némítsd le a telefont</li><li>📞 Csak ha biztonságban vagy, hívd a rendőrséget (17), írd le a helyzetet</li><li>❌ Ne közelítsd meg a biztonsági erőket kézzel a zsebedben</li><li>✅ A terület biztosítása után nyújts elsősegélyt</li></ul>" },
+    { "icon": "💧", "title": "Vízbe fúlás", "desc": "Azonnali CPR, ne ürítse a vizet", "content": "<strong>Teendők:</strong><ul><li>🆘 Gyorsan húzza ki az áldozatot a vízből</li><li>✅ Ellenőrizze a tudatot és a légzést</li><li>❌ Ne próbálja eltávolítani a vizet a tüdőből (haszontalan és veszélyes)</li><li>💨 Ha nem lélegzik: kezdje meg a CPR-t (30 kompresszió / 2 befújás)</li><li>📞 Hívja a 15-öt vagy a 112-t, használjon AED-t ha elérhető</li><li>🩱 Takarja le az áldozatot a hipotermia elkerülése végett</li></ul>" },
+    { "icon": "📞", "title": "15/112 hívása", "desc": "Helyszín, állapot, ne tegye le", "content": "<strong>Kulcsfontosságú információk:</strong><br><ul><li>📍 Pontos helyszín (cím, emelet, bejutási pont)</li><li>👥 Áldozatok száma</li><li>🩺 Állapot: eszméleténél van? lélegzik? vérzik?</li><li>⚡ Esemény: baleset, rosszullét, tűz...</li><li>📞 Ne tegye le elsőként, kövesse az utasításokat</li><li>📱 Ha lehetséges, használja a hangszórót</li></ul>" }
+  ],
+  "mental": [
+    { "icon": "🧘", "title": "Szívkoherencia", "desc": "5-5-5 nyugtató", "content": "<strong>5-5-5 légzés:</strong><br>Belégzés 5s, kilégzés 5s, szünet 5s. Ismételje 5 percig. Azonnali nyugtató hatás." },
+    { "icon": "🧠", "title": "Szorongás 3-3-3", "desc": "Vizuális/auditív/motorikus lehorgonyzás", "content": "<strong>Lehorgonyzási technika:</strong><br>Nevezzen meg 3 dolgot amit lát, 3 hangot amit hall, mozgassa testének 3 részét." },
+    { "icon": "📞", "title": "Lelki segély 3114", "desc": "Ingyenes 24/7", "content": "<strong>Hallgatóvonal: 3114</strong> (ingyenes, szakemberek). Pszichiátriai vészhelyzet: 15." },
+    { "icon": "💤", "title": "Kiégés megelőzése", "desc": "Pihenés, aktivitás, konzultáció", "content": "<strong>Jelek:</strong> kimerültség, cinizmus, hatástalanság. Szünet, fizikai aktivitás, konzultáció." },
+    { "icon": "🌿", "title": "Gyors meditáció", "desc": "5 perc nyugalom", "content": "Üljön kényelmesen, összpontosítson a légzésére. Engedje el a gondolatokat ítélkezés nélkül." },
+    { "icon": "🆘", "title": "Öngyilkosság megelőzése", "desc": "Ingyenes hívás 3114", "content": "Öngyilkos gondolatok esetén: hívja a <strong>3114</strong>-et (24/7, névtelen). Nem vagy egyedül, segítség elérhető." },
+    { "icon": "🎨", "title": "Művészetterápia", "desc": "Érzelmek kifejezése", "content": "<strong>Gyakorlat:</strong> Rajzolja le vagy írja le, amit érez, ítélkezés nélkül. A kreatív kifejezés csökkenti a stresszt és a szorongást." },
+    { "icon": "🚶", "title": "Tudatos séta", "desc": "Testi lehorgonyzás", "content": "Sétáljon lassan, összpontosítson minden lépésre, a talaj érzetére, a légzésére. Napi 10 perc javítja a hangulatot." },
+    { "icon": "📖", "title": "Hálanapló", "desc": "3 pozitív dolog", "content": "Minden este írjon le 3 apró pozitív dolgot a napból. Ez a gyakorlat erősíti a pszichológiai ellenálló képességet." },
+    { "icon": "🧩", "title": "A rágódás kezelése", "desc": "Állítsa meg a negatív gondolatokat", "content": "<strong>STOP technika:</strong> Stop (mondja magában, hogy STOP), Lélegezzen, Figyelje meg érzéseit, Folytassa konstruktív cselekvéssel." },
+    { "icon": "🤝", "title": "Támogató csoportok", "desc": "Meghallgatás és megosztás", "content": "Csatlakozzon támogató csoportokhoz (egyesületek, ifjúsági központok). A tapasztalatok megosztása enyhíti a szenvedést." },
+    { "icon": "📱", "title": "Mentálhigiénés alkalmazások", "desc": "Petit Bambou, Mind, Respire", "content": "Ingyenes alkalmazások: <strong>Petit Bambou</strong> (meditáció), <strong>Mind</strong> (KBT), <strong>Respire</strong> (szívkoherencia)." }
+  ],
+  "associations": [
+    { "icon": "🩸", "name": "Magyar Vöröskereszt", "desc": "Mentés, képzés", "content": "Magyar Vöröskereszt<br>Mentés, elsősegély képzés.<br><strong>📞 Kapcsolat:</strong> 06 1 374 1300" },
+    { "icon": "🤝", "name": "Élelmiszerbank", "desc": "Élelmiszer segély", "content": "Magyar Élelmiszerbank Egyesület<br>Élelmiszer- és ruhasegély, szolidaritás.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "⚓", "name": "Vízi mentők", "desc": "Vízi mentés 196", "content": "Vízi mentők<br>Vízi mentés.<br><strong>📞 Kapcsolat:</strong> 196 (vészhelyzet)" },
+    { "icon": "🧸", "name": "Kék Vonal 116111", "desc": "Gyermekvédelem", "content": "Kék Vonal Gyermekkrizis Alapítvány<br>Kiskorúak védelme.<br><strong>📞 Kapcsolat:</strong> 116111" },
+    { "icon": "🍲", "name": "Máltai Szeretetszolgálat", "desc": "Élelmiszer segély", "content": "Magyar Máltai Szeretetszolgálat<br>Étkeztetés, szociális támogatás.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "🏠", "name": "Hajléktalanok Segítője", "desc": "Hajléktalanság elleni küzdelem", "content": "Hajléktalanok Segítője<br>Vészszállás, kilakoltatások megelőzése.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "👩‍🦽", "name": "MEOSZ", "desc": "Fogyatékosság és akadálymentesítés", "content": "MEOSZ<br>Fogyatékos személyek támogatása, jogvédelem.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "🚺", "name": "NANE", "desc": "Nők elleni erőszak", "content": "NANE Egyesület<br>Meghallgatás, támogatás, vészszállás.<br><strong>📞 Kapcsolat:</strong> 06 80 123 456" },
+    { "icon": "🌈", "name": "Háttér Társaság", "desc": "LGBT+ fiatalok kirekesztése", "content": "Háttér Társaság<br>Szállás és támogatás homofóbia áldozataivá vált LGBT+ fiataloknak.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "🧓", "name": "Idősbarát Alapítvány", "desc": "Elszigetelt idősek", "content": "Idősbarát Alapítvány<br>Társas kapcsolatok, konkrét segítség, házhoz menő szolgálat.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "🩺", "name": "HIV Segély", "desc": "HIV elleni küzdelem", "content": "HIV Segély Alapítvány<br>Megelőzés, tesztelés, pszichológiai támogatás.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" },
+    { "icon": "🌍", "name": "Magyar Református Szeretetszolgálat", "desc": "Nemzetközi szolidaritás", "content": "Magyar Református Szeretetszolgálat<br>Sürgősségi segély, integráció, mikrohitel.<br><strong>📞 Kapcsolat:</strong> 06 1 123 4567" }
+  ]
+}

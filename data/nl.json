@@ -1,0 +1,94 @@
+{
+  "language": "nl",
+  "buttons": {
+    "flashStop": "STOP FLASH",
+    "respirationStop": "STOP",
+    "flashlightStop": "UIT",
+    "cprStop": "STOP"
+  },
+  "splash": {
+    "title": "Blijf kalm!",
+    "subtitle": "Deze portal werkt zonder internet en helpt je bij crisis- en noodsituaties. Je kunt alarmnummers bellen via je mobiele netwerk (4G/5G).",
+    "guideButton": "📋 GA NAAR DE VOLLEDIGE GIDS"
+  },
+  "urgences": [
+    { "number": "15", "name": "SAMU (medisch)", "tel": "15" },
+    { "number": "18", "name": "Brandweer", "tel": "18" },
+    { "number": "112", "name": "EU-noodnummers", "tel": "112" },
+    { "number": "17", "name": "Politie", "tel": "17" }
+  ],
+  "sections": {
+    "outilsTitle": "🛠️ Noodhulpmiddelen",
+    "guidesTitle": "📚 Praktische gidsen",
+    "assosTitle": "🤝 Verenigingsgids",
+    "mentalTitle": "🧠 Gids voor geestelijke gezondheid"
+  },
+  "outils": [
+    { "id": "flash", "icon": "🔦", "title": "SOS-flits", "desc": "SOS-lichtsignaal", "func": "Flash" },
+    { "id": "respiration", "icon": "🧘", "title": "Ademhaling", "desc": "4-4-6 anti-stress", "func": "Respiration" },
+    { "id": "flashlight", "icon": "💡", "title": " Zaklamp", "desc": "Helder wit scherm", "func": "Flashlight" },
+    { "id": "soundAlarm", "icon": "🔊", "title": "Geluidssignaal", "desc": "Continu signaal", "func": "SoundAlarm" },
+    { "id": "cprMetronome", "icon": "❤️", "title": "CPR-metronoom", "desc": "100-120 bpm", "func": "CprMetronome" }
+  ],
+  "drawer": {
+    "title": "📋 Navigatie",
+    "links": [
+      { "icon": "🛠️", "label": "Noodhulpmiddelen", "scroll": "outils-section" },
+      { "icon": "📚", "label": "Praktische gidsen", "scroll": "guides-section" },
+      { "icon": "🤝", "label": "Verenigingen", "scroll": "asso-section" },
+      { "icon": "🧠", "label": "Geestelijke gezondheid", "scroll": "mental-section" }
+    ]
+  },
+  "respirationTexts": {
+    "inhale": "Inademen",
+    "hold": "Vasthouden",
+    "exhale": "Uitademen",
+    "instruction": "4s inademen — 4s vasthouden — 6s uitademen"
+  },
+  "cprMessages": {
+    "good": "✅ Aanbevolen CPR-tempo (100-120 compressies/min)",
+    "bad": "⚠️ Niet optimaal tempo. Stel in op 100-120 BPM."
+  },
+  "guides": [
+    { "icon": "🫀", "title": "Hartstilstand", "desc": "CPR 30:2, 100-120/min", "content": "<strong>Protocol:</strong><br><ul><li>1️⃣ Beveilig, bel 15/112</li><li>2️⃣ Controleer bewustzijn/ademhaling (10s)</li><li>3️⃣ Bij bewusteloosheid en geen ademhaling: 30 compressies (100-120/min, 5-6cm diep)</li><li>4️⃣ Gebruik AED zo snel mogelijk</li><li>5️⃣ Wissel 30:2 af indien getraind</li></ul><p><strong>Onderbreek compressies niet onnodig.</strong></p>" },
+    { "icon": "🛌", "title": "Stabiele zijligging", "desc": "Veiligheidspositie", "content": "<strong>Voor een bewusteloos persoon die ademt:</strong><br><ul><li>👉 Arm van het slachtoffer in rechte hoek plaatsen</li><li>👉 Andere arm over de borst leggen</li><li>👉 Tegenoverliggende been buigen</li><li>👉 Slachtoffer opzij draaien, hoofd ondersteunen</li><li>👉 Hoofd kantelen om luchtweg vrij te maken</li><li>✅ Bel 15, controleer ademhaling tot hulp arriveert</li></ul>" },
+    { "icon": "🧠", "title": "Epilepsie", "desc": "Hoofd beschermen, niet tegenhouden", "content": "<strong>Wat te doen:</strong><br><ul><li>✅ Hoofd beschermen (kussen, kleding)</li><li>✅ Gevaarlijke voorwerpen verwijderen</li><li>❌ Niets in de mond stoppen</li><li>❌ Bewegingen niet beperken</li><li>⏱️ Bel 15 bij: eerste aanval, duur >5 min, verwonding, ademhalingsmoeilijkheden</li><li>Na aanval in stabiele zijligging leggen</li></ul>" },
+    { "icon": "🩸", "title": "Bloeding", "desc": "Directe druk", "content": "<strong>Stop hevige bloeding:</strong><ul><li>🔴 Direct drukken met schone doek</li><li>🔴 Stevige druk behouden, niet loslaten</li><li>🔴 Als bloed doorsijpelt, nieuwe doek toevoegen zonder eerste te verwijderen</li><li>🔴 Slachtoffer neerleggen, bel 15</li><li>⚠️ Tourniquet alleen als laatste redmiddel door professional</li></ul>" },
+    { "icon": "🍎", "title": "Verslikking", "desc": "Heimlich / rugslagen", "content": "<strong>Volwassene:</strong><ul><li>Moedig hoesten aan</li><li>5 rugslagen</li><li>5 abdominale stoten (vuist boven navel, naar binnen en boven duwen)</li><li>Wissel af tot uitstoting of bewusteloosheid</li><li>Bij bewusteloosheid: start CPR</li></ul>" },
+    { "icon": "🔥", "title": "Brand", "desc": "Kruipen, niet rennen", "content": "<strong>Regels:</strong><ul><li>❌ Gebruik geen liften</li><li>✅ Laag blijven om rook te vermijden (kruipen)</li><li>✅ Deuren achter je sluiten</li><li>✅ Bij brandende kleding: STOP - DROP - ROLL</li><li>✅ Alarmeer brandweer (18/112) vanaf veilige plek</li></ul>" },
+    { "icon": "⚡", "title": "AED", "desc": "Volg stem, plaats patches", "content": "<strong>Defibrillator:</strong><ul><li>1️⃣ Apparaat aanzetten</li><li>2️⃣ Volg gesproken instructies</li><li>3️⃣ Borst ontbloten, elektroden plaatsen (zoals aangegeven)</li><li>4️⃣ Raak slachtoffer niet aan tijdens analyse</li><li>5️⃣ Bij schokadvies: vrijmaken en knop indrukken</li><li>6️⃣ Compressies onmiddellijk hervatten</li></ul>" },
+    { "icon": "🤧", "title": "Ernstige allergie", "desc": "Anafylaxie → 15 + adrenaline", "content": "<strong>Tekenen:</strong> zwelling, netelroos, ademhalingsmoeilijkheden, flauwvallen.<br><strong>Handelen:</strong><ul><li>✅ Slachtoffer neerleggen (of halfzittend bij ademhalingsmoeilijkheden)</li><li>✅ Adrenaline-auto-injector gebruiken indien beschikbaar (Anapen, EpiPen)</li><li>✅ Onmiddellijk 15 bellen</li><li>❌ Niets te drinken of eten geven</li></ul>" },
+    { "icon": "🍬", "title": "Hypoglykemie", "desc": "Suiker indien bewust", "content": "<strong>Symptomen:</strong> zweten, zwakte, verwardheid, bleekheid.<br><strong>Actie:</strong><ul><li>Indien bewust en kan slikken: suiker geven (zoete drank, 2 suikerklontjes, sap)</li><li>Snelle verbetering (5-10 min)</li><li>Bij bewusteloosheid: stabiele zijligging, bel 15, niet laten drinken</li><li>Bij bekende diabetes: zoek glucosemeter</li></ul>" },
+    { "icon": "🏃", "title": "Aanslag", "desc": "Vluchten, verbergen, alarmeren", "content": "<strong>Internationaal protocol: Vluchten, Verbergen, Alarmeren</strong><br><ul><li>🏃‍♂️ Vlucht indien mogelijk, ren niet in groep, verlaat zone</li><li>🚪 Verberg: sluit deur, doe licht uit, bescherm tegen schoten, zet telefoon stil</li><li>📞 Alarmeer politie (17) alleen wanneer veilig, beschrijf situatie</li><li>❌ Kom niet met handen in zakken naar veiligheidstroepen</li><li>✅ Verleen eerste hulp na beveiliging</li></ul>" },
+    { "icon": "💧", "title": "VerDrinking", "desc": "Onmiddellijke CPR, niet leegmaken", "content": "<strong>Handelen:</strong><ul><li>🆘 Haal slachtoffer snel uit water</li><li>✅ Controleer bewustzijn en ademhaling</li><li>❌ Probeer geen water uit longen te verwijderen (nutteloos en gevaarlijk)</li><li>💨 Bij geen ademhaling: start CPR (30 compressies / 2 beademingen)</li><li>📞 Bel 15 of 112, gebruik AED indien beschikbaar</li><li>🩱 Dek slachtoffer af om onderkoeling te voorkomen</li></ul>" },
+    { "icon": "📞", "title": "Noodoproep 15/112", "desc": "Plaats, toestand, niet ophangen", "content": "<strong>Belangrijke informatie:</strong><br><ul><li>📍 Exacte locatie (adres, verdieping, toegangspunt)</li><li>👥 Aantal slachtoffers</li><li>🩺 Toestand: bewust? ademt? bloedt?</li><li>⚡ Gebeurtenis: ongeval, ziekte, brand...</li><li>📞 Hang niet als eerste op, volg instructies</li><li>📱 Gebruik luidspreker indien mogelijk</li></ul>" }
+  ],
+  "mental": [
+    { "icon": "🧘", "title": "Hartcoherentie", "desc": "5-5-5 kalmerend", "content": "<strong>5-5-5 ademhaling:</strong><br>Adem 5s in, adem 5s uit, pauze 5s. Herhaal 5 minuten. Onmiddellijk kalmerend effect." },
+    { "icon": "🧠", "title": "Angst 3-3-3", "desc": "Visuele/auditieve/motorische verankering", "content": "<strong>Verankeringstechniek:</strong><br>Noem 3 dingen die je ziet, 3 geluiden die je hoort, beweeg 3 delen van je lichaam." },
+    { "icon": "📞", "title": "Psychologische ondersteuning 3114", "desc": "Gratis 24/7", "content": "<strong>Luisterlijn: 3114</strong> (gratis, professionals). Psychiatrische noodsituatie: 15." },
+    { "icon": "💤", "title": "Burn-out preventie", "desc": "Rust, activiteit, raadplegen", "content": "<strong>Tekenen:</strong> uitputting, cynisme, ineffectiviteit. Pauze, lichaamsbeweging, raadplegen." },
+    { "icon": "🌿", "title": "Snelle meditatie", "desc": "5 min rust", "content": "Ga comfortabel zitten, concentreer je op je ademhaling. Laat gedachten voorbijgaan zonder oordeel." },
+    { "icon": "🆘", "title": "Suïcidepreventie", "desc": "Gratis oproep 3114", "content": "Bij zelfmoordgedachten: bel <strong>3114</strong> (24/7, anoniem). Je bent niet alleen, er is hulp beschikbaar." },
+    { "icon": "🎨", "title": "Kunsttherapie", "desc": "Emoties uiten", "content": "<strong>Oefening:</strong> Teken of schrijf wat je voelt zonder oordeel. Creatieve expressie vermindert stress en angst." },
+    { "icon": "🚶", "title": "Mindful wandelen", "desc": "Lichamelijke verankering", "content": "Loop langzaam, concentreer je op elke stap, het gevoel van de grond, je ademhaling. 10 minuten per dag verbetert de stemming." },
+    { "icon": "📖", "title": "Dankbaarheidsdagboek", "desc": "3 positieve dingen", "content": "Schrijf elke avond 3 kleine positieve dingen van de dag op. Deze oefening versterkt de psychologische veerkracht." },
+    { "icon": "🧩", "title": "Omgaan met piekeren", "desc": "Stop negatieve gedachten", "content": "<strong>STOP-techniek:</strong> Stop (zeg STOP mentaal), Adem, Observeer je gewaarwordingen, Ga verder met een constructieve actie." },
+    { "icon": "🤝", "title": "Praten in groepen", "desc": "Luisteren en delen", "content": "Sluit je aan bij praatgroepen (verenigingen, jeugdcentra). Het delen van ervaringen verlicht het lijden." },
+    { "icon": "📱", "title": "Apps voor geestelijke gezondheid", "desc": "Petit Bambou, Mind, Respire", "content": "Gratis apps: <strong>Petit Bambou</strong> (meditatie), <strong>Mind</strong> (CGT), <strong>Respire</strong> (hartcoherentie)." }
+  ],
+  "associations": [
+    { "icon": "🩸", "name": "Rode Kruis", "desc": "Hulpverlening, opleiding", "content": "Rode Kruis Vlaanderen<br>Hulpverlening, eerste hulp opleiding.<br><strong>📞 Contact:</strong> 105" },
+    { "icon": "🤝", "name": "Voedselbanken", "desc": "Voedselhulp", "content": "Voedselbanken Nederland<br>Voedselhulp, kleding, solidariteit.<br><strong>📞 Contact:</strong> 088 123 45 67" },
+    { "icon": "⚓", "name": "KNRM", "desc": "Redding op zee 196", "content": "Koninklijke Nederlandse Redding Maatschappij<br>Redding op zee.<br><strong>📞 Contact:</strong> 196 (nood)" },
+    { "icon": "🧸", "name": "Kindertelefoon 116111", "desc": "Bescherming minderjarigen", "content": "Kindertelefoon<br>Bescherming van minderjarigen.<br><strong>📞 Contact:</strong> 116111" },
+    { "icon": "🍲", "name": "Leger des Heils", "desc": "Voedselhulp", "content": "Leger des Heils<br>Maaltijdverstrekking, sociale begeleiding.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "🏠", "name": "Stichting Lezen en Schrijven", "desc": "Bestrijding laaggeletterdheid", "content": "Stichting Lezen en Schrijven<br>Noodopvang, preventie uithuiszetting.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "👩‍🦽", "name": "Ieder(in)", "desc": "Handicap & toegankelijkheid", "content": "Ieder(in)<br>Ondersteuning voor mensen met een handicap, verdediging van rechten.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "🚺", "name": "Blijf Groep", "desc": "Geweld tegen vrouwen", "content": "Blijf Groep<br>Luisteren, begeleiden, noodopvang.<br><strong>📞 Contact:</strong> 0800 2000 (vrouwenopvang)" },
+    { "icon": "🌈", "name": "COC Nederland", "desc": "LGBT+ jongeren uitgesloten", "content": "COC Nederland<br>Opvang en ondersteuning voor LGBT+ jongeren slachtoffer van homofobie.<br><strong>📞 Contact:</strong> 030 123 4567" },
+    { "icon": "🧓", "name": "Unie KBO", "desc": "Geïsoleerde ouderen", "content": "Unie KBO<br>Sociaal contact, concrete hulp, huisbezoeken.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "🩺", "name": "Aidsfonds", "desc": "Strijd tegen hiv", "content": "Aidsfonds<br>Preventie, testen, psychologische ondersteuning.<br><strong>📞 Contact:</strong> 0800 123 456" },
+    { "icon": "🌍", "name": "Cordaid", "desc": "Internationale solidariteit", "content": "Cordaid<br>Spoedhulp, integratie, microkrediet.<br><strong>📞 Contact:</strong> 0800 123 456" }
+  ]
+}
