@@ -72,10 +72,10 @@
 
 ```bash
 # 1. Télécharger le script
-git clone https://github.com/sos-guide/Installation-Guide.git
+git clone https://github.com/sos-guide/INSTALL.git
 
 # 2. Entrer dans le dossier
-cd Installation-Guide
+cd INSTALL
 
 # 3. Rendre exécutable
 chmod +x install.sh
